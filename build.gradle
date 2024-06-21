@@ -1,14 +1,16 @@
-import edu.wpi.first.gradlerio.deploy.roborio.RoboRIO;
-
 plugins {
     id "java"
-    id "edu.wpi.first.GradleRIO" version "2024.1.1-beta-4"
-    id "com.diffplug.spotless" version "6.23.3"
-    id "com.peterabeles.gversion" version "1.10"
+    id "org.jetbrains.kotlin.jvm" version "1.9.22"
+    id "edu.wpi.first.GradleRIO" version "2024.3.2"
+    id "idea"
 }
 
-sourceCompatibility = JavaVersion.VERSION_17
-targetCompatibility = JavaVersion.VERSION_17
+def javaVersion = JavaVersion.VERSION_17
+
+java {
+    sourceCompatibility = javaVersion
+    targetCompatibility = javaVersion
+}
 
 def ROBOT_MAIN_CLASS = "frc.robot.Main"
 
@@ -84,31 +86,29 @@ dependencies {
     nativeRelease wpi.java.vendor.jniRelease(wpi.platforms.desktop)
     simulationRelease wpi.sim.enableRelease()
 
-    testImplementation 'junit:junit:4.13.2'
-    implementation 'junit:junit:4.13.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
-    annotationProcessor "org.littletonrobotics.akit.junction:junction-autolog:3.0.0-beta-6"
-
-    implementation 'com.github.galaxia5987:common:614879054d'
+    testImplementation platform("org.junit:junit-bom:5.10.1")
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.junit.jupiter:junit-jupiter-params"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
 }
 
-configurations.all {
-    exclude group: "edu.wpi.first.wpilibj"
+test {
+    useJUnitPlatform()
+    systemProperty 'junit.jupiter.extensions.autodetection.enabled', 'true'
 }
 
 // Simulation configuration (e.g. environment variables).
-
 wpi.sim.addGui().defaultEnabled = true
-wpi.sim.addDriverstation().defaultEnabled = true
-
-wpi.sim.addWebsocketsClient()
-wpi.sim.envVar("HALSIMWS_HOST", "10.0.0.2")
+wpi.sim.addDriverstation()
 
 // Setting up my Jar File. In this case, adding all libraries into the main jar ('fat jar')
 // in order to make them all available at runtime. Also adding the manifest so WPILib
 // knows where to look for our Robot Class.
 jar {
     from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    from sourceSets.main.allSource
     manifest edu.wpi.first.gradlerio.GradleRIOPlugin.javaManifest(ROBOT_MAIN_CLASS)
     duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
@@ -118,38 +118,29 @@ deployArtifact.jarTask = jar
 wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
-// Create version file
-project.compileJava.dependsOn(createVersionFile)
-gversion {
-    srcDir       = "src/main/java/"
-    classPackage = "frc.robot"
-    className    = "BuildConstants"
-    dateFormat   = "yyyy-MM-dd HH:mm:ss z"
-    timeZone     = "Asia/Jerusalem"
-    indent       = "  "
+tasks.withType(JavaCompile) {
+    // Configure string concat to always inline compile
+    options.compilerArgs.add '-XDstringConcat=inline'
 }
 
-spotless {
-    format 'misc', {
-        // define the files to apply `misc` to
-        target '*gradle*', '.gitattributes', '.gitignore'
-
-        // define the steps to apply to those files
-        trimTrailingWhitespace()
-        indentWithSpaces(4)
-        endWithNewline()
+kotlin {
+    compilerOptions {
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.@Companion.fromTarget(javaVersion.toString()))
+        // https://kotlinlang.org/docs/gradle-configure-project.html#gradle-java-toolchains-support
+        jvmToolchain(Integer.valueOf(javaVersion.toString()))
     }
-    java {
-        targetExclude('**/BuildConstants.java')
+}
 
-        cleanthat().sourceCompatibility(java.sourceCompatibility as String)
-                .addMutator('AllIncludingDraftSingleMutators').includeDraft(false)
-
-        // use AOSP style for 4-character wide indents
-        googleJavaFormat().aosp()
-        // fix formatting of type annotations
-        formatAnnotations()
-        trimTrailingWhitespace()
-        endWithNewline()
+idea {
+    project {
+        // The project.sourceCompatibility setting is not always picked up, so we set explicitly
+        languageLevel = javaVersion
+    }
+    module {
+        // Improve development & (especially) debugging experience (and IDEA's capabilities) by having libraries' source & javadoc attached
+        downloadJavadoc = true
+        downloadSources = true
+        // Exclude the .vscode directory from indexing and search
+        excludeDirs += file(".vscode")
     }
 }
