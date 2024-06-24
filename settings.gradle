@@ -26,5 +26,8 @@ pluginManagement {
     }
 }
 
+include ':annotation'
+project(':annotation').projectDir = new File(rootDir, 'annotation')
+
 Properties props = System.getProperties();
 props.setProperty("org.gradle.internal.native.headers.unresolved.dependencies.ignore", "true");
