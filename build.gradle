@@ -10,7 +10,7 @@ plugins {
     id "idea"
 }
 
-def javaVersion = JavaVersion.VERSION_20
+def javaVersion = JavaVersion.VERSION_22
 
 java {
     sourceCompatibility = javaVersion
