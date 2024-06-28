@@ -11,5 +11,5 @@ interface ClimbIO {
 
     fun disableStopper()
 
-    fun updateInputs()
+    fun updateInputs(inputs: ClimbInputs)
 }
