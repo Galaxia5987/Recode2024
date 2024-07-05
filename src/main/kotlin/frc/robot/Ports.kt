@@ -1,6 +1,11 @@
 package frc.robot
 
 class Ports {
+    object Intake {
+        const val ANGLE_MOTOR_ID: Int = 0
+        const val SPIN_MOTOR_ID: Int = 0
+        const val CENTER_MOTOR_ID: Int = 0
+    }
     object SwerveDrive {
         const val FRONT_LEFT_DRIVE_MOTOR_ID: Int = 3
         const val FRONT_LEFT_ANGLE_MOTOR_ID: Int = 4
