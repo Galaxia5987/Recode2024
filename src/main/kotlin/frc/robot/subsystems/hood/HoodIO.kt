@@ -15,7 +15,7 @@ interface HoodIO {
 
     fun setAngle(angle: MutableMeasure<Angle>) {}
 
-    fun setAngle(angle: MutableMeasure<Angle>, torqueChassisCompensation: Double)
+    fun setAngle(angle: MutableMeasure<Angle>, torqueChassisCompensation: Double) {}
 
     fun updateInputs() {}
 
