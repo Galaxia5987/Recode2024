@@ -9,7 +9,6 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
-import frc.robot.subsystems.hood.HoodIO.Companion.inputs
 
 class HoodIOSim : HoodIO {
     private val motor: TalonFXSim = TalonFXSim(
