@@ -12,6 +12,9 @@ object HoodConstants {
     val MOMENT_OF_INERTIA : Measure<Mult<Mult<Mass, Distance>, Distance>> = Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
     val MAX_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
     val MAX_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second).of(4.0)
+    val RESTING_ANGLE: MutableMeasure<Angle> = Units.Degrees.of(114.0).mutableCopy()
+
+    val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset")
 
     val kP = LoggedTunableNumber("Hood/kP")
     val kI = LoggedTunableNumber("Hood/kI")
