@@ -1,6 +1,8 @@
 package frc.robot.subsystems.hood
 
 import com.ctre.phoenix6.configs.TalonFXConfiguration
+import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.math.geometry.Translation3d
 import edu.wpi.first.units.*
 import frc.robot.lib.webconstants.LoggedTunableNumber
 
@@ -8,11 +10,17 @@ object HoodConstants {
     const val GEAR_RATIO : Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
     const val MAX_TOLERANCE_DEG = 0.75 // Degrees
     const val ENCODER_TICKS_PER_REVOLUTION = 4096
+    const val SIMULATION_LENGTH = 3.0
 
     val MOMENT_OF_INERTIA : Measure<Mult<Mult<Mass, Distance>, Distance>> = Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
     val MAX_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
     val MAX_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second).of(4.0)
-    val RESTING_ANGLE: MutableMeasure<Angle> = Units.Degrees.of(114.0).mutableCopy()
+    val RESTING_ANGLE: Measure<Angle> = Units.Degrees.of(114.0)
+    val HOOD_LENGTH: Measure<Distance> = Units.Meters.of(0.4)
+    val MECHANISM_2D_POSE = Translation2d(1.0, 1.0)
+    val ROOT_POSITION = Translation3d(-0.27, 0.0, 0.225)
+    val SIMULATION_OFFSET = Units.Degrees.of(-54.0)
+
 
     val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset")
 
