@@ -37,7 +37,10 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     fun hasNote(): Boolean = inputs.hasNote
 
     fun setRollerPower(power: Double): Command {
-        return run { io.setRollerMotorPower(power) }.withName("Set Roller Power")
+        return run {
+            inputs.rollerPowerSetPoint = power
+            io.setRollerMotorPower(power)
+        }.withName("Set Roller Power")
     }
 
     override fun periodic() {
