@@ -14,7 +14,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     private val topRollerInputs = io.topRollerInputs
     private val bottomRollerInputs = io.bottomRollerInputs
     private val timer = Timer()
-    private val SUBSYSTEM_NAME = this::class.simpleName
+    private val subsystemName = this::class.simpleName
 
     companion object {
         @Volatile
@@ -67,8 +67,8 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     override fun periodic() {
         io.updateInputs()
         if (timer.advanceIfElapsed(0.1)) {
-            Logger.processInputs("$SUBSYSTEM_NAME/TopRoller", topRollerInputs)
-            Logger.processInputs("$SUBSYSTEM_NAME/BottomRoller", bottomRollerInputs)
+            Logger.processInputs("$subsystemName/TopRoller", topRollerInputs)
+            Logger.processInputs("$subsystemName/BottomRoller", bottomRollerInputs)
         }
     }
 }
