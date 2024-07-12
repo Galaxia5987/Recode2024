@@ -11,12 +11,13 @@ import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
 class HoodIOSim : HoodIO {
-    private val motor: TalonFXSim = TalonFXSim(
-        1,
-        HoodConstants.GEAR_RATIO,
-        HoodConstants.MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
-        HoodConstants.GEAR_RATIO
-    )
+    private val motor: TalonFXSim =
+        TalonFXSim(
+            1,
+            HoodConstants.GEAR_RATIO,
+            HoodConstants.MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
+            HoodConstants.GEAR_RATIO
+        )
 
     private val control = MotionMagicDutyCycle(0.0)
     private val dutyCycleOut = DutyCycleOut(0.0)

@@ -1,6 +1,8 @@
 package frc.robot.subsystems.hood
 
-import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.signals.GravityTypeValue
+import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.geometry.Translation3d
 import edu.wpi.first.units.*
@@ -19,7 +21,10 @@ object HoodConstants {
     val HOOD_LENGTH: Measure<Distance> = Units.Meters.of(0.4)
     val MECHANISM_2D_POSE = Translation2d(1.0, 1.0)
     val ROOT_POSITION = Translation3d(-0.27, 0.0, 0.225)
-    val SIMULATION_OFFSET = Units.Degrees.of(-54.0)
+    val SIMULATION_OFFSET: Measure<Angle> = Units.Degrees.of(-54.0)
+
+    private const val CURRENT_LIMIT = 40.0
+    private val INVERTED_VALUE = InvertedValue.CounterClockwise_Positive
 
 
     val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset")
@@ -33,4 +38,34 @@ object HoodConstants {
     val kG = LoggedTunableNumber("Hood/kG")
 
     val MOTOR_CONFIGURATION = TalonFXConfiguration()
+
+    init {
+        kP.initDefault(3.0)
+        ABSOLUTE_ENCODER_OFFSET.initDefault((78.046 - 33.48) / 360.0)
+        MOTOR_CONFIGURATION
+            .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO))
+            .withMotionMagic(
+                MotionMagicConfigs()
+                    .withMotionMagicCruiseVelocity(
+                        MAX_VELOCITY.`in`(Units.RotationsPerSecond)
+                    )
+                    .withMotionMagicJerk(16.0)
+            )
+            .withSlot0(
+                Slot0Configs()
+                    .withKP(kP.get())
+                    .withKI(kI.get())
+                    .withKD(kD.get())
+                    .withKS(kS.get())
+                    .withKV(kV.get())
+                    .withKA(kA.get())
+                    .withKG(kG.get())
+                    .withGravityType(GravityTypeValue.Arm_Cosine)
+            )
+            .withMotorOutput(MotorOutputConfigs().withInverted(HoodConstants.INVERTED_VALUE)).CurrentLimits
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true)
+            .withStatorCurrentLimit(HoodConstants.CURRENT_LIMIT)
+            .withSupplyCurrentLimit(HoodConstants.CURRENT_LIMIT)
+    }
 }
