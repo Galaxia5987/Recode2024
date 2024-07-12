@@ -40,4 +40,10 @@ class IntakeIOReal : IntakeIO{
     override fun setAngle(angle: Rotation2d) {
 //        angleMotor.setControl(positionControl)
     }
+
+    override fun updateInputs() {
+        inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
+        inputs.spinMotorVoltage = spinMotor.busVoltage
+        inputs.centerMotorVoltage = centerMotor.busVoltage
+    }
 }
