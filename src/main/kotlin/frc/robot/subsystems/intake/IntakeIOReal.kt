@@ -7,6 +7,9 @@ import com.revrobotics.CANSparkBase
 import com.revrobotics.CANSparkLowLevel
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.units.Angle
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
 import frc.robot.Ports
 
 class IntakeIOReal : IntakeIO{
@@ -37,8 +40,8 @@ class IntakeIOReal : IntakeIO{
         centerMotor.set(power)
     }
 
-    override fun setAngle(angle: Rotation2d) {
-//        angleMotor.setControl(positionControl)
+    override fun setAngle(angle: Measure<Angle>) {
+        angleMotor.setControl(positionControl.withPosition(angle.`in`(Units.Rotations)))
     }
 
     override fun updateInputs() {

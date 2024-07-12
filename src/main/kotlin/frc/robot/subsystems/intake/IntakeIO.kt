@@ -1,10 +1,8 @@
 package frc.robot.subsystems.intake
 
-import com.ctre.phoenix6.hardware.TalonFX
-import edu.wpi.first.math.geometry.Pose2d
-import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.math.geometry.Transform2d
-import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.units.Angle
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
 import org.team9432.annotation.Logged
 
 interface IntakeIO {
@@ -17,7 +15,7 @@ interface IntakeIO {
     fun setCenterPower(power: Double) {
 
     }
-    fun setAngle(angle: Rotation2d) {
+    fun setAngle(angle: Measure<Angle>) {
 
     }
 
