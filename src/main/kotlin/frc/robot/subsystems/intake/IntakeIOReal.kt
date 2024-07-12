@@ -10,10 +10,10 @@ import edu.wpi.first.math.geometry.Rotation2d
 import frc.robot.Ports
 
 class IntakeIOReal : IntakeIO{
-    val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
-    val spinMotor = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
-    val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
-    val positionControl = PositionVoltage(0.0)
+    private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
+    private val spinMotor = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val positionControl = PositionVoltage(0.0)
 
     init {
         spinMotor.inverted = true
