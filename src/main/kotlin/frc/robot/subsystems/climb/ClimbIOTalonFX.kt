@@ -1,11 +1,11 @@
 package frc.robot.subsystems.climb
 
+import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
 import com.ctre.phoenix6.controls.StrictFollower
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.controls.DutyCycleOut
-import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import frc.robot.Ports
 
@@ -26,6 +26,7 @@ class ClimbIOTalonFX : ClimbIO {
         stopperMotor.enableVoltageCompensation(true)
         stopperMotor.configVoltageCompSaturation(12.0)
         stopperMotor.configPeakCurrentLimit(ClimbConstants.STOPPER_MOTOR_CURRENT_LIMIT)
+        stopperMotor.setNeutralMode(NeutralMode.Brake)
         stopperMotor.inverted = true
     }
 
