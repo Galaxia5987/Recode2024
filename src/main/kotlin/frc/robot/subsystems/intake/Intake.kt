@@ -6,6 +6,11 @@ import org.littletonrobotics.junction.Logger
 class Intake(private val io: IntakeIO) : SubsystemBase() {
     private val inputs = io.inputs
 
-class Intake : SubsystemBase() {
+    fun setSpinPower(power: Double): Command {
+        return Commands.run({
+                io.setSpinPower(power)
+            }
+        )
+    }
 
 }
