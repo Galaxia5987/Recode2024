@@ -17,7 +17,7 @@ object ClimbConstants {
     val OPEN_POSITION: MutableMeasure<Angle> = Units.Degree.of(40.0).mutableCopy()
     val CLOSED_POSITION: MutableMeasure<Angle> = Units.Degree.of(140.0).mutableCopy()
 
-    fun initConstants(){
+    init {
         MOTOR_CONFIG.withMotorOutput(
             MotorOutputConfigs()
                 .withInverted(InvertedValue.Clockwise_Positive)
