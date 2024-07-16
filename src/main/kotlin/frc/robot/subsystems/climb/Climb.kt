@@ -1,12 +1,15 @@
 package frc.robot.subsystems.climb
 
+import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
 
 class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     private val inputs = LoggedClimbInputs()
+    private val timer = Timer()
 
     companion object {
         @Volatile
@@ -18,6 +21,11 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
                     instance = Climb(io)
             }
         }
+    }
+
+    init {
+        timer.start()
+        timer.reset()
     }
 
     fun open(): Command {
@@ -34,5 +42,12 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
 
     fun setPower(power: DoubleSupplier): Command {
         return Commands.run({ io.setPower(power.asDouble) })
+    }
+
+    override fun periodic() {
+        io.updateInputs()
+        if (timer.advanceIfElapsed(0.0)) {
+            Logger.processInputs(this::class.simpleName, inputs)
+        }
     }
 }
