@@ -16,9 +16,6 @@ class ClimbIOTalonFX : ClimbIO {
 
     private val percentOutput = DutyCycleOut(0.0).withEnableFOC(true)
 
-    override var isStopperStuck = false
-        get() = stopperMotor.statorCurrent>=ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
-
     init {
         mainMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
         auxMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
@@ -48,9 +45,10 @@ class ClimbIOTalonFX : ClimbIO {
         stopperMotor.set(TalonSRXControlMode.Disabled, 0.0)
     }
 
-    override fun updateInputs(inputs: ClimbInputs) {
+    override fun updateInputs() {
         inputs.stopperAppliedVoltage.mut_replace(stopperMotor.motorOutputVoltage, Units.Volt)
         inputs.stopperCurrent.mut_replace(stopperMotor.statorCurrent, Units.Amps)
         inputs.mainMotorAppliedVoltage.mut_replace(mainMotor.motorVoltage.value, Units.Volt)
+        inputs.isStopperStuck = stopperMotor.statorCurrent >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
     }
 }
