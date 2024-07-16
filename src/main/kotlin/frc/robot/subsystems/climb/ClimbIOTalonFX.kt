@@ -43,7 +43,7 @@ class ClimbIOTalonFX : ClimbIO {
     }
 
     override fun disableStopper() {
-        stopperMotor.set(TalonSRXControlMode.Disabled, 0.0)
+        stopperMotor.neutralOutput()
     }
 
     override fun updateInputs() {
