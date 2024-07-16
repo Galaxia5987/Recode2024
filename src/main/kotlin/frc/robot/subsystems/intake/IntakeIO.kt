@@ -19,6 +19,10 @@ interface IntakeIO {
 
     }
 
+    fun reset(angle: Measure<Angle>) {
+
+    }
+
     fun updateInputs() {
 
     }
