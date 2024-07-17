@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.subsystems.swerve.Swerve
 import frc.robot.subsystems.swerve.SwerveConstants
+import swervelib.SwerveDrive
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,7 +17,7 @@ import frc.robot.subsystems.swerve.SwerveConstants
  */
 object RobotContainer {
     private val swerveDrive = Swerve(
-        SwerveConstants.SWERVE_CONFIG, SwerveConstants.SWERVE_CONTROLLER_CONFIG, 6.0
+        SwerveConstants.SWERVE_CONFIG, SwerveConstants.SWERVE_CONTROLLER_CONFIG, SwerveConstants.MAX_SPEED
     )
 
     private val driverController = CommandXboxController(0)

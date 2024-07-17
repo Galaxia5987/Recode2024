@@ -1,7 +1,6 @@
 package frc.robot.subsystems.swerve
 
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
-import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.SPI
 import frc.robot.Ports
 import swervelib.encoders.CANCoderSwerve
@@ -11,8 +10,8 @@ import swervelib.parser.*
 import swervelib.parser.json.MotorConfigDouble
 
 object SwerveConstants {
-    private val ROBOT_LENGTH: Double //[m]
-    private val ROBOT_WIDTH: Double //[m]
+    val ROBOT_LENGTH: Double //[m]
+    val ROBOT_WIDTH: Double //[m]
 
     enum class SwerveType {
         WCP,
@@ -20,11 +19,12 @@ object SwerveConstants {
         SIM
     }
 
-    private val SWERVE_TYPE = SwerveType.WCP
+    val SWERVE_TYPE = SwerveType.WCP
     val SWERVE_CONFIG: SwerveDriveConfiguration
     val SWERVE_CONTROLLER_CONFIG: SwerveControllerConfiguration
 
-    private val SWERVE_OFFSETS = arrayOf(0.0, 0.0, 0.0, 0.0)
+    val SWERVE_OFFSETS = arrayOf(0.0, 0.0, 0.0, 0.0)
+    val MAX_SPEED: Double
     private val IMU = NavXSwerve(SPI.Port.kMXP)
     private val SWERVE_MODULE_CONFIGS: Array<SwerveModuleConfiguration> = arrayOf()
     private val SWERVE_MODULE_CHARACTERISTICS: SwerveModulePhysicalCharacteristics
@@ -36,7 +36,7 @@ object SwerveConstants {
     private val DRIVE_REDUCTION: Double
     private val ANGLE_REDUCTION: Double
 
-    private const val joystickDeadband = 0.15
+    const val joystickDeadband = 0.15
 
     init {
         when(SWERVE_TYPE){
@@ -52,6 +52,8 @@ object SwerveConstants {
                 SWERVE_ANGLE_PID = PIDFConfig(0.0, 0.0, 0.0, 0.0)
                 SWERVE_DRIVE_PID = PIDFConfig(0.0, 0.0, 0.0, 0.0)
                 DRIVE_FF = SimpleMotorFeedforward(0.0, 0.0, 0.0)
+
+                MAX_SPEED = 6.0
 
                 SWERVE_MODULE_CHARACTERISTICS = SwerveModulePhysicalCharacteristics(
                     CONVERSION_FACTORS, 1.19, 12.0,
@@ -71,17 +73,19 @@ object SwerveConstants {
             }
 
             SwerveType.NEO -> {
-                ROBOT_LENGTH = 0.75
-                ROBOT_WIDTH = 0.75
+                ROBOT_LENGTH = 0.635
+                ROBOT_WIDTH = 0.66
 
-                DRIVE_REDUCTION = (1 / 2.0) * (24.0 / 22.0) * (15.0 / 45.0)
-                ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
+                DRIVE_REDUCTION = (12.0 / 24.0) * (28.0 / 20.0) * (15.0 / 45.0)
+                ANGLE_REDUCTION = (6.0 / 40.0) * (11.0 / 59.0)
                 CONVERSION_FACTORS = MotorConfigDouble(ANGLE_REDUCTION, DRIVE_REDUCTION)
 
-                HEADING_PID = PIDFConfig(0.0, 0.0, 0.0, 0.0)
-                SWERVE_ANGLE_PID = PIDFConfig(0.0, 0.0, 0.0, 0.0)
-                SWERVE_DRIVE_PID = PIDFConfig(0.0, 0.0, 0.0, 0.0)
-                DRIVE_FF = SimpleMotorFeedforward(0.0, 0.0, 0.0)
+                HEADING_PID = PIDFConfig(0.0, 0.0, 0.0)
+                SWERVE_DRIVE_PID = PIDFConfig(0.0006, 0.0, 0.0)
+                SWERVE_ANGLE_PID = PIDFConfig(3.5, 0.0, 0.0)
+                DRIVE_FF = SimpleMotorFeedforward(0.6, 2.12, 0.0)
+
+                MAX_SPEED = 6.0
 
                 SWERVE_MODULE_CHARACTERISTICS = SwerveModulePhysicalCharacteristics(
                     CONVERSION_FACTORS, 1.19, 12.0,
@@ -113,6 +117,8 @@ object SwerveConstants {
                 SWERVE_DRIVE_PID = PIDFConfig(0.0, 0.0, 0.0, 0.0)
                 DRIVE_FF = SimpleMotorFeedforward(0.0, 0.0, 0.0)
 
+                MAX_SPEED = 6.0
+
                 SWERVE_MODULE_CHARACTERISTICS = SwerveModulePhysicalCharacteristics(
                     CONVERSION_FACTORS, 1.19, 12.0,
                     40, 20, 0.3, 0.3
@@ -136,6 +142,6 @@ object SwerveConstants {
 
         SWERVE_CONTROLLER_CONFIG = SwerveControllerConfiguration(
             SWERVE_CONFIG, HEADING_PID,
-            joystickDeadband, 6.0)
+            joystickDeadband, MAX_SPEED)
     }
 }
