@@ -61,12 +61,12 @@ object SwerveConstants {
                 )
                 for (i in 0..3){
                     SWERVE_MODULE_CONFIGS[i] = SwerveModuleConfiguration(
-                        TalonFXSwerve(Ports.SwerveDrive.DRIVE_IDS[i], true),
-                        TalonFXSwerve(Ports.SwerveDrive.ANGLE_IDS[i], false),
-                        CONVERSION_FACTORS, CANCoderSwerve(Ports.SwerveDrive.ENCODER_IDS[i]),
+                        TalonFXSwerve(Ports.SwerveDriveWCP.DRIVE_IDS[i], true),
+                        TalonFXSwerve(Ports.SwerveDriveWCP.ANGLE_IDS[i], false),
+                        CONVERSION_FACTORS, CANCoderSwerve(Ports.SwerveDriveWCP.ENCODER_IDS[i]),
                         SWERVE_OFFSETS[i], ROBOT_WIDTH / 2, ROBOT_LENGTH / 2,
                         SWERVE_ANGLE_PID, SWERVE_DRIVE_PID, SWERVE_MODULE_CHARACTERISTICS, false,
-                        Ports.SwerveDrive.DRIVE_INVERTED[i], Ports.SwerveDrive.ANGLE_INVERTED[i],
+                        Ports.SwerveDriveWCP.DRIVE_INVERTED[i], Ports.SwerveDriveWCP.ANGLE_INVERTED[i],
                         "Module ${i+1}", true
                     )
                 }
@@ -93,12 +93,12 @@ object SwerveConstants {
                 )
                 for (i in 0..3){
                     SWERVE_MODULE_CONFIGS[i] = SwerveModuleConfiguration(
-                        TalonFXSwerve(Ports.SwerveDrive.DRIVE_IDS[i], true),
-                        TalonFXSwerve(Ports.SwerveDrive.ANGLE_IDS[i], false),
-                        CONVERSION_FACTORS, CANCoderSwerve(Ports.SwerveDrive.ENCODER_IDS[i]),
+                        TalonFXSwerve(Ports.SwerveDriveNEO.DRIVE_IDS[i], true),
+                        TalonFXSwerve(Ports.SwerveDriveNEO.ANGLE_IDS[i], false),
+                        CONVERSION_FACTORS, PWMDutyCycleEncoderSwerve(Ports.SwerveDriveNEO.ENCODER_IDS[i]),
                         SWERVE_OFFSETS[i], ROBOT_WIDTH / 2, ROBOT_LENGTH / 2,
                         SWERVE_ANGLE_PID, SWERVE_DRIVE_PID, SWERVE_MODULE_CHARACTERISTICS, false,
-                        Ports.SwerveDrive.DRIVE_INVERTED[i], Ports.SwerveDrive.ANGLE_INVERTED[i],
+                        Ports.SwerveDriveWCP.DRIVE_INVERTED[i], Ports.SwerveDriveWCP.ANGLE_INVERTED[i],
                         "Module ${i+1}", true
                     )
                 }
@@ -125,12 +125,12 @@ object SwerveConstants {
                 )
                 for (i in 0..3){
                     SWERVE_MODULE_CONFIGS[i] = SwerveModuleConfiguration(
-                        TalonFXSwerve(Ports.SwerveDrive.DRIVE_IDS[i], true),
-                        TalonFXSwerve(Ports.SwerveDrive.ANGLE_IDS[i], false),
-                        CONVERSION_FACTORS, CANCoderSwerve(Ports.SwerveDrive.ENCODER_IDS[i]),
+                        TalonFXSwerve(Ports.SwerveDriveWCP.DRIVE_IDS[i], true),
+                        TalonFXSwerve(Ports.SwerveDriveWCP.ANGLE_IDS[i], false),
+                        CONVERSION_FACTORS, CANCoderSwerve(Ports.SwerveDriveWCP.ENCODER_IDS[i]),
                         SWERVE_OFFSETS[i], ROBOT_WIDTH / 2, ROBOT_LENGTH / 2,
                         SWERVE_ANGLE_PID, SWERVE_DRIVE_PID, SWERVE_MODULE_CHARACTERISTICS, false,
-                        Ports.SwerveDrive.DRIVE_INVERTED[i], Ports.SwerveDrive.ANGLE_INVERTED[i],
+                        Ports.SwerveDriveWCP.DRIVE_INVERTED[i], Ports.SwerveDriveWCP.ANGLE_INVERTED[i],
                         "Module ${i+1}", true
                     )
                 }
