@@ -1,9 +1,11 @@
 package frc.robot.subsystems.swerve
 
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.wpilibj.SPI
 import frc.robot.Ports
 import swervelib.encoders.CANCoderSwerve
+import swervelib.encoders.PWMDutyCycleEncoderSwerve
 import swervelib.imu.NavXSwerve
 import swervelib.motors.TalonFXSwerve
 import swervelib.parser.*
@@ -25,6 +27,7 @@ object SwerveConstants {
 
     val SWERVE_OFFSETS = arrayOf(0.0, 0.0, 0.0, 0.0)
     val MAX_SPEED: Double
+    val holonomicPathFollowerConfig: HolonomicPathFollowerConfig
     private val IMU = NavXSwerve(SPI.Port.kMXP)
     private val SWERVE_MODULE_CONFIGS = arrayOfNulls<SwerveModuleConfiguration>(4)
     private val SWERVE_MODULE_CHARACTERISTICS: SwerveModulePhysicalCharacteristics
