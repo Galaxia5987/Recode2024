@@ -26,7 +26,7 @@ object SwerveConstants {
     val SWERVE_OFFSETS = arrayOf(0.0, 0.0, 0.0, 0.0)
     val MAX_SPEED: Double
     private val IMU = NavXSwerve(SPI.Port.kMXP)
-    private val SWERVE_MODULE_CONFIGS: Array<SwerveModuleConfiguration> = arrayOf()
+    private val SWERVE_MODULE_CONFIGS = arrayOfNulls<SwerveModuleConfiguration>(4)
     private val SWERVE_MODULE_CHARACTERISTICS: SwerveModulePhysicalCharacteristics
     private val HEADING_PID: PIDFConfig
     private val SWERVE_ANGLE_PID: PIDFConfig
