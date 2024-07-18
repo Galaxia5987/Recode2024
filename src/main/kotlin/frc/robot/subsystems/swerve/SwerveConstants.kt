@@ -19,7 +19,7 @@ object SwerveConstants {
         SIM
     }
 
-    val SWERVE_TYPE = SwerveType.WCP
+    val SWERVE_TYPE = SwerveType.NEO
     val SWERVE_CONFIG: SwerveDriveConfiguration
     val SWERVE_CONTROLLER_CONFIG: SwerveControllerConfiguration
 
