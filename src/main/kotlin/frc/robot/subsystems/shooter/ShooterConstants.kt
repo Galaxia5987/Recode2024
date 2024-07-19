@@ -1,6 +1,10 @@
 package frc.robot.subsystems.shooter
 
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.units.*
 import frc.robot.lib.webconstants.LoggedTunableNumber
 
@@ -36,4 +40,47 @@ object ShooterConstants {
 
     val STOP_POWER = Units.RotationsPerSecond.zero().mutableCopy()
 
+    private const val CURRENT_LIMIT_TOP = 40.0
+    private const val CURRENT_LIMIT_BOTTOM = 40.0
+
+    private val TOP_INVERSION = InvertedValue.CounterClockwise_Positive
+    private val BOTTOM_INVERSION = InvertedValue.Clockwise_Positive
+
+    init {
+        topMotorConfiguration
+            .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO_TOP))
+            .withSlot0(
+                Slot0Configs()
+                    .withKP(TOP_kP.get())
+                    .withKI(TOP_kI.get())
+                    .withKD(TOP_kD.get())
+                    .withKS(TOP_kS.get())
+                    .withKV(TOP_kV.get())
+                    .withKA(TOP_kA.get())
+            )
+            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.TOP_INVERSION)).CurrentLimits
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true)
+            .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_TOP)
+            .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_TOP)
+
+        bottomMotorConfiguration
+            .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO_BOTTOM))
+            .withSlot0(
+                Slot0Configs()
+                    .withKP(BOTTOM_kP.get())
+                    .withKI(BOTTOM_kI.get())
+                    .withKD(BOTTOM_kD.get())
+                    .withKS(BOTTOM_kS.get())
+                    .withKV(BOTTOM_kV.get())
+                    .withKA(BOTTOM_kA.get())
+            )
+            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.BOTTOM_INVERSION)).CurrentLimits
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true)
+            .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_BOTTOM)
+            .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_BOTTOM)
+        TOP_kP.initDefault(5.0)
+        BOTTOM_kP.initDefault(5.0)
+    }
 }
