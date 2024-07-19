@@ -12,8 +12,10 @@ import frc.robot.lib.Utils
 import kotlin.math.sign
 
 class HoodIOReal : HoodIO {
+    override val inputs = LoggedHoodInputs()
     private val motor: TalonFX = TalonFX(-1) // TODO: Replace with real motor port
     private val encoder = TalonSRX(-1) // TODO: Replace with real Port
+
     private val positionControl = PositionTorqueCurrentFOC(0.0)
 
     init {

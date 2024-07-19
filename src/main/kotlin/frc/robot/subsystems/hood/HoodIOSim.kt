@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
 class HoodIOSim : HoodIO {
+    override val inputs = LoggedHoodInputs()
     private val motor: TalonFXSim =
         TalonFXSim(
             1,

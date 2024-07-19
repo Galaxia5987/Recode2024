@@ -7,9 +7,7 @@ import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface HoodIO {
-    companion object {
-        val inputs = LoggedHoodInputs()
-    }
+    val inputs: LoggedHoodInputs
 
     fun updateInternalEncoder() {}
 
