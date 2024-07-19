@@ -1,12 +1,15 @@
 package frc.robot.subsystems.swerve
 
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig
+import com.pathplanner.lib.util.PIDConstants
+import com.pathplanner.lib.util.ReplanningConfig
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.wpilibj.SPI
 import frc.robot.Ports
 import swervelib.encoders.CANCoderSwerve
 import swervelib.encoders.PWMDutyCycleEncoderSwerve
 import swervelib.imu.NavXSwerve
+import swervelib.motors.SparkMaxSwerve
 import swervelib.motors.TalonFXSwerve
 import swervelib.parser.*
 import swervelib.parser.json.MotorConfigDouble
@@ -98,8 +101,8 @@ object SwerveConstants {
                 )
                 for (i in 0..3){
                     SWERVE_MODULE_CONFIGS[i] = SwerveModuleConfiguration(
-                        TalonFXSwerve(Ports.SwerveDriveNEO.DRIVE_IDS[i], true),
-                        TalonFXSwerve(Ports.SwerveDriveNEO.ANGLE_IDS[i], false),
+                        SparkMaxSwerve(Ports.SwerveDriveNEO.DRIVE_IDS[i], true),
+                        SparkMaxSwerve(Ports.SwerveDriveNEO.ANGLE_IDS[i], false),
                         CONVERSION_FACTORS, PWMDutyCycleEncoderSwerve(Ports.SwerveDriveNEO.ENCODER_IDS[i]),
                         SWERVE_OFFSETS[i], ROBOT_WIDTH / 2, ROBOT_LENGTH / 2,
                         SWERVE_ANGLE_PID, SWERVE_DRIVE_PID, SWERVE_MODULE_CHARACTERISTICS, false,
