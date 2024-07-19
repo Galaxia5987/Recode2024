@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance
 object Constants {
     const val CONFIG_TIMEOUT: Int = 100 // [ms]
 
-    val CURRENT_MODE: Mode = Mode.SIM
+    val CURRENT_MODE: Mode = Mode.REAL
 
     enum class Mode {
         REAL,
