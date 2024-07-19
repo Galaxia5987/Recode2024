@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import frc.robot.Ports
 
 class IntakeIOReal : IntakeIO{
+    override val inputs = LoggedIntakeInputs()
     private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
     private val spinMotor = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)

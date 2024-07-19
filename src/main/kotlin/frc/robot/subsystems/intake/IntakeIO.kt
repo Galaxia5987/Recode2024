@@ -6,9 +6,7 @@ import edu.wpi.first.units.Units
 import org.team9432.annotation.Logged
 
 interface IntakeIO {
-    companion object {
-        val inputs = LoggedIntakeInputs()
-    }
+    val inputs: LoggedIntakeInputs
 
     fun setSpinPower(power: Double) {
 
