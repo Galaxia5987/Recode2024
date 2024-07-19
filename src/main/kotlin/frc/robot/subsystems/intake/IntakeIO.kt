@@ -25,6 +25,10 @@ interface IntakeIO {
 
     }
 
+    fun reset() {
+
+    }
+
     fun updateInputs() {
 
     }
