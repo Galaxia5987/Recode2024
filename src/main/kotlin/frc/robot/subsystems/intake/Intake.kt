@@ -4,6 +4,7 @@ import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
 
@@ -45,6 +46,16 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
             setAngle(IntakeConstants.restAngle),
             setSpinPower(0.0),
             setCenterPower(0.0)
+        )
+    }
+
+    fun reset(): StartEndCommand {
+        return StartEndCommand({
+                io.setAnglePower(-0.3)
+            }, {
+                io.reset()
+                io.setAnglePower(0.0)
+            }
         )
     }
 
