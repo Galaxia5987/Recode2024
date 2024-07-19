@@ -21,7 +21,7 @@ interface IntakeIO {
 
     }
 
-    fun reset(angle: Measure<Angle>) {
+    fun setAnglePower(power: Double) {
 
     }
 
