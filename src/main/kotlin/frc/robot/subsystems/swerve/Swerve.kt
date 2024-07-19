@@ -50,15 +50,13 @@ class Swerve private constructor() : SubsystemBase() {
         swerveDrive.setMotorIdleMode(true)
     }
 
-    fun configAutoBuilder(){
+    private fun configAutoBuilder(){
         AutoBuilder.configureHolonomic(
             {robotPose},
             this::resetOdometry,
             {robotVelocity},
             this::setChassisSpeeds,
-            HolonomicPathFollowerConfig(
-
-            ),
+            SwerveConstants.holonomicPathFollowerConfig,
             Constants::isRed,
             this
         )

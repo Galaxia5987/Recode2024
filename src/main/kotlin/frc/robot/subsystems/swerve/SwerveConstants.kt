@@ -10,6 +10,8 @@ import swervelib.imu.NavXSwerve
 import swervelib.motors.TalonFXSwerve
 import swervelib.parser.*
 import swervelib.parser.json.MotorConfigDouble
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 object SwerveConstants {
     val ROBOT_LENGTH: Double //[m]
@@ -146,5 +148,12 @@ object SwerveConstants {
         SWERVE_CONTROLLER_CONFIG = SwerveControllerConfiguration(
             SWERVE_CONFIG, HEADING_PID,
             joystickDeadband, MAX_SPEED)
+
+        holonomicPathFollowerConfig = HolonomicPathFollowerConfig(
+            PIDConstants(5.5, 0.0, 0.15),
+            PIDConstants(3.0, 0.0, 0.4),
+            MAX_SPEED, sqrt((ROBOT_LENGTH / 2.0).pow(2.0) + (ROBOT_WIDTH / 2.0).pow(2.0)),
+            ReplanningConfig()
+        )
     }
 }
