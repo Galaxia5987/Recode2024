@@ -12,9 +12,11 @@ interface IntakeIO {
     fun setSpinPower(power: Double) {
 
     }
+
     fun setCenterPower(power: Double) {
 
     }
+
     fun setAngle(angle: Measure<Angle>) {
 
     }
