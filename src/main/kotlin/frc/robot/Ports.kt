@@ -60,4 +60,9 @@ class Ports {
         const val JOYSTICK_TOP_RIGHT_BUTTON: Int = 4
         const val JOYSTICK_RIGHT_BIG_BUTTON: Int = 16
     }
+
+    object GaliShooter {
+        const val TOP_MOTOR_ID = -1
+        const val BOTTOM_MOTOR_ID = -2
+    }
 }
