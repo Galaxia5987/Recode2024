@@ -16,9 +16,7 @@ import swervelib.SwerveDrive
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
-    private val swerveDrive = Swerve(
-        SwerveConstants.SWERVE_CONFIG, SwerveConstants.SWERVE_CONTROLLER_CONFIG, SwerveConstants.MAX_SPEED
-    )
+    private val swerveDrive = Swerve.getInstance()
 
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
@@ -39,7 +37,7 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
-        driverController.y().onTrue(Commands.runOnce({ swerveDrive.zeroGyro() }))
+        driverController.y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
     }
 
     fun getAutonomousCommand(): Command = autoChooser.selected

@@ -20,11 +20,12 @@ import swervelib.parser.SwerveControllerConfiguration
 import swervelib.parser.SwerveDriveConfiguration
 import java.util.function.DoubleSupplier
 
-class Swerve (
-    val swerveConfig: SwerveDriveConfiguration,
-    val controllerConfig: SwerveControllerConfiguration) : SubsystemBase() {
+class Swerve private constructor() : SubsystemBase() {
 
-    private val swerveDrive = SwerveDrive(swerveConfig, controllerConfig, SwerveConstants.MAX_SPEED)
+    private val swerveDrive = SwerveDrive(
+        SwerveConstants.SWERVE_CONFIG,
+        SwerveConstants.SWERVE_CONTROLLER_CONFIG,
+        SwerveConstants.MAX_SPEED)
 
     @AutoLogOutput
     private var robotVelocity = ChassisSpeeds()
@@ -33,6 +34,15 @@ class Swerve (
     @AutoLogOutput
     private var robotPose = Pose2d()
         get() = swerveDrive.pose
+
+    companion object {
+        private var instance: Swerve? = null
+
+        fun getInstance(): Swerve{
+            if (instance==null) instance = Swerve()
+            return instance ?: throw IllegalStateException("swerve instance is null")
+        }
+    }
 
     init {
         swerveDrive.setOdometryPeriod(1.0/250.0)
