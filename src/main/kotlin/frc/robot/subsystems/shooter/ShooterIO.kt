@@ -8,10 +8,8 @@ import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
-    companion object {
-        val topRollerInputs = LoggedRollerInputs()
-        val bottomRollerInputs = LoggedRollerInputs()
-    }
+    val topRollerInputs: LoggedRollerInputs
+    val bottomRollerInputs: LoggedRollerInputs
 
     fun setTopVelocity(velocity: MutableMeasure<Velocity<Angle>>) {}
 

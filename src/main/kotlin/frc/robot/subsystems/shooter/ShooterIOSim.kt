@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
 class ShooterIOSim : ShooterIO {
+    override val topRollerInputs = LoggedRollerInputs()
+    override val bottomRollerInputs = LoggedRollerInputs()
     private val topMotor = TalonFXSim(
         1,
         ShooterConstants.GEAR_RATIO_TOP,

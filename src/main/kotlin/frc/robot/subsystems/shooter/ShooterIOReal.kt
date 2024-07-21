@@ -9,6 +9,8 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 
 class ShooterIOReal : ShooterIO {
+    override val topRollerInputs = LoggedRollerInputs()
+    override val bottomRollerInputs = LoggedRollerInputs()
     private val topMotor = TalonFX(-1) // TODO: Replace with real port
     private val bottomMotor = TalonFX(-1) // TODO: Replace with real port
     private val topControl = VelocityVoltage(0.0)
