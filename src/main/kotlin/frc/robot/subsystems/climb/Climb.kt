@@ -8,7 +8,7 @@ import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
 
 class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
-    private val inputs = LoggedClimbInputs()
+    private val inputs = io.inputs
     private val timer = Timer()
 
     companion object {

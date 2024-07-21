@@ -7,9 +7,7 @@ import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface ClimbIO {
-    companion object {
-        val inputs = LoggedClimbInputs()
-    }
+    val inputs: LoggedClimbInputs
 
     fun setPower(power:Double)
 
