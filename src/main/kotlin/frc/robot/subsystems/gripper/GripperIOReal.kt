@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.RobotController
 import edu.wpi.first.wpilibj.Timer
 
 class GripperIOReal : GripperIO {
+    override val inputs = LoggedGripperInputs()
     private val rollerMotor: CANSparkMax =
         CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless) // TODO: Replace deviceID with real value
     private val timer = Timer()

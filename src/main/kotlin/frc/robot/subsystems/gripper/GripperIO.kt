@@ -6,9 +6,7 @@ import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface GripperIO {
-    companion object {
-        val inputs = LoggedGripperInputs()
-    }
+    val inputs: LoggedGripperInputs
 
     fun setRollerMotorPower(power: Double) {}
 

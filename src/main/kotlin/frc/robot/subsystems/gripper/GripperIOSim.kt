@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
 class GripperIOSim : GripperIO {
+    override val inputs = LoggedGripperInputs()
     private val rollerMotor = TalonFXSim(1, 1.0, 0.5, 1.0)
     private val powerRequestRoller = DutyCycleOut(0.0)
 
