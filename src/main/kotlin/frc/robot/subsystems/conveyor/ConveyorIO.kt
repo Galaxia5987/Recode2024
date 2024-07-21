@@ -7,9 +7,7 @@ import edu.wpi.first.units.Velocity
 import org.team9432.annotation.Logged
 
 interface ConveyorIO {
-    companion object {
-        val inputs = LoggedConveyorInputs()
-    }
+    val inputs: LoggedConveyorInputs
 
     fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) {}
 

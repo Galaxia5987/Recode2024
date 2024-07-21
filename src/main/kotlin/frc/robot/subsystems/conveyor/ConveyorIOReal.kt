@@ -8,6 +8,7 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 
 class ConveyorIOReal : ConveyorIO {
+    override val inputs = LoggedConveyorInputs()
     private val roller = TalonFX(-1) // TODO: Replace with actual port
     private val control = VelocityVoltage(0.0).withEnableFOC(true)
 

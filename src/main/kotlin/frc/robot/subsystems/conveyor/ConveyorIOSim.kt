@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.SparkMaxSim
 
 class ConveyorIOSim : ConveyorIO {
+    override val inputs = LoggedConveyorInputs()
     private val conveyor = SparkMaxSim(
         1,
         ConveyorConstants.GEAR_RATIO,
