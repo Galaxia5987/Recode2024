@@ -10,8 +10,8 @@ import edu.wpi.first.units.Velocity
 import frc.robot.Ports
 
 class ShooterIOReal : ShooterIO {
-    override val bottomInputs = RollerInputs()
-    override val topInputs = RollerInputs()
+    override val bottomInputs = LoggedRollerInputs()
+    override val topInputs = LoggedRollerInputs()
 
     private val topMotor = TalonFX(Ports.GaliShooter.TOP_MOTOR_ID)
     private val bottomMotor = TalonFX(Ports.GaliShooter.BOTTOM_MOTOR_ID)
