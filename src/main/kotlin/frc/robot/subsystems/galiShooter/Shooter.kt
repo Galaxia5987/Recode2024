@@ -13,11 +13,14 @@ class Shooter(private val io: ShooterIO) : SubsystemBase() {
     private val bottomInputs = io.bottomInputs
 
     companion object {
+        @Volatile
         private var instance: Shooter? = null
 
         fun initialize(io: ShooterIO) {
-            if (instance == null) {
-                instance = Shooter(io)
+            synchronized(this) {
+                if (instance == null) {
+                    instance = Shooter(io)
+                }
             }
         }
 
