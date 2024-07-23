@@ -8,8 +8,8 @@ import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
-    val topInputs: RollerInputs
-    val bottomInputs: RollerInputs
+    val topInputs: LoggedRollerInputs
+    val bottomInputs: LoggedRollerInputs
 
     fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
 
