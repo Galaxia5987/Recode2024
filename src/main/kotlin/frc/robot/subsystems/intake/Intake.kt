@@ -11,6 +11,26 @@ import org.littletonrobotics.junction.Logger
 class Intake(private val io: IntakeIO) : SubsystemBase() {
     private val inputs = io.inputs
 
+    companion object {
+        @Volatile
+        private var instance: Intake? = null
+
+        fun initialize(io: IntakeIO) {
+            synchronized(this) {
+                if (instance == null) {
+                    instance = Intake(io)
+                }
+            }
+        }
+
+        fun getInstance(): Intake {
+            return instance ?: throw IllegalArgumentException(
+                "Intake has not been initialized. Call initialize(io: IntakeIO) first."
+            )
+        }
+    }
+
+
     fun setSpinPower(power: Double): Command {
         return Commands.run({
                 io.setSpinPower(power)
