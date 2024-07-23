@@ -12,11 +12,27 @@ class Shooter(private val io: ShooterIO) : SubsystemBase() {
     private val topInputs = io.topInputs
     private val bottomInputs = io.bottomInputs
 
+    companion object {
+        private var instance: Shooter? = null
+
+        fun initialize(io: ShooterIO) {
+            if (instance == null) {
+                instance = Shooter(io)
+            }
+        }
+
+        fun getInstance(): Shooter {
+            return instance ?: throw IllegalArgumentException(
+                "Shooter has not been initialized. Call initialize(io: ShooterIO) first."
+            )
+        }
+    }
+
     fun setTopVelocity(velocity: Measure<Velocity<Angle>>): Command {
         return Commands.run({
             topInputs.velocitySetpoint = velocity
             io.setTopVelocity(velocity)
-            }
+        }
         )
     }
 
@@ -24,14 +40,14 @@ class Shooter(private val io: ShooterIO) : SubsystemBase() {
         return Commands.run({
             bottomInputs.velocitySetpoint = velocity
             io.setBottomVelocity(velocity)
-            }
+        }
         )
     }
 
     fun stop(velocity: Measure<Velocity<Angle>>): Command {
         return Commands.run({
             io.stop()
-            }
+        }
         )
     }
 
