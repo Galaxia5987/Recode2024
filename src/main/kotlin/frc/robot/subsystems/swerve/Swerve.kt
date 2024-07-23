@@ -45,6 +45,7 @@ class Swerve private constructor() : SubsystemBase() {
     }
 
     init {
+        configAutoBuilder()
         swerveDrive.setOdometryPeriod(1.0/250.0)
         swerveDrive.setHeadingCorrection(true)
         swerveDrive.setMotorIdleMode(true)
