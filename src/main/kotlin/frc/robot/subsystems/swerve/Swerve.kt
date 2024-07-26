@@ -1,26 +1,23 @@
 package frc.robot.subsystems.swerve
 
 import com.pathplanner.lib.auto.AutoBuilder
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig
 import edu.wpi.first.math.geometry.Pose2d
-import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Rotation3d
 import edu.wpi.first.math.kinematics.ChassisSpeeds
-import edu.wpi.first.units.Distance
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import frc.robot.Constants
 import org.littletonrobotics.junction.AutoLogOutput
+import org.littletonrobotics.junction.Logger
 import swervelib.SwerveDrive
-import swervelib.parser.SwerveControllerConfiguration
-import swervelib.parser.SwerveDriveConfiguration
 import java.util.function.DoubleSupplier
 
 class Swerve private constructor() : SubsystemBase() {
+
+    val swerveInputs = LoggedSwerveInputs()
+    val moduleInputs =  arrayOf(LoggedModuleInputs(), LoggedModuleInputs(), LoggedModuleInputs(), LoggedModuleInputs())
 
     private val swerveDrive = SwerveDrive(
         SwerveConstants.SWERVE_CONFIG,
@@ -81,9 +78,35 @@ class Swerve private constructor() : SubsystemBase() {
     }
 
     private fun SwerveDrive.driveFieldOriented(xOutput: Double, yOutput: Double, omegaOutput: Double){
-        driveFieldOriented(ChassisSpeeds(
+        val desiredSpeeds = ChassisSpeeds(
             SwerveConstants.MAX_SPEED*xOutput,
             SwerveConstants.MAX_SPEED*yOutput,
-            SwerveConstants.MAX_SPEED*omegaOutput))
+            SwerveConstants.MAX_SPEED*omegaOutput
+        )
+        println(SwerveConstants.MAX_SPEED*xOutput)
+        swerveInputs.desiredSpeeds = desiredSpeeds
+        driveFieldOriented(desiredSpeeds)
+    }
+
+    private fun updateInputs(){
+        for (i in 0..3){
+            moduleInputs[i].moduleState = swerveDrive.modules[i].state
+            moduleInputs[i].moduleDistance = swerveDrive.modules[i].position.distanceMeters
+            moduleInputs[i].angle = swerveDrive.modules[i].state.angle
+            moduleInputs[i].angleSetpoint =
+                swerveDrive.kinematics.toSwerveModuleStates(swerveInputs.desiredSpeeds)[i].angle
+            moduleInputs[i].driveMotorVelocity = swerveDrive.modules[i].state.speedMetersPerSecond
+            moduleInputs[i].driveMotorVelocitySetpoint =
+                swerveDrive.kinematics.toSwerveModuleStates(swerveInputs.desiredSpeeds)[i].speedMetersPerSecond
+//            moduleInputs.angleMotorVelocity =swerveInputs.desiredSpeeds
+        }
+    }
+
+    override fun periodic() {
+        updateInputs()
+        Logger.processInputs("Swerve", swerveInputs)
+        for (i in 0..3){
+            Logger.processInputs("Swerve/Module${i + 1}", moduleInputs[i])
+        }
     }
 }
