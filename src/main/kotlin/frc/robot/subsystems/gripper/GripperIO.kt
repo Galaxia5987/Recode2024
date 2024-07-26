@@ -14,7 +14,6 @@ interface GripperIO {
 
     @Logged
     open class GripperInputs {
-        var rollerPowerSetPoint = 0.0
         var rollerMotorVoltage: MutableMeasure<Voltage> = Units.Volts.of(0.0).mutableCopy()
         var hasNote = false
     }
