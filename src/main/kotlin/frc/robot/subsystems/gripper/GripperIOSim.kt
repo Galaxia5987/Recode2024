@@ -1,21 +1,19 @@
 package frc.robot.subsystems.gripper
 
-import com.ctre.phoenix6.controls.DutyCycleOut
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.Timer
-import frc.robot.lib.motors.TalonFXSim
+import frc.robot.lib.motors.SparkMaxSim
 
 class GripperIOSim : GripperIO {
     override val inputs = LoggedGripperInputs()
-    private val rollerMotor = TalonFXSim(1, 1.0, 0.5, 1.0)
-    private val powerRequestRoller = DutyCycleOut(0.0)
+    private val rollerMotor = SparkMaxSim(1, 1.0, 0.5, 1.0)
 
     override fun setRollerMotorPower(power: Double) {
-        rollerMotor.setControl(powerRequestRoller.withOutput(power))
+        rollerMotor.set(power)
     }
 
     override fun updateInputs() {
         rollerMotor.update(Timer.getFPGATimestamp())
-        inputs.rollerMotorVoltage.mut_replace(rollerMotor.appliedVoltage, Units.Volts)
+        inputs.rollerMotorVoltage.mut_replace(rollerMotor.busVoltage, Units.Volts)
     }
 }
