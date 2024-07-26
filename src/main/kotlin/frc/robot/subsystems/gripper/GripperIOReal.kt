@@ -6,13 +6,13 @@ import com.revrobotics.CANSparkMax
 import com.revrobotics.SparkLimitSwitch
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.DigitalInput
-import edu.wpi.first.wpilibj.RobotController
 import edu.wpi.first.wpilibj.Timer
+import frc.robot.Ports
 
 class GripperIOReal : GripperIO {
     override val inputs = LoggedGripperInputs()
     private val rollerMotor: CANSparkMax =
-        CANSparkMax(0, CANSparkLowLevel.MotorType.kBrushless) // TODO: Replace deviceID with real value
+        CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val timer = Timer()
     private val sensor: DigitalInput = DigitalInput(1)
 
