@@ -22,7 +22,6 @@ interface ShooterIO {
     @Logged
     open class RollerInputs {
         var velocity: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
-        var velocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
         var voltage: MutableMeasure<Voltage> = MutableMeasure.zero(Units.Volts)
     }
 }

@@ -9,10 +9,11 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
+import javax.swing.text.MutableAttributeSet
 
 class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
-    private val topRollerInputs = io.topRollerInputs
-    private val bottomRollerInputs = io.bottomRollerInputs
+    private var topVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
+    private var bottomVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
     private val timer = Timer()
     private val subsystemName = this::class.simpleName
 
@@ -42,8 +43,8 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
 
     fun setVelocity(topVelocity: MutableMeasure<Velocity<Angle>>, bottomVelocity: MutableMeasure<Velocity<Angle>>): Command {
         return run {
-            topRollerInputs.velocity.mut_replace(topVelocity)
-            bottomRollerInputs.velocity.mut_replace(bottomVelocity)
+            topVelocitySetpoint.mut_replace(topVelocity)
+            bottomVelocitySetpoint.mut_replace(bottomVelocity)
             io.setTopVelocity(topVelocity)
             io.setBottomVelocity(bottomVelocity)
         }.withName("") // TODO:
@@ -53,22 +54,22 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
 
     fun stop(): Command {
         return run {
-            topRollerInputs.velocitySetpoint.mut_replace(ShooterConstants.STOP_POWER)
-            bottomRollerInputs.velocitySetpoint.mut_replace(ShooterConstants.STOP_POWER)
+            topVelocitySetpoint.mut_replace(ShooterConstants.STOP_POWER)
+            bottomVelocitySetpoint.mut_replace(ShooterConstants.STOP_POWER)
             io.stop()
         }.withName("Stop Shooter")
     }
 
     @AutoLogOutput
-    fun atSetpoint(): Boolean = topRollerInputs.velocity.isNear(topRollerInputs.velocitySetpoint, ShooterConstants.TOP_ROLLER_TOLERANCE.`in`(
-        Units.RotationsPerSecond)) && bottomRollerInputs.velocity.isNear(bottomRollerInputs.velocitySetpoint, ShooterConstants.BOTTOM_ROLLER_TOLERANCE.`in`(
+    fun atSetpoint(): Boolean = io.topRollerInputs.velocity.isNear(topVelocitySetpoint, ShooterConstants.TOP_ROLLER_TOLERANCE.`in`(
+        Units.RotationsPerSecond)) && io.bottomRollerInputs.velocity.isNear(bottomVelocitySetpoint, ShooterConstants.BOTTOM_ROLLER_TOLERANCE.`in`(
         Units.RotationsPerSecond))
 
     override fun periodic() {
         io.updateInputs()
         if (timer.advanceIfElapsed(0.1)) {
-            Logger.processInputs("$subsystemName/TopRoller", topRollerInputs)
-            Logger.processInputs("$subsystemName/BottomRoller", bottomRollerInputs)
+            Logger.processInputs("$subsystemName/TopRoller", io.topRollerInputs)
+            Logger.processInputs("$subsystemName/BottomRoller", io.bottomRollerInputs)
         }
     }
 }
