@@ -2,6 +2,7 @@ package frc.robot.subsystems.galiShooter
 
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.InvertedValue
+import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.*
 import frc.robot.lib.webconstants.LoggedTunableNumber
 
@@ -55,7 +56,7 @@ object ShooterConstants {
                     .withKV(TOP_kV.get())
                     .withKA(TOP_kA.get())
             )
-            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.TOP_INVERSION)).CurrentLimits
+            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.TOP_INVERSION).withNeutralMode(NeutralModeValue.Coast)).CurrentLimits
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true)
             .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_TOP)
@@ -72,7 +73,7 @@ object ShooterConstants {
                     .withKV(BOTTOM_kV.get())
                     .withKA(BOTTOM_kA.get())
             )
-            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.BOTTOM_INVERSION)).CurrentLimits
+            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.BOTTOM_INVERSION).withNeutralMode(NeutralModeValue.Coast)).CurrentLimits
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true)
             .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_BOTTOM)
