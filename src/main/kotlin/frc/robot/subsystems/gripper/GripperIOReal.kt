@@ -33,10 +33,8 @@ class GripperIOReal : GripperIO {
         rollerMotor.set(power)
     }
 
-    private fun hasNote(): Boolean = !sensor.get()
-
     override fun updateInputs() {
         inputs.rollerMotorVoltage.mut_replace(rollerMotor.get() * RobotController.getBatteryVoltage(), Units.Volts)
-        inputs.hasNote = hasNote()
+        inputs.hasNote = !sensor.get()
     }
 }
