@@ -20,9 +20,6 @@ class ShooterIOReal : ShooterIO {
     private val bottomControl = VelocityVoltage(0.0)
 
     init {
-        topMotor.setNeutralMode(NeutralModeValue.Coast)
-        bottomMotor.setNeutralMode(NeutralModeValue.Coast)
-
         topMotor.configurator.apply(ShooterConstants.topMotorConfiguration)
         bottomMotor.configurator.apply(ShooterConstants.bottomMotorConfiguration)
     }
