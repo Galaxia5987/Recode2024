@@ -16,9 +16,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         camera.pipelineIndex = pipeLineIndex
     }
 
-    override fun getLatestResult(): VisionResult? {
-        // TODO: Implement Method
-    }
+    override fun getLatestResult(): VisionResult = VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.ambiguity)
 
     override fun updateInputs() {
         inputs.isConnected = camera.isConnected
