@@ -26,5 +26,6 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
 
         inputs.poseFieldOriented = estimatedPose.get().estimatedPose
         inputs.timestamp = estimatedPose.get().timestampSeconds
+        inputs.ambiguity = 0.0
     }
 }
