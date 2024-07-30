@@ -19,5 +19,6 @@ interface VisionIO {
         var poseFieldOriented = Pose3d()
         var isConnected = false
         var timestamp: Double = 0.0 // Seconds
+        var ambiguity: Double = 0.0
     }
 }
