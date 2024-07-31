@@ -2,14 +2,14 @@ package frc.robot
 
 class Ports {
     object SwerveDriveWCP {
-        const val FRONT_LEFT_DRIVE_MOTOR_ID: Int = 3
-        const val FRONT_LEFT_ANGLE_MOTOR_ID: Int = 4
-        const val FRONT_RIGHT_DRIVE_MOTOR_ID: Int = 7
-        const val FRONT_RIGHT_ANGLE_MOTOR_ID: Int = 8
-        const val REAR_LEFT_DRIVE_MOTOR_ID: Int = 5
-        const val REAR_LEFT_ANGLE_MOTOR_ID: Int = 2
-        const val REAR_RIGHT_DRIVE_MOTOR_ID: Int = 1
-        const val REAR_RIGHT_ANGLE_MOTOR_ID: Int = 6
+        const val FRONT_LEFT_DRIVE_MOTOR_ID: Int = 2
+        const val FRONT_LEFT_ANGLE_MOTOR_ID: Int = 1
+        const val FRONT_RIGHT_DRIVE_MOTOR_ID: Int = 4
+        const val FRONT_RIGHT_ANGLE_MOTOR_ID: Int = 3
+        const val REAR_LEFT_DRIVE_MOTOR_ID: Int = 6
+        const val REAR_LEFT_ANGLE_MOTOR_ID: Int = 5
+        const val REAR_RIGHT_DRIVE_MOTOR_ID: Int = 8
+        const val REAR_RIGHT_ANGLE_MOTOR_ID: Int = 7
 
         val DRIVE_IDS: IntArray = intArrayOf(FRONT_LEFT_DRIVE_MOTOR_ID,
                 FRONT_RIGHT_DRIVE_MOTOR_ID,
@@ -22,10 +22,10 @@ class Ports {
                 REAR_RIGHT_ANGLE_MOTOR_ID
         )
 
-        const val FRONT_LEFT_ENCODER_ID: Int = 2
-        const val FRONT_RIGHT_ENCODER_ID: Int = 7
-        const val REAR_LEFT_ENCODER_ID: Int = 3
-        const val REAR_RIGHT_ENCODER_ID: Int = 8
+        const val FRONT_LEFT_ENCODER_ID: Int = 10
+        const val FRONT_RIGHT_ENCODER_ID: Int = 20
+        const val REAR_LEFT_ENCODER_ID: Int = 30
+        const val REAR_RIGHT_ENCODER_ID: Int = 40
 
         val ENCODER_IDS: IntArray = intArrayOf(FRONT_LEFT_ENCODER_ID,
                 FRONT_RIGHT_ENCODER_ID,
