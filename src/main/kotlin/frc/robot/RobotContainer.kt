@@ -5,9 +5,7 @@ import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.subsystems.swerve.Swerve
-import frc.robot.subsystems.swerve.SwerveConstants
-import swervelib.SwerveDrive
+import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -16,7 +14,7 @@ import swervelib.SwerveDrive
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
-    private val swerveDrive = Swerve.getInstance()
+    private val swerveDrive: SwerveDrive
 
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
@@ -24,6 +22,9 @@ object RobotContainer {
     private val autoChooser = AutoBuilder.buildAutoChooser()
 
     init {
+        Constants.initSwerve()
+        swerveDrive = SwerveDrive.getInstance()
+
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
