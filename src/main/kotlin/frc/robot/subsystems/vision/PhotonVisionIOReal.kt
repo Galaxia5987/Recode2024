@@ -16,7 +16,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         camera.pipelineIndex = pipeLineIndex
     }
 
-    override fun getLatestResult(): VisionResult = VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.ambiguity)
+    override fun getLatestResult(): VisionResult = VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.distanceToTargets, inputs.poseAmbiguities)
 
     override fun updateInputs() {
         inputs.isConnected = camera.isConnected
@@ -26,6 +26,13 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
 
         inputs.poseFieldOriented = estimatedPose.get().estimatedPose
         inputs.timestamp = estimatedPose.get().timestampSeconds
-        inputs.ambiguity = 0.0
+
+        val tags = latestResult.targets
+
+        for (tag in tags) {
+            inputs.distanceToTargets.add(tag.bestCameraToTarget.translation.norm)
+            inputs.poseAmbiguities.add(tag.poseAmbiguity)
+        }
+
     }
 }
