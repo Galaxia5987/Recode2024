@@ -7,7 +7,9 @@ import edu.wpi.first.units.Units
 object IntakeConstants {
     const val intakeSpinPower = 0.4
     const val intakeCenterPower = 0.4
+    const val GEAR_RATIO = 45.62
 
     val intakeAngle: Measure<Angle> = Units.Degree.zero()
+
     val restAngle: Measure<Angle> = Units.Degree.of(114.0)
 }
