@@ -11,6 +11,8 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase() {
+    @AutoLogOutput
+    private var velocitySetPoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
     private val inputs = io.inputs
     private val timer = Timer()
 
@@ -25,7 +27,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
             }
         }
 
-        fun getInstace(): Conveyor {
+        fun getInstance(): Conveyor {
             return instance ?: throw IllegalArgumentException(
                 "Conveyor has not been initialized. Call initialize(io: HoodIO) first."
             )
@@ -38,7 +40,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     }
 
     fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) : Command = run {
-        inputs.velocitySetPoint.mut_replace(velocity)
+        velocitySetPoint.mut_replace(velocity)
         io.setVelocity(velocity)
     }
 
@@ -46,12 +48,12 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
 
     @AutoLogOutput
     fun atSetPoint() : Boolean {
-        return inputs.velocity.isNear(inputs.velocitySetPoint, ConveyorConstants.TOLERANCE)
+        return inputs.velocity.isNear(velocitySetPoint, ConveyorConstants.TOLERANCE)
     }
 
     fun stop() : Command {
         return runOnce {
-            inputs.velocitySetPoint.mut_replace(0.0, Units.RotationsPerSecond)
+            velocitySetPoint.mut_replace(0.0, Units.RotationsPerSecond)
             io.stop()
         }
     }

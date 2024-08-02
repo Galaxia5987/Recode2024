@@ -17,7 +17,6 @@ interface ConveyorIO {
 
     @Logged
     open class ConveyorInputs {
-        var velocitySetPoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
         var velocity: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
     }
 }
