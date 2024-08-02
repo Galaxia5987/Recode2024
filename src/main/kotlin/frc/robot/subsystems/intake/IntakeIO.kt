@@ -37,6 +37,5 @@ interface IntakeIO {
         var spinMotorVoltage = 0.0
         var centerMotorVoltage = 0.0
         var angleMotorAngle: Measure<Angle> = Units.Degree.zero()
-        var angleSetPoint: Measure<Angle> = Units.Degree.zero()
     }
 }
