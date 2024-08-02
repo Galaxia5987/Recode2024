@@ -41,8 +41,7 @@ class HoodIOReal : HoodIO {
             positionControl
                 .withPosition(inputs.internalAngle.plus(error).`in`(Units.Rotations))
                 .withFeedForward(
-                    sign(
-                        inputs.angleSetpoint.minus(inputs.absoluteEncoderAngle
+                    sign(angle.minus(inputs.absoluteEncoderAngle
                         ).`in`(Units.Degrees)) * HoodConstants.kS.get())
         )
     }

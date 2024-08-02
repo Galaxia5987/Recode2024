@@ -20,7 +20,6 @@ interface HoodIO {
     @Logged
     open class HoodInputs {
         var internalAngle: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
-        var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
         var voltage: MutableMeasure<Voltage> = MutableMeasure.zero(Units.Volts)
         var absoluteEncoderAngle: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
         var absoluteEncoderAngleNoOffset: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)

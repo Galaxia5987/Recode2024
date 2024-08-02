@@ -15,7 +15,9 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
+    @AutoLogOutput
     private val inputs: LoggedHoodInputs = io.inputs
+    private var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
     private val timer = Timer()
     private val encoderTimer = Timer()
 
@@ -57,13 +59,13 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
 
     @AutoLogOutput
     fun atSetpoint(): Boolean =
-        inputs.absoluteEncoderAngle.isNear(inputs.angleSetpoint, HoodConstants.MAX_TOLERANCE_DEG)
+        inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE_DEG)
 
     fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
 
     fun setAngle(angle: MutableMeasure<Angle>): Command {
         return run {
-            inputs.angleSetpoint.mut_replace(angle)
+            angleSetpoint.mut_replace(angle)
             io.setAngle(angle)
         }.withName("Set Angle Hood")
     }
