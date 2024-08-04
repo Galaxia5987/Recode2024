@@ -6,10 +6,11 @@ import edu.wpi.first.units.Angle
 import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
+import frc.robot.Ports
 
 class ConveyorIOReal : ConveyorIO {
     override val inputs = LoggedConveyorInputs()
-    private val roller = TalonFX(-1) // TODO: Replace with actual port
+    private val roller = TalonFX(Ports.conveyor.MOTOR_ID)
     private val control = VelocityVoltage(0.0).withEnableFOC(true)
 
     init {

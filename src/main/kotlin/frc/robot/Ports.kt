@@ -53,6 +53,10 @@ class Ports {
         )
     }
 
+    object conveyor {
+        const val MOTOR_ID = 8
+    }
+
     object UI {
         const val JOYSTICK_TRIGGER: Int = 1
         const val JOYSTICK_TOP_BOTTOM_BUTTON: Int = 2
