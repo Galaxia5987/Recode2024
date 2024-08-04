@@ -46,7 +46,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInputs()
-        if (timer.advanceIfElapsed(0.0)) {
+        if (timer.advanceIfElapsed(0.1)) {
             Logger.processInputs(this::class.simpleName, inputs)
         }
     }
