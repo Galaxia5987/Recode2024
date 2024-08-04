@@ -2,9 +2,13 @@ package frc.robot.subsystems.swerve
 
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
+import com.pathplanner.lib.util.HolonomicPathFollowerConfig
+import com.pathplanner.lib.util.PIDConstants
+import com.pathplanner.lib.util.ReplanningConfig
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.lib.webconstants.LoggedTunableNumber
+import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
@@ -30,27 +34,44 @@ object SwerveConstants {
     const val VOLT_COMP_SATURATION: Double = 12.0
     const val NEUTRAL_DEADBAND: Double = 0.0
     const val XBOX_DEADBAND: Double = 0.1
-    val STEERING_MULTIPLIER: LoggedTunableNumber = LoggedTunableNumber("Steering multiplier", 0.6)
-    val DRIVE_KP: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/driveKP")
-    val DRIVE_KI: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/driveKI")
-    val DRIVE_KD: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/driveKD")
-    val DRIVE_KV: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/driveKV")
-    val DRIVE_KS: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/driveKS")
-    val DRIVE_KA: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/driveKA")
-    val ANGLE_KP: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/angleKP")
-    val ANGLE_KI: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/angleKI")
-    val ANGLE_KD: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/angleKD")
-    val ANGLE_KV: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/angleKV")
-    val ANGLE_KS: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/angleKS")
-    val ANGLE_KA: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/PID/angleKA")
+    val STEERING_MULTIPLIER =
+        LoggedTunableNumber("Steering multiplier", 0.6)
+    val DRIVE_KP: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/driveKP")
+    val DRIVE_KI: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/driveKI")
+    val DRIVE_KD: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/driveKD")
+    val DRIVE_KV: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/driveKV")
+    val DRIVE_KS: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/driveKS")
+    val DRIVE_KA: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/driveKA")
+    val ANGLE_KP: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/angleKP")
+    val ANGLE_KI: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/angleKI")
+    val ANGLE_KD: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/angleKD")
+    val ANGLE_KV: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/angleKV")
+    val ANGLE_KS: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/angleKS")
+    val ANGLE_KA: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/PID/angleKA")
     val PID_VALUES: Array<LoggedTunableNumber> = arrayOf(
         DRIVE_KP, DRIVE_KI, DRIVE_KD, DRIVE_KV, DRIVE_KS, DRIVE_KA, ANGLE_KP, ANGLE_KI,
         ANGLE_KD, ANGLE_KV, ANGLE_KS, ANGLE_KA
     )
-    val ROTATION_KP: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/Rotation/rotationKP")
-    val ROTATION_KI: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/Rotation/rotationKI")
-    val ROTATION_KD: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/Rotation/rotationKD")
-    val ROTATION_KDIETER: LoggedTunableNumber = LoggedTunableNumber("Swerve Drive/Rotation/rotationKDIETER")
+    val ROTATION_KP: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/Rotation/rotationKP")
+    val ROTATION_KI: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/Rotation/rotationKI")
+    val ROTATION_KD: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/Rotation/rotationKD")
+    val ROTATION_KDIETER: LoggedTunableNumber =
+        LoggedTunableNumber("Swerve Drive/Rotation/rotationKDIETER")
 
     val VOLTAGE_CONFIGS: VoltageConfigs = VoltageConfigs()
         .withPeakForwardVoltage(VOLT_COMP_SATURATION)

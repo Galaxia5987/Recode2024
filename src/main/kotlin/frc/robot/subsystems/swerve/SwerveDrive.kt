@@ -243,15 +243,14 @@ class SwerveDrive private constructor
         rotation: DoubleSupplier,
         deadband: Double = SwerveConstants.XBOX_DEADBAND,
         fieldOriented: Boolean = true): Command {
-        return run(
-            Runnable {
-                drive(
-                    MathUtil.applyDeadband(forward.asDouble, deadband),
-                    MathUtil.applyDeadband(strafe.asDouble, deadband),
-                    MathUtil.applyDeadband(rotation.asDouble, deadband),
-                    fieldOriented
-                )
-            })
+        return run {
+            drive(
+                MathUtil.applyDeadband(forward.asDouble, deadband),
+                MathUtil.applyDeadband(strafe.asDouble, deadband),
+                MathUtil.applyDeadband(rotation.asDouble, deadband),
+                fieldOriented
+            )
+        }
     }
 
     fun turnCommand(rotation: MutableMeasure<Angle>, turnTolerance: Double): Command {
@@ -369,14 +368,14 @@ class SwerveDrive private constructor
             SysIdRoutine(
                 SysIdRoutine.Config(),
                 SysIdRoutine.Mechanism(
-                    Consumer<Measure<Voltage?>> { volts: Measure<Voltage?> ->
+                    { volts: Measure<Voltage?> ->
                         for (module in modules) {
                             module!!.characterize(
                                 volts.`in`(edu.wpi.first.units.Units.Volts)
                             )
                         }
                     },
-                    Consumer<SysIdRoutineLog> { log: SysIdRoutineLog ->
+                    { log: SysIdRoutineLog ->
                         for (module in modules) {
                             module!!.updateSysIdRoutineLog(log)
                         }
