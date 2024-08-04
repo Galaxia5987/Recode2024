@@ -29,15 +29,15 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun open(): Command {
-        return Commands.run({ io.closeStopper() })
+        return Commands.run(io::closeStopper)
             .until { inputs.isStopperStuck }
-            .andThen({ io.disableStopper() })
+            .andThen(io::disableStopper)
     }
 
     fun lock(): Command {
-        return Commands.run({ io.closeStopper() })
+        return Commands.run(io::closeStopper)
             .until { inputs.isStopperStuck }
-            .andThen({ io.disableStopper() })
+            .andThen(io::disableStopper)
     }
 
     fun setPower(power: DoubleSupplier): Command {
