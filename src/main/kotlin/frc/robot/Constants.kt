@@ -8,6 +8,7 @@ import frc.robot.subsystems.swerve.*
 
 object Constants {
     const val CONFIG_TIMEOUT: Int = 100 // [ms]
+    const val LOOP_TIME = 0.02 // [s]
 
     val CURRENT_MODE: Mode = Mode.REAL
 
@@ -36,11 +37,12 @@ object Constants {
                     Ports.SwerveDriveWCP.DRIVE_IDS[i],
                     Ports.SwerveDriveWCP.ANGLE_IDS[i],
                     Ports.SwerveDriveWCP.ENCODER_IDS[i],
-                    SwerveConstants.DRIVE_MOTOR_CONFIGS ?: TalonFXConfiguration(), //TODO: Not sure if this is great cuz default config doesn't have current limits but it shouldn't be null so...
-                    SwerveConstants.ANGLE_MOTOR_CONFIGS ?: TalonFXConfiguration(),
-                    SwerveConstants.ENCODER_CONFIGS ?: CANcoderConfiguration(),
+                    SwerveConstants.DRIVE_MOTOR_CONFIGS ?: throw IllegalStateException("drive motor config is null"), //TODO: Not sure if this is great cuz default config doesn't have current limits but it shouldn't be null so...
+                    SwerveConstants.ANGLE_MOTOR_CONFIGS ?: throw IllegalStateException("angle motor config is null"),
+                    SwerveConstants.ENCODER_CONFIGS ?: throw IllegalStateException("encoder config is null"),
                     SwerveConstants.OFFSETS[i]
                 )}
+                SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
             }
             SwerveConstants.SwerveType.NEO->{
                 moduleIOs = Array<ModuleIO>(4) {i->ModuleIOSparkMax(
@@ -50,7 +52,9 @@ object Constants {
                     Ports.SwerveDriveNEO.DRIVE_INVERTED[i],
                     Ports.SwerveDriveNEO.ANGLE_INVERTED[i]
                 )}
+                SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
             }
         }
+
     }
 }
