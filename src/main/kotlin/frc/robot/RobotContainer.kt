@@ -33,7 +33,7 @@ object RobotContainer {
     }
 
     private fun configureDefaultCommands() {
-        swerveDrive.driveCommand(
+        swerveDrive.defaultCommand=swerveDrive.driveCommand(
             { -driverController.leftY },
             { -driverController.leftX },
             { 0.6 * -driverController.rightX })
