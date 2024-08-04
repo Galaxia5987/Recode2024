@@ -10,6 +10,7 @@ import edu.wpi.first.units.Units
 import frc.robot.Ports
 
 class ClimbIOTalonFX : ClimbIO {
+    override val inputs = LoggedClimbInputs()
     private val mainMotor = TalonFX(Ports.Climb.MAIN_MOTOR_ID)
     private val auxMotor = TalonFX(Ports.Climb.AUX_MOTOR_ID)
     private val stopperMotor = TalonSRX(Ports.Climb.STOPPER_ID)

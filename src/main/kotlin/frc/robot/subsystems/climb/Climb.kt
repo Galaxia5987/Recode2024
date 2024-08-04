@@ -8,7 +8,7 @@ import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
 
 class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
-    private val inputs = LoggedClimbInputs()
+    private val inputs = io.inputs
     private val timer = Timer()
 
     companion object {
@@ -29,15 +29,15 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun open(): Command {
-        return Commands.run({ io.closeStopper() })
+        return Commands.run(io::closeStopper)
             .until { inputs.isStopperStuck }
-            .andThen({ io.disableStopper() })
+            .andThen(io::disableStopper)
     }
 
     fun lock(): Command {
-        return Commands.run({ io.closeStopper() })
+        return Commands.run(io::closeStopper)
             .until { inputs.isStopperStuck }
-            .andThen({ io.disableStopper() })
+            .andThen(io::disableStopper)
     }
 
     fun setPower(power: DoubleSupplier): Command {

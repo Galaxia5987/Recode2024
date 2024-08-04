@@ -8,17 +8,16 @@ import org.team9432.annotation.Logged
 
 interface ClimbIO {
     val inputs: LoggedClimbInputs
-        get() = LoggedClimbInputs()
 
-    fun setPower(power: Double)
+    fun setPower(power: Double) {}
 
-    fun openStopper()
+    fun openStopper() {}
 
-    fun closeStopper()
+    fun closeStopper() {}
 
-    fun disableStopper()
+    fun disableStopper() {}
 
-    fun updateInputs()
+    fun updateInputs() {}
 
     @Logged
     open class ClimbInputs {
