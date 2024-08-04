@@ -1,5 +1,6 @@
 package frc.robot.subsystems.swerve
 
+import com.pathplanner.lib.auto.AutoBuilder
 import edu.wpi.first.math.MathUtil
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
@@ -88,6 +89,7 @@ class SwerveDrive private constructor
             SwerveDrivePoseEstimator(
                 kinematics, yaw, modulePositions, botPose
             )
+        configAutoBuilder()
     }
 
     companion object {
@@ -348,6 +350,18 @@ class SwerveDrive private constructor
         }
 
         Logger.processInputs("SwerveDrive", inputs)
+    }
+
+    private fun configAutoBuilder(){
+        AutoBuilder.configureHolonomic(
+            {botPose},
+            this::resetPose,
+            {chassisSpeeds},
+            {speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds))},
+            SwerveConstants.holonomicPathFollowerConfig,
+            Constants::isRed,
+            this
+        )
     }
 
     fun characterize(): Command {

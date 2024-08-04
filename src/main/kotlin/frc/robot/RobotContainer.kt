@@ -2,6 +2,7 @@ package frc.robot
 
 import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
@@ -19,11 +20,12 @@ object RobotContainer {
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
-    private val autoChooser = AutoBuilder.buildAutoChooser()
+    private val autoChooser: SendableChooser<Command>
 
     init {
         Constants.initSwerve()
         swerveDrive = SwerveDrive.getInstance()
+        autoChooser = AutoBuilder.buildAutoChooser()
 
         registerAutoCommands()
         configureButtonBindings()

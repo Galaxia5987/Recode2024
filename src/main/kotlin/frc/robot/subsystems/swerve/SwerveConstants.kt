@@ -71,6 +71,7 @@ object SwerveConstants {
     var FEEDBACK_CONFIGS_ANGLE: FeedbackConfigs? = null
     var ANGLE_MOTOR_CONFIGS: TalonFXConfiguration? = null
     var ENCODER_CONFIGS: CANcoderConfiguration? = null
+    val holonomicPathFollowerConfig: HolonomicPathFollowerConfig
 
     var DRIVE_MOTOR_MOMENT_OF_INERTIA: Double = 0.025
     var ANGLE_MOTOR_MOMENT_OF_INERTIA: Double = 0.004
@@ -222,5 +223,12 @@ object SwerveConstants {
         ENCODER_CONFIGS =
             CANcoderConfiguration()
                 .withMagnetSensor(MagnetSensorConfigs().withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1))
+
+        holonomicPathFollowerConfig = HolonomicPathFollowerConfig(
+            PIDConstants(5.5, 0.0, 0.15),
+            PIDConstants(3.0, 0.0, 0.4),
+            MAX_X_Y_VELOCITY, sqrt((ROBOT_LENGTH / 2.0).pow(2.0) + (ROBOT_WIDTH / 2.0).pow(2.0)),
+            ReplanningConfig()
+        )
     }
 }
