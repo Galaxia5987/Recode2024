@@ -10,7 +10,7 @@ interface ClimbIO {
     val inputs: LoggedClimbInputs
         get() = LoggedClimbInputs()
 
-    fun setPower(power:Double)
+    fun setPower(power: Double)
 
     fun openStopper()
 

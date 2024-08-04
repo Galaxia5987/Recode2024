@@ -15,9 +15,9 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
         @Volatile
         private var instance: Climb? = null
 
-        fun initialize(io: ClimbIO){
-            synchronized(this){
-                if (instance==null)
+        fun initialize(io: ClimbIO) {
+            synchronized(this) {
+                if (instance == null)
                     instance = Climb(io)
             }
         }
