@@ -1,5 +1,6 @@
 package frc.robot.subsystems.conveyor
 
+import com.ctre.phoenix6.controls.VelocityVoltage
 import com.revrobotics.CANSparkBase
 import com.revrobotics.CANSparkMax
 import edu.wpi.first.math.controller.PIDController
@@ -10,10 +11,12 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.SparkMaxSim
+import frc.robot.lib.motors.TalonFXSim
 
 class ConveyorIOSim : ConveyorIO {
     override val inputs = LoggedConveyorInputs()
-    private val conveyor = SparkMaxSim(
+    private val control = VelocityVoltage(0.0)
+    private val conveyor = TalonFXSim(
         1,
         ConveyorConstants.GEAR_RATIO,
         ConveyorConstants.MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
@@ -28,15 +31,11 @@ class ConveyorIOSim : ConveyorIO {
     }
 
     override fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
-        conveyor.setReference(
-            velocity.`in`(Units.RotationsPerSecond),
-            CANSparkBase.ControlType.kVelocity,
-            feed.calculate(velocity.`in`(Units.RotationsPerSecond))
-        )
+        conveyor.setControl(control.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
     override fun stop() {
-       conveyor.setInputVoltage(0.0)
+       conveyor.setControl(control.withVelocity(0.0))
     }
 
 
