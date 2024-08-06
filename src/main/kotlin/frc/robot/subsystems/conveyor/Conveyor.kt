@@ -48,7 +48,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
 
     @AutoLogOutput
     fun atSetPoint() : Boolean {
-        return inputs.velocity.isNear(velocitySetpoint, ConveyorConstants.TOLERANCE)
+        return inputs.velocity.isNear(velocitySetpoint, ConveyorConstants.AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
     }
 
     fun stop() : Command {
