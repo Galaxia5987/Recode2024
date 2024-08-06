@@ -46,10 +46,10 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
             bottomVelocitySetpoint.mut_replace(bottomVelocity)
             io.setTopVelocity(topVelocity)
             io.setBottomVelocity(bottomVelocity)
-        }.withName("") // TODO:
+        }.withName("Set Top and Bottom Velocity Command")
     }
 
-    fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) : Command = setVelocity(velocity, velocity)
+    fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) : Command = setVelocity(velocity, velocity).withName("Set Velocity Command")
 
     fun stop(): Command {
         return run {
