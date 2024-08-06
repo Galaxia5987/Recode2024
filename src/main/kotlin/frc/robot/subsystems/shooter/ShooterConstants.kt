@@ -60,8 +60,8 @@ object ShooterConstants {
             )
             .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.TOP_INVERSION)).CurrentLimits
             .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true)
             .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_TOP)
+            .withSupplyCurrentLimitEnable(true)
             .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_TOP)
 
         bottomMotorConfiguration
