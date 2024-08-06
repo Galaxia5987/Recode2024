@@ -53,6 +53,11 @@ class Ports {
         )
     }
 
+    object Shooter {
+        const val TOP_MOTOR_ID: Int = 11
+        const val BOTTOM_MOTOR_ID: Int = 10
+    }
+
     object UI {
         const val JOYSTICK_TRIGGER: Int = 1
         const val JOYSTICK_TOP_BOTTOM_BUTTON: Int = 2
