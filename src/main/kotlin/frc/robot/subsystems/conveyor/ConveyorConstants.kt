@@ -14,10 +14,10 @@ object ConveyorConstants {
 
     val FEED_VELOCITY: MutableMeasure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0).mutableCopy()
 
-    var KP: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kP")
-    var KI: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kI")
-    var KD: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kD")
-    var KS: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kS")
-    var KV: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kV")
-    var KA: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kA")
+    val KP: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kP")
+    val KI: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kI")
+    val KD: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kD")
+    val KS: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kS")
+    val KV: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kV")
+    val KA: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kA")
 }
