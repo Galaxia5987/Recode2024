@@ -66,9 +66,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInputs()
-        if (timer.advanceIfElapsed(0.1)) {
-            Logger.processInputs("$subsystemName/TopRoller", io.topRollerInputs)
-            Logger.processInputs("$subsystemName/BottomRoller", io.bottomRollerInputs)
-        }
+        Logger.processInputs("$subsystemName/TopRoller", io.topRollerInputs)
+        Logger.processInputs("$subsystemName/BottomRoller", io.bottomRollerInputs)
     }
 }
