@@ -73,6 +73,5 @@ class ShooterIOSim : ShooterIO {
         bottomRollerInputs.velocity.mut_replace(
             bottomMotor.velocity, Units.RotationsPerSecond
         )
-
     }
 }
