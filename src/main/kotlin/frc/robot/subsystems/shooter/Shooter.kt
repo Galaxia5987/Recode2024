@@ -60,9 +60,14 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     }
 
     @AutoLogOutput
-    fun atSetpoint(): Boolean = io.topRollerInputs.velocity.isNear(topVelocitySetpoint, ShooterConstants.TOP_ROLLER_TOLERANCE.`in`(
-        Units.RotationsPerSecond)) && io.bottomRollerInputs.velocity.isNear(bottomVelocitySetpoint, ShooterConstants.BOTTOM_ROLLER_TOLERANCE.`in`(
-        Units.RotationsPerSecond))
+    fun atSetpoint(): Boolean =
+        io.topRollerInputs.velocity.isNear(
+            topVelocitySetpoint, ShooterConstants.TOP_ROLLER_TOLERANCE.`in`(Units.Percent)
+        ) && io.bottomRollerInputs.velocity.isNear(
+            bottomVelocitySetpoint, ShooterConstants.BOTTOM_ROLLER_TOLERANCE.`in`(
+                Units.Percent
+            )
+        )
 
     override fun periodic() {
         io.updateInputs()

@@ -12,8 +12,8 @@ object ShooterConstants {
     const val GEAR_RATIO_TOP: Double = 1.0
     const val GEAR_RATIO_BOTTOM: Double = 1.0
 
-    val TOP_ROLLER_TOLERANCE: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
-    val BOTTOM_ROLLER_TOLERANCE: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
+    val TOP_ROLLER_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.5)
+    val BOTTOM_ROLLER_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.5)
     val MOMENT_OF_INERTIA_TOP: MutableMeasure<Mult<Mult<Mass, Distance>, Distance>> =
         Units.Kilograms.mult(Units.Meters).mult(
             Units.Meters
