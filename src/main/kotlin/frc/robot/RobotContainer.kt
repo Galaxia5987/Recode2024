@@ -23,7 +23,6 @@ object RobotContainer {
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
-//    private val autoChooser = AutoBuilder.buildAutoChooser()
     private val shooter: Shooter
 
     init {
