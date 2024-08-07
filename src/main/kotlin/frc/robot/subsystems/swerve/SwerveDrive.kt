@@ -355,7 +355,7 @@ class SwerveDrive private constructor
             this::resetPose,
             {chassisSpeeds},
             {speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds))},
-            SwerveConstants.holonomicPathFollowerConfig,
+            SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
             Constants::isRed,
             this
         )
