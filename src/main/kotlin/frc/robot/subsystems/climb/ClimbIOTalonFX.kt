@@ -8,6 +8,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.controls.DutyCycleOut
 import edu.wpi.first.units.Units
 import frc.robot.Ports
+import kotlin.math.absoluteValue
 
 class ClimbIOTalonFX : ClimbIO {
     override val inputs = LoggedClimbInputs()
@@ -48,10 +49,10 @@ class ClimbIOTalonFX : ClimbIO {
     }
 
     override fun updateInputs() {
-        inputs.stopperAppliedVoltage.mut_replace(stopperMotor.motorOutputVoltage, Units.Volt)
-        inputs.stopperCurrent.mut_replace(stopperMotor.statorCurrent, Units.Amps)
-        inputs.mainMotorAppliedVoltage.mut_replace(mainMotor.motorVoltage.value, Units.Volt)
-        inputs.isStopperStuck = stopperMotor.statorCurrent >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
+//        inputs.stopperAppliedVoltage.mut_replace(stopperMotor.motorOutputVoltage, Units.Volt)
+//        inputs.stopperCurrent.mut_replace(stopperMotor.statorCurrent, Units.Amps)
+//        inputs.mainMotorAppliedVoltage.mut_replace(mainMotor.motorVoltage.value, Units.Volt)
         inputs.isStopperStuck = stopperMotor.statorCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
+        inputs.stopperCurrent = stopperMotor.statorCurrent
     }
 }
