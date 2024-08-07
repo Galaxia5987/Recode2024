@@ -28,9 +28,9 @@ class Ports {
     }
 
     object Climb {
-        const val MAIN_MOTOR_ID: Int = 5
-        const val AUX_MOTOR_ID: Int = 7
-        const val STOPPER_ID: Int = 9
+        const val MAIN_MOTOR_ID: Int = 4
+        const val AUX_MOTOR_ID: Int = 5
+        const val STOPPER_ID: Int = 28
     }
 
     object SwerveDrive {
