@@ -25,7 +25,6 @@ class ModuleIOTalonFX(
     private val driveConfig: TalonFXConfiguration,
     private val angleConfig: TalonFXConfiguration,
     private val encoderConfig: CANcoderConfiguration,
-    private val encoderOffset: Double
 ) : ModuleIO {
     private val driveMotor = TalonFX(driveMotorID, "swerveDrive")
     private val angleMotor = TalonFX(angleMotorID, "swerveDrive")
