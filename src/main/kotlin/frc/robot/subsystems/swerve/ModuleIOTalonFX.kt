@@ -96,6 +96,8 @@ class ModuleIOTalonFX(
 
         inputs.absolutePosition = encoder.absolutePosition.value
         inputs.moduleState = moduleState
+
+        if (hasPIDChanged(SwerveConstants.PID_VALUES)) updatePID()
     }
 
     override fun updatePID() {
