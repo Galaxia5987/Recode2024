@@ -21,10 +21,9 @@ interface ClimbIO {
 
     @Logged
     open class ClimbInputs {
-//        var stopperAppliedVoltage: MutableMeasure<Voltage> = Units.Volts.of(0.0).mutableCopy()
-//        var stopperCurrent: MutableMeasure<Current> = Units.Amps.of(0.0).mutableCopy()
+        var stopperAppliedVoltage = 0.0
         var stopperCurrent = 0.0
-//        var mainMotorAppliedVoltage: MutableMeasure<Voltage> = Units.Volts.of(0.0).mutableCopy()
+        var mainMotorAppliedVoltage = 0.0
         var isStopperStuck = false
     }
 }

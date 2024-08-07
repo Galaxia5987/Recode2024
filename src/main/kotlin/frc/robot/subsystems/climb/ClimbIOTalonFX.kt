@@ -49,9 +49,9 @@ class ClimbIOTalonFX : ClimbIO {
     }
 
     override fun updateInputs() {
-//        inputs.stopperAppliedVoltage.mut_replace(stopperMotor.motorOutputVoltage, Units.Volt)
-//        inputs.stopperCurrent.mut_replace(stopperMotor.statorCurrent, Units.Amps)
-//        inputs.mainMotorAppliedVoltage.mut_replace(mainMotor.motorVoltage.value, Units.Volt)
+        inputs.stopperAppliedVoltage = stopperMotor.motorOutputVoltage
+        inputs.stopperCurrent = stopperMotor.statorCurrent
+        inputs.mainMotorAppliedVoltage = mainMotor.motorVoltage.value
         inputs.isStopperStuck = stopperMotor.statorCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
         inputs.stopperCurrent = stopperMotor.statorCurrent
     }
