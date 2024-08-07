@@ -36,11 +36,11 @@ class ClimbIOTalonFX : ClimbIO {
     }
 
     override fun openStopper() {
-        stopperMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)
+        stopperMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)
     }
 
     override fun closeStopper() {
-        stopperMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)
+        stopperMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)
     }
 
     override fun disableStopper() {
@@ -52,5 +52,6 @@ class ClimbIOTalonFX : ClimbIO {
         inputs.stopperCurrent.mut_replace(stopperMotor.statorCurrent, Units.Amps)
         inputs.mainMotorAppliedVoltage.mut_replace(mainMotor.motorVoltage.value, Units.Volt)
         inputs.isStopperStuck = stopperMotor.statorCurrent >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
+        inputs.isStopperStuck = stopperMotor.statorCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
     }
 }

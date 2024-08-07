@@ -33,7 +33,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun open(): Command {
-        return Commands.run(io::closeStopper)
+        return Commands.run(io::openStopper)
             .until { inputs.isStopperStuck }
             .andThen(io::disableStopper)
     }
@@ -45,7 +45,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun setPower(power: DoubleSupplier): Command {
-        return Commands.run({ io.setPower(power.asDouble) })
+        return run { io.setPower(power.asDouble) }
     }
 
     override fun periodic() {
