@@ -87,10 +87,10 @@ class ModuleIOTalonFX(
 
         inputs.encoderHasFaults =
             encoder.fault_Hardware.value ||
-            encoder.fault_Undervoltage.value ||
-            encoder.fault_BadMagnet.value ||
-            encoder.fault_BootDuringEnable.value ||
-            encoder.fault_UnlicensedFeatureInUse.value
+                    encoder.fault_Undervoltage.value ||
+                    encoder.fault_BadMagnet.value ||
+                    encoder.fault_BootDuringEnable.value ||
+                    encoder.fault_UnlicensedFeatureInUse.value
 
         inputs.absolutePosition = encoder.absolutePosition.value
         inputs.moduleState = moduleState

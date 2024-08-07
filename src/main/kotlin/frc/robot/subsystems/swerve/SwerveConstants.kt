@@ -21,7 +21,7 @@ object SwerveConstants {
 
     val SWERVE_TYPE = SwerveType.WCP
 
-    val OFFSETS = arrayOf(0.533935546875,0.762939453125,0.023681640625,0.3232421875)
+    val OFFSETS = arrayOf(0.533935546875, 0.762939453125, 0.023681640625, 0.3232421875)
 
     const val NEO_CURRENT_LIMIT: Double = 40.0
     const val NEO_550_CURRENT_LIMIT: Double = 20.0

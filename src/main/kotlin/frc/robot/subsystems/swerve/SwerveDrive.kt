@@ -102,7 +102,7 @@ class SwerveDrive private constructor
             instance = SwerveDrive(gyroIO, offsets, *moduleIOs)
         }
 
-        fun getInstance(): SwerveDrive{
+        fun getInstance(): SwerveDrive {
             return instance ?: throw IllegalStateException("Swerve has not been initialized. Call initialize first.")
         }
     }
@@ -169,7 +169,7 @@ class SwerveDrive private constructor
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
 
-    fun checkSwerve(){
+    fun checkSwerve() {
         Arrays.stream(modules).forEach { obj: SwerveModule? -> obj!!.checkModule() }
     }
 
@@ -241,7 +241,8 @@ class SwerveDrive private constructor
         strafe: DoubleSupplier,
         rotation: DoubleSupplier,
         deadband: Double = SwerveConstants.XBOX_DEADBAND,
-        fieldOriented: Boolean = true): Command {
+        fieldOriented: Boolean = true
+    ): Command {
         return run {
             drive(
                 MathUtil.applyDeadband(forward.asDouble, deadband),
@@ -317,7 +318,8 @@ class SwerveDrive private constructor
                 .toTypedArray<SwerveModuleState?>()
         chassisSpeeds = kinematics.toChassisSpeeds(*currentModuleStates)
         velocity = hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond)
-        absolutePositions = Arrays.stream(modules).mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } //TODO: really not sure about this on
+        absolutePositions = Arrays.stream(modules)
+            .mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } //TODO: really not sure about this on
             .toArray()
     }
 
@@ -348,12 +350,12 @@ class SwerveDrive private constructor
         Logger.processInputs("SwerveDrive", inputs)
     }
 
-    private fun configAutoBuilder(){
+    private fun configAutoBuilder() {
         AutoBuilder.configureHolonomic(
-            {botPose},
+            { botPose },
             this::resetPose,
-            {chassisSpeeds},
-            {speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds))},
+            { chassisSpeeds },
+            { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
             SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
             Constants::isRed,
             this
