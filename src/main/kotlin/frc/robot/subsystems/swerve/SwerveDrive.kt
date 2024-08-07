@@ -25,7 +25,6 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
 import java.util.concurrent.locks.ReentrantLock
-import java.util.function.Consumer
 import java.util.function.DoubleSupplier
 import java.util.function.Function
 import kotlin.math.hypot
