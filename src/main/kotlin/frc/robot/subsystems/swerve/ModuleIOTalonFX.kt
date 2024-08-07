@@ -48,7 +48,6 @@ class ModuleIOTalonFX(
         angleMotor.configurator.apply(angleConfig)
         angleMotor.setPosition(0.0)
 
-        encoderConfig.MagnetSensor.withMagnetOffset(encoderOffset)
         encoder.configurator.apply(encoderConfig)
 
         BaseStatusSignal.setUpdateFrequencyForAll(
@@ -164,6 +163,10 @@ class ModuleIOTalonFX(
                 driveMotor.set(0.8)
                 angleMotor.set(0.2)
             })
+    }
+
+    override fun updateOffset(offset: Rotation2d) {
+        angleMotor.setPosition(encoder.absolutePosition.value - offset.rotations)
     }
 
     override fun setVoltage(volts: Double) {
