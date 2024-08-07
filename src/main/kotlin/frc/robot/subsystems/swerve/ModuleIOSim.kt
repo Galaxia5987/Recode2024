@@ -38,8 +38,8 @@ class ModuleIOSim() : ModuleIO {
         SwerveConstants.ANGLE_KD.get(),
         0.02
     )
-    private val driveControlRequest: VelocityVoltage = VelocityVoltage(0.0).withEnableFOC(true)
-    private val angleControlRequest: PositionVoltage = PositionVoltage(0.0).withEnableFOC(true)
+    private val driveControlRequest = VelocityVoltage(0.0).withEnableFOC(true)
+    private val angleControlRequest = PositionVoltage(0.0).withEnableFOC(true)
     override val inputs = LoggedModuleInputs()
 
     init {
@@ -81,14 +81,14 @@ class ModuleIOSim() : ModuleIO {
         )
     }
 
-    override var angle: Rotation2d
+    override var angle
         get() = inputs.angle
         set(angle) {
             inputs.angleSetpoint = angle
             angleMotor.setControl(angleControlRequest.withPosition(angle.rotations))
         }
 
-    override var velocity: Double
+    override var velocity
         get() = inputs.driveMotorVelocity
         set(velocity) {
             inputs.driveMotorVelocitySetpoint = velocity
@@ -98,10 +98,10 @@ class ModuleIOSim() : ModuleIO {
             driveMotor.setControl(driveControlRequest)
         }
 
-    override val moduleState: SwerveModuleState
+    override val moduleState
         get() = SwerveModuleState(velocity, angle)
 
-    override val modulePosition: SwerveModulePosition
+    override val modulePosition
         get() = SwerveModulePosition(
             Units.rpsToMetersPerSecond(
                 driveMotor.position, SwerveConstants.WHEEL_DIAMETER / 2

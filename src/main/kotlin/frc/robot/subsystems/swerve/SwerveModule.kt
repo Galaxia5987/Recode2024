@@ -38,10 +38,10 @@ class SwerveModule
             io.angle = moduleState.angle
         }
 
-    val modulePosition: SwerveModulePosition
+    val modulePosition
         get() = SwerveModulePosition(inputs.moduleDistance, inputs.angle)
 
-    val position: Double
+    val position
         get() = inputs.absolutePosition
 
     fun stop() {
@@ -59,7 +59,7 @@ class SwerveModule
         }
     }
 
-    val acceleration: Double
+    val acceleration
         get() = inputs.driveMotorAcceleration
 
     override fun periodic() {
@@ -77,7 +77,7 @@ class SwerveModule
         log.motor("$number")
             .voltage(edu.wpi.first.units.Units.Volts.of(inputs.angleMotorAppliedVoltage))
             .angularPosition(
-                edu.wpi.first.units.Units.Rotations.of(inputs.angle.getRotations())
+                edu.wpi.first.units.Units.Rotations.of(inputs.angle.rotations)
             )
             .angularVelocity(
                 edu.wpi.first.units.Units.RotationsPerSecond.of(

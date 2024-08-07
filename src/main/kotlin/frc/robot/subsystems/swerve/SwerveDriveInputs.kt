@@ -8,11 +8,11 @@ import org.team9432.annotation.Logged
 @Logged
 open class SwerveDriveInputs {
     // x, y, omega
-    var desiredSpeeds: ChassisSpeeds = ChassisSpeeds()
+    var desiredSpeeds = ChassisSpeeds()
 
-    var acceleration: Double = 0.0
+    var acceleration = 0.0
 
-    var rawYaw: Rotation2d = Rotation2d()
-    var yaw: Rotation2d = Rotation2d()
-    var gyroOffset: Rotation2d = Rotation2d()
+    var rawYaw = Rotation2d()
+    var yaw = Rotation2d()
+    var gyroOffset = Rotation2d()
 }

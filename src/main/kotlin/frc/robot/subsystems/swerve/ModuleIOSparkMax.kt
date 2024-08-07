@@ -108,7 +108,7 @@ class ModuleIOSparkMax(
         anglePIDController.setFF(SwerveConstants.ANGLE_KS.get())
     }
 
-    override var angle: Rotation2d
+    override var angle
         get() = inputs.angle
         set(angle) {
             inputs.angleSetpoint = Utils.normalize(angle)
@@ -119,7 +119,7 @@ class ModuleIOSparkMax(
             )
         }
 
-    override var velocity: Double
+    override var velocity
         get() = (Units.rpmToRadsPerSec(driveEncoder.velocity)
                 * (SwerveConstants.WHEEL_DIAMETER / 2))
         set(velocity) {
@@ -132,10 +132,10 @@ class ModuleIOSparkMax(
             )
         }
 
-    override val moduleState: SwerveModuleState
+    override val moduleState
         get() = SwerveModuleState(velocity, inputs.angle)
 
-    override val modulePosition: SwerveModulePosition
+    override val modulePosition
         get() = SwerveModulePosition(inputs.moduleDistance, angle)
 
     override fun stop() {

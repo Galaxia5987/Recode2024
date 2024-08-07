@@ -54,13 +54,13 @@ class SwerveDrive private constructor
     private var desiredSpeeds = ChassisSpeeds()
 
     @AutoLogOutput
-    var velocity: Double = 0.0
+    var velocity = 0.0
         private set
 
     @AutoLogOutput
     private var absolutePositions = DoubleArray(4)
 
-    private val kinematics: SwerveDriveKinematics = SwerveDriveKinematics(
+    private val kinematics = SwerveDriveKinematics(
         SwerveConstants.WHEEL_POSITIONS[0],
         SwerveConstants.WHEEL_POSITIONS[1],
         SwerveConstants.WHEEL_POSITIONS[2],
@@ -70,7 +70,7 @@ class SwerveDrive private constructor
     private val estimator: SwerveDrivePoseEstimator
 
     @AutoLogOutput
-    private var botPose: Pose2d = Pose2d()
+    private var botPose = Pose2d()
 
     private var inCharacterizationMode = false
 
@@ -117,7 +117,7 @@ class SwerveDrive private constructor
         gyroIO.resetGyro(angle)
     }
 
-    val rawYaw: Rotation2d
+    val rawYaw
         /**
          * Gets the raw yaw reading from the gyro.
          *
@@ -125,7 +125,7 @@ class SwerveDrive private constructor
          */
         get() = inputs.rawYaw
 
-    val yaw: Rotation2d
+    val yaw
         /**
          * Gets the yaw reading from the gyro with the calculated offset.
          *
@@ -158,7 +158,7 @@ class SwerveDrive private constructor
         }
     }
 
-    val currentSpeeds: ChassisSpeeds
+    val currentSpeeds
         get() = chassisSpeeds
 
     fun resetPose(pose: Pose2d) {
@@ -227,7 +227,7 @@ class SwerveDrive private constructor
      * @param omegaOutput percentage of the max possible rotation speed
      */
     fun drive(xOutput: Double, yOutput: Double, omegaOutput: Double, fieldOriented: Boolean) {
-        val chassisSpeeds: ChassisSpeeds =
+        val chassisSpeeds =
             ChassisSpeeds(
                 SwerveConstants.MAX_X_Y_VELOCITY * xOutput,
                 SwerveConstants.MAX_X_Y_VELOCITY * yOutput,
@@ -254,7 +254,7 @@ class SwerveDrive private constructor
     }
 
     fun turnCommand(rotation: MutableMeasure<Angle>, turnTolerance: Double): Command {
-        val turnController: DieterController =
+        val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
                 SwerveConstants.ROTATION_KI.get(),
@@ -263,21 +263,20 @@ class SwerveDrive private constructor
             )
         turnController.setTolerance(turnTolerance)
         turnController.enableContinuousInput(-0.5, 0.5)
-        return run(
-            Runnable {
-                drive(
-                    0.0,
-                    0.0,
-                    turnController.calculate(
-                        estimator
-                            .estimatedPosition
-                            .rotation
-                            .rotations,
-                        rotation.`in`(edu.wpi.first.units.Units.Rotations)
-                    ),
-                    false
-                )
-            })
+        return run {
+            drive(
+                0.0,
+                0.0,
+                turnController.calculate(
+                    estimator
+                        .estimatedPosition
+                        .rotation
+                        .rotations,
+                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                ),
+                false
+            )
+        }
     }
 
     fun driveAndAdjust(
@@ -287,7 +286,7 @@ class SwerveDrive private constructor
         deadband: Double,
         usePoseEstimation: Boolean
     ): Command {
-        val turnController: DieterController =
+        val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
                 SwerveConstants.ROTATION_KI.get(),
@@ -296,20 +295,19 @@ class SwerveDrive private constructor
             )
         turnController.enableContinuousInput(-0.5, 0.5)
         turnController.setTolerance(2 / 360.0)
-        return run(
-            Runnable {
-                drive(
-                    MathUtil.applyDeadband(xJoystick.asDouble, deadband),
-                    MathUtil.applyDeadband(yJoystick.asDouble, deadband),
-                    turnController.calculate(
-                        if (usePoseEstimation
-                        ) botPose.rotation.rotations
-                        else odometryYaw.rotations,
-                        rotation.`in`(edu.wpi.first.units.Units.Rotations)
-                    ),
-                    true
-                )
-            })
+        return run {
+            drive(
+                MathUtil.applyDeadband(xJoystick.asDouble, deadband),
+                MathUtil.applyDeadband(yJoystick.asDouble, deadband),
+                turnController.calculate(
+                    if (usePoseEstimation
+                    ) botPose.rotation.rotations
+                    else odometryYaw.rotations,
+                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                ),
+                true
+            )
+        }
     }
 
     fun updateSwerveOutputs() {
@@ -328,7 +326,7 @@ class SwerveDrive private constructor
         gyroIO.updateInputs(inputs)
     }
 
-    val acceleration: Double
+    val acceleration
         get() = inputs.acceleration
 
     override fun periodic() {
@@ -364,7 +362,7 @@ class SwerveDrive private constructor
     }
 
     fun characterize(): Command {
-        val routine: SysIdRoutine =
+        val routine =
             SysIdRoutine(
                 SysIdRoutine.Config(),
                 SysIdRoutine.Mechanism(

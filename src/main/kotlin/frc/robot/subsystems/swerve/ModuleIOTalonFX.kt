@@ -32,8 +32,8 @@ class ModuleIOTalonFX(
 
     private val encoder = CANcoder(encoderID, "swerveDrive")
 
-    private val angleControlRequest: PositionVoltage = PositionVoltage(0.0).withEnableFOC(true).withSlot(0)
-    private val velocityControlRequest: VelocityVoltage = VelocityVoltage(0.0).withEnableFOC(true)
+    private val angleControlRequest = PositionVoltage(0.0).withEnableFOC(true).withSlot(0)
+    private val velocityControlRequest = VelocityVoltage(0.0).withEnableFOC(true)
     override val inputs = LoggedModuleInputs()
 
     init {
@@ -120,7 +120,7 @@ class ModuleIOTalonFX(
         angleMotor.configurator.apply(angleConfig.Slot0)
     }
 
-    override var angle: Rotation2d
+    override var angle
         get() = inputs.angle
         set(angle) {
             var angle = angle
@@ -134,7 +134,7 @@ class ModuleIOTalonFX(
             angleMotor.setControl(angleControlRequest)
         }
 
-    override var velocity: Double
+    override var velocity
         get() = inputs.driveMotorVelocity
         set(velocity) {
             inputs.driveMotorVelocitySetpoint = velocity
@@ -145,10 +145,10 @@ class ModuleIOTalonFX(
             driveMotor.setControl(velocityControlRequest)
         }
 
-    override val moduleState: SwerveModuleState
+    override val moduleState
         get() = SwerveModuleState(velocity, angle)
 
-    override val modulePosition: SwerveModulePosition
+    override val modulePosition
         get() = SwerveModulePosition(inputs.moduleDistance, angle)
 
     override fun stop() {

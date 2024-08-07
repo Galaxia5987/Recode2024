@@ -12,18 +12,18 @@ interface ModuleIO {
 
     val inputs: LoggedModuleInputs
 
-    var angle: Rotation2d
+    var angle
         get() = Rotation2d()
         set(angle) {}
 
-    var velocity: Double
+    var velocity
         get() = 0.0
         set(velocity) {}
 
-    val moduleState: SwerveModuleState
+    val moduleState
         get() = SwerveModuleState()
 
-    val modulePosition: SwerveModulePosition
+    val modulePosition
         get() = SwerveModulePosition()
 
     fun updateInputs() {}
@@ -50,21 +50,21 @@ interface ModuleIO {
 
     @Logged
     open class ModuleInputs {
-        var driveMotorVelocity: Double = 0.0
-        var driveMotorVoltage: Double = 0.0
-        var driveMotorVelocitySetpoint: Double = 0.0
-        var driveMotorPosition: Double = 0.0
-        var driveMotorAcceleration: Double = 0.0
+        var driveMotorVelocity = 0.0
+        var driveMotorVoltage = 0.0
+        var driveMotorVelocitySetpoint = 0.0
+        var driveMotorPosition = 0.0
+        var driveMotorAcceleration = 0.0
 
-        var angle: Rotation2d = Rotation2d()
-        var angleSetpoint: Rotation2d = Rotation2d()
-        var absolutePosition: Double = 0.0
-        var angleMotorAppliedVoltage: Double = 0.0
-        var angleMotorVelocity: Double = 0.0
+        var angle = Rotation2d()
+        var angleSetpoint = Rotation2d()
+        var absolutePosition = 0.0
+        var angleMotorAppliedVoltage = 0.0
+        var angleMotorVelocity = 0.0
 
-        var moduleDistance: Double = 0.0
-        var moduleState: SwerveModuleState = SwerveModuleState()
+        var moduleDistance = 0.0
+        var moduleState = SwerveModuleState()
 
-        var encoderHasFaults: Boolean = false
+        var encoderHasFaults = false
     }
 }
