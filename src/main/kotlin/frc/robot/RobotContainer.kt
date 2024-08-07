@@ -21,7 +21,6 @@ object RobotContainer {
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
-    private val autoChooser = AutoBuilder.buildAutoChooser()
 
     private val climb: Climb
 
@@ -50,7 +49,7 @@ object RobotContainer {
         driverController.back().onTrue(climb.open().withTimeout(2.0))
     }
 
-    fun getAutonomousCommand(): Command = autoChooser.selected
+    fun getAutonomousCommand(): Command = Commands.none()
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
