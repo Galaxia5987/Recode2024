@@ -5,6 +5,7 @@ import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.math.MathUtil
 import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOTalonFX
@@ -34,20 +35,19 @@ object RobotContainer {
 
     private fun configureDefaultCommands() {
         climb.setDefaultCommand(
-            climb.setPower(
-                DoubleSupplier {
-                    MathUtil.applyDeadband(
-                        -(driverController.leftTriggerAxis + 1) / 2
-                                + (driverController.rightTriggerAxis + 1) / 2,
-                        0.15
-                    )
-                })
+            climb.setPower {
+                MathUtil.applyDeadband(
+                    -(driverController.leftTriggerAxis + 1) / 2
+                            + (driverController.rightTriggerAxis + 1) / 2,
+                    0.15
+                )
+            }
         )
     }
 
     private fun configureButtonBindings() {
-        driverController.start().onTrue(climb.lock())
-        driverController.back().onTrue(climb.open())
+        driverController.start().onTrue(climb.lock().withTimeout(2.0))
+        driverController.back().onTrue(climb.open().withTimeout(2.0))
     }
 
     fun getAutonomousCommand(): Command = autoChooser.selected
