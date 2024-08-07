@@ -19,6 +19,7 @@ object HoodConstants {
     val MAX_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second).of(4.0)
     val RESTING_ANGLE: Measure<Angle> = Units.Degrees.of(114.0)
     val HOOD_LENGTH: Measure<Distance> = Units.Meters.of(0.4)
+   
     val MECHANISM_2D_POSE = Translation2d(1.0, 1.0)
     val ROOT_POSITION = Translation3d(-0.27, 0.0, 0.225)
     val SIMULATION_OFFSET: Measure<Angle> = Units.Degrees.of(-54.0)
