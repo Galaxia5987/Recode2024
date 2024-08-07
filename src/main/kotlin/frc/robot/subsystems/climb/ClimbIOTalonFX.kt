@@ -25,7 +25,7 @@ class ClimbIOTalonFX : ClimbIO {
         stopperMotor.configFactoryDefault()
         stopperMotor.enableCurrentLimit(true)
         stopperMotor.enableVoltageCompensation(true)
-        stopperMotor.configVoltageCompSaturation(12.0)
+        stopperMotor.configVoltageCompSaturation(ClimbConstants.STOPPER_MOTOR_VOLTAGE_COMPENSATION_SATURATION)
         stopperMotor.configPeakCurrentLimit(ClimbConstants.STOPPER_MOTOR_CURRENT_LIMIT)
         stopperMotor.setNeutralMode(NeutralMode.Brake)
         stopperMotor.inverted = true
