@@ -12,7 +12,7 @@ import org.littletonrobotics.junction.Logger
 
 class Intake(private val io: IntakeIO) : SubsystemBase() {
     @AutoLogOutput
-    private var angleSetPoint: Measure<Angle> = Units.Degree.zero()
+    private var angleSetpoint: Measure<Angle> = Units.Degree.zero()
     private val inputs = io.inputs
 
     companion object {
@@ -51,7 +51,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
 
     fun setAngle(angle: Measure<Angle>): Command {
         return Commands.run({
-                angleSetPoint = angle
+                angleSetpoint = angle
                 io.setAngle(angle)
             }
         )
