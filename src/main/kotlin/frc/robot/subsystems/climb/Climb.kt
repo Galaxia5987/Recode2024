@@ -27,7 +27,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
             }
         }
 
-        fun getInstance(): Climb{
+        fun getInstance(): Climb {
             return instance ?: throw IllegalStateException("climb not initialized, call initialize(io)")
         }
     }
