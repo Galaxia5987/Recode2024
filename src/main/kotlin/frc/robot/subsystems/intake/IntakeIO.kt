@@ -8,29 +8,17 @@ import org.team9432.annotation.Logged
 interface IntakeIO {
     val inputs: LoggedIntakeInputs
 
-    fun setSpinPower(power: Double) {
+    fun setSpinPower(power: Double) {}
 
-    }
+    fun setCenterPower(power: Double) {}
 
-    fun setCenterPower(power: Double) {
+    fun setAngle(angle: Measure<Angle>) {}
 
-    }
+    fun setAnglePower(power: Double) {}
 
-    fun setAngle(angle: Measure<Angle>) {
+    fun retract() {}
 
-    }
-
-    fun setAnglePower(power: Double) {
-
-    }
-
-    fun reset() {
-
-    }
-
-    fun updateInputs() {
-
-    }
+    fun updateInputs() {}
 
     @Logged
     open class IntakeInputs {
