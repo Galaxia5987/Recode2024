@@ -52,7 +52,5 @@ class ClimbIOTalonFX : ClimbIO {
         inputs.stopperAppliedVoltage = stopperMotor.motorOutputVoltage
         inputs.stopperCurrent = stopperMotor.statorCurrent
         inputs.mainMotorAppliedVoltage = mainMotor.motorVoltage.value
-        inputs.isStopperStuck = stopperMotor.statorCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
-        inputs.stopperCurrent = stopperMotor.statorCurrent
     }
 }

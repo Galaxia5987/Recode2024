@@ -4,12 +4,17 @@ import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
+import kotlin.math.absoluteValue
 
 class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     private val inputs = io.inputs
     private val timer = Timer()
+
+    @AutoLogOutput
+    private var isStopperStuck = false
 
     companion object {
         @Volatile
@@ -34,13 +39,13 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
 
     fun open(): Command {
         return Commands.run(io::openStopper)
-            .until { inputs.isStopperStuck }
+            .until { isStopperStuck }
             .andThen(io::disableStopper)
     }
 
     fun lock(): Command {
         return Commands.run(io::closeStopper)
-            .until { inputs.isStopperStuck }
+            .until { isStopperStuck }
             .andThen(io::disableStopper)
     }
 
@@ -49,6 +54,9 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     override fun periodic() {
+        isStopperStuck =
+            inputs.stopperCurrent.absoluteValue >=
+                    ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
         io.updateInputs()
         if (timer.advanceIfElapsed(0.1)) {
             Logger.processInputs(this::class.simpleName, inputs)

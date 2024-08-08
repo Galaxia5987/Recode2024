@@ -24,6 +24,5 @@ interface ClimbIO {
         var stopperAppliedVoltage = 0.0
         var stopperCurrent = 0.0
         var mainMotorAppliedVoltage = 0.0
-        var isStopperStuck = false
     }
 }
