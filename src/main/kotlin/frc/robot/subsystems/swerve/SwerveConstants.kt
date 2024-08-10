@@ -2,6 +2,8 @@ package frc.robot.subsystems.swerve
 
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
+import com.ctre.phoenix6.signals.InvertedValue
+import com.ctre.phoenix6.signals.NeutralModeValue
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig
 import com.pathplanner.lib.util.PIDConstants
 import com.pathplanner.lib.util.ReplanningConfig
@@ -23,82 +25,87 @@ object SwerveConstants {
 
     val OFFSETS = arrayOf(0.533935546875, 0.762939453125, 0.023681640625, 0.3232421875)
 
-    const val NEO_CURRENT_LIMIT: Double = 40.0
-    const val NEO_550_CURRENT_LIMIT: Double = 20.0
-    val TALON_FX_CURRENT_LIMIT_CONFIGS: CurrentLimitsConfigs = CurrentLimitsConfigs()
+    const val VOLT_COMP_SATURATION = 12.0
+    const val NEUTRAL_DEADBAND = 0.0
+    const val XBOX_DEADBAND = 0.1
+
+    const val NEO_CURRENT_LIMIT = 40.0
+    const val NEO_550_CURRENT_LIMIT = 20.0
+    val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
         .withSupplyCurrentLimit(40.0)
         .withStatorCurrentLimit(80.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
+    val VOLTAGE_CONFIGS = VoltageConfigs()
+        .withPeakForwardVoltage(VOLT_COMP_SATURATION)
+        .withPeakReverseVoltage(VOLT_COMP_SATURATION)
+    val MOTOR_OUTPUT_CONFIGS = MotorOutputConfigs()
+        .withDutyCycleNeutralDeadband(NEUTRAL_DEADBAND)
+        .withNeutralMode(NeutralModeValue.Brake)
+        .withInverted(InvertedValue.Clockwise_Positive)
+    val MOTION_MAGIC_CONFIGS = MotionMagicConfigs()
+        .withMotionMagicCruiseVelocity(3.0)
+        .withMotionMagicAcceleration(12.0)
 
-    const val VOLT_COMP_SATURATION: Double = 12.0
-    const val NEUTRAL_DEADBAND: Double = 0.0
-    const val XBOX_DEADBAND: Double = 0.1
     val STEERING_MULTIPLIER =
         LoggedTunableNumber("Steering multiplier", 0.6)
-    val DRIVE_KP: LoggedTunableNumber =
+    val DRIVE_KP =
         LoggedTunableNumber("Swerve Drive/PID/driveKP")
-    val DRIVE_KI: LoggedTunableNumber =
+    val DRIVE_KI =
         LoggedTunableNumber("Swerve Drive/PID/driveKI")
-    val DRIVE_KD: LoggedTunableNumber =
+    val DRIVE_KD =
         LoggedTunableNumber("Swerve Drive/PID/driveKD")
-    val DRIVE_KV: LoggedTunableNumber =
+    val DRIVE_KV =
         LoggedTunableNumber("Swerve Drive/PID/driveKV")
-    val DRIVE_KS: LoggedTunableNumber =
+    val DRIVE_KS =
         LoggedTunableNumber("Swerve Drive/PID/driveKS")
-    val DRIVE_KA: LoggedTunableNumber =
+    val DRIVE_KA =
         LoggedTunableNumber("Swerve Drive/PID/driveKA")
-    val ANGLE_KP: LoggedTunableNumber =
+    val ANGLE_KP =
         LoggedTunableNumber("Swerve Drive/PID/angleKP")
-    val ANGLE_KI: LoggedTunableNumber =
+    val ANGLE_KI =
         LoggedTunableNumber("Swerve Drive/PID/angleKI")
-    val ANGLE_KD: LoggedTunableNumber =
+    val ANGLE_KD =
         LoggedTunableNumber("Swerve Drive/PID/angleKD")
-    val ANGLE_KV: LoggedTunableNumber =
+    val ANGLE_KV =
         LoggedTunableNumber("Swerve Drive/PID/angleKV")
-    val ANGLE_KS: LoggedTunableNumber =
+    val ANGLE_KS =
         LoggedTunableNumber("Swerve Drive/PID/angleKS")
-    val ANGLE_KA: LoggedTunableNumber =
+    val ANGLE_KA =
         LoggedTunableNumber("Swerve Drive/PID/angleKA")
-    val PID_VALUES: Array<LoggedTunableNumber> = arrayOf(
+    val PID_VALUES = arrayOf(
         DRIVE_KP, DRIVE_KI, DRIVE_KD, DRIVE_KV, DRIVE_KS, DRIVE_KA, ANGLE_KP, ANGLE_KI,
         ANGLE_KD, ANGLE_KV, ANGLE_KS, ANGLE_KA
     )
-    val ROTATION_KP: LoggedTunableNumber =
+    val ROTATION_KP =
         LoggedTunableNumber("Swerve Drive/Rotation/rotationKP")
-    val ROTATION_KI: LoggedTunableNumber =
+    val ROTATION_KI =
         LoggedTunableNumber("Swerve Drive/Rotation/rotationKI")
-    val ROTATION_KD: LoggedTunableNumber =
+    val ROTATION_KD =
         LoggedTunableNumber("Swerve Drive/Rotation/rotationKD")
-    val ROTATION_KDIETER: LoggedTunableNumber =
+    val ROTATION_KDIETER =
         LoggedTunableNumber("Swerve Drive/Rotation/rotationKDIETER")
 
-    val VOLTAGE_CONFIGS: VoltageConfigs = VoltageConfigs()
-        .withPeakForwardVoltage(VOLT_COMP_SATURATION)
-        .withPeakReverseVoltage(VOLT_COMP_SATURATION)
-    val MOTOR_OUTPUT_CONFIGS: MotorOutputConfigs = MotorOutputConfigs().withDutyCycleNeutralDeadband(NEUTRAL_DEADBAND)
-    val MOTION_MAGIC_CONFIGS: MotionMagicConfigs = MotionMagicConfigs()
-        .withMotionMagicCruiseVelocity(3.0)
-        .withMotionMagicAcceleration(12.0)
-    const val ODOMETRY_FREQUENCY: Double = 250.0
-    var ROBOT_WIDTH: Double = 0.0
-    var ROBOT_LENGTH: Double = 0.0
+
+    const val ODOMETRY_FREQUENCY = 250.0
+    var ROBOT_WIDTH = 0.0
+    var ROBOT_LENGTH = 0.0
+    var WHEEL_DIAMETER = 0.0
+    var DRIVE_REDUCTION = 0.0
+    var ANGLE_REDUCTION = 0.0
     var WHEEL_POSITIONS: Array<Translation2d?>
-    var WHEEL_DIAMETER: Double = 0.0
-    var DRIVE_REDUCTION: Double = 0.0
     var FEEDBACK_CONFIGS_DRIVE: FeedbackConfigs? = null
     var DRIVE_MOTOR_CONFIGS: TalonFXConfiguration? = null
-    var ANGLE_REDUCTION: Double = 0.0
     var FEEDBACK_CONFIGS_ANGLE: FeedbackConfigs? = null
     var ANGLE_MOTOR_CONFIGS: TalonFXConfiguration? = null
     var ENCODER_CONFIGS: CANcoderConfiguration? = null
     val HOLONOMIC_PATH_FOLLOWER_CONFIG: HolonomicPathFollowerConfig
 
-    var DRIVE_MOTOR_MOMENT_OF_INERTIA: Double = 0.025
-    var ANGLE_MOTOR_MOMENT_OF_INERTIA: Double = 0.004
-    var MAX_X_Y_VELOCITY: Double = 0.0
-    var MAX_OMEGA_VELOCITY: Double = 0.0
-    var VY_NOTE_DETECTION_CONTROLLER: PIDController = PIDController(5.0, 0.0, 0.3)
+    var DRIVE_MOTOR_MOMENT_OF_INERTIA = 0.025
+    var ANGLE_MOTOR_MOMENT_OF_INERTIA = 0.004
+    var MAX_X_Y_VELOCITY = 0.0
+    var MAX_OMEGA_VELOCITY = 0.0
+    var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
     init {
         when (SWERVE_TYPE) {
