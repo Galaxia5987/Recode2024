@@ -15,8 +15,8 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
-    @AutoLogOutput
     private val inputs: LoggedHoodInputs = io.inputs
+    @AutoLogOutput
     private var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
     private val timer = Timer()
     private val encoderTimer = Timer()
