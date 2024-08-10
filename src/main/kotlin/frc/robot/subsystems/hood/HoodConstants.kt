@@ -66,7 +66,7 @@ object HoodConstants {
             .withMotorOutput(MotorOutputConfigs().withInverted(HoodConstants.INVERTED_VALUE)).CurrentLimits
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(HoodConstants.CURRENT_LIMIT)
+            .withStatorCurrentLimit(2 * HoodConstants.CURRENT_LIMIT)
             .withSupplyCurrentLimit(HoodConstants.CURRENT_LIMIT)
     }
 }
