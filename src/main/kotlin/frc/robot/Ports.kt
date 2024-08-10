@@ -53,6 +53,11 @@ class Ports {
         )
     }
 
+    object Hood {
+        const val MOTOR_ID: Int = 9
+        const val ENCODER_ID: Int = 21
+    }
+
     object UI {
         const val JOYSTICK_TRIGGER: Int = 1
         const val JOYSTICK_TOP_BOTTOM_BUTTON: Int = 2

@@ -8,13 +8,14 @@ import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
+import frc.robot.Ports
 import frc.robot.lib.Utils
 import kotlin.math.sign
 
 class HoodIOReal : HoodIO {
     override val inputs = LoggedHoodInputs()
-    private val motor: TalonFX = TalonFX(-1) // TODO: Replace with real motor port
-    private val encoder = TalonSRX(-1) // TODO: Replace with real Port
+    private val motor: TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
+    private val encoder = TalonSRX(Ports.Hood.ENCODER_ID)
 
     private val positionControl = PositionTorqueCurrentFOC(0.0)
 
