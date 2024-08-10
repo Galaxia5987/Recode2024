@@ -10,7 +10,6 @@ import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.littletonrobotics.junction.AutoLog
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
@@ -59,7 +58,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
 
     @AutoLogOutput
     fun atSetpoint(): Boolean =
-        inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE_DEG)
+        inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE)
 
     fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
 
