@@ -59,15 +59,15 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
 
     fun intake(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.intakeAngle),
-            setSpinPower(IntakeConstants.intakeSpinPower),
-            setCenterPower(IntakeConstants.intakeCenterPower)
+            setAngle(IntakeConstants.INTAKE_ANGLE),
+            setSpinPower(IntakeConstants.INTAKE_SPIN_POWER),
+            setCenterPower(IntakeConstants.INTAKE_CENTER_POWER)
         )
     }
 
     fun stop(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.restAngle),
+            setAngle(IntakeConstants.REST_ANGLE),
             setSpinPower(0.0),
             setCenterPower(0.0)
         )

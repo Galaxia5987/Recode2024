@@ -5,11 +5,11 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 
 object IntakeConstants {
-    const val intakeSpinPower = 0.4
-    const val intakeCenterPower = 0.4
+    const val INTAKE_SPIN_POWER = 0.4
+    const val INTAKE_CENTER_POWER = 0.4
     const val GEAR_RATIO = 45.62
 
-    val intakeAngle: Measure<Angle> = Units.Degree.zero()
+    val INTAKE_ANGLE: Measure<Angle> = Units.Degree.zero()
 
-    val restAngle: Measure<Angle> = Units.Degree.of(114.0)
+    val REST_ANGLE: Measure<Angle> = Units.Degree.of(114.0)
 }
