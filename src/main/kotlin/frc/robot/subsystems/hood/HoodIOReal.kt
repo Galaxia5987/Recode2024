@@ -17,7 +17,7 @@ class HoodIOReal : HoodIO {
     private val motor: TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
     private val encoder = TalonSRX(Ports.Hood.ENCODER_ID)
 
-    private val positionControl = PositionTorqueCurrentFOC(0.0)
+    private val angleControl = PositionTorqueCurrentFOC(0.0)
 
     init {
         motor.configurator.apply(HoodConstants.MOTOR_CONFIGURATION)
@@ -39,7 +39,7 @@ class HoodIOReal : HoodIO {
     override fun setAngle(angle: MutableMeasure<Angle>) {
         val error = angle.minus(inputs.absoluteEncoderAngle)
         motor.setControl(
-            positionControl
+            angleControl
                 .withPosition(inputs.internalAngle.plus(error).`in`(Units.Rotations))
                 .withFeedForward(
                     sign(angle.minus(inputs.absoluteEncoderAngle
