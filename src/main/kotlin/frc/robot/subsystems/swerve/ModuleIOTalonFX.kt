@@ -38,12 +38,10 @@ class ModuleIOTalonFX(
     init {
         updatePID()
 
-        driveConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive
         driveMotor.configurator.apply(driveConfig)
         driveMotor.setPosition(0.0)
 
         angleConfig.ClosedLoopGeneral.ContinuousWrap = true
-        angleConfig.MotorOutput.Inverted = InvertedValue.Clockwise_Positive
         angleMotor.configurator.apply(angleConfig)
         angleMotor.setPosition(0.0)
 
@@ -56,9 +54,6 @@ class ModuleIOTalonFX(
             angleMotor.position,
             angleMotor.motorVoltage
         )
-
-        driveMotor.setNeutralMode(NeutralModeValue.Brake)
-        angleMotor.setNeutralMode(NeutralModeValue.Brake)
     }
 
     override fun updateInputs() {
