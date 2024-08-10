@@ -5,6 +5,7 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
+import java.util.function.Supplier
 
 interface HoodIO {
     val inputs: LoggedHoodInputs
@@ -13,7 +14,7 @@ interface HoodIO {
 
     fun setAngle(angle: MutableMeasure<Angle>) {}
 
-    fun setAngle(angle: MutableMeasure<Angle>, torqueChassisCompensation: Double) {}
+    fun setAngle(angle: MutableMeasure<Angle>, torqueCompensation: Supplier<Double>) {}
 
     fun updateInputs() {}
 
