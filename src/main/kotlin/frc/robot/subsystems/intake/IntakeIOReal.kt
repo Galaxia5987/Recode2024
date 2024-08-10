@@ -52,7 +52,7 @@ class IntakeIOReal : IntakeIO{
         angleMotor.setControl(dutyCycle.withOutput(power))
     }
 
-    override fun reset() {
+    override fun resetEncoder() {
         angleMotor.setPosition(0.0)
     }
 

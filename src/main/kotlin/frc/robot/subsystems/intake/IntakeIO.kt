@@ -16,7 +16,7 @@ interface IntakeIO {
 
     fun setAnglePower(power: Double) {}
 
-    fun retract() {}
+    fun resetEncoder() {}
 
     fun updateInputs() {}
 

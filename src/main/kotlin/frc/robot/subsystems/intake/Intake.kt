@@ -77,7 +77,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
         return StartEndCommand({
                 io.setAnglePower(-0.3)
             }, {
-                io.reset()
+                io.resetEncoder()
                 io.setAnglePower(0.0)
             }
         )
