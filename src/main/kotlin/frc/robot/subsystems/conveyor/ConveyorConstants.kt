@@ -4,6 +4,7 @@ import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.*
+import frc.robot.Constants
 import frc.robot.lib.webconstants.LoggedTunableNumber
 
 object ConveyorConstants {
@@ -27,35 +28,48 @@ object ConveyorConstants {
     val PID_VALUES = arrayOf(KP, KI, KD, KS, KV, KA)
 
     init {
-        KP.initDefault(1.0)
-        KI.initDefault(0.0)
-        KD.initDefault(0.0)
-        KS.initDefault(0.0)
-        KV.initDefault(0.1125)
-        KA.initDefault(0.0)
+        when (Constants.CURRENT_MODE) {
+            Constants.Mode.REAL, Constants.Mode.REPLAY -> {
+                KP.initDefault(1.0)
+                KI.initDefault(0.0)
+                KD.initDefault(0.0)
+                KS.initDefault(0.0)
+                KV.initDefault(0.1125)
+                KA.initDefault(0.0)
 
-        MOTOR_CONFIG
-            .withMotorOutput(
-                MotorOutputConfigs()
-                    .withNeutralMode(NeutralModeValue.Coast)
-                    .withInverted(InvertedValue.Clockwise_Positive)
-            ).withSlot0(
-                Slot0Configs()
-                    .withKP(KP.get())
-                    .withKI(KI.get())
-                    .withKD(KD.get())
-                    .withKS(KS.get())
-                    .withKV(KV.get())
-                    .withKA(KA.get())
-            ).withCurrentLimits(
-                CurrentLimitsConfigs()
-                    .withStatorCurrentLimitEnable(true)
-                    .withSupplyCurrentLimitEnable(true)
-                    .withStatorCurrentLimit(80.0)
-                    .withSupplyCurrentLimit(40.0)
-            ).withFeedback(
-                FeedbackConfigs()
-                    .withSensorToMechanismRatio(GEAR_RATIO)
-            )
+                MOTOR_CONFIG
+                    .withMotorOutput(
+                        MotorOutputConfigs()
+                            .withNeutralMode(NeutralModeValue.Coast)
+                            .withInverted(InvertedValue.Clockwise_Positive)
+                    ).withSlot0(
+                        Slot0Configs()
+                            .withKP(KP.get())
+                            .withKI(KI.get())
+                            .withKD(KD.get())
+                            .withKS(KS.get())
+                            .withKV(KV.get())
+                            .withKA(KA.get())
+                    ).withCurrentLimits(
+                        CurrentLimitsConfigs()
+                            .withStatorCurrentLimitEnable(true)
+                            .withSupplyCurrentLimitEnable(true)
+                            .withStatorCurrentLimit(80.0)
+                            .withSupplyCurrentLimit(40.0)
+                    ).withFeedback(
+                        FeedbackConfigs()
+                            .withSensorToMechanismRatio(GEAR_RATIO)
+                    )
+            }
+
+            else -> {
+                KP.initDefault(0.0)
+                KI.initDefault(0.0)
+                KD.initDefault(0.0)
+                KS.initDefault(0.0)
+                KV.initDefault(1.87)
+                KA.initDefault(0.0)
+            }
+        }
     }
 }
