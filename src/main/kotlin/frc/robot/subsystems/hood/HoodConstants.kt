@@ -3,6 +3,7 @@ package frc.robot.subsystems.hood
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.GravityTypeValue
 import com.ctre.phoenix6.signals.InvertedValue
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.geometry.Translation3d
 import edu.wpi.first.units.*
@@ -62,6 +63,7 @@ object HoodConstants {
                     .withKA(kA.get())
                     .withKG(kG.get())
                     .withGravityType(GravityTypeValue.Arm_Cosine)
+                    .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign)
             )
             .withMotorOutput(MotorOutputConfigs().withInverted(HoodConstants.INVERTED_VALUE)).CurrentLimits
             .withStatorCurrentLimitEnable(true)

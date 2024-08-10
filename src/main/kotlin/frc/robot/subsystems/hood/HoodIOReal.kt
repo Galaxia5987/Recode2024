@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.MutableMeasure
@@ -41,9 +42,6 @@ class HoodIOReal : HoodIO {
         motor.setControl(
             angleControl
                 .withPosition(inputs.internalAngle.plus(error).`in`(Units.Rotations))
-                .withFeedForward(
-                    sign(angle.minus(inputs.absoluteEncoderAngle
-                        ).`in`(Units.Degrees)) * HoodConstants.kS.get())
         )
     }
 
