@@ -23,15 +23,19 @@ class IntakeIOReal : IntakeIO{
     private val dutyCycle = DutyCycleOut(0.0)
 
     init {
+        spinMotor.restoreFactoryDefaults()
         spinMotor.inverted = true
         spinMotor.setSmartCurrentLimit(40)
         spinMotor.idleMode = CANSparkBase.IdleMode.kCoast
         spinMotor.enableVoltageCompensation(12.0)
+        spinMotor.burnFlash()
 
+        centerMotor.restoreFactoryDefaults()
         centerMotor.inverted = true
         centerMotor.setSmartCurrentLimit(40)
         centerMotor.idleMode = CANSparkBase.IdleMode.kBrake
         centerMotor.enableVoltageCompensation(12.0)
+        centerMotor.burnFlash()
 
         angleMotor.configurator.apply(IntakeConstants.MOTOR_CONFIG)
     }
