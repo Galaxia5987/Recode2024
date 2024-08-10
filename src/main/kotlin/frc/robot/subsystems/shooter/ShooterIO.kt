@@ -5,6 +5,7 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import edu.wpi.first.units.Voltage
+import frc.robot.lib.webconstants.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
@@ -18,6 +19,16 @@ interface ShooterIO {
     fun stop() {}
 
     fun updateInputs() {}
+
+    fun updatePID() {}
+
+    fun hasPIDChanged(PIDValues: Array<LoggedTunableNumber>): Boolean{
+        var hasChanged = false
+        for (value in PIDValues){
+            if (value.hasChanged()) hasChanged = true
+        }
+        return hasChanged
+    }
 
     @Logged
     open class RollerInputs {

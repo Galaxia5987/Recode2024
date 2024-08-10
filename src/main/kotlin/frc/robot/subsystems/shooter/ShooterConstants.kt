@@ -35,6 +35,10 @@ object ShooterConstants {
     val BOTTOM_kV: LoggedTunableNumber = LoggedTunableNumber("Shooter/Bottom kV")
     val BOTTOM_kA: LoggedTunableNumber = LoggedTunableNumber("Shooter/Bottom kA")
 
+    val PID_VALUES = arrayOf(
+        TOP_kP, TOP_kI, TOP_kD, TOP_kS, TOP_kV, TOP_kA,
+        BOTTOM_kP, BOTTOM_kI, BOTTOM_kD, BOTTOM_kS, BOTTOM_kV, BOTTOM_kA)
+
     val topMotorConfiguration = TalonFXConfiguration()
     val bottomMotorConfiguration = TalonFXConfiguration()
 
@@ -73,11 +77,11 @@ object ShooterConstants {
                     .withKV(TOP_kV.get())
                     .withKA(TOP_kA.get())
             )
-            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.TOP_INVERSION)).CurrentLimits
+            .withMotorOutput(MotorOutputConfigs().withInverted(TOP_INVERSION)).CurrentLimits
             .withStatorCurrentLimitEnable(true)
-            .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_TOP)
+            .withStatorCurrentLimit(2 * CURRENT_LIMIT_TOP)
             .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_TOP)
+            .withSupplyCurrentLimit(CURRENT_LIMIT_TOP)
 
         bottomMotorConfiguration
             .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO_BOTTOM))
@@ -90,12 +94,10 @@ object ShooterConstants {
                     .withKV(BOTTOM_kV.get())
                     .withKA(BOTTOM_kA.get())
             )
-            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.BOTTOM_INVERSION)).CurrentLimits
+            .withMotorOutput(MotorOutputConfigs().withInverted(BOTTOM_INVERSION)).CurrentLimits
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_BOTTOM)
-            .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_BOTTOM)
-        TOP_kP.initDefault(5.0)
-        BOTTOM_kP.initDefault(5.0)
+            .withStatorCurrentLimit(2 * CURRENT_LIMIT_BOTTOM)
+            .withSupplyCurrentLimit(CURRENT_LIMIT_BOTTOM)
     }
 }
