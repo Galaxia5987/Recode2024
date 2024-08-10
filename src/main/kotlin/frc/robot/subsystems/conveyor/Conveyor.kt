@@ -39,7 +39,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         timer.reset()
     }
 
-    fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) : Command = run {
+    fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>): Command = run {
         velocitySetpoint.mut_replace(velocity)
         io.setVelocity(velocity)
     }
@@ -47,11 +47,11 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     fun feed() = setVelocity(ConveyorConstants.FEED_VELOCITY)
 
     @AutoLogOutput
-    fun atSetPoint() : Boolean {
+    fun atSetPoint(): Boolean {
         return inputs.velocity.isNear(velocitySetpoint, ConveyorConstants.AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
     }
 
-    fun stop() : Command {
+    fun stop(): Command {
         return runOnce {
             velocitySetpoint.mut_replace(0.0, Units.RotationsPerSecond)
             io.stop()

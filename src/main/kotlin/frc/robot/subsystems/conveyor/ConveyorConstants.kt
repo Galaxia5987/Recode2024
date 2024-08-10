@@ -11,7 +11,8 @@ object ConveyorConstants {
 
     val AT_SETPOINT_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.5)
 
-    val MOMENT_OF_INERTIA : Measure<Mult<Mult<Mass, Distance>, Distance>> = Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.000_05)
+    val MOMENT_OF_INERTIA: Measure<Mult<Mult<Mass, Distance>, Distance>> =
+        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.000_05)
 
     val MOTOR_CONFIG: TalonFXConfiguration = TalonFXConfiguration()
 

@@ -1,8 +1,6 @@
 package frc.robot.subsystems.conveyor
 
 import com.ctre.phoenix6.controls.VelocityVoltage
-import com.revrobotics.CANSparkBase
-import com.revrobotics.CANSparkMax
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.units.Angle
@@ -10,7 +8,6 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj.Timer
-import frc.robot.lib.motors.SparkMaxSim
 import frc.robot.lib.motors.TalonFXSim
 
 class ConveyorIOSim : ConveyorIO {
@@ -23,8 +20,10 @@ class ConveyorIOSim : ConveyorIO {
         1.0
     )
 
-    private val controller: PIDController = PIDController(ConveyorConstants.KP.get(), ConveyorConstants.KI.get(), ConveyorConstants.KD.get(), 0.02)
-    private val feed: SimpleMotorFeedforward = SimpleMotorFeedforward(ConveyorConstants.KS.get(), ConveyorConstants.KV.get(), ConveyorConstants.KA.get())
+    private val controller: PIDController =
+        PIDController(ConveyorConstants.KP.get(), ConveyorConstants.KI.get(), ConveyorConstants.KD.get(), 0.02)
+    private val feed: SimpleMotorFeedforward =
+        SimpleMotorFeedforward(ConveyorConstants.KS.get(), ConveyorConstants.KV.get(), ConveyorConstants.KA.get())
 
     init {
         conveyor.setController(controller)
@@ -35,7 +34,7 @@ class ConveyorIOSim : ConveyorIO {
     }
 
     override fun stop() {
-       conveyor.setControl(control.withVelocity(0.0))
+        conveyor.setControl(control.withVelocity(0.0))
     }
 
 
