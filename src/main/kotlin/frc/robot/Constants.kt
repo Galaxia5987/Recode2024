@@ -38,7 +38,7 @@ object Constants {
                         Ports.SwerveDriveWCP.ANGLE_IDS[i],
                         Ports.SwerveDriveWCP.ENCODER_IDS[i],
                         SwerveConstants.DRIVE_MOTOR_CONFIGS
-                            ?: throw IllegalStateException("drive motor config is null"), //TODO: Not sure if this is great cuz default config doesn't have current limits but it shouldn't be null so...
+                            ?: throw IllegalStateException("drive motor config is null"),
                         SwerveConstants.ANGLE_MOTOR_CONFIGS
                             ?: throw IllegalStateException("angle motor config is null"),
                         SwerveConstants.ENCODER_CONFIGS ?: throw IllegalStateException("encoder config is null")
