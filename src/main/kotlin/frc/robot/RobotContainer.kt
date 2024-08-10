@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.hood.HoodIOReal
 import frc.robot.subsystems.hood.HoodIOSim
 import java.util.Optional
 import kotlin.math.absoluteValue
@@ -19,14 +20,14 @@ import kotlin.math.absoluteValue
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
+    private val hood: Hood;
+
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
-    private val hood: Hood;
-//    private val autoChooser = AutoBuilder.buildAutoChooser()
 
     init {
-        Hood.initialize(HoodIOSim())
+        Hood.initialize(HoodIOReal())
         hood = Hood.getInstance();
 
         registerAutoCommands()
