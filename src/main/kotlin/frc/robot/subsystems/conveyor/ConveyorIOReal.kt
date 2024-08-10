@@ -11,7 +11,7 @@ import frc.robot.Ports
 
 class ConveyorIOReal : ConveyorIO {
     override val inputs = LoggedConveyorInputs()
-    private val roller = TalonFX(Ports.conveyor.MOTOR_ID)
+    private val roller = TalonFX(Ports.Conveyor.MOTOR_ID)
     private val control = VelocityVoltage(0.0).withEnableFOC(true)
 
     init {
