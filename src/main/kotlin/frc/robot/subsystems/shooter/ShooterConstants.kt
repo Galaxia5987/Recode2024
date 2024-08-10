@@ -47,6 +47,21 @@ object ShooterConstants {
     private val BOTTOM_INVERSION = InvertedValue.Clockwise_Positive
 
     init {
+        TOP_kP.initDefault(0.4)
+        TOP_kI.initDefault(0.0)
+        TOP_kD.initDefault(0.0)
+        TOP_kS.initDefault(0.0)
+        TOP_kV.initDefault(0.1282)
+        TOP_kA.initDefault(0.0)
+
+        BOTTOM_kP.initDefault(0.3)
+        BOTTOM_kI.initDefault(0.0)
+        BOTTOM_kD.initDefault(0.0)
+        BOTTOM_kS.initDefault(0.0)
+        BOTTOM_kV.initDefault(0.1232)
+        BOTTOM_kA.initDefault(0.0)
+
+
         topMotorConfiguration
             .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO_TOP))
             .withSlot0(
