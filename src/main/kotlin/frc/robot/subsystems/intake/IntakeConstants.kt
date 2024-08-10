@@ -25,7 +25,7 @@ object IntakeConstants {
         ).CurrentLimits
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(40.0)
+            .withStatorCurrentLimit(80.0)
             .withSupplyCurrentLimit(40.0)
     }
 }
