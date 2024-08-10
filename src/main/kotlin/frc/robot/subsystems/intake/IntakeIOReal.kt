@@ -33,7 +33,7 @@ class IntakeIOReal : IntakeIO{
         centerMotor.idleMode = CANSparkBase.IdleMode.kBrake
         centerMotor.enableVoltageCompensation(12.0)
 
-//        angleMotor.configurator.apply(null) TODO: add configuration
+        angleMotor.configurator.apply(IntakeConstants.MOTOR_CONFIG)
     }
 
     override fun setSpinPower(power: Double) {
