@@ -26,7 +26,7 @@ class HoodIOReal : HoodIO {
     }
 
     private fun getEncoderPosition(): Double {
-        val encoderTicksPerRevolution = HoodConstants.ENCODER_TICKS_PER_REVOLUTION.toDouble()
+        val encoderTicksPerRevolution = HoodConstants.ENCODER_TICKS_PER_REVOLUTION
         val encoderPosition = encoder.selectedSensorPosition % encoderTicksPerRevolution
         val normalizedPosition = encoderPosition / encoderTicksPerRevolution - HoodConstants.ABSOLUTE_ENCODER_OFFSET.get()
         return Utils.normalize(Rotation2d.fromRotations(normalizedPosition)).rotations

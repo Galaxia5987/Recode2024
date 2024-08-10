@@ -10,7 +10,7 @@ import frc.robot.lib.webconstants.LoggedTunableNumber
 
 object HoodConstants {
     const val GEAR_RATIO : Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
-    const val ENCODER_TICKS_PER_REVOLUTION = 4096
+    const val ENCODER_TICKS_PER_REVOLUTION = 4096.0
     const val SIMULATION_LENGTH = 3.0
 
     val MAX_TOLERANCE : Measure<Angle> = Units.Degrees.of(0.75)
