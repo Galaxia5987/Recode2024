@@ -1,4 +1,3 @@
-
 package frc.robot
 
 import com.pathplanner.lib.auto.AutoBuilder
@@ -10,6 +9,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOTalonFX
 import java.util.function.DoubleSupplier
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
+import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -18,21 +19,37 @@ import java.util.function.DoubleSupplier
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
+    private val swerveDrive: SwerveDrive
+    private val climb: Climb
+
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
-
-    private val climb: Climb
+    
+    private val autoChooser: SendableChooser<Command>
 
     init {
+        Constants.initSwerve()
         Climb.initialize(ClimbIOTalonFX())
+        
+        swerveDrive = SwerveDrive.getInstance()
         climb = Climb.getInstance()
+        
+        autoChooser = AutoBuilder.buildAutoChooser()
+
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
     }
 
     private fun configureDefaultCommands() {
+
+        swerveDrive.setDefaultCommand(
+          swerveDrive.driveCommand(
+            { -driverController.leftY },
+            { -driverController.leftX },
+            { 0.6 * -driverController.rightX }))
+        
         climb.setDefaultCommand(
             climb.setPower {
                 MathUtil.applyDeadband(
@@ -45,8 +62,10 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
+        driverController.y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
+        
         driverController.start().onTrue(climb.lock().withTimeout(2.0))
-        driverController.back().onTrue(climb.open().withTimeout(2.0))
+        driverController.back().onTrue(climb.open().withTimeout(2.0))   
     }
 
     fun getAutonomousCommand(): Command = Commands.none()

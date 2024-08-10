@@ -12,6 +12,19 @@ plugins {
 
 def javaVersion = JavaVersion.VERSION_17
 
+sourceSets {
+    main {
+        java {
+            srcDirs += 'src/main/kotlin'
+        }
+    }
+    test {
+        java {
+            srcDirs += 'src/test/kotlin'
+        }
+    }
+}
+
 java {
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
