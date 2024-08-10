@@ -1,6 +1,32 @@
 package frc.robot
 
 class Ports {
+  
+    object Shooter {
+        const val TOP_MOTOR_ID: Int = 11
+        const val BOTTOM_MOTOR_ID: Int = 10
+    }
+
+    object Hood {
+        const val MOTOR_ID: Int = 9
+        const val ENCODER_ID: Int = 21
+    }
+
+    object Conveyor {
+        const val MOTOR_ID: Int = 8
+    }
+
+    object Gripper {
+        const val ANGLE_ID: Int = 6
+        const val ROLLER_ID: Int = 7
+        const val ENCODER_ID: Int = 7
+    }
+
+    object Climb {
+        const val MAIN_MOTOR_ID: Int = 4
+        const val AUX_MOTOR_ID: Int = 5
+        const val STOPPER_ID: Int = 28
+    }
 
     object Intake {
         const val ANGLE_MOTOR_ID: Int = 0

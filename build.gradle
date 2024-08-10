@@ -25,7 +25,6 @@ sourceSets {
     }
 }
 
-
 java {
     sourceCompatibility = javaVersion
     targetCompatibility = javaVersion
