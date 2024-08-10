@@ -19,9 +19,7 @@ object ClimbConstants {
                 .withInverted(InvertedValue.Clockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake)
         ).CurrentLimits
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(40.0)
-            .withSupplyCurrentLimit(40.0)
+            .withStatorCurrentLimitEnable(false)
+            .withSupplyCurrentLimitEnable(false)
     }
 }
