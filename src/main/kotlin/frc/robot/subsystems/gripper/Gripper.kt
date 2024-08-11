@@ -43,6 +43,10 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
         }.withName("Set Roller Power")
     }
 
+    fun feed(): Command {
+        return setRollerPower(GripperConstants.INTAKE_POWER).withTimeout(0.4)
+    }
+
     override fun periodic() {
         io.updateInputs()
         Logger.processInputs(this::class.simpleName, io.inputs)
