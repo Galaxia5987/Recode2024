@@ -4,10 +4,7 @@ import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.*
 import frc.robot.Ports
 
 class ShooterIOReal : ShooterIO {
@@ -26,11 +23,11 @@ class ShooterIOReal : ShooterIO {
         bottomMotor.configurator.apply(ShooterConstants.bottomMotorConfiguration)
     }
 
-    override fun setTopVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
+    override fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
         topMotor.setControl(topControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
-    override fun setBottomVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
+    override fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {
         bottomMotor.setControl(bottomControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 

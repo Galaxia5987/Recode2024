@@ -1,10 +1,6 @@
 package frc.robot.subsystems.shooter
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
-import edu.wpi.first.units.Voltage
+import edu.wpi.first.units.*
 import frc.robot.lib.webconstants.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
@@ -12,9 +8,9 @@ interface ShooterIO {
     val topRollerInputs: LoggedRollerInputs
     val bottomRollerInputs: LoggedRollerInputs
 
-    fun setTopVelocity(velocity: MutableMeasure<Velocity<Angle>>) {}
+    fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {}
 
-    fun setBottomVelocity(velocity: MutableMeasure<Velocity<Angle>>) {}
+    fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {}
 
     fun stop() {}
 

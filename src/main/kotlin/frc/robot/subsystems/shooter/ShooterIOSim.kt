@@ -49,11 +49,11 @@ class ShooterIOSim : ShooterIO {
         )
     }
 
-    override fun setTopVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
+    override fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
         topMotor.setControl(topControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
-    override fun setBottomVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
+    override fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {
         bottomMotor.setControl(bottomControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
