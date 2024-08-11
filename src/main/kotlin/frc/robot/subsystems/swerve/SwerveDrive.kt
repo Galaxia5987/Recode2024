@@ -92,14 +92,15 @@ class SwerveDrive private constructor
     }
 
     companion object {
-        @JvmField
-        val odometryLock = ReentrantLock()
-
         @Volatile
         private var instance: SwerveDrive? = null
 
         fun initialize(gyroIO: GyroIO, offsets: Array<Double>, vararg moduleIOs: ModuleIO) {
-            instance = SwerveDrive(gyroIO, offsets, *moduleIOs)
+            synchronized(this) {
+                if (instance == null) {
+                    instance = SwerveDrive(gyroIO, offsets, *moduleIOs)
+                }
+            }
         }
 
         fun getInstance(): SwerveDrive {
