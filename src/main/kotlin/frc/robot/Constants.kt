@@ -10,17 +10,22 @@ object Constants {
 
     val CURRENT_MODE: Mode = Mode.REAL
 
+    val alliance: Alliance
+        get() = if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
+            Alliance.RED
+        } else{
+            Alliance.BLUE
+        }
+
+    enum class Alliance {
+        RED,
+        BLUE
+    }
 
     enum class Mode {
         REAL,
         SIM,
         REPLAY
-    }
-
-    fun isRed(): Boolean {
-        val alliance = DriverStation.getAlliance()
-        return if (alliance.isPresent) alliance.get() == Alliance.Red
-        else false
     }
 
     fun initSwerve() {

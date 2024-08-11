@@ -66,7 +66,7 @@ class SwerveDrive private constructor
         SwerveConstants.WHEEL_POSITIONS[3]
     )
 
-    private val estimator: SwerveDrivePoseEstimator
+    val estimator: SwerveDrivePoseEstimator
 
     @AutoLogOutput
     private var botPose = Pose2d()
@@ -92,14 +92,15 @@ class SwerveDrive private constructor
     }
 
     companion object {
-        @JvmField
-        val odometryLock = ReentrantLock()
-
         @Volatile
         private var instance: SwerveDrive? = null
 
         fun initialize(gyroIO: GyroIO, offsets: Array<Double>, vararg moduleIOs: ModuleIO) {
-            instance = SwerveDrive(gyroIO, offsets, *moduleIOs)
+            synchronized(this) {
+                if (instance == null) {
+                    instance = SwerveDrive(gyroIO, offsets, *moduleIOs)
+                }
+            }
         }
 
         fun getInstance(): SwerveDrive {
@@ -164,7 +165,7 @@ class SwerveDrive private constructor
         botPose = pose
         resetGyro(
             pose.rotation
-                .minus(if (Constants.isRed()) Rotation2d.fromDegrees(180.0) else Rotation2d())
+                .minus(if (Constants.alliance==Constants.Alliance.RED) Rotation2d.fromDegrees(180.0) else Rotation2d())
         )
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
@@ -174,7 +175,7 @@ class SwerveDrive private constructor
     }
 
     fun stop() {
-        for (i in 1..modules.size) {
+        for (i in modules.indices) {
             modules[i]?.moduleState = SwerveModuleState(0.0, modules[i]?.moduleState?.angle)
         }
     }
@@ -357,7 +358,7 @@ class SwerveDrive private constructor
             { chassisSpeeds },
             { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
             SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
-            Constants::isRed,
+            {Constants.alliance == Constants.Alliance.RED},
             this
         )
     }
