@@ -98,9 +98,7 @@ object Robot : LoggedRobot() {
         autonomousCommand = robotContainer!!.getAutonomousCommand()
 
         // Schedule the autonomous command
-        if (autonomousCommand != null) {
-            autonomousCommand!!.schedule()
-        }
+        autonomousCommand!!.schedule()
     }
 
     /** This function is called periodically during autonomous.  */

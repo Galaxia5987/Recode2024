@@ -10,6 +10,7 @@ object Constants {
 
     val CURRENT_MODE: Mode = Mode.REAL
 
+
     enum class Mode {
         REAL,
         SIM,
