@@ -1,12 +1,32 @@
 package frc.robot
 
+import com.pathplanner.lib.path.PathConstraints
+import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
-import edu.wpi.first.wpilibj.DriverStation.Alliance
 import frc.robot.subsystems.swerve.*
+import kotlin.math.sqrt
 
 object Constants {
     const val CONFIG_TIMEOUT: Int = 100 // [ms]
     const val LOOP_TIME = 0.02 // [s]
+
+    val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(2.0)
+    val MAX_ACCELERATION: Measure<Velocity<Velocity<Distance>>> = Units.MetersPerSecondPerSecond.of(1.0)
+    val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
+        MAX_VELOCITY.`in`(Units.MetersPerSecond)
+                / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+    )
+    val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second)
+        .of(
+            (MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond)
+                    / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0)))
+        )
+    val PATH_CONSTRAINTS: PathConstraints = PathConstraints(
+        MAX_VELOCITY.`in`(Units.MetersPerSecond),
+        MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond),
+        MAX_ANGULAR_VELOCITY.`in`(Units.RotationsPerSecond),
+        MAX_ANGULAR_ACCELERATION.`in`(Units.RotationsPerSecond.per(Units.Second))
+    )
 
     val CURRENT_MODE: Mode = Mode.REAL
 
