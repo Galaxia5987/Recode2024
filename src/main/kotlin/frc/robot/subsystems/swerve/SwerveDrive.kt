@@ -66,7 +66,7 @@ class SwerveDrive private constructor
         SwerveConstants.WHEEL_POSITIONS[3]
     )
 
-    private val estimator: SwerveDrivePoseEstimator
+    val estimator: SwerveDrivePoseEstimator
 
     @AutoLogOutput
     private var botPose = Pose2d()
