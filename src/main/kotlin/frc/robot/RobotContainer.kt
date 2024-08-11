@@ -88,6 +88,4 @@ object RobotContainer {
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
     }
-
-    fun getAutonomousCommand() : Command = Commands.none()
 }
