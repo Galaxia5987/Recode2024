@@ -175,7 +175,7 @@ class SwerveDrive private constructor
     }
 
     fun stop() {
-        for (i in 1..modules.size) {
+        for (i in modules.indices) {
             modules[i]?.moduleState = SwerveModuleState(0.0, modules[i]?.moduleState?.angle)
         }
     }
