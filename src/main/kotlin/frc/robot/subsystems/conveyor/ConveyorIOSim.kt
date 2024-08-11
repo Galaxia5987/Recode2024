@@ -3,10 +3,7 @@ package frc.robot.subsystems.conveyor
 import com.ctre.phoenix6.controls.VelocityVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
@@ -29,7 +26,7 @@ class ConveyorIOSim : ConveyorIO {
         conveyor.setController(controller)
     }
 
-    override fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
+    override fun setVelocity(velocity: Measure<Velocity<Angle>>) {
         conveyor.setControl(control.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 

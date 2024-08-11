@@ -1,16 +1,13 @@
 package frc.robot.subsystems.conveyor
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.*
 import frc.robot.lib.webconstants.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface ConveyorIO {
     val inputs: LoggedConveyorInputs
 
-    fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) {}
+    fun setVelocity(velocity: Measure<Velocity<Angle>>) {}
 
     fun updateInputs() {}
 

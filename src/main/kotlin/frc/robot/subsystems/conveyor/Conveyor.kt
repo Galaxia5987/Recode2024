@@ -1,9 +1,6 @@
 package frc.robot.subsystems.conveyor
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -39,7 +36,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         timer.reset()
     }
 
-    fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>): Command = run {
+    fun setVelocity(velocity: Measure<Velocity<Angle>>): Command = run {
         velocitySetpoint.mut_replace(velocity)
         io.setVelocity(velocity)
     }
