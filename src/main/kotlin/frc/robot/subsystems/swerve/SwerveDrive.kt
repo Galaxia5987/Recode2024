@@ -165,7 +165,7 @@ class SwerveDrive private constructor
         botPose = pose
         resetGyro(
             pose.rotation
-                .minus(if (Constants.isRed()) Rotation2d.fromDegrees(180.0) else Rotation2d())
+                .minus(if (Constants.alliance==Constants.Alliance.RED) Rotation2d.fromDegrees(180.0) else Rotation2d())
         )
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
@@ -358,7 +358,7 @@ class SwerveDrive private constructor
             { chassisSpeeds },
             { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
             SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
-            Constants::isRed,
+            {Constants.alliance == Constants.Alliance.RED},
             this
         )
     }
