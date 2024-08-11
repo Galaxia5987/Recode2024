@@ -280,7 +280,7 @@ class SwerveDrive private constructor
     }
 
     fun driveAndAdjust(
-        rotation: MutableMeasure<Angle>,
+        rotation: Measure<Angle>,
         xJoystick: DoubleSupplier,
         yJoystick: DoubleSupplier,
         deadband: Double,
