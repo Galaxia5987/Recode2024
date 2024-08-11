@@ -13,8 +13,8 @@ object HoodConstants {
     const val GEAR_RATIO : Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
     const val ENCODER_TICKS_PER_REVOLUTION = 4096.0
     const val SIMULATION_LENGTH = 3.0
+    const val MAX_TOLERANCE : Double = 0.75/360
 
-    val MAX_TOLERANCE : Measure<Angle> = Units.Degrees.of(0.75)
     val MOMENT_OF_INERTIA : Measure<Mult<Mult<Mass, Distance>, Distance>> = Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
     val MAX_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
     val MAX_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second).of(4.0)
