@@ -33,8 +33,6 @@ object RobotContainer {
     private val shooter: Shooter
     private val hood: Hood;
 
-    private val driverController = CommandXboxController(0)
-    private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
     
     private val autoChooser: SendableChooser<Command>
@@ -61,15 +59,15 @@ object RobotContainer {
 
         swerveDrive.setDefaultCommand(
           swerveDrive.driveCommand(
-            { -driverController.leftY },
-            { -driverController.leftX },
-            { 0.6 * -driverController.rightX }))
+            { -ControllerInputs.getDriverController().leftY },
+            { -ControllerInputs.getDriverController().leftX },
+            { 0.6 * -ControllerInputs.getDriverController().rightX }))
         
         climb.setDefaultCommand(
             climb.setPower {
                 MathUtil.applyDeadband(
-                    -(driverController.leftTriggerAxis + 1) / 2
-                            + (driverController.rightTriggerAxis + 1) / 2,
+                    -(ControllerInputs.getDriverController().leftTriggerAxis + 1) / 2
+                            + (ControllerInputs.getDriverController().rightTriggerAxis + 1) / 2,
                     0.15
                 )
             }
@@ -77,10 +75,10 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
-        driverController.y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
+        ControllerInputs.getDriverController().y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
         
-        driverController.start().onTrue(climb.lock().withTimeout(2.0))
-        driverController.back().onTrue(climb.open().withTimeout(2.0))   
+        ControllerInputs.getDriverController().start().onTrue(climb.lock().withTimeout(2.0))
+        ControllerInputs.getDriverController().back().onTrue(climb.open().withTimeout(2.0))
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
