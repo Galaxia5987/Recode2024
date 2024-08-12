@@ -11,6 +11,7 @@ import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.hood.HoodConstants
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 
@@ -35,7 +36,7 @@ object CommandGroups {
     }
 
     fun stopWarmup(): Command {
-        return warmup(Units.Degrees.zero(), Units.RotationsPerSecond.zero(), Units.RotationsPerSecond.zero())
+        return warmup(HoodConstants.RESTING_ANGLE, Units.RotationsPerSecond.zero(), Units.RotationsPerSecond.zero())
     }
 
     fun openClimb(): Command {
