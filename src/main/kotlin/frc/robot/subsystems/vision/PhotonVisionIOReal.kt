@@ -22,6 +22,11 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         inputs.isConnected = camera.isConnected
 
         val latestResult = camera.latestResult
+
+        if (!latestResult.hasTargets()) {
+            return
+        }
+
         val estimatedPose = estimator.update(latestResult)
 
         inputs.poseFieldOriented = estimatedPose.get().estimatedPose
