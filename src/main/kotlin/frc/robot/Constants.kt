@@ -3,6 +3,12 @@ package frc.robot
 import com.pathplanner.lib.path.PathConstraints
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
+import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.Commands
+import frc.robot.scoreState.AmpState
+import frc.robot.scoreState.ClimbState
+import frc.robot.scoreState.ScoreState
+import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.swerve.*
 import kotlin.math.sqrt
 
@@ -30,6 +36,8 @@ object Constants {
 
     val CURRENT_MODE: Mode = Mode.REAL
 
+    var CURRENT_STATE: ScoreState? = null
+
     val alliance: Alliance
         get() = if (DriverStation.getAlliance().get() == DriverStation.Alliance.Red){
             Alliance.RED
@@ -40,6 +48,24 @@ object Constants {
     enum class Alliance {
         RED,
         BLUE
+    }
+
+    enum class State {
+        SHOOT,
+        AMP,
+        CLIMB;
+
+        fun setState(): Command {
+            return Commands.runOnce(
+                {
+                    CURRENT_STATE = when (this) {
+                        SHOOT -> ShootState()
+                        AMP -> AmpState()
+                        CLIMB -> ClimbState()
+                    }
+                }
+            )
+        }
     }
 
     enum class Mode {
