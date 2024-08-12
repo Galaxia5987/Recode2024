@@ -6,7 +6,12 @@ import org.photonvision.PhotonPoseEstimator
 
 class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCam: Transform3d) : VisionIO {
     override val inputs = LoggedVisionInputs()
-    private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(VisionConstants.aprilTagFieldLayout, PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR, camera, robotToCam)
+    private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
+        VisionConstants.aprilTagFieldLayout,
+        PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
+        camera,
+        robotToCam
+    )
 
     init {
         camera.pipelineIndex = 0
@@ -16,7 +21,8 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         camera.pipelineIndex = pipeLineIndex
     }
 
-    override fun getLatestResult(): VisionResult = VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.distanceToTargets, inputs.poseAmbiguities)
+    override fun getLatestResult(): VisionResult =
+        VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.distanceToTargets, inputs.poseAmbiguities)
 
     override fun updateInputs() {
         inputs.isConnected = camera.isConnected
