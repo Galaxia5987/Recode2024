@@ -42,8 +42,14 @@ object HoodConstants {
     val MOTOR_CONFIGURATION = TalonFXConfiguration()
 
     init {
-        kP.initDefault(3.0)
-        ABSOLUTE_ENCODER_OFFSET.initDefault((78.046 - 33.48) / 360.0)
+        kP.initDefault(2400.0)
+        kI.initDefault(0.0)
+        kD.initDefault(600.0)
+        kS.initDefault(0.0)
+        kV.initDefault(0.0)
+        kA.initDefault(0.0)
+        kG.initDefault(9.0)
+        ABSOLUTE_ENCODER_OFFSET.initDefault((57.832 - 33.48) / 360.0)
         MOTOR_CONFIGURATION
             .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO))
             .withMotionMagic(
