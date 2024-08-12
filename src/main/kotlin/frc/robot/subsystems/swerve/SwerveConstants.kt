@@ -107,6 +107,8 @@ object SwerveConstants {
     var MAX_OMEGA_VELOCITY = 0.0
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
+    val TURN_MAX_TOLERANCE = 3.0/360.0 //TODO: calibrate
+
     init {
         when (SWERVE_TYPE) {
             SwerveType.SIM -> {

@@ -12,6 +12,7 @@ import edu.wpi.first.math.kinematics.SwerveModuleState
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.MutableMeasure
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.Voltage
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
@@ -51,6 +52,13 @@ class SwerveDrive private constructor
 
     @AutoLogOutput
     private var desiredSpeeds = ChassisSpeeds()
+
+    @AutoLogOutput
+    private var turnAngleSetpoint: Measure<Angle> = Units.Degrees.zero()
+
+    @get:AutoLogOutput
+    val atTurnSetpoint: Boolean
+        get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.TURN_MAX_TOLERANCE)
 
     @AutoLogOutput
     var velocity = 0.0
@@ -255,6 +263,7 @@ class SwerveDrive private constructor
     }
 
     fun turnCommand(rotation: MutableMeasure<Angle>, turnTolerance: Double): Command {
+        turnAngleSetpoint = rotation
         val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
@@ -287,6 +296,7 @@ class SwerveDrive private constructor
         deadband: Double,
         usePoseEstimation: Boolean
     ): Command {
+        turnAngleSetpoint = rotation
         val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
