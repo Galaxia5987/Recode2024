@@ -12,6 +12,9 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     @AutoLogOutput
     private var rollerPowerSetPoint = 0.0
 
+    val hasNote: Boolean
+        get() = io.inputs.hasNote
+
     companion object {
         @Volatile
         private var instance: Gripper? = null
