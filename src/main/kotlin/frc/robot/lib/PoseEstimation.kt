@@ -32,6 +32,9 @@ class PoseEstimation {
          * Averages ambiguity of estimated poses using a harmonic average. Can be from different targets
          * in vision module, or between module.
          *
+         * Note: The numerator is 1 instead of the usual 'n'.
+         * This is so when we have multiple lower values the ambiguity will be lower.
+         *
          * @param ambiguities the ambiguities to average.
          * @return the average of the ambiguities.
          */
