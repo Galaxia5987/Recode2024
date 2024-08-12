@@ -9,7 +9,9 @@ import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.conveyor.Conveyor
+import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 
 object CommandGroups {
@@ -17,6 +19,8 @@ object CommandGroups {
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
     private val climb = Climb.getInstance()
+    private val intake = Intake.getInstance()
+    private val gripper = Gripper.getInstance()
 
     fun warmup(
         hoodAngle: Measure<Angle> = Units.Degrees.of(65.0),
@@ -48,5 +52,21 @@ object CommandGroups {
             climb::lock,
             climb
         )
+    }
+
+    fun intake(rumble: Command): Command {
+        return Commands.parallel(
+            intake.intake(), gripper.setRollerPower(0.4)
+        )
+            .until { gripper.hasNote }
+            .andThen(Commands.parallel(intake.stop(), gripper.setRollerPower(0.0), rumble))
+            .withName("intake")
+    }
+
+    fun outtake(): Command {
+        return Commands.parallel(
+            intake.outtake(),
+            (gripper.setRollerPower(-0.7))
+        ).withName("outtake")
     }
 }
