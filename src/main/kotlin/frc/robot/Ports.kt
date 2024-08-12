@@ -9,7 +9,7 @@ class Ports {
 
     object Hood {
         const val MOTOR_ID: Int = 9
-        const val ENCODER_ID: Int = 21
+        const val ENCODER_ID: Int = 28
     }
 
     object Conveyor {
@@ -17,9 +17,7 @@ class Ports {
     }
 
     object Gripper {
-        const val ANGLE_ID: Int = 6
         const val ROLLER_ID: Int = 7
-        const val ENCODER_ID: Int = 7
     }
 
     object Climb {
@@ -29,9 +27,9 @@ class Ports {
     }
 
     object Intake {
-        const val ANGLE_MOTOR_ID: Int = 0
-        const val SPIN_MOTOR_ID: Int = 0
-        const val CENTER_MOTOR_ID: Int = 0
+        const val ANGLE_MOTOR_ID: Int = 1
+        const val SPIN_MOTOR_ID: Int = 2
+        const val CENTER_MOTOR_ID: Int = 3
     }
     
     object SwerveDriveWCP {
