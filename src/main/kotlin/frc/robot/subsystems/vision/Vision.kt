@@ -30,9 +30,7 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
         results.clear()
         for (io: VisionIO in ios) {
             val latestResult = io.getLatestResult()
-            if (latestResult != null) {
-                results.add(latestResult)
-            }
+            results.add(latestResult)
         }
     }
 }
