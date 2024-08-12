@@ -106,6 +106,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 
+    implementation 'com.opencsv:opencsv:5.8'
+
     implementation project(':annotation')
     ksp project(':annotation')
 
