@@ -27,7 +27,7 @@ class IntakeIOSim : IntakeIO {
     }
 
     override fun setAngle(angle: Measure<Angle>) {
-        angleMotor.setControl(positionControl.withPosition(angle.`in`(Units.Degrees)))
+        angleMotor.setControl(positionControl.withPosition(angle.`in`(Units.Rotations)))
     }
 
     override fun setAnglePower(power: Double) {
@@ -40,7 +40,7 @@ class IntakeIOSim : IntakeIO {
         centerMotor.update(Timer.getFPGATimestamp())
         inputs.spinMotorVoltage = spinMotor.busVoltage
         inputs.centerMotorVoltage = centerMotor.busVoltage
-        inputs.angleMotorAngle = Units.Degree.of(angleMotor.position)
+        inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position)
     }
 
 }

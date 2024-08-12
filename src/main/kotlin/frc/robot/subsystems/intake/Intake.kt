@@ -50,7 +50,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
     }
 
     fun setAngle(angle: Measure<Angle>): Command {
-        return Commands.run({
+        return Commands.runOnce({
                 angleSetpoint = angle
                 io.setAngle(angle)
             }
@@ -62,6 +62,14 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
             setAngle(IntakeConstants.INTAKE_ANGLE),
             setSpinPower(IntakeConstants.INTAKE_SPIN_POWER),
             setCenterPower(IntakeConstants.INTAKE_CENTER_POWER)
+        )
+    }
+
+    fun outtake(): Command {
+        return Commands.parallel(
+            setAngle(IntakeConstants.REST_ANGLE),
+            setSpinPower(-IntakeConstants.INTAKE_SPIN_POWER),
+            setCenterPower(-IntakeConstants.INTAKE_CENTER_POWER)
         )
     }
 
