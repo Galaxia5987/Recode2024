@@ -5,7 +5,7 @@ import com.ctre.phoenix6.controls.MotionMagicDutyCycle
 import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.math.trajectory.TrapezoidProfile
 import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
+import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
@@ -36,7 +36,7 @@ class HoodIOSim : HoodIO {
         )
     }
 
-    override fun setAngle(angle: MutableMeasure<Angle>) {
+    override fun setAngle(angle: Measure<Angle>) {
         motor.setControl(control.withPosition(angle.`in`(Units.Rotations)))
     }
 

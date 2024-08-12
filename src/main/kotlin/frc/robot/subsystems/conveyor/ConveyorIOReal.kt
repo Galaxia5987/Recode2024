@@ -4,7 +4,7 @@ import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
+import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import frc.robot.Ports
@@ -18,7 +18,7 @@ class ConveyorIOReal : ConveyorIO {
         roller.configurator.apply(ConveyorConstants.MOTOR_CONFIG)
     }
 
-    override fun setVelocity(velocity: MutableMeasure<Velocity<Angle>>) {
+    override fun setVelocity(velocity: Measure<Velocity<Angle>>) {
         roller.setControl(control.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 

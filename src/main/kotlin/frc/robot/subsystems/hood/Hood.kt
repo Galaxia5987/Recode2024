@@ -3,6 +3,7 @@ package frc.robot.subsystems.hood
 import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.math.geometry.Rotation3d
 import edu.wpi.first.units.Angle
+import edu.wpi.first.units.Measure
 import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.Timer
@@ -62,7 +63,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
 
     fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
 
-    fun setAngle(angle: MutableMeasure<Angle>): Command {
+    fun setAngle(angle: Measure<Angle>): Command {
         return run {
             angleSetpoint.mut_replace(angle)
             io.setAngle(angle)

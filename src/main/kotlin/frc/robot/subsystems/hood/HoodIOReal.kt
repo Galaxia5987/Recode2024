@@ -4,14 +4,12 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
-import com.ctre.phoenix6.signals.StaticFeedforwardSignValue
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
+import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import frc.robot.Ports
 import frc.robot.lib.Utils
-import kotlin.math.sign
 
 class HoodIOReal : HoodIO {
     override val inputs = LoggedHoodInputs()
@@ -37,7 +35,7 @@ class HoodIOReal : HoodIO {
         motor.setPosition(getEncoderPosition())
     }
 
-    override fun setAngle(angle: MutableMeasure<Angle>) {
+    override fun setAngle(angle: Measure<Angle>) {
         val error = angle.minus(inputs.absoluteEncoderAngle)
         motor.setControl(
             angleControl

@@ -262,7 +262,7 @@ class SwerveDrive private constructor
         }
     }
 
-    fun turnCommand(rotation: MutableMeasure<Angle>, turnTolerance: Double): Command {
+    fun turnCommand(rotation: Measure<Angle>, turnTolerance: Double): Command {
         turnAngleSetpoint = rotation
         val turnController =
             DieterController(
@@ -282,7 +282,7 @@ class SwerveDrive private constructor
                         .estimatedPosition
                         .rotation
                         .rotations,
-                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                    rotation.`in`(Units.Rotations)
                 ),
                 false
             )

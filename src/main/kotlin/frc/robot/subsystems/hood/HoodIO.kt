@@ -1,9 +1,6 @@
 package frc.robot.subsystems.hood
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Voltage
+import edu.wpi.first.units.*
 import org.team9432.annotation.Logged
 import java.util.function.Supplier
 
@@ -12,9 +9,9 @@ interface HoodIO {
 
     fun updateInternalEncoder() {}
 
-    fun setAngle(angle: MutableMeasure<Angle>) {}
+    fun setAngle(angle: Measure<Angle>) {}
 
-    fun setAngle(angle: MutableMeasure<Angle>, torqueCompensation: Supplier<Double>) {}
+    fun setAngle(angle: Measure<Angle>, torqueCompensation: Supplier<Double>) {}
 
     fun updateInputs() {}
 
