@@ -9,7 +9,7 @@ import org.littletonrobotics.junction.Logger
 
 class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase() {
     @AutoLogOutput
-    private var velocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
+    private var velocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
     private val inputs = io.inputs
     private val timer = Timer()
 
@@ -37,7 +37,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     }
 
     fun setVelocity(velocity: Measure<Velocity<Angle>>): Command = run {
-        velocitySetpoint.mut_replace(velocity)
+        velocitySetpoint = velocity
         io.setVelocity(velocity)
     }
 
@@ -50,7 +50,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
 
     fun stop(): Command {
         return runOnce {
-            velocitySetpoint.mut_replace(0.0, Units.RotationsPerSecond)
+            velocitySetpoint = Units.RotationsPerSecond.zero()
             io.stop()
         }
     }
