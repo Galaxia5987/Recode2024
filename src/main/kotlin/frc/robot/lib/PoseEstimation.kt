@@ -48,7 +48,7 @@ class PoseEstimation {
 
         for (result in results) {
             val ambiguities = result.distanceToTargets.map { d -> d * d }
-            val stddev = multiplier //* ambiguities // TODO: Do Harmonic Average for ambiguities list before calculating stddev
+            val stddev = multiplier * averageAmbiguity(ambiguities)
 
             swerveDrive.estimator.addVisionMeasurement(
                 result.estimatedRobotPose.toPose2d(),
