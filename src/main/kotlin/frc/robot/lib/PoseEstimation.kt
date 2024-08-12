@@ -44,7 +44,7 @@ class PoseEstimation {
     }
 
     fun processVisionMeasurements(multiplier: Double) {
-        val results = vision.getResults()
+        val results = vision.results
 
         for (result in results) {
             val ambiguities = result.distanceToTargets.map { d -> d * d }

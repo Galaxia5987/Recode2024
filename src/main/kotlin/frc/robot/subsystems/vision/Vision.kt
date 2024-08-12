@@ -3,7 +3,8 @@ package frc.robot.subsystems.vision
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 
 class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBase() {
-    private var results: MutableList<VisionResult> = ArrayList()
+    var results: MutableList<VisionResult> = ArrayList()
+        private set
 
     companion object {
         @Volatile
@@ -23,8 +24,6 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
             )
         }
     }
-
-    fun getResults(): List<VisionResult> = results
 
     override fun periodic() {
         results.clear()
