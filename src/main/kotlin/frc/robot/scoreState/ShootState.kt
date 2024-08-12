@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.Constants
 import frc.robot.commandGroups.CommandGroups
 import frc.robot.lib.extensions.TranslationExtensions.getRotationToTranslation
+import frc.robot.lib.math.interpolation.InterpolatingDouble
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
@@ -61,8 +62,24 @@ class ShootState : ScoreState {
         }
     }
 
-    fun warmup(distanceToSpeaker: Measure<Distance>): Command {
-        return Commands.none()//TODO: Add CSV files and stuff and implement interpolation
+    private fun warmup(distanceToSpeaker: Measure<Distance>): Command {
+        return CommandGroups.warmup(
+            Units.Degrees.of(
+                ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
+                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+                ).value
+            ),
+            Units.RotationsPerSecond.of(
+                ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
+                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+                ).value
+            ),
+            Units.RotationsPerSecond.of(
+                ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
+                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+                ).value
+            )
+        )
     }
 
     fun turnToSpeaker(): Command {
