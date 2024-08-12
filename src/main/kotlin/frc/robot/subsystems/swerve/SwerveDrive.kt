@@ -56,6 +56,10 @@ class SwerveDrive private constructor
     @AutoLogOutput
     private var turnAngleSetpoint: Measure<Angle> = Units.Degrees.zero()
 
+    @get:AutoLogOutput
+    val atTurnSetpoint: Boolean
+        get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.TURN_MAX_TOLERANCE)
+
     @AutoLogOutput
     var velocity = 0.0
         private set
