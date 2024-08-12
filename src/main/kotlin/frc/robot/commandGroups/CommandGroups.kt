@@ -14,8 +14,10 @@ import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodConstants
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
+import frc.robot.subsystems.swerve.SwerveDrive
 
 object CommandGroups {
+    private val swerveDrive = SwerveDrive.getInstance()
     private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
@@ -37,6 +39,16 @@ object CommandGroups {
 
     fun stopWarmup(): Command {
         return warmup(HoodConstants.RESTING_ANGLE, Units.RotationsPerSecond.zero(), Units.RotationsPerSecond.zero())
+    }
+
+    fun setpointShoot(): Command {
+        return Commands.parallel(
+            warmup(
+                Units.Degrees.of(84.0),
+                Units.RotationsPerSecond.of(73.0),
+                Units.RotationsPerSecond.of(50.0)
+            )
+        ).until {shooter.atSetpoint() && hood.atSetpoint() && swerveDrive.atTurnSetpoint}
     }
 
     fun openClimb(): Command {
