@@ -92,7 +92,7 @@ class ShootState : ScoreState {
     }
 
     fun readyToShoot(): Boolean {
-        return shooter.atSetpoint() && hood.atSetpoint()
+        return shooter.atSetpoint() && hood.atSetpoint() && swerveDrive.atTurnSetpoint
     }
 
     fun init(): Runnable {
