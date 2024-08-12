@@ -18,7 +18,7 @@ object HoodConstants {
     val MOMENT_OF_INERTIA : Measure<Mult<Mult<Mass, Distance>, Distance>> = Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
     val MAX_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
     val MAX_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second).of(4.0)
-    val RESTING_ANGLE: Measure<Angle> = Units.Degrees.of(114.0)
+    val RESTING_ANGLE: Measure<Angle> = Units.Degrees.of(100.0)
     val HOOD_LENGTH: Measure<Distance> = Units.Meters.of(0.4)
    
     val MECHANISM_2D_POSE = Translation2d(1.0, 1.0)
