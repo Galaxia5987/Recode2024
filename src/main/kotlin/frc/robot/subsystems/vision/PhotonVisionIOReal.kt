@@ -42,6 +42,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
 
         for (tag in tags) {
             inputs.distanceToTargets.add(tag.bestCameraToTarget.translation.norm)
+            inputs.tagAreas.add(tag.area)
             inputs.poseAmbiguities.add(tag.poseAmbiguity)
         }
 
