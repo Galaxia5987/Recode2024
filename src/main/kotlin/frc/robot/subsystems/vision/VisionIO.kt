@@ -10,7 +10,7 @@ interface VisionIO {
 
     }
 
-    fun getLatestResult(): VisionResult? = null
+    fun getLatestResult(): VisionResult = VisionResult()
 
     fun updateInputs() {}
 
