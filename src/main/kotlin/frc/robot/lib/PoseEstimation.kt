@@ -36,7 +36,7 @@ class PoseEstimation {
          * @return the average of the ambiguities.
          */
         fun averageAmbiguity(ambiguities: List<Double>): Double {
-            return ambiguities.size / ambiguities.sumOf { 1.0 / it }
+            return 1.0 / ambiguities.sumOf { 1.0 / it }
         }
     }
 
