@@ -88,14 +88,14 @@ object RobotContainer {
         ControllerInputs.getDriverController().y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
 
         ControllerInputs.getDriverController().start().whileTrue(intake.reset())
-        ControllerInputs.getDriverController().leftBumper()
+        ControllerInputs.getDriverController().rightBumper()
             .whileTrue(gripper.feed())
             .onFalse(gripper.setRollerPower(0.0))
 
         ControllerInputs.getDriverController().leftTrigger()
             .whileTrue(CommandGroups.intake(Commands.none()))
             .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
-        ControllerInputs.getDriverController().rightBumper()
+        ControllerInputs.getDriverController().leftBumper()
             .whileTrue(CommandGroups.outtake())
             .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
 
