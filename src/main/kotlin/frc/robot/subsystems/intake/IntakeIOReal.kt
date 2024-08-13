@@ -36,6 +36,8 @@ class IntakeIOReal : IntakeIO {
         centerMotor.burnFlash()
 
         angleMotor.configurator.apply(IntakeConstants.MOTOR_CONFIG)
+
+        angleMotor.setPosition(120.0/360.0)
     }
 
     override fun setSpinPower(power: Double) {
