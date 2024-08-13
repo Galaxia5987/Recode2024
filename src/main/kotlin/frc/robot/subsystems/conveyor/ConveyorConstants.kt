@@ -30,11 +30,11 @@ object ConveyorConstants {
     init {
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL, Constants.Mode.REPLAY -> {
-                KP.initDefault(1.0)
+                KP.initDefault(3.5)
                 KI.initDefault(0.0)
                 KD.initDefault(0.0)
                 KS.initDefault(0.0)
-                KV.initDefault(0.1125)
+                KV.initDefault(3.8)
                 KA.initDefault(0.0)
 
                 MOTOR_CONFIG
