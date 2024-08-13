@@ -19,7 +19,11 @@ class ConveyorIOReal : ConveyorIO {
     }
 
     override fun setVelocity(velocity: Measure<Velocity<Angle>>) {
-        roller.setControl(control.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
+        if (velocity == Units.RotationsPerSecond.of(0.0)){
+            roller.stopMotor()
+        }else {
+            roller.setControl(control.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
+        }
     }
 
     override fun stop() {
