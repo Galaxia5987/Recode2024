@@ -1,5 +1,7 @@
 package frc.robot
 
+import com.pathplanner.lib.util.GeometryUtil
+import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.DriverStation.Alliance
 import frc.robot.subsystems.swerve.*
@@ -10,6 +12,7 @@ object Constants {
 
     val CURRENT_MODE: Mode = Mode.REAL
 
+    var SPEAKER_POSE: Translation2d = Translation2d(0.0, 5.5479442) // Blue
 
     enum class Mode {
         REAL,
@@ -21,6 +24,12 @@ object Constants {
         val alliance = DriverStation.getAlliance()
         return if (alliance.isPresent) alliance.get() == Alliance.Red
         else false
+    }
+
+    fun initSpeakerPose() {
+        if (isRed()) {
+            SPEAKER_POSE = GeometryUtil.flipFieldPosition(SPEAKER_POSE)
+        }
     }
 
     fun initSwerve() {
