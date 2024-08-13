@@ -16,7 +16,6 @@ object CommandGroups {
     private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
-    private val climb = Climb.getInstance()
 
     fun warmup(
         hoodAngle: Measure<Angle> = Units.Degrees.of(65.0),
@@ -34,19 +33,5 @@ object CommandGroups {
         return warmup(Units.Degrees.zero(), Units.RotationsPerSecond.zero(), Units.RotationsPerSecond.zero())
     }
 
-    fun openClimb(): Command {
-        return Commands.sequence(
-            climb.setPower { -0.3 }.withTimeout(1.25),
-            climb.open(),
-            climb.setPower { -0.5 }.withTimeout(2.5),
-        )
-    }
 
-    fun closeClimb(): Command {
-        return StartEndCommand(
-            { climb.setPower { 0.5 } },
-            climb::lock,
-            climb
-        )
-    }
 }
