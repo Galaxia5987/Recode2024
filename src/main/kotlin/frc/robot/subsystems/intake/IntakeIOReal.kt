@@ -75,5 +75,7 @@ class IntakeIOReal : IntakeIO {
             .withKI(IntakeConstants.ANGLE_KI.get())
             .withKD(IntakeConstants.ANGLE_KD.get())
             .withKG(IntakeConstants.ANGLE_KG.get())
+
+        angleMotor.configurator.apply(slot0Configs)
     }
 }
