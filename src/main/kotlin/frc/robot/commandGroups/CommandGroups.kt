@@ -44,7 +44,7 @@ object CommandGroups {
     fun setpointShoot(): Command {
         return Commands.parallel(
             warmup(
-                Units.Degrees.of(84.0),
+                Units.Degrees.of(93.0),
                 Units.RotationsPerSecond.of(73.0),
                 Units.RotationsPerSecond.of(50.0)
             )
