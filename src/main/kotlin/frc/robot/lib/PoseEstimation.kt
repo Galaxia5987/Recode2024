@@ -32,20 +32,23 @@ class PoseEstimation {
          * Averages ambiguity of estimated poses using a harmonic average. Can be from different targets
          * in vision module, or between module.
          *
+         * Note: The numerator is 1 instead of the usual 'n'.
+         * This is so when we have multiple lower values the ambiguity will be lower.
+         *
          * @param ambiguities the ambiguities to average.
          * @return the average of the ambiguities.
          */
         fun averageAmbiguity(ambiguities: List<Double>): Double {
-            return ambiguities.size / ambiguities.sumOf { 1.0 / it }
+            return 1.0 / ambiguities.sumOf { 1.0 / it }
         }
     }
 
     fun processVisionMeasurements(multiplier: Double) {
-        val results = vision.getResults()
+        val results = vision.results
 
         for (result in results) {
             val ambiguities = result.distanceToTargets.map { d -> d * d }
-            val stddev = multiplier //* ambiguities // TODO: Do Harmonic Average for ambiguities list before calculating stddev
+            val stddev = multiplier * averageAmbiguity(ambiguities)
 
             swerveDrive.estimator.addVisionMeasurement(
                 result.estimatedRobotPose.toPose2d(),

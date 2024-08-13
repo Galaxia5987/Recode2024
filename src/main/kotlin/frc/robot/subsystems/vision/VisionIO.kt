@@ -10,7 +10,7 @@ interface VisionIO {
 
     }
 
-    fun getLatestResult(): VisionResult? = null
+    fun getLatestResult(): VisionResult = VisionResult()
 
     fun updateInputs() {}
 
@@ -21,5 +21,6 @@ interface VisionIO {
         var timestamp: Double = 0.0 // Seconds
         var distanceToTargets: MutableList<Double> = ArrayList()
         var poseAmbiguities: MutableList<Double> = ArrayList()
+        var tagAreas: MutableList<Double> = ArrayList() // Area is in percentages
     }
 }
