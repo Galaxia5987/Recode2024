@@ -6,7 +6,6 @@ import edu.wpi.first.units.Angle;
 import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
 import frc.robot.Constants;
-
 import java.util.Comparator;
 import java.util.List;
 
