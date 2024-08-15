@@ -83,7 +83,7 @@ object Initializer {
                 VisionConstants.DRIVER_CAMERA_POSE,
             )
 
-        Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera, driverCamera))
+        Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
     }
 
     init {
