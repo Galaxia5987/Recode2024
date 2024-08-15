@@ -10,6 +10,10 @@ import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.swerve.*
+import frc.robot.subsystems.vision.PhotonVisionIOReal
+import frc.robot.subsystems.vision.Vision
+import frc.robot.subsystems.vision.VisionConstants
+import org.photonvision.PhotonCamera
 import kotlin.math.sqrt
 
 object Constants {
@@ -113,6 +117,30 @@ object Constants {
                 SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
             }
         }
+    }
 
+    fun initVision(){
+        var speakerRightCamera =
+            PhotonVisionIOReal(
+                PhotonCamera("OV2311_1"),
+                VisionConstants.SPEAKER_RIGHT_CAMERA_POSE
+            )
+        var speakerLeftCamera =
+            PhotonVisionIOReal(
+                PhotonCamera("OV2311_2"),
+                VisionConstants.SPEAKER_LEFT_CAMERA_POSE,
+            )
+        var intakeAprilTagCamera =
+            PhotonVisionIOReal(
+                PhotonCamera("OV2311_0"),
+                VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,
+            )
+        var driverCamera =
+            PhotonVisionIOReal(
+                PhotonCamera("Driver_Camera"),
+                VisionConstants.DRIVER_CAMERA_POSE,
+            )
+
+        Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera, driverCamera))
     }
 }

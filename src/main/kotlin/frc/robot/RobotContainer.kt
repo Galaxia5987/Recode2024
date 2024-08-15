@@ -42,6 +42,7 @@ object RobotContainer {
 
     init {
         Constants.initSwerve()
+        Constants.initVision()
         Climb.initialize(ClimbIOTalonFX())
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
