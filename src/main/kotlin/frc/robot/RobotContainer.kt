@@ -30,9 +30,9 @@ object RobotContainer {
     private fun configureDefaultCommands() {
 
         swerveDrive.defaultCommand = swerveDrive.driveCommand(
-            { ControllerInputs.getDriverController().leftY },
-            { ControllerInputs.getDriverController().leftX },
-            { 0.6 * ControllerInputs.getDriverController().rightX })
+            { -ControllerInputs.getDriverController().leftY },
+            { -ControllerInputs.getDriverController().leftX },
+            { 0.6 * -ControllerInputs.getDriverController().rightX })
     }
 
     private fun configureButtonBindings() {
