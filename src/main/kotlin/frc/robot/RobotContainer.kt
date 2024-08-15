@@ -41,7 +41,7 @@ object RobotContainer {
     private val autoChooser: SendableChooser<Command>
 
     init {
-        Constants.initSpeakerPose()
+        Constants.initConstants()
         Constants.initSwerve()
         Constants.initVision()
         Climb.initialize(ClimbIOTalonFX())
