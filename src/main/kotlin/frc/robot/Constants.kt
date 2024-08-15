@@ -50,7 +50,7 @@ object Constants {
     var CURRENT_STATE: ScoreState? = null
 
     val isRed: Boolean
-        get() = DriverStation.getAlliance().get() == DriverStation.Alliance.Red
+        get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
 
     enum class State {
         SHOOT,

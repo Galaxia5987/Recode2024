@@ -173,7 +173,7 @@ class SwerveDrive private constructor
         botPose = pose
         resetGyro(
             pose.rotation
-                .minus(if (Constants.alliance==Constants.Alliance.RED) Rotation2d.fromDegrees(180.0) else Rotation2d())
+                .minus(if (Constants.isRed) Rotation2d.fromDegrees(180.0) else Rotation2d())
         )
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
