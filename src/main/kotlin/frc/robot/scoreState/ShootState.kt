@@ -1,7 +1,5 @@
 package frc.robot.scoreState
 
-import com.pathplanner.lib.util.GeometryUtil
-import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
@@ -11,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.Constants
 import frc.robot.commandGroups.CommandGroups
+import frc.robot.lib.PoseEstimation
 import frc.robot.lib.extensions.TranslationExtensions.getRotationToTranslation
 import frc.robot.lib.math.interpolation.InterpolatingDouble
 import frc.robot.subsystems.conveyor.Conveyor
@@ -26,40 +25,11 @@ class ShootState : ScoreState {
     private val conveyor = Conveyor.getInstance()
     private val gripper = Gripper.getInstance()
 
-    val botPose = Pose2d()
-
-    fun getDistanceToSpeaker(): Measure<Distance> {
-        return when (Constants.alliance) {
-            Constants.Alliance.RED -> Units.Meters.of(
-                botPose.translation.getDistance(
-                    GeometryUtil.flipFieldPosition(
-                        ScoreConstants.SPEAKER_POSE_BLUE
-                    )
-                )
-            )
-
-            Constants.Alliance.BLUE -> Units.Meters.of(
-                botPose.translation.getDistance(
-                    ScoreConstants.SPEAKER_POSE_BLUE
-                )
-            )
-        }
-    }
 
     fun getRotationToSpeaker(): Rotation2d {
-        return when (Constants.alliance) {
-            Constants.Alliance.RED ->
-                botPose.translation.getRotationToTranslation(
-                    GeometryUtil.flipFieldPosition(
-                        ScoreConstants.SPEAKER_POSE_BLUE
-                    )
-                )
-
-            Constants.Alliance.BLUE ->
-                botPose.translation.getRotationToTranslation(
-                    ScoreConstants.SPEAKER_POSE_BLUE
-                )
-        }
+        return swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
+            Constants.SPEAKER_POSE
+        )
     }
 
     private fun warmup(distanceToSpeaker: Measure<Distance>): Command {
@@ -98,7 +68,7 @@ class ShootState : ScoreState {
     fun init(): Runnable {
         return Runnable {
             Commands.parallel(
-                warmup(getDistanceToSpeaker()),
+                warmup(Units.Meters.of(PoseEstimation.getInstance().getDistanceToSpeaker())),
                 turnToSpeaker()
             ).until(::readyToShoot).andThen(Commands.none()) //TODO: Replace with LEDs command
         }
