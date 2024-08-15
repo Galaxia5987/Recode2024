@@ -43,6 +43,9 @@ class SwerveModule
     val position
         get() = inputs.absolutePosition
 
+    val velocity
+        get() = io.velocity
+
     fun stop() {
         io.stop()
     }
