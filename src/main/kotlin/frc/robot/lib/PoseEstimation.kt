@@ -7,6 +7,7 @@ import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.subsystems.vision.Vision
 import org.littletonrobotics.junction.AutoLogOutput
+import kotlin.math.sqrt
 
 class PoseEstimation {
     private val vision: Vision = Vision.getInstance()
@@ -29,20 +30,6 @@ class PoseEstimation {
                 "PoseEstimation has not been initialized. Call initialize() first."
             )
         }
-
-        /**
-         * Averages ambiguity of estimated poses using a harmonic average. Can be from different targets
-         * in vision module, or between module.
-         *
-         * Note: The numerator is 1 instead of the usual 'n'.
-         * This is so when we have multiple lower values the ambiguity will be lower.
-         *
-         * @param ambiguities the ambiguities to average.
-         * @return the average of the ambiguities.
-         */
-        fun averageAmbiguity(ambiguities: List<Double>): Double {
-            return 1.0 / ambiguities.sumOf { 1.0 / it }
-        }
     }
 
     fun processVisionMeasurements(multiplier: Double) {
@@ -59,8 +46,8 @@ class PoseEstimation {
             }
 
             val ambiguities = result.distanceToTargets.map { d -> d * d }
-//            val ambiguities = result.tagAreas
-            val stddev = multiplier * averageAmbiguity(ambiguities)
+            val ambiguitiesMean = ambiguities.average()
+            val stddev = sqrt(ambiguitiesMean)
 
             swerveDrive.estimator.addVisionMeasurement(
                 estimatedPose.toPose2d(),
