@@ -6,7 +6,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.commandGroups.CommandGroups
 import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
@@ -34,45 +33,10 @@ object RobotContainer {
             { ControllerInputs.getDriverController().leftY },
             { ControllerInputs.getDriverController().leftX },
             { 0.6 * ControllerInputs.getDriverController().rightX })
-
-//        climb.setDefaultCommand(
-//            climb.setPower {
-//                MathUtil.applyDeadband(
-//                    -(ControllerInputs.getDriverController().leftTriggerAxis + 1) / 2
-//                            + (ControllerInputs.getDriverController().rightTriggerAxis + 1) / 2,
-//                    0.15
-//                )
-//            }
-//        )
     }
 
     private fun configureButtonBindings() {
         ControllerInputs.getDriverController().y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
-
-//        ControllerInputs.getDriverController().start().whileTrue(intake.reset())
-//        ControllerInputs.getDriverController().rightBumper()
-//            .whileTrue(gripper.feed())
-//            .onFalse(gripper.setRollerPower(0.0))
-
-//        ControllerInputs.getDriverController().leftTrigger()
-//            .whileTrue(CommandGroups.intake(Commands.none()))
-//            .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
-//        ControllerInputs.getDriverController().leftBumper()
-//            .whileTrue(CommandGroups.outtake())
-//            .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
-
-        ControllerInputs.getDriverController().x().onTrue(Constants.State.SHOOT.setState())
-        ControllerInputs.getDriverController().b()
-            .whileTrue(CommandGroups.setpointShoot())
-            .onFalse(CommandGroups.stopWarmup())
-//        ControllerInputs.getDriverController().a().onTrue(Constants.State.CLIMB.setState())
-//        ControllerInputs.getDriverController().b().onTrue(Constants.State.AMP.setState())
-
-//        ControllerInputs.getDriverController().rightTrigger().whileTrue(
-//            Constants.CURRENT_STATE?.execute() ?: Commands.none())
-
-//        ControllerInputs.getDriverController().start().onTrue(climb.lock().withTimeout(2.0))
-//        ControllerInputs.getDriverController().back().onTrue(climb.open().withTimeout(2.0))
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
