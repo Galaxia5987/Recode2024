@@ -19,8 +19,6 @@ object ScoreConstants {
     val SHOOTER_BOTTOM_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(12.5)
     val CONVEYOR_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(15.0)
 
-    val SPEAKER_POSE_BLUE = Translation2d(0.0, 5.5479442)
-
     val HOOD_ANGLE_BY_DISTANCE: InterpolatingDoubleMap =
         ShootingCSV.parse(
             Filesystem.getDeployDirectory().name + "/shootData/distance-to-angle.csv"
