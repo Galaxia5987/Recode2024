@@ -44,6 +44,12 @@ object Constants {
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
 
+    const val FIELD_LENGTH: Double = 16.54
+    const val FIELD_WIDTH: Double = 8.23
+
+    fun isOutOfBounds(estimatedPose: Pose3d): Boolean {
+        return estimatedPose.x < 0 || estimatedPose.x > FIELD_LENGTH || estimatedPose.y < 0 || estimatedPose.y > FIELD_WIDTH
+    }
 
     enum class Mode {
         REAL,
