@@ -1,6 +1,7 @@
 package frc.robot.subsystems.vision
 
 import edu.wpi.first.math.geometry.Transform3d
+import edu.wpi.first.units.Units
 import org.photonvision.PhotonCamera
 import org.photonvision.PhotonPoseEstimator
 
@@ -39,16 +40,20 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
             return
         }
 
-        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
-        inputs.timestamp = estimatedPose.get().timestampSeconds
-
         val tags = latestResult.targets
 
         for (tag in tags) {
-            inputs.distanceToTargets.add(tag.bestCameraToTarget.translation.norm)
+            val distanceToTarget = tag.bestCameraToTarget.translation.norm
+            if (distanceToTarget > VisionConstants.MAXIMUM_DISTANCE_FROM_TAG.`in`(Units.Meters)) {
+                return
+            }
+
+            inputs.distanceToTargets.add(distanceToTarget)
             inputs.tagAreas.add(tag.area)
             inputs.poseAmbiguities.add(tag.poseAmbiguity)
         }
 
+        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
+        inputs.timestamp = estimatedPose.get().timestampSeconds
     }
 }
