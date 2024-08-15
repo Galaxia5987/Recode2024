@@ -36,6 +36,8 @@ object Robot : LoggedRobot() {
      * initialization code.
      */
     override fun robotInit() {
+        Initializer //initialize all subsystems and constants
+
         // Initialize logger
         Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME)
         Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE)

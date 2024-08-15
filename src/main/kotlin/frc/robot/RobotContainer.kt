@@ -5,20 +5,8 @@ import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.hood.HoodIOReal
-import frc.robot.subsystems.shooter.Shooter
-import frc.robot.subsystems.shooter.ShooterIOReal
-import frc.robot.subsystems.climb.Climb
-import frc.robot.subsystems.climb.ClimbIOTalonFX
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import frc.robot.commandGroups.CommandGroups
-import frc.robot.subsystems.conveyor.Conveyor
-import frc.robot.subsystems.conveyor.ConveyorIOReal
-import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.gripper.GripperIOReal
-import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.intake.IntakeIOReal
 import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
@@ -28,39 +16,13 @@ import frc.robot.subsystems.swerve.SwerveDrive
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
-    private val swerveDrive: SwerveDrive
-    private val climb: Climb
-    private val shooter: Shooter
-    private val hood: Hood
-    private val conveyor: Conveyor
-    private val intake: Intake
-    private val gripper: Gripper
+    private val swerveDrive: SwerveDrive = SwerveDrive.getInstance()
 
     private val testController = CommandXboxController(2)
 
-    private val autoChooser: SendableChooser<Command>
+    private val autoChooser: SendableChooser<Command> = AutoBuilder.buildAutoChooser()
 
     init {
-        Constants.initConstants()
-        Constants.initSwerve()
-        Constants.initVision()
-        Climb.initialize(ClimbIOTalonFX())
-        Shooter.initialize(ShooterIOReal())
-        Hood.initialize(HoodIOReal())
-        Conveyor.initialize(ConveyorIOReal())
-        Intake.initialize(IntakeIOReal())
-        Gripper.initialize(GripperIOReal())
-
-        swerveDrive = SwerveDrive.getInstance()
-        climb = Climb.getInstance()
-        shooter = Shooter.getInstance()
-        hood = Hood.getInstance();
-        conveyor = Conveyor.getInstance()
-        intake = Intake.getInstance()
-        gripper = Gripper.getInstance()
-
-        autoChooser = AutoBuilder.buildAutoChooser()
-
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -68,12 +30,10 @@ object RobotContainer {
 
     private fun configureDefaultCommands() {
 
-        swerveDrive.setDefaultCommand(
-            swerveDrive.driveCommand(
-                { ControllerInputs.getDriverController().leftY },
-                { ControllerInputs.getDriverController().leftX },
-                { 0.6 * ControllerInputs.getDriverController().rightX })
-        )
+        swerveDrive.defaultCommand = swerveDrive.driveCommand(
+            { ControllerInputs.getDriverController().leftY },
+            { ControllerInputs.getDriverController().leftX },
+            { 0.6 * ControllerInputs.getDriverController().rightX })
 
 //        climb.setDefaultCommand(
 //            climb.setPower {
@@ -89,17 +49,17 @@ object RobotContainer {
     private fun configureButtonBindings() {
         ControllerInputs.getDriverController().y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
 
-        ControllerInputs.getDriverController().start().whileTrue(intake.reset())
-        ControllerInputs.getDriverController().rightBumper()
-            .whileTrue(gripper.feed())
-            .onFalse(gripper.setRollerPower(0.0))
+//        ControllerInputs.getDriverController().start().whileTrue(intake.reset())
+//        ControllerInputs.getDriverController().rightBumper()
+//            .whileTrue(gripper.feed())
+//            .onFalse(gripper.setRollerPower(0.0))
 
-        ControllerInputs.getDriverController().leftTrigger()
-            .whileTrue(CommandGroups.intake(Commands.none()))
-            .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
-        ControllerInputs.getDriverController().leftBumper()
-            .whileTrue(CommandGroups.outtake())
-            .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
+//        ControllerInputs.getDriverController().leftTrigger()
+//            .whileTrue(CommandGroups.intake(Commands.none()))
+//            .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
+//        ControllerInputs.getDriverController().leftBumper()
+//            .whileTrue(CommandGroups.outtake())
+//            .onFalse(intake.stop().alongWith(gripper.setRollerPower(0.0)))
 
         ControllerInputs.getDriverController().x().onTrue(Constants.State.SHOOT.setState())
         ControllerInputs.getDriverController().b()
