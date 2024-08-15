@@ -107,7 +107,9 @@ object SwerveConstants {
     var MAX_OMEGA_VELOCITY = 0.0
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
-    val TURN_MAX_TOLERANCE = 3.0/360.0 //TODO: calibrate
+    const val TURN_MAX_TOLERANCE = 3.0/360.0 //TODO: calibrate
+    const val SKID_TOLERANCE = 0.8 //
+    const val COLLISION_TOLERANCE: Float = 2.0F // [G]
 
     init {
         when (SWERVE_TYPE) {
