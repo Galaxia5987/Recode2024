@@ -28,6 +28,7 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
     override fun periodic() {
         results.clear()
         for (io: VisionIO in ios) {
+            io.updateInputs()
             val latestResult = io.getLatestResult()
             results.add(latestResult)
         }
