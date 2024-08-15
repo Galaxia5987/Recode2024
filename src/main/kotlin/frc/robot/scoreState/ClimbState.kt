@@ -12,7 +12,7 @@ import frc.robot.commandGroups.CommandGroups
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.swerve.SwerveDrive
 
-class ClimbState: ScoreState {
+class ClimbState : ScoreState {
 
     private val swerveDrive = SwerveDrive.getInstance()
 
@@ -20,13 +20,14 @@ class ClimbState: ScoreState {
         return swerveDrive.estimator.estimatedPosition.nearest(Constants.chainLocations.asList())
     }
 
-    private fun pathFindToPose(pose: Pose2d): Command{
+    private fun pathFindToPose(pose: Pose2d): Command {
         return Commands.parallel(
             AutoBuilder.pathfindToPose(pose, Constants.PATH_CONSTRAINTS),
             swerveDrive.turnCommand(
                 Units.Rotations.of(
-                getNearestChain().rotation.rotations).mutableCopy(),
-                2.0/360
+                    getNearestChain().rotation.rotations
+                ).mutableCopy(),
+                2.0 / 360
             )
         )
     }
@@ -34,12 +35,15 @@ class ClimbState: ScoreState {
     override fun execute(): Command {
         val optimalPose: Pose2d = getNearestChain()
         return StartEndCommand(
-            {Commands.sequence(
-                CommandGroups.openClimb(),
-                pathFindToPose(optimalPose),
-                CommandGroups.closeClimb()
-            )},
+            {
+                Commands.sequence(
+                    CommandGroups.openClimb(),
+                    pathFindToPose(optimalPose),
+                    CommandGroups.closeClimb()
+                )
+            },
             Commands::none, //TODO: Replace with LEDs command
-            swerveDrive, Climb.getInstance())
+            swerveDrive, Climb.getInstance()
+        )
     }
 }
