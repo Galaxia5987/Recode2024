@@ -12,8 +12,6 @@ import frc.robot.lib.math.interpolation.InterpolatingDoubleMap
 
 object ScoreConstants {
 
-    val chainLocations = arrayOf(Pose2d(), Pose2d(), Pose2d()) //left, right, middle
-
     val AMP_ROTATION: Measure<Angle> = Units.Degrees.of(-90.0)
     val SHOOTER_TOP_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(8.5)
     val SHOOTER_BOTTOM_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(12.5)

@@ -3,6 +3,7 @@ package frc.robot
 import com.pathplanner.lib.util.GeometryUtil
 import edu.wpi.first.math.geometry.Translation2d
 import com.pathplanner.lib.path.PathConstraints
+import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj2.command.Command
@@ -42,6 +43,8 @@ object Constants {
 
     var SPEAKER_POSE: Translation2d = Translation2d(0.0, 5.5479442) // Blue
 
+    var chainLocations = arrayOf(Pose2d(), Pose2d(), Pose2d()) //left, right, middle
+
     val CURRENT_MODE: Mode = Mode.REAL
 
     var CURRENT_STATE: ScoreState? = null
@@ -73,9 +76,12 @@ object Constants {
         REPLAY
     }
 
-    fun initSpeakerPose() {
+    fun initConstants() {
         if (isRed) {
             SPEAKER_POSE = GeometryUtil.flipFieldPosition(SPEAKER_POSE)
+
+            chainLocations = Array<Pose2d>(chainLocations.size)
+            { i -> GeometryUtil.flipFieldPose(chainLocations[i])}
         }
     }
 

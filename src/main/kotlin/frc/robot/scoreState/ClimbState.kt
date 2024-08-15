@@ -1,7 +1,6 @@
 package frc.robot.scoreState
 
 import com.pathplanner.lib.auto.AutoBuilder
-import com.pathplanner.lib.path.PathConstraints
 import com.pathplanner.lib.util.GeometryUtil
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.units.Units
@@ -18,16 +17,8 @@ class ClimbState: ScoreState {
     private val swerveDrive = SwerveDrive.getInstance()
     private val botPose = Pose2d() //Todo: replace with estimator
 
-    private fun getNearestChain(): Pose2d{
-        return when (Constants.alliance){
-            Constants.Alliance.RED -> {
-                val chainLocations = List<Pose2d>(ScoreConstants.chainLocations.size)
-                {i -> GeometryUtil.flipFieldPose(ScoreConstants.chainLocations[i])}
-                botPose.nearest(chainLocations)
-            }
-            Constants.Alliance.BLUE ->
-                botPose.nearest(ScoreConstants.chainLocations.asList())
-        }
+    private fun getNearestChain(): Pose2d {
+        return botPose.nearest(Constants.chainLocations.asList())
     }
 
     private fun pathFindToPose(pose: Pose2d): Command{
