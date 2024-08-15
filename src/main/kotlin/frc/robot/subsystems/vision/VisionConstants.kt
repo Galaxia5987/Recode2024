@@ -8,9 +8,7 @@ import edu.wpi.first.math.geometry.Transform3d
 object VisionConstants {
     val aprilTagFieldLayout: AprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField()
 
-    var VISION_MEASUREMENT_MULTIPLIER = 1_000_000_000.0
-    const val AUTO_VISION_MEASUREMENT_MULTIPLIER = 0.5;
-    const val TELEOP_VISION_MEASUREMENT_MULTIPLIER = 0.05
+    var VISION_MEASUREMENT_MULTIPLIER = 0.5
 
 
     val SPEAKER_RIGHT_CAMERA_POSE = Transform3d(
