@@ -1,6 +1,8 @@
 package frc.robot
 
 import com.pathplanner.lib.path.PathConstraints
+import edu.wpi.first.math.geometry.Rotation3d
+import edu.wpi.first.math.geometry.Transform3d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj2.command.Command
@@ -33,6 +35,23 @@ object Constants {
         MAX_ANGULAR_VELOCITY.`in`(Units.RotationsPerSecond),
         MAX_ANGULAR_ACCELERATION.`in`(Units.RotationsPerSecond.per(Units.Second))
     )
+
+    val SPEAKER_RIGHT_CAMERA_POSE = Transform3d(
+        -0.065833,
+        -0.04005,
+        0.608178,
+        Rotation3d(0.0, -Math.toRadians(25.0), Math.toRadians(180.0))
+    )
+    val SPEAKER_LEFT_CAMERA_POSE = Transform3d(
+        -0.065833,
+        0.03995,
+        0.608178,
+        Rotation3d(0.0, -Math.toRadians(25.0), Math.toRadians(180.0))
+    )
+    val INTAKE_APRILTAG_CAMERA_POSE = Transform3d(
+        -0.012852, -0.0005, 0.635282, Rotation3d(0.0, -Math.toRadians(25.0), 0.0)
+    )
+    val DRIVER_CAMERA_POSE = Transform3d(0.0, 0.0, 0.53, Rotation3d(0.0, Math.toRadians(20.0), 0.0))
 
     val CURRENT_MODE: Mode = Mode.REAL
 
