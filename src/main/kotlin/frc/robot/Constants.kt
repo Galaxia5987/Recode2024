@@ -1,5 +1,7 @@
 package frc.robot
 
+import com.pathplanner.lib.util.GeometryUtil
+import edu.wpi.first.math.geometry.Translation2d
 import com.pathplanner.lib.path.PathConstraints
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
@@ -38,6 +40,7 @@ object Constants {
         MAX_ANGULAR_ACCELERATION.`in`(Units.RotationsPerSecond.per(Units.Second))
     )
 
+    var SPEAKER_POSE: Translation2d = Translation2d(0.0, 5.5479442) // Blue
 
     val CURRENT_MODE: Mode = Mode.REAL
 
@@ -77,6 +80,12 @@ object Constants {
         REAL,
         SIM,
         REPLAY
+    }
+
+    fun initSpeakerPose() {
+        if (isRed) {
+            SPEAKER_POSE = GeometryUtil.flipFieldPosition(SPEAKER_POSE)
+        }
     }
 
     fun initSwerve() {
