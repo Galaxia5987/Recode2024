@@ -22,7 +22,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
     }
 
     override fun getLatestResult(): VisionResult =
-        VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.distanceToTargets, inputs.poseAmbiguities)
+        VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.distanceToTargets, inputs.poseAmbiguities, inputs.tagAreas)
 
     override fun updateInputs() {
         inputs.isConnected = camera.isConnected
