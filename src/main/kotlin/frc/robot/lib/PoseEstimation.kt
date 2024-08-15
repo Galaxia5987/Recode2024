@@ -1,10 +1,12 @@
 package frc.robot.lib
 
 import edu.wpi.first.math.VecBuilder
+import edu.wpi.first.math.geometry.Translation2d
+import frc.robot.Constants
 import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.subsystems.vision.Vision
-import java.util.stream.DoubleStream
+import org.littletonrobotics.junction.AutoLogOutput
 
 class PoseEstimation {
     private val vision: Vision = Vision.getInstance()
@@ -61,4 +63,13 @@ class PoseEstimation {
             )
         }
     }
+
+    @AutoLogOutput(key = "Robot/DistanceToSpeakerk")
+    fun getDistanceToSpeaker(): Double = getPoseRelativeToSpeaker().norm
+
+    @AutoLogOutput(key = "Robot/ToSpeaker")
+    fun getPoseRelativeToSpeaker(): Translation2d =
+        Constants.SPEAKER_POSE.minus(
+            SwerveDrive.getInstance().estimator.estimatedPosition.translation
+        )
 }
