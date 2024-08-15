@@ -368,7 +368,7 @@ class SwerveDrive private constructor
             { chassisSpeeds },
             { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
             SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
-            {Constants.alliance == Constants.Alliance.RED},
+            {Constants.isRed},
             this
         )
     }
