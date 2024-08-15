@@ -7,4 +7,15 @@ data class VisionResult(
     var timestamp: Double = 0.0,
     var distanceToTargets: MutableList<Double> = ArrayList(),
     var poseAmbiguities: MutableList<Double> = ArrayList()
-)
+) {
+    override fun toString(): String {
+        return """
+            VisionResult(
+                estimatedRobotPose: $estimatedRobotPose,
+                timestamp: $timestamp,
+                distanceToTargets: $distanceToTargets,
+                poseAmbiguities: $poseAmbiguities
+            )
+        """.trimIndent()
+    }
+}
