@@ -4,6 +4,8 @@ import com.kauailabs.navx.frc.AHRS
 import edu.wpi.first.math.MathUtil
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj.SPI
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 class GyroIOReal : GyroIO {
     private val gyro = AHRS(SPI.Port.kMXP)
@@ -22,13 +24,17 @@ class GyroIOReal : GyroIO {
     val pitch: Rotation2d
         get() = Rotation2d(gyro.pitch.toDouble())
 
+    override fun getAccelMagnitude(): Float {
+        return sqrt(gyro.rawAccelX.pow(2) + gyro.rawAccelY.pow(2) + gyro.rawAccelZ.pow(2))
+    }
+
     override fun resetGyro(angle: Rotation2d) {
         gyroOffset = rawYaw.minus(angle)
     }
 
     override fun updateInputs(inputs: SwerveDriveInputs) {
         inputs.gyroOffset = gyroOffset
-        inputs.acceleration = gyro.worldLinearAccelX.toDouble() // TODO: Make sure it's really x
+        inputs.acceleration = getAccelMagnitude()
         inputs.yaw = yaw
         inputs.rawYaw = rawYaw
     }
