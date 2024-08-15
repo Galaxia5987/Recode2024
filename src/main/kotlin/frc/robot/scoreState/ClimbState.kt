@@ -15,10 +15,9 @@ import frc.robot.subsystems.swerve.SwerveDrive
 class ClimbState: ScoreState {
 
     private val swerveDrive = SwerveDrive.getInstance()
-    private val botPose = Pose2d() //Todo: replace with estimator
 
     private fun getNearestChain(): Pose2d {
-        return botPose.nearest(Constants.chainLocations.asList())
+        return swerveDrive.estimator.estimatedPosition.nearest(Constants.chainLocations.asList())
     }
 
     private fun pathFindToPose(pose: Pose2d): Command{
