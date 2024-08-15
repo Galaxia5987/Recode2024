@@ -49,11 +49,21 @@ class PoseEstimation {
         val results = vision.results
 
         for (result in results) {
+            val estimatedPose = result.estimatedRobotPose
+
+            val isFloating = estimatedPose.z > 0.1
+            val isOutOfBounds = Constants.isOutOfBounds(estimatedPose)
+
+            if (isFloating || isOutOfBounds) {
+                continue
+            }
+
             val ambiguities = result.distanceToTargets.map { d -> d * d }
+//            val ambiguities = result.tagAreas
             val stddev = multiplier * averageAmbiguity(ambiguities)
 
             swerveDrive.estimator.addVisionMeasurement(
-                result.estimatedRobotPose.toPose2d(),
+                estimatedPose.toPose2d(),
                 result.timestamp,
                 VecBuilder.fill(
                     stddev,
