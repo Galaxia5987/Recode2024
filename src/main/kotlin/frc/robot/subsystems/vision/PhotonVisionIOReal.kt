@@ -35,6 +35,10 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
 
         val estimatedPose = estimator.update(latestResult)
 
+        if (estimatedPose.isEmpty) {
+            return
+        }
+
         inputs.poseFieldOriented = estimatedPose.get().estimatedPose
         inputs.timestamp = estimatedPose.get().timestampSeconds
 
