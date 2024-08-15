@@ -4,19 +4,11 @@ import com.pathplanner.lib.util.GeometryUtil
 import edu.wpi.first.math.geometry.Translation2d
 import com.pathplanner.lib.path.PathConstraints
 import edu.wpi.first.math.geometry.Pose2d
+import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
-import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.Commands
-import frc.robot.scoreState.AmpState
-import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
-import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.swerve.*
-import frc.robot.subsystems.vision.PhotonVisionIOReal
-import frc.robot.subsystems.vision.Vision
-import frc.robot.subsystems.vision.VisionConstants
-import org.photonvision.PhotonCamera
 import kotlin.math.sqrt
 
 object Constants {
