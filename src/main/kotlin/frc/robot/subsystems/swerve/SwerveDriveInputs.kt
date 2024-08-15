@@ -9,7 +9,7 @@ open class SwerveDriveInputs {
     // x, y, omega
     var desiredSpeeds = ChassisSpeeds()
 
-    var acceleration = 0.0
+    var acceleration = 0.0F
 
     var rawYaw = Rotation2d()
     var yaw = Rotation2d()
