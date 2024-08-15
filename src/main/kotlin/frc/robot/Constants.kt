@@ -52,23 +52,6 @@ object Constants {
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
 
-    enum class State {
-        SHOOT,
-        AMP,
-        CLIMB;
-
-        fun setState(): Command {
-            return Commands.runOnce(
-                {
-                    CURRENT_STATE = when (this) {
-                        SHOOT -> ShootState()
-                        AMP -> AmpState()
-                        CLIMB -> ClimbState()
-                    }
-                }
-            )
-        }
-    }
 
     enum class Mode {
         REAL,
