@@ -45,9 +45,16 @@ class PoseEstimation {
                 continue
             }
 
-            val ambiguities = result.distanceToTargets.map { d -> d * d }
-            val ambiguitiesMean = ambiguities.average()
-            val stddev = sqrt(ambiguitiesMean)
+            val distances = result.distanceToTargets
+            val mean = distances.average()
+
+            val stddev = if (distances.size == 1) {
+                distances.first() * multiplier
+            } else {
+                val squaredDistances = distances.map { d -> (d - mean) * (d - mean) }
+                val variance = squaredDistances.average()
+                sqrt(variance)
+            }
 
             swerveDrive.estimator.addVisionMeasurement(
                 estimatedPose.toPose2d(),
