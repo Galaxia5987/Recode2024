@@ -181,10 +181,12 @@ class SwerveDrive private constructor
     private fun isSkidding(): Boolean {
         var weightedAvg = 0.0
         var denominator = 0.0
-        val slipRatios = Array<Double>(modules.size)
-        {
-            ((modules[it]?.velocity ?: 0.0) - chassisSpeeds.getVelocityMagnitude())
-                .div(chassisSpeeds.getVelocityMagnitude())
+
+        val chassisSpeedMagnitude: Double = chassisSpeeds.getVelocityMagnitude()
+        val slipRatios = Array(modules.size) { index ->
+            val moduleVelocity = modules[index]?.velocity ?: 0.0
+            val velocityDifference = moduleVelocity - chassisSpeedMagnitude
+            velocityDifference / chassisSpeedMagnitude
         }
 
         for (ratio in slipRatios){
