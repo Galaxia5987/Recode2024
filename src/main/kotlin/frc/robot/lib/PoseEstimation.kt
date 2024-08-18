@@ -68,7 +68,7 @@ class PoseEstimation {
         }
     }
 
-    @AutoLogOutput(key = "Robot/DistanceToSpeakerk")
+    @AutoLogOutput(key = "Robot/DistanceToSpeaker")
     fun getDistanceToSpeaker(): Double = getPoseRelativeToSpeaker().norm
 
     @AutoLogOutput(key = "Robot/ToSpeaker")
