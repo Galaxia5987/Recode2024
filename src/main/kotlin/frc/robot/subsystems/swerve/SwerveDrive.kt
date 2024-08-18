@@ -372,7 +372,7 @@ class SwerveDrive private constructor
         updateGyroInputs()
         updateModulePositions()
 
-        if (!isSkidding() && !isColliding()) {
+        if (!(isSkidding() && isColliding())) {
             estimator.update(odometryYaw, modulePositions)
         }
 
