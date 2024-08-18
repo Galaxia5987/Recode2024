@@ -33,9 +33,15 @@ object Constants {
         MAX_ANGULAR_ACCELERATION.`in`(Units.RotationsPerSecond.per(Units.Second))
     )
 
-    var SPEAKER_POSE: Translation2d = Translation2d(0.0, 5.5479442) // Blue
+    private val SPEAKER_POSE_BLUE = Translation2d(0.0, 5.5479442)
 
-    var chainLocations = arrayOf(Pose2d(), Pose2d(), Pose2d()) //left, right, middle
+    val SPEAKER_POSE: Translation2d
+        get() = if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE
+
+    private val CHAIN_LOCATIONS_BLUE = arrayOf(Pose2d(), Pose2d(), Pose2d()) // left, right, middle
+    val CHAIN_LOCATIONS: Array<Pose2d>
+        get() = if (isRed) Array<Pose2d>(CHAIN_LOCATIONS_BLUE.size)
+        { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i])} else CHAIN_LOCATIONS_BLUE
 
     val CURRENT_MODE: Mode = Mode.REAL
 
@@ -57,14 +63,5 @@ object Constants {
         REAL,
         SIM,
         REPLAY
-    }
-
-    fun initConstants() {
-        if (isRed) {
-            SPEAKER_POSE = GeometryUtil.flipFieldPosition(SPEAKER_POSE)
-
-            chainLocations = Array<Pose2d>(chainLocations.size)
-            { i -> GeometryUtil.flipFieldPose(chainLocations[i])}
-        }
     }
 }

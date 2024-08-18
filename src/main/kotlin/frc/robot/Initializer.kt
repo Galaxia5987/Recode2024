@@ -87,7 +87,6 @@ object Initializer {
     }
 
     init {
-        Constants.initConstants()
         initVision()
         initSwerve()
         PoseEstimation.initialize()
