@@ -198,7 +198,7 @@ class SwerveDrive private constructor
         return weightedAvg > SwerveConstants.SKID_TOLERANCE
     }
 
-    fun isColliding() : Boolean {
+    private fun isColliding() : Boolean {
         return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE
     }
 
