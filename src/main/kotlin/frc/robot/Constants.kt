@@ -48,7 +48,9 @@ object Constants {
     const val FIELD_WIDTH: Double = 8.23
 
     fun isOutOfBounds(estimatedPose: Pose3d): Boolean {
-        return estimatedPose.x < 0 || estimatedPose.x > FIELD_LENGTH || estimatedPose.y < 0 || estimatedPose.y > FIELD_WIDTH
+        val x = estimatedPose.x
+        val y = estimatedPose.y
+        return !(0 < x && x < FIELD_LENGTH) || !(0 < y && y < FIELD_WIDTH)
     }
 
     enum class Mode {
