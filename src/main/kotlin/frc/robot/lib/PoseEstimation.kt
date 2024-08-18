@@ -69,11 +69,7 @@ class PoseEstimation {
     }
 
     @AutoLogOutput(key = "Robot/DistanceToSpeaker")
-    fun getDistanceToSpeaker(): Double = getPoseRelativeToSpeaker().norm
-
-    @AutoLogOutput(key = "Robot/ToSpeaker")
-    fun getPoseRelativeToSpeaker(): Translation2d =
-        Constants.SPEAKER_POSE.minus(
-            SwerveDrive.getInstance().estimator.estimatedPosition.translation
-        )
+    fun getDistanceToSpeaker(): Double = (
+            Constants.SPEAKER_POSE - SwerveDrive.getInstance().estimator.estimatedPosition.translation
+            ).norm
 }
