@@ -39,7 +39,7 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
         val latestResult: PhotonPipelineResult =
             simCamera.process(
                 0.0,
-                botPose3d.plus(robotToCam.div(-1.0)),
+                botPose3d + robotToCam.inverse(),
                 VisionConstants.aprilTagFieldLayout.tags.map { a ->
                     VisionTargetSim(
                         a.pose,
