@@ -29,8 +29,7 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
         results.clear()
         for (io: VisionIO in ios) {
             io.updateInputs()
-            val latestResult = io.getLatestResult()
-            results.add(latestResult)
+            results.add(io.getLatestResult())
         }
     }
 }
