@@ -42,7 +42,7 @@ object ShooterConstants {
     val topMotorConfiguration = TalonFXConfiguration()
     val bottomMotorConfiguration = TalonFXConfiguration()
 
-    val STOP_POWER = Units.RotationsPerSecond.zero()
+    val STOP_POWER: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
 
     private const val CURRENT_LIMIT_TOP = 40.0
     private const val CURRENT_LIMIT_BOTTOM = 40.0
