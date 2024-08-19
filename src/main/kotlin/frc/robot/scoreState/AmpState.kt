@@ -40,8 +40,10 @@ class AmpState : ScoreState {
     private fun end(): Runnable {
         return Runnable {
             gripper.feed()
-                .andThen(shooter.stop())
-                .alongWith(conveyor.stop())
+                .andThen(
+                    shooter.stop()
+                        .alongWith(conveyor.stop())
+                )
         }
     }
 
