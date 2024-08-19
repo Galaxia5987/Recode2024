@@ -178,6 +178,13 @@ class SwerveDrive private constructor
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
 
+    /**
+     * Determines if the swerve drive is skidding by calculating a weighted average of slip ratios
+     * across all swerve modules.
+     *
+     * @return `true` if the weighted average of slip ratios exceeds the predefined skid tolerance,
+     *         indicating that the robot is skidding; `false` otherwise.
+     */
     private fun isSkidding(): Boolean {
         var weightedAvg = 0.0
         var denominator = 0.0
