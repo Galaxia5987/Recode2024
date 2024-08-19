@@ -70,7 +70,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
         }.withName("Set Angle Hood")
     }
 
-    fun setRestingAngle(): Command = setAngle(HoodConstants.RESTING_ANGLE.mutableCopy()).withName("Set Resting Angle Hood")
+    fun setRestingAngle(): Command = setAngle(HoodConstants.RESTING_ANGLE).withName("Set Resting Angle Hood")
 
     @AutoLogOutput(key = "Hood/Pose")
     private fun getPose3d() : Pose3d = Pose3d(HoodConstants.ROOT_POSITION, Rotation3d(0.0, getAngle().plus(HoodConstants.SIMULATION_OFFSET).`in`(Units.Radians), 0.0))

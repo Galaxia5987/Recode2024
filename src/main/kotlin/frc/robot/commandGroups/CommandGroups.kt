@@ -31,8 +31,8 @@ object CommandGroups {
         conveyorVelocity: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(60.0)
     ): Command {
         return Commands.parallel(
-            hood.setAngle(hoodAngle.mutableCopy()),
-            shooter.setVelocity(shooterVelocity.mutableCopy()),
+            hood.setAngle(hoodAngle),
+            shooter.setVelocity(shooterVelocity),
             conveyor.setVelocity(conveyorVelocity)
         )
     }

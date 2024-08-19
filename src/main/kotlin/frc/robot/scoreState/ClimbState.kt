@@ -25,7 +25,7 @@ class ClimbState : ScoreState {
             swerveDrive.turnCommand(
                 Units.Rotations.of(
                     getNearestChain().rotation.rotations
-                ).mutableCopy(),
+                ),
                 2.0 / 360
             )
         )

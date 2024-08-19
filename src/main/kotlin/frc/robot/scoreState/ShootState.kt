@@ -56,7 +56,7 @@ class ShootState : ScoreState {
         return swerveDrive.turnCommand(
             Units.Rotations.of(
                 getRotationToSpeaker().rotations
-            ).mutableCopy(),
+            ),
             3.0 / 360.0
         )
     }

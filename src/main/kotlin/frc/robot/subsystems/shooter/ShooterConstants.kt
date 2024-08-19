@@ -14,12 +14,12 @@ object ShooterConstants {
 
     val TOP_ROLLER_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.5)
     val BOTTOM_ROLLER_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.5)
-    val MOMENT_OF_INERTIA_TOP: MutableMeasure<Mult<Mult<Mass, Distance>, Distance>> =
+    val MOMENT_OF_INERTIA_TOP: Measure<Mult<Mult<Mass, Distance>, Distance>> =
         Units.Kilograms.mult(Units.Meters).mult(
             Units.Meters
-        ).of(0.0008).mutableCopy()
-    val MOMENT_OF_INERTIA_BOTTOM: MutableMeasure<Mult<Mult<Mass, Distance>, Distance>> =
-        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0008).mutableCopy()
+        ).of(0.0008)
+    val MOMENT_OF_INERTIA_BOTTOM: Measure<Mult<Mult<Mass, Distance>, Distance>> =
+        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0008)
 
     val TOP_kP: LoggedTunableNumber = LoggedTunableNumber("Shooter/Top kP")
     val TOP_kI: LoggedTunableNumber = LoggedTunableNumber("Shooter/Top kI")
@@ -42,7 +42,7 @@ object ShooterConstants {
     val topMotorConfiguration = TalonFXConfiguration()
     val bottomMotorConfiguration = TalonFXConfiguration()
 
-    val STOP_POWER = Units.RotationsPerSecond.zero().mutableCopy()
+    val STOP_POWER = Units.RotationsPerSecond.zero()
 
     private const val CURRENT_LIMIT_TOP = 40.0
     private const val CURRENT_LIMIT_BOTTOM = 40.0
