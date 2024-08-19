@@ -18,18 +18,20 @@ class AmpState : ScoreState {
     private val gripper: Gripper = Gripper.getInstance()
 
     private fun init(): Runnable {
+        val driveAndAdjust = swerveDrive.driveAndAdjust(
+            ScoreConstants.AMP_ROTATION,
+            { -ControllerInputs.getDriverController().leftX },
+            { -ControllerInputs.getDriverController().leftY },
+            0.1,
+            false
+        )
+        val setShooterVelocity = shooter.setVelocity(
+            ScoreConstants.SHOOTER_TOP_AMP_VELOCITY,
+            ScoreConstants.SHOOTER_BOTTOM_AMP_VELOCITY
+        )
         return Runnable {
             Commands.parallel(
-                swerveDrive.driveAndAdjust(
-                    ScoreConstants.AMP_ROTATION,
-                    { -ControllerInputs.getDriverController().leftX },
-                    { -ControllerInputs.getDriverController().leftY },
-                    0.1,
-                    false
-                ), shooter.setVelocity(
-                    ScoreConstants.SHOOTER_TOP_AMP_VELOCITY,
-                    ScoreConstants.SHOOTER_BOTTOM_AMP_VELOCITY
-                ), conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY)
+                driveAndAdjust, setShooterVelocity, conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY)
                 // TODO: Add LEDS
             )
         }
