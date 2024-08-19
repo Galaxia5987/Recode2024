@@ -47,8 +47,8 @@ class AmpState : ScoreState {
 
     override fun execute(): Command {
         return StartEndCommand(
-            { init() },
-            { end() },
+            ::init,
+            ::end,
             swerveDrive, shooter, conveyor, hood, gripper
         )
     }
