@@ -16,12 +16,10 @@ object Constants {
     const val CONFIG_TIMEOUT: Int = 100 // [ms]
     const val LOOP_TIME = 0.02 // [s]
 
-    val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(2.0)
-    val MAX_ACCELERATION: Measure<Velocity<Velocity<Distance>>> = Units.MetersPerSecondPerSecond.of(1.0)
-    val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
-        MAX_VELOCITY.`in`(Units.MetersPerSecond)
-                / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
     private val EFFECTIVE_ROBOT_RADIUS: Measure<Distance> = Units.Meters.of(SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+    private val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(2.0)
+    private val MAX_ACCELERATION: Measure<Velocity<Velocity<Distance>>> = Units.MetersPerSecondPerSecond.of(1.0)
+    private val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
         MAX_VELOCITY.`in`(Units.MetersPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
     )
     private val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> =
