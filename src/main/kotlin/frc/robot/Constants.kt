@@ -21,12 +21,14 @@ object Constants {
     val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
         MAX_VELOCITY.`in`(Units.MetersPerSecond)
                 / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+    private val EFFECTIVE_ROBOT_RADIUS: Measure<Distance> = Units.Meters.of(SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+        MAX_VELOCITY.`in`(Units.MetersPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
     )
-    val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second)
-        .of(
-            (MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond)
-                    / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0)))
-        )
+    private val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> =
+        Units.RotationsPerSecond.per(Units.Second)
+            .of(
+                MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
+            )
     val PATH_CONSTRAINTS: PathConstraints = PathConstraints(
         MAX_VELOCITY.`in`(Units.MetersPerSecond),
         MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond),
