@@ -37,9 +37,7 @@ object CommandGroups {
         )
     }
 
-    fun stopWarmup(): Command {
-        return warmup(HoodConstants.RESTING_ANGLE, Units.RotationsPerSecond.zero(), Units.RotationsPerSecond.zero())
-    }
+    fun stopWarmup(): Command = Commands.parallel(shooter.stop(), conveyor.stop(), hood.setRestingAngle())
 
     fun setpointShoot(): Command {
         return Commands.parallel(
