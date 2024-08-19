@@ -1,14 +1,15 @@
 package frc.robot
 
-import com.pathplanner.lib.util.GeometryUtil
-import edu.wpi.first.math.geometry.Translation2d
 import com.pathplanner.lib.path.PathConstraints
+import com.pathplanner.lib.util.GeometryUtil
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Pose3d
+import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
 import frc.robot.scoreState.ScoreState
-import frc.robot.subsystems.swerve.*
+import frc.robot.subsystems.swerve.SwerveConstants
 import kotlin.math.sqrt
 
 object Constants {
@@ -38,7 +39,11 @@ object Constants {
     val SPEAKER_POSE: Translation2d
         get() = if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE
 
-    private val CHAIN_LOCATIONS_BLUE = arrayOf(Pose2d(), Pose2d(), Pose2d()) // left, right, middle
+    private val CHAIN_TOP = Pose2d(Translation2d(4.39, 4.67), Rotation2d.fromDegrees(-57.72))
+    private val CHAIN_MIDDLE = Pose2d(Translation2d(5.59, 4.09), Rotation2d.fromDegrees(180.00))
+    private val CHAIN_BOTTOM = Pose2d(Translation2d(4.39, 3.46), Rotation2d.fromDegrees(57.72))
+
+    private val CHAIN_LOCATIONS_BLUE = arrayOf(CHAIN_TOP, CHAIN_MIDDLE, CHAIN_BOTTOM)
     val CHAIN_LOCATIONS: Array<Pose2d>
         get() = if (isRed) Array<Pose2d>(CHAIN_LOCATIONS_BLUE.size)
         { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i])} else CHAIN_LOCATIONS_BLUE
