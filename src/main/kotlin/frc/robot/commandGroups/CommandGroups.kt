@@ -7,11 +7,11 @@ import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
+import frc.robot.lib.extensions.TranslationExtensions.getRotationToTranslation
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.hood.HoodConstants
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
@@ -79,5 +79,44 @@ object CommandGroups {
             intake.outtake(),
             (gripper.setRollerPower(-0.7))
         ).withName("outtake")
+    }
+
+    fun superPoopInit(): Runnable {
+        return Runnable {
+            Commands.parallel(
+                warmup(
+                    CommandGroupsConstants.HOOD_ANGLE_SUPER_POOP,
+                    CommandGroupsConstants.SHOOTER_VELOCITY_SUPER_POOP,
+                    CommandGroupsConstants.CONVEYOR_VELOCITY_SUPER_POOP
+                ), // TODO: ledMode,
+                swerveDrive.turnCommand(
+                    Units.Degrees.of(
+                        swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
+                            CommandGroupsConstants.SUPER_POOP_TRANSLATION
+                        ).degrees
+                    ),
+                    CommandGroupsConstants.SUPER_POOP_TURN_TOLERANCE.`in`(Units.Rotations)
+                )
+            ).until { readyToSuperPoop() } // TODO: add LEDS
+        }
+    }
+
+    fun superPoopEnd(): Runnable {
+        return Runnable {
+            stopWarmup()
+        }
+        // TODO: LED MODE Default
+    }
+
+    fun superPoop(): Command {
+        return StartEndCommand(
+            superPoopInit(),
+            superPoopEnd(),
+            shooter, hood, conveyor, swerveDrive
+        )
+    }
+
+    fun readyToSuperPoop(): Boolean {
+        return shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()
     }
 }
