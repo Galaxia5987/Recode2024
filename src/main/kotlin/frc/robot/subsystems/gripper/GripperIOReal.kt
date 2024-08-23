@@ -14,7 +14,7 @@ class GripperIOReal : GripperIO {
     private val rollerMotor: CANSparkMax =
         CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val timer = Timer()
-    private val sensor: DigitalInput = DigitalInput(1)
+    private val sensor: DigitalInput = DigitalInput(8)
 
     init {
         rollerMotor.restoreFactoryDefaults()
