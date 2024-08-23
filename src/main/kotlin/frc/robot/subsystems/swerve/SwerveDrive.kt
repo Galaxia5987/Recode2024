@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.Constants
 import frc.robot.lib.controllers.DieterController
-import frc.robot.lib.extensions.ChassisSpeedsExtensions.getVelocityMagnitude
+import frc.robot.lib.extensions.ChassisSpeedsExtensions.getSpeed
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
@@ -189,11 +189,11 @@ class SwerveDrive private constructor
         var weightedAvg = 0.0
         var denominator = 0.0
 
-        val chassisSpeedMagnitude: Double = chassisSpeeds.getVelocityMagnitude()
+        val chassisSpeed: Double = chassisSpeeds.getSpeed()
         val slipRatios = Array(modules.size) { index ->
             val moduleVelocity = modules[index]?.velocity ?: 0.0
-            val velocityDifference = moduleVelocity - chassisSpeedMagnitude
-            velocityDifference / chassisSpeedMagnitude
+            val velocityDifference = moduleVelocity - chassisSpeed
+            velocityDifference / chassisSpeed
         }
 
         for (ratio in slipRatios){
