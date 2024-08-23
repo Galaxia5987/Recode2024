@@ -64,17 +64,17 @@ object Initializer {
     fun initVision(){
         val speakerRightCamera =
             PhotonVisionIOReal(
-                PhotonCamera("rightOV3211"),
+                PhotonCamera("rightOV2311"),
                 VisionConstants.SPEAKER_RIGHT_CAMERA_POSE
             )
         val speakerLeftCamera =
             PhotonVisionIOReal(
-                PhotonCamera("leftOV3211"),
+                PhotonCamera("leftOV2311"),
                 VisionConstants.SPEAKER_LEFT_CAMERA_POSE,
             )
         val intakeAprilTagCamera =
             PhotonVisionIOReal(
-                PhotonCamera("frontOV3211"),
+                PhotonCamera("frontOV2311"),
                 VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,
             )
         val driverCamera =
