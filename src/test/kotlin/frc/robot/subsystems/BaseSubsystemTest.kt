@@ -1,6 +1,7 @@
 package frc.robot.subsystems
 
 import edu.wpi.first.hal.HAL
+import edu.wpi.first.wpilibj.simulation.SimHooks
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.BeforeEach
@@ -31,5 +32,10 @@ abstract class BaseSubsystemTest {
         } catch (e: InterruptedException) {
             schedulerExecutor.shutdownNow()
         }
+    }
+
+    protected fun simulateTimeAndWait(simulationTime: Double = 5.0, waitTimeMillis: Long = 1000) {
+        SimHooks.stepTiming(simulationTime)
+        Thread.sleep(waitTimeMillis)
     }
 }
