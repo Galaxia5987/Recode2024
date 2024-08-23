@@ -17,16 +17,16 @@ object ScoreConstants {
 
     val HOOD_ANGLE_BY_DISTANCE: InterpolatingDoubleMap =
         parseCSVToMap(
-            Filesystem.getDeployDirectory().name + "/shootData/distance-to-angle.csv"
+            Filesystem.getDeployDirectory().path + "/shootData/distance-to-angle.csv"
         )
 
     val SHOOTER_VELOCITY_BY_DISTANCE: InterpolatingDoubleMap =
         parseCSVToMap(
-            Filesystem.getDeployDirectory().name + "/shootData/distance-to-shooter-velocity.csv"
+            Filesystem.getDeployDirectory().path + "/shootData/distance-to-shooter-velocity.csv"
         )
 
     val CONVEYOR_VELOCITY_BY_DISTANCE: InterpolatingDoubleMap =
         parseCSVToMap(
-            Filesystem.getDeployDirectory().name + "/shootData/distance-to-conveyor-velocity.csv"
+            Filesystem.getDeployDirectory().path + "/shootData/distance-to-conveyor-velocity.csv"
         )
 }
