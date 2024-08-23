@@ -1,7 +1,6 @@
 package frc.robot.subsystems.shooter
 
 import edu.wpi.first.units.Units
-import edu.wpi.first.wpilibj.simulation.SimHooks
 import edu.wpi.first.wpilibj2.command.Command
 import frc.robot.subsystems.BaseSubsystemTest
 import org.junit.jupiter.api.Assertions.assertTrue
@@ -26,8 +25,7 @@ class ShooterTest : BaseSubsystemTest() {
 
         command.execute()
 
-        SimHooks.stepTiming(5.0)
-        Thread.sleep(1000)
+        simulateTimeAndWait()
 
         assertTrue(shooter.atSetpoint(), "Shooter should be at setpoint.")
     }
