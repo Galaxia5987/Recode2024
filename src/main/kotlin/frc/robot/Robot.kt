@@ -4,6 +4,8 @@
 package frc.robot
 
 import com.ctre.phoenix6.SignalLogger
+import edu.wpi.first.hal.FRCNetComm
+import edu.wpi.first.hal.HAL
 import edu.wpi.first.wpilibj.Compressor
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.PneumaticsModuleType
@@ -36,6 +38,10 @@ object Robot : LoggedRobot() {
      * initialization code.
      */
     override fun robotInit() {
+        // Report Kotlin language usage
+        // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
+        HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin);
+        
         Initializer //initialize all subsystems and constants
 
         // Initialize logger
