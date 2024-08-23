@@ -46,11 +46,14 @@ object Constants {
     private val CHAIN_LOCATIONS_BLUE = arrayOf(CHAIN_TOP, CHAIN_MIDDLE, CHAIN_BOTTOM)
     val CHAIN_LOCATIONS: Array<Pose2d>
         get() = if (isRed) Array<Pose2d>(CHAIN_LOCATIONS_BLUE.size)
-        { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i])} else CHAIN_LOCATIONS_BLUE
+        { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i]) } else CHAIN_LOCATIONS_BLUE
 
     val CURRENT_MODE: Mode = Mode.REAL
+    const val ROBORIO_NEO_SERIAL = "NEO" // TODO: Fill in roborio serial number
+    const val ROBORIO_WCP_SERIAL = "WCP" // TODO: Fill in roborio serial number
 
     var CURRENT_STATE: ScoreState? = null
+    val ROBORIO_SERIAL_NUM: String = System.getenv("serialnum") ?: "" // TODO: Not sure if this exists on init
 
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red

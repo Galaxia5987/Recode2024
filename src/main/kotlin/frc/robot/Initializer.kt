@@ -1,18 +1,7 @@
 package frc.robot
 
-import frc.robot.lib.PoseEstimation
-import frc.robot.subsystems.climb.Climb
-import frc.robot.subsystems.climb.ClimbIOTalonFX
-import frc.robot.subsystems.conveyor.Conveyor
-import frc.robot.subsystems.conveyor.ConveyorIOReal
-import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.gripper.GripperIOReal
-import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.hood.HoodIOReal
-import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.intake.IntakeIOReal
 import frc.robot.subsystems.shooter.Shooter
-import frc.robot.subsystems.shooter.ShooterIOReal
+import frc.robot.subsystems.shooter.ShooterIOSim
 import frc.robot.subsystems.swerve.*
 import frc.robot.subsystems.vision.PhotonVisionIOReal
 import frc.robot.subsystems.vision.Vision
@@ -22,31 +11,10 @@ import org.photonvision.PhotonCamera
 object Initializer {
 
     fun initSwerve() {
-        var moduleIOs: Array<ModuleIO>
+        val moduleIOs: Array<ModuleIO>
 
-        when (SwerveConstants.SWERVE_TYPE) {
-            SwerveConstants.SwerveType.SIM -> {
-                moduleIOs = Array<ModuleIO>(4) { ModuleIOSim() }
-                SwerveDrive.initialize(GyroIOSim(), SwerveConstants.OFFSETS, *moduleIOs)
-            }
-
-            SwerveConstants.SwerveType.WCP -> {
-                moduleIOs = Array<ModuleIO>(4) { i ->
-                    ModuleIOTalonFX(
-                        Ports.SwerveDriveWCP.DRIVE_IDS[i],
-                        Ports.SwerveDriveWCP.ANGLE_IDS[i],
-                        Ports.SwerveDriveWCP.ENCODER_IDS[i],
-                        SwerveConstants.DRIVE_MOTOR_CONFIGS
-                            ?: throw IllegalStateException("drive motor config is null"),
-                        SwerveConstants.ANGLE_MOTOR_CONFIGS
-                            ?: throw IllegalStateException("angle motor config is null"),
-                        SwerveConstants.ENCODER_CONFIGS ?: throw IllegalStateException("encoder config is null")
-                    )
-                }
-                SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
-            }
-
-            SwerveConstants.SwerveType.NEO -> {
+        if (Constants.CURRENT_MODE == Constants.Mode.REAL) {
+            if (Constants.ROBORIO_SERIAL_NUM == Constants.ROBORIO_NEO_SERIAL) {
                 moduleIOs = Array<ModuleIO>(4) { i ->
                     ModuleIOSparkMax(
                         Ports.SwerveDriveNEO.DRIVE_IDS[i],
@@ -57,11 +25,29 @@ object Initializer {
                     )
                 }
                 SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
+                return
             }
+
+            moduleIOs = Array<ModuleIO>(4) { i ->
+                ModuleIOTalonFX(
+                    Ports.SwerveDriveWCP.DRIVE_IDS[i],
+                    Ports.SwerveDriveWCP.ANGLE_IDS[i],
+                    Ports.SwerveDriveWCP.ENCODER_IDS[i],
+                    SwerveConstants.DRIVE_MOTOR_CONFIGS
+                        ?: throw IllegalStateException("drive motor config is null"),
+                    SwerveConstants.ANGLE_MOTOR_CONFIGS
+                        ?: throw IllegalStateException("angle motor config is null"),
+                    SwerveConstants.ENCODER_CONFIGS ?: throw IllegalStateException("encoder config is null")
+                )
+            }
+            SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
+        } else {
+            moduleIOs = Array<ModuleIO>(4) { ModuleIOSim() }
+            SwerveDrive.initialize(GyroIOSim(), SwerveConstants.OFFSETS, *moduleIOs)
         }
     }
 
-    fun initVision(){
+    fun initVision() {
         val speakerRightCamera =
             PhotonVisionIOReal(
                 PhotonCamera("rightOV2311"),
@@ -87,14 +73,14 @@ object Initializer {
     }
 
     init {
-        initVision()
-        initSwerve()
-        PoseEstimation.initialize()
-        Climb.initialize(ClimbIOTalonFX())
-        Shooter.initialize(ShooterIOReal())
-        Hood.initialize(HoodIOReal())
-        Conveyor.initialize(ConveyorIOReal())
-        Intake.initialize(IntakeIOReal())
-        Gripper.initialize(GripperIOReal())
+//        initVision()
+//        initSwerve()
+//        PoseEstimation.initialize()
+//        Climb.initialize(ClimbIOTalonFX())
+        Shooter.initialize(ShooterIOSim())
+//        Hood.initialize(HoodIOReal())
+//        Conveyor.initialize(ConveyorIOReal())
+//        Intake.initialize(IntakeIOReal())
+//        Gripper.initialize(GripperIOReal())
     }
 }
