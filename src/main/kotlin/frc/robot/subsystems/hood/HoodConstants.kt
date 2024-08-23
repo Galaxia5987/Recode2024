@@ -49,7 +49,7 @@ object HoodConstants {
         kV.initDefault(0.0)
         kA.initDefault(0.0)
         kG.initDefault(9.0)
-        ABSOLUTE_ENCODER_OFFSET.initDefault((57.832 - 33.48) / 360.0)
+        ABSOLUTE_ENCODER_OFFSET.initDefault((58.095 - 33.48) / 360.0)
         MOTOR_CONFIGURATION
             .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(GEAR_RATIO))
             .withMotionMagic(
