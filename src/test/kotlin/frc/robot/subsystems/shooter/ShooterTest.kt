@@ -27,9 +27,8 @@ class ShooterTest : BaseSubsystemTest() {
         command.execute()
 
         SimHooks.stepTiming(5.0)
-
         Thread.sleep(1000)
 
-        assertTrue(shooter.atSetpoint())
+        assertTrue(shooter.atSetpoint(), "Shooter should be at setpoint.")
     }
 }
