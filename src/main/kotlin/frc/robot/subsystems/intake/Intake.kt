@@ -34,6 +34,8 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
         }
     }
 
+    fun getInputs(): LoggedIntakeInputs = inputs // Can't think of a better way that won't take a lot of time.
+
 
     fun setSpinPower(power: Double): Command {
         return Commands.run({
