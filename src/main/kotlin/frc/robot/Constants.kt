@@ -36,8 +36,7 @@ object Constants {
 
     private val SPEAKER_POSE_BLUE = Translation2d(0.0, 5.5479442)
 
-    val SPEAKER_POSE: Translation2d
-        get() = if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE
+    val SPEAKER_POSE: Translation2d by lazy { if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE }
 
     private val CHAIN_TOP = Pose2d(Translation2d(4.39, 4.67), Rotation2d.fromDegrees(-57.72))
     private val CHAIN_MIDDLE = Pose2d(Translation2d(5.59, 4.09), Rotation2d.fromDegrees(180.00))
