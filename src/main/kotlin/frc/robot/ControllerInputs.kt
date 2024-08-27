@@ -6,11 +6,11 @@ object ControllerInputs {
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
 
-    fun getDriverController(): CommandXboxController {
+    fun driverController(): CommandXboxController {
         return driverController
     }
 
-    fun getOperatorController(): CommandXboxController {
+    fun operatorController(): CommandXboxController {
         return operatorController
     }
 }
