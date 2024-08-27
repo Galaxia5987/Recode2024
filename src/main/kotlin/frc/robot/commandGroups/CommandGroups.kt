@@ -7,7 +7,10 @@ import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
+import frc.robot.ControllerInputs
+import frc.robot.lib.finallyDo
 import frc.robot.lib.getRotationToTranslation
+import frc.robot.lib.handleInterrupt
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
@@ -21,7 +24,6 @@ object CommandGroups {
     private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
-    private val climb = Climb.getInstance()
     private val intake = Intake.getInstance()
     private val gripper = Gripper.getInstance()
 
@@ -49,12 +51,15 @@ object CommandGroups {
         ).until {shooter.atSetpoint() && hood.atSetpoint() && swerveDrive.atTurnSetpoint}
     }
 
-    fun intake(rumble: Command): Command {
+    private fun stopIntake(): Command = Commands.parallel(intake.stop(), gripper.stop())
+
+    fun intake(): Command {
         return Commands.parallel(
             intake.intake(), gripper.setRollerPower(0.4)
         )
             .until { gripper.hasNote }
-            .andThen(Commands.parallel(intake.stop(), gripper.setRollerPower(0.0), rumble))
+            .andThen(Commands.parallel(intake.stop(), gripper.setRollerPower(0.0), ControllerInputs.startRumble()))
+            .finallyDo(stopIntake().alongWith(ControllerInputs.stopRumble()))
             .withName("intake")
     }
 
@@ -62,7 +67,9 @@ object CommandGroups {
         return Commands.parallel(
             intake.outtake(),
             (gripper.setRollerPower(-0.7))
-        ).withName("outtake")
+        )
+            .finallyDo(stopIntake())
+            .withName("outtake")
     }
 
     fun superPoopInit(): Runnable {
