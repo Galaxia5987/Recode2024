@@ -65,7 +65,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
 
     fun outtake(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.REST_ANGLE),
+            setAngle(IntakeConstants.INTAKE_ANGLE),
             setSpinPower(-IntakeConstants.INTAKE_SPIN_POWER),
             setCenterPower(-IntakeConstants.INTAKE_CENTER_POWER)
         )
@@ -81,10 +81,8 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
         return setAngle(IntakeConstants.REST_ANGLE).alongWith(stopSpin())
     }
 
-    fun reset(): StartEndCommand {
-        return StartEndCommand({
-            io.setAnglePower(-0.3)
-        }, {
+    fun reset(): Command {
+        return Commands.run({ io.setAnglePower(-0.3) }).finallyDo(Runnable {
             io.resetEncoder()
             io.setAnglePower(0.0)
         })
