@@ -49,22 +49,6 @@ object CommandGroups {
         ).until {shooter.atSetpoint() && hood.atSetpoint() && swerveDrive.atTurnSetpoint}
     }
 
-    fun openClimb(): Command {
-        return Commands.sequence(
-            climb.setPower { -0.3 }.withTimeout(1.25),
-            climb.open(),
-            climb.setPower { -0.5 }.withTimeout(2.5),
-        )
-    }
-
-    fun closeClimb(): Command {
-        return StartEndCommand(
-            { climb.setPower { 0.5 } },
-            climb::lock,
-            climb
-        )
-    }
-
     fun intake(rumble: Command): Command {
         return Commands.parallel(
             intake.intake(), gripper.setRollerPower(0.4)
