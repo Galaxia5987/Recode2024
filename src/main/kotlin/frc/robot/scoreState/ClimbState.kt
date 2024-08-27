@@ -7,13 +7,14 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.Constants
-import frc.robot.commandGroups.CommandGroups
+import frc.robot.lib.handleInterrupt
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.swerve.SwerveDrive
 
 class ClimbState : ScoreState {
 
     private val swerveDrive = SwerveDrive.getInstance()
+    private val climb = Climb.getInstance()
 
     private fun nearestChain(): Pose2d {
         return swerveDrive.estimator.estimatedPosition.nearest(Constants.CHAIN_LOCATIONS.asList())
@@ -21,27 +22,17 @@ class ClimbState : ScoreState {
 
     private fun pathFindToChain(): Command {
         return Commands.parallel(
-            AutoBuilder.pathfindToPose(nearestChain(), Constants.PATH_CONSTRAINTS),
-            swerveDrive.turnCommand(
+            AutoBuilder.pathfindToPose(nearestChain(), Constants.PATH_CONSTRAINTS), swerveDrive.turnCommand(
                 Units.Rotations.of(
                     nearestChain().rotation.rotations
-                ),
-                2.0 / 360
+                ), 2.0 / 360
             )
         )
     }
 
     override fun execute(): Command {
-        return StartEndCommand(
-            {
-                Commands.sequence(
-                    CommandGroups.openClimb(),
-                    pathFindToChain(),
-                    CommandGroups.closeClimb()
-                )
-            },
-            Commands::none, //TODO: Replace with LEDs command
-            swerveDrive, Climb.getInstance()
-        )
+        return Commands.sequence(
+            climb.openClimb(), pathFindToChain(), climb.closeClimb()
+        ).handleInterrupt(Commands.none()) // TODO: Replace with LEDs command
     }
 }
