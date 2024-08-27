@@ -7,7 +7,7 @@ import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
-import frc.robot.lib.extensions.TranslationExtensions.getRotationToTranslation
+import frc.robot.lib.getRotationToTranslation
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
