@@ -9,8 +9,6 @@ import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.gripper.GripperIOReal
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodIOReal
-import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.intake.IntakeIOReal
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
@@ -95,7 +93,6 @@ object Initializer {
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
         Conveyor.initialize(ConveyorIOReal())
-        Intake.initialize(IntakeIOReal())
         Gripper.initialize(GripperIOReal())
     }
 }
