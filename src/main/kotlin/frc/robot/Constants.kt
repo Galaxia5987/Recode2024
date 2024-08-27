@@ -49,8 +49,7 @@ object Constants {
         { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i]) } else CHAIN_LOCATIONS_BLUE
 
     val CURRENT_MODE: Mode = Mode.REAL
-    const val ROBORIO_NEO_SERIAL = "NEO" // TODO: Fill in roborio serial number
-    const val ROBORIO_WCP_SERIAL = "WCP" // TODO: Fill in roborio serial number
+    const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
     var CURRENT_STATE: ScoreState? = null
     val ROBORIO_SERIAL_NUM: String = System.getenv("serialnum") ?: "" // TODO: Not sure if this exists on init
