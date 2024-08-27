@@ -8,13 +8,13 @@ import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
-import frc.robot.scoreState.ScoreState
 import frc.robot.subsystems.swerve.SwerveConstants
 import kotlin.math.sqrt
 
 object Constants {
     const val CONFIG_TIMEOUT: Int = 100 // [ms]
     const val LOOP_TIME = 0.02 // [s]
+    const val IS_TUNING_MODE = true
 
     private val EFFECTIVE_ROBOT_RADIUS: Measure<Distance> = Units.Meters.of(SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
     private val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(2.0)
