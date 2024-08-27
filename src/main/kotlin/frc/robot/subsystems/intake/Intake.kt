@@ -71,13 +71,13 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
         ).handleInterrupt(stopSpin())
     }
 
-    private fun stopSpin(): Command {
+    fun stopSpin(): Command {
         return Commands.parallel(
             setSpinPower(0.0), setCenterPower(0.0)
         )
     }
 
-    private fun stop(): Command {
+    fun stop(): Command {
         return setAngle(IntakeConstants.REST_ANGLE).alongWith(stopSpin())
     }
 
