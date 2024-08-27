@@ -60,7 +60,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
             setAngle(IntakeConstants.INTAKE_ANGLE),
             setSpinPower(IntakeConstants.INTAKE_SPIN_POWER),
             setCenterPower(IntakeConstants.INTAKE_CENTER_POWER)
-        ).handleInterrupt(stop())
+        )
     }
 
     fun outtake(): Command {
@@ -68,7 +68,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
             setAngle(IntakeConstants.REST_ANGLE),
             setSpinPower(-IntakeConstants.INTAKE_SPIN_POWER),
             setCenterPower(-IntakeConstants.INTAKE_CENTER_POWER)
-        ).handleInterrupt(stopSpin())
+        )
     }
 
     fun stopSpin(): Command {
