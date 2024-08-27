@@ -52,7 +52,7 @@ object Constants {
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
     var CURRENT_STATE: ScoreState? = null
-    val ROBORIO_SERIAL_NUM: String = System.getenv("serialnum") ?: "" // TODO: Not sure if this exists on init
+    val ROBORIO_SERIAL_NUM: String = System.getenv("serialnum") ?: throw IllegalArgumentException("Roborio Serial number missing!")
 
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
