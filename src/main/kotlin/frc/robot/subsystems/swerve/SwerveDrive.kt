@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.Constants
 import frc.robot.lib.controllers.DieterController
-import frc.robot.lib.extensions.ChassisSpeedsExtensions.getSpeed
+import frc.robot.lib.getSpeed
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*

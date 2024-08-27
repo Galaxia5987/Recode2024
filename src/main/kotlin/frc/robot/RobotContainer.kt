@@ -1,6 +1,8 @@
 package frc.robot
 
+import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
@@ -8,6 +10,7 @@ import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
+import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,9 +41,9 @@ object RobotContainer {
     private fun configureDefaultCommands() {
 
         swerveDrive.defaultCommand = swerveDrive.driveCommand(
-            { -ControllerInputs.getDriverController().leftY },
-            { -ControllerInputs.getDriverController().leftX },
-            { 0.6 * -ControllerInputs.getDriverController().rightX })
+            { -ControllerInputs.driverController().leftY },
+            { -ControllerInputs.driverController().leftX },
+            { 0.6 * -ControllerInputs.driverController().rightX })
     }
 
     private fun configureButtonBindings() {
