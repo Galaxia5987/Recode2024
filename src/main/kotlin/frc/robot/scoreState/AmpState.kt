@@ -2,7 +2,6 @@ package frc.robot.scoreState
 
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.ControllerInputs
 import frc.robot.lib.handleInterrupt
 import frc.robot.subsystems.conveyor.Conveyor
@@ -21,8 +20,8 @@ class AmpState : ScoreState {
     private fun init(): Command {
         val driveAndAdjust = swerveDrive.driveAndAdjust(
             ScoreConstants.AMP_ROTATION,
-            { -ControllerInputs.getDriverController().leftX },
-            { -ControllerInputs.getDriverController().leftY },
+            { -ControllerInputs.driverController().leftX },
+            { -ControllerInputs.driverController().leftY },
             0.1,
             false
         )
