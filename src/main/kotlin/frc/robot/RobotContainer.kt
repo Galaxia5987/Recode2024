@@ -31,11 +31,11 @@ object RobotContainer {
     private lateinit var currentState: ScoreState
 
     init {
+        currentState = shootState
+
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
-
-        currentState = shootState
     }
 
     private fun configureDefaultCommands() {
