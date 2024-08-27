@@ -28,7 +28,7 @@ object RobotContainer {
     private val ampState: AmpState by lazy { AmpState() }
     private val climbState: ClimbState by lazy { ClimbState() }
 
-    private lateinit var currentState: ScoreState
+    private var currentState: ScoreState
 
     init {
         currentState = shootState
