@@ -46,3 +46,8 @@ inline fun <reified T : List<Any>> LogTable.get(key: String, defaultValue: T): T
 fun Translation2d.getRotationToTranslation(other: Translation2d): Rotation2d = (this - other).angle
 
 fun Command.handleInterrupt(command: Command): WrapperCommand = handleInterrupt { command.schedule() }
+
+fun Command.finallyDo(command: Command): WrapperCommand = finallyDo(Runnable {
+    if (command.isScheduled) command.cancel()
+    command.schedule()
+})
