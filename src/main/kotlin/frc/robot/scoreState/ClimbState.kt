@@ -15,16 +15,16 @@ class ClimbState : ScoreState {
 
     private val swerveDrive = SwerveDrive.getInstance()
 
-    private fun getNearestChain(): Pose2d {
+    private fun nearestChain(): Pose2d {
         return swerveDrive.estimator.estimatedPosition.nearest(Constants.CHAIN_LOCATIONS.asList())
     }
 
-    private fun pathFindToPose(pose: Pose2d): Command {
+    private fun pathFindToChain(): Command {
         return Commands.parallel(
-            AutoBuilder.pathfindToPose(pose, Constants.PATH_CONSTRAINTS),
+            AutoBuilder.pathfindToPose(nearestChain(), Constants.PATH_CONSTRAINTS),
             swerveDrive.turnCommand(
                 Units.Rotations.of(
-                    getNearestChain().rotation.rotations
+                    nearestChain().rotation.rotations
                 ),
                 2.0 / 360
             )
@@ -32,12 +32,11 @@ class ClimbState : ScoreState {
     }
 
     override fun execute(): Command {
-        val optimalPose: Pose2d = getNearestChain()
         return StartEndCommand(
             {
                 Commands.sequence(
                     CommandGroups.openClimb(),
-                    pathFindToPose(optimalPose),
+                    pathFindToChain(),
                     CommandGroups.closeClimb()
                 )
             },
