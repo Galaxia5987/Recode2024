@@ -1,7 +1,18 @@
 package frc.robot
 
+import frc.robot.lib.PoseEstimation
+import frc.robot.subsystems.climb.Climb
+import frc.robot.subsystems.climb.ClimbIOTalonFX
+import frc.robot.subsystems.conveyor.Conveyor
+import frc.robot.subsystems.conveyor.ConveyorIOReal
+import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.gripper.GripperIOReal
+import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.hood.HoodIOReal
+import frc.robot.subsystems.intake.Intake
+import frc.robot.subsystems.intake.IntakeIOReal
 import frc.robot.subsystems.shooter.Shooter
-import frc.robot.subsystems.shooter.ShooterIOSim
+import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
 import frc.robot.subsystems.vision.PhotonVisionIOReal
 import frc.robot.subsystems.vision.Vision
@@ -73,14 +84,14 @@ object Initializer {
     }
 
     init {
-//        initVision()
-//        initSwerve()
-//        PoseEstimation.initialize()
-//        Climb.initialize(ClimbIOTalonFX())
-        Shooter.initialize(ShooterIOSim())
-//        Hood.initialize(HoodIOReal())
-//        Conveyor.initialize(ConveyorIOReal())
-//        Intake.initialize(IntakeIOReal())
-//        Gripper.initialize(GripperIOReal())
+        initVision()
+        initSwerve()
+        PoseEstimation.initialize()
+        Climb.initialize(ClimbIOTalonFX())
+        Shooter.initialize(ShooterIOReal())
+        Hood.initialize(HoodIOReal())
+        Conveyor.initialize(ConveyorIOReal())
+        Intake.initialize(IntakeIOReal())
+        Gripper.initialize(GripperIOReal())
     }
 }
