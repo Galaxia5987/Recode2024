@@ -35,9 +35,7 @@ class AmpState : ScoreState {
     }
 
     private fun end(): Command {
-        return gripper.feed().andThen(
-                shooter.stop().alongWith(conveyor.stop())
-            )
+        return gripper.feed().andThen(Commands.parallel(shooter.stop(), conveyor.stop(), gripper.stop()))
     }
 
     override fun execute(): Command {

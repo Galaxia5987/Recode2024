@@ -47,10 +47,16 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
-        ControllerInputs.operatorController().a().whileTrue(currentState.execute())
+        ControllerInputs.operatorController().a().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
         ControllerInputs.operatorController().b().onTrue(Commands.runOnce({ currentState = shootState }))
         ControllerInputs.operatorController().x().onTrue(Commands.runOnce({ currentState = ampState }))
         ControllerInputs.operatorController().y().onTrue(Commands.runOnce({ currentState = climbState }))
+
+        ControllerInputs.driverController().rightTrigger().whileTrue(CommandGroups.intake())
+        ControllerInputs.driverController().rightBumper().whileTrue(CommandGroups.outtake())
+
+        ControllerInputs.operatorController().x().whileTrue(Intake.getInstance().reset())
+
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
