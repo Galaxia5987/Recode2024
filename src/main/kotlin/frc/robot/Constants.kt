@@ -38,11 +38,12 @@ object Constants {
 
     val SPEAKER_POSE: Translation2d by lazy { if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE }
 
-    private val CHAIN_TOP = Pose2d(Translation2d(4.39, 4.67), Rotation2d.fromDegrees(-57.72))
-    private val CHAIN_MIDDLE = Pose2d(Translation2d(5.59, 4.09), Rotation2d.fromDegrees(180.00))
-    private val CHAIN_BOTTOM = Pose2d(Translation2d(4.39, 3.46), Rotation2d.fromDegrees(57.72))
+    private val CHAIN_LOCATIONS_BLUE: Array<Pose2d> = arrayOf(
+        Triple(4.39, 4.67, -57.72), // Left
+        Triple(5.59, 4.09, 180.00), // Center
+        Triple(4.39, 3.46, 57.72) // Right
+    ).map { (x, y, theta) -> Pose2d(x, y, Rotation2d.fromDegrees(theta)) }.toTypedArray()
 
-    private val CHAIN_LOCATIONS_BLUE = arrayOf(CHAIN_TOP, CHAIN_MIDDLE, CHAIN_BOTTOM)
     val CHAIN_LOCATIONS: Array<Pose2d>
         get() = if (isRed) Array<Pose2d>(CHAIN_LOCATIONS_BLUE.size)
         { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i]) } else CHAIN_LOCATIONS_BLUE
