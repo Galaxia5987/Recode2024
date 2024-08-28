@@ -5,8 +5,7 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import edu.wpi.first.math.geometry.Translation2d
-import com.pathplanner.lib.util.GeometryUtil
-import frc.robot.Constants
+import frc.robot.lib.getTranslationByColor
 
 object ShootOverStageConstants {
     val HOOD_ANGLE_SUPER_POOP: Measure<Angle> = Units.Degrees.of(110.0)
@@ -16,9 +15,9 @@ object ShootOverStageConstants {
     private val SUPER_POOP_TRANSLATION_BLUE = Translation2d()
 
     val SUPER_POOP_TRANSLATION: Translation2d
-        get() =
-            if (Constants.isRed) GeometryUtil.flipFieldPosition(SUPER_POOP_TRANSLATION_BLUE)
-            else SUPER_POOP_TRANSLATION_BLUE
+        by lazy {
+            getTranslationByColor(SUPER_POOP_TRANSLATION)
+        }
 
     val SUPER_POOP_TURN_TOLERANCE: Measure<Angle> = Units.Degrees.of(2.5)
 }

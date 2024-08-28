@@ -8,6 +8,8 @@ import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
+import frc.robot.lib.getPoseByColor
+import frc.robot.lib.getTranslationByColor
 import frc.robot.subsystems.swerve.SwerveConstants
 import kotlin.math.sqrt
 
@@ -34,7 +36,7 @@ object Constants {
 
     private val SPEAKER_POSE_BLUE = Translation2d(0.0, 5.5479442)
 
-    val SPEAKER_POSE: Translation2d by lazy { if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE }
+    val SPEAKER_POSE: Translation2d by lazy { getTranslationByColor(SPEAKER_POSE_BLUE) }
 
     val CHAIN_LOCATIONS: List<Pose2d> by lazy {
         val blueChainLocations = listOf(
@@ -43,7 +45,9 @@ object Constants {
             Triple(4.39, 3.46, 57.72) // Right
         ).map { (x, y, theta) -> Pose2d(x, y, Rotation2d.fromDegrees(theta)) }
 
-        if (isRed) blueChainLocations.map(GeometryUtil::flipFieldPose) else blueChainLocations
+        blueChainLocations.map { pose ->
+            getPoseByColor(pose)
+        }
     }
 
     val CURRENT_MODE: Mode = Mode.REAL
