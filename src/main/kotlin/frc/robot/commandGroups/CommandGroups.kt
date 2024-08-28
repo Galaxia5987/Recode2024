@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.ControllerInputs
 import frc.robot.lib.finallyDo
 import frc.robot.lib.getRotationToTranslation
-import frc.robot.lib.handleInterrupt
-import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
@@ -72,9 +70,8 @@ object CommandGroups {
             .withName("outtake")
     }
 
-    fun superPoopInit(): Runnable {
-        return Runnable {
-            Commands.parallel(
+    private fun shootOverStageInit(): Command {
+        return Commands.parallel(
                 warmup(
                     CommandGroupsConstants.HOOD_ANGLE_SUPER_POOP,
                     CommandGroupsConstants.SHOOTER_VELOCITY_SUPER_POOP,
@@ -89,13 +86,10 @@ object CommandGroups {
                     CommandGroupsConstants.SUPER_POOP_TURN_TOLERANCE.`in`(Units.Rotations)
                 )
             ).until { readyToSuperPoop() } // TODO: add LEDS
-        }
     }
 
-    fun superPoopEnd(): Runnable {
-        return Runnable {
-            stopWarmup()
-        }
+    private fun shootOverStageEnd(): Command {
+        return stopWarmup()
         // TODO: LED MODE Default
     }
 
