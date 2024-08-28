@@ -7,6 +7,7 @@ import edu.wpi.first.units.*
 import frc.robot.Constants
 import frc.robot.lib.Gains
 import frc.robot.lib.LoggedTunableNumber
+import frc.robot.lib.createGains
 
 object HoodConstants {
     const val GEAR_RATIO: Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
@@ -32,24 +33,12 @@ object HoodConstants {
     val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset", (58.095 - 33.48) / 360.0)
 
     val GAINS by lazy {
-        if (Constants.CURRENT_MODE == Constants.Mode.SIM) Gains(
-            2400.0,
-            0.0,
-            600.0,
-            0.0,
-            0.0,
-            0.0,
-            9.0
-        ) else Gains(
-            20.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            0.0
+        createGains(
+            Gains(
+                2400.0, 0.0, 600.0, 0.0, 0.0, 0.0, 9.0
+            ), Gains(
+                20.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0
+            )
         )
     }
-
-
 }
