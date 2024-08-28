@@ -9,6 +9,10 @@ import com.pathplanner.lib.util.PIDConstants
 import com.pathplanner.lib.util.ReplanningConfig
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.units.Distance
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.Velocity
 import frc.robot.Constants
 import frc.robot.lib.LoggedTunableNumber
 import kotlin.math.pow
@@ -99,13 +103,13 @@ object SwerveConstants {
     var MAX_OMEGA_VELOCITY = 0.0
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
-    const val TURN_MAX_TOLERANCE = 3.0 / 360.0 //TODO: calibrate
+    const val TURN_MAX_TOLERANCE = 3.0 / 360.0
     const val SKID_TOLERANCE = 0.3
-    const val COLLISION_TOLERANCE: Float = 1.8F // [G]
+    val COLLISION_TOLERANCE: Measure<Velocity<Velocity<Distance>>> = Units.Gs.of(1.8)
 
     init {
         if (Constants.CURRENT_MODE == Constants.Mode.REAL) {
-            if (Constants.ROBORIO_SERIAL_NUM == Constants.ROBORIO_NEO_SERIAL) {
+            if (Constants.ROBORIO_SERIAL_NUMBER == Constants.ROBORIO_NEO_SERIAL) {
                 DRIVE_KP.initDefault(0.0006)
                 DRIVE_KI.initDefault(0.0)
                 DRIVE_KD.initDefault(0.0)

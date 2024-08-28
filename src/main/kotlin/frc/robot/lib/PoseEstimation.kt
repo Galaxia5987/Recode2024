@@ -1,6 +1,7 @@
 package frc.robot.lib
 
 import edu.wpi.first.math.VecBuilder
+import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.Constants
 import frc.robot.subsystems.swerve.SwerveConstants
@@ -32,6 +33,12 @@ class PoseEstimation {
         }
     }
 
+    private fun isOutOfBounds(estimatedPose: Pose3d): Boolean {
+        val x = estimatedPose.x
+        val y = estimatedPose.y
+        return !(0 < x && x < Constants.FIELD_LENGTH) || !(0 < y && y < Constants.FIELD_WIDTH)
+    }
+
     fun processVisionMeasurements(multiplier: Double) {
         val results = vision.results
 
@@ -39,7 +46,7 @@ class PoseEstimation {
             val estimatedPose = result.estimatedRobotPose
 
             val isFloating = estimatedPose.z > 0.1
-            val isOutOfBounds = Constants.isOutOfBounds(estimatedPose)
+            val isOutOfBounds = isOutOfBounds(estimatedPose)
 
             if (isFloating || isOutOfBounds) {
                 continue

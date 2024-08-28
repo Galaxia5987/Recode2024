@@ -22,41 +22,48 @@ import org.photonvision.PhotonCamera
 object Initializer {
 
     fun initSwerve() {
-        val moduleIOs: Array<ModuleIO>
-
-        if (Constants.CURRENT_MODE == Constants.Mode.REAL) {
-            if (Constants.ROBORIO_SERIAL_NUM == Constants.ROBORIO_NEO_SERIAL) {
-                moduleIOs = Array<ModuleIO>(4) { i ->
-                    ModuleIOSparkMax(
-                        Ports.SwerveDriveNEO.DRIVE_IDS[i],
-                        Ports.SwerveDriveNEO.ANGLE_IDS[i],
-                        Ports.SwerveDriveNEO.ENCODER_IDS[i],
-                        Ports.SwerveDriveNEO.DRIVE_INVERTED[i],
-                        Ports.SwerveDriveNEO.ANGLE_INVERTED[i]
-                    )
+        val moduleIOs: Array<ModuleIO> = when (Constants.CURRENT_MODE) {
+            Constants.Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
+                Constants.ROBORIO_NEO_SERIAL -> {
+                    Array(4) { i ->
+                        ModuleIOSparkMax(
+                            Ports.SwerveDriveNEO.DRIVE_IDS[i],
+                            Ports.SwerveDriveNEO.ANGLE_IDS[i],
+                            Ports.SwerveDriveNEO.ENCODER_IDS[i],
+                            Ports.SwerveDriveNEO.DRIVE_INVERTED[i],
+                            Ports.SwerveDriveNEO.ANGLE_INVERTED[i]
+                        )
+                    }
                 }
-                SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
-                return
+                else -> {
+                    Array(4) { i ->
+                        ModuleIOTalonFX(
+                            Ports.SwerveDriveWCP.DRIVE_IDS[i],
+                            Ports.SwerveDriveWCP.ANGLE_IDS[i],
+                            Ports.SwerveDriveWCP.ENCODER_IDS[i],
+                            SwerveConstants.DRIVE_MOTOR_CONFIGS
+                                ?: throw IllegalStateException("drive motor config is null"),
+                            SwerveConstants.ANGLE_MOTOR_CONFIGS
+                                ?: throw IllegalStateException("angle motor config is null"),
+                            SwerveConstants.ENCODER_CONFIGS
+                                ?: throw IllegalStateException("encoder config is null")
+                        )
+                    }
+                }
             }
-
-            moduleIOs = Array<ModuleIO>(4) { i ->
-                ModuleIOTalonFX(
-                    Ports.SwerveDriveWCP.DRIVE_IDS[i],
-                    Ports.SwerveDriveWCP.ANGLE_IDS[i],
-                    Ports.SwerveDriveWCP.ENCODER_IDS[i],
-                    SwerveConstants.DRIVE_MOTOR_CONFIGS
-                        ?: throw IllegalStateException("drive motor config is null"),
-                    SwerveConstants.ANGLE_MOTOR_CONFIGS
-                        ?: throw IllegalStateException("angle motor config is null"),
-                    SwerveConstants.ENCODER_CONFIGS ?: throw IllegalStateException("encoder config is null")
-                )
+            else -> {
+                Array(4) { ModuleIOSim() }
             }
-            SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS, *moduleIOs)
-        } else {
-            moduleIOs = Array<ModuleIO>(4) { ModuleIOSim() }
-            SwerveDrive.initialize(GyroIOSim(), SwerveConstants.OFFSETS, *moduleIOs)
         }
+
+        val gyroIO = when (Constants.CURRENT_MODE) {
+            Constants.Mode.REAL -> GyroIOReal()
+            else -> GyroIOSim()
+        }
+
+        SwerveDrive.initialize(gyroIO, SwerveConstants.OFFSETS, *moduleIOs)
     }
+
 
     fun initVision() {
         val speakerRightCamera =
