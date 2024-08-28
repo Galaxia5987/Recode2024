@@ -31,10 +31,10 @@ object IntakeConstants {
     init {
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
-                ANGLE_KP.initDefault(20.0)
-                ANGLE_KI.initDefault(0.03)
-                ANGLE_KD.initDefault(0.0)
-                ANGLE_KG.initDefault(0.3)
+                ANGLE_KP.initDefault(21.0)
+                ANGLE_KI.initDefault(0.0)
+                ANGLE_KD.initDefault(0.1)
+                ANGLE_KG.initDefault(0.0)
             }
 
             Constants.Mode.SIM, Constants.Mode.REPLAY -> {

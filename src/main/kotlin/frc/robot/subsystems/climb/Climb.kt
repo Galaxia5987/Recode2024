@@ -3,6 +3,7 @@ package frc.robot.subsystems.climb
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
@@ -22,8 +23,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
 
         fun initialize(io: ClimbIO) {
             synchronized(this) {
-                if (instance == null)
-                    instance = Climb(io)
+                if (instance == null) instance = Climb(io)
             }
         }
 
@@ -38,25 +38,34 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun open(): Command {
-        return Commands.run(io::openStopper)
-            .until { isStopperStuck }
-            .andThen(io::disableStopper)
+        return Commands.run(io::openStopper).until { isStopperStuck }.andThen(io::disableStopper)
     }
 
     fun lock(): Command {
-        return Commands.run(io::closeStopper)
-            .until { isStopperStuck }
-            .andThen(io::disableStopper)
+        return Commands.run(io::closeStopper).until { isStopperStuck }.andThen(io::disableStopper)
     }
 
     fun setPower(power: DoubleSupplier): Command {
         return run { io.setPower(power.asDouble) }
     }
 
+    fun openClimb(): Command {
+        return Commands.sequence(
+            setPower { -0.3 }.withTimeout(1.25),
+            open(),
+            setPower { -0.5 }.withTimeout(2.5),
+        )
+    }
+
+    fun closeClimb(): Command {
+        return StartEndCommand(
+            { setPower { 0.5 } }, ::lock
+        )
+    }
+
     override fun periodic() {
         isStopperStuck =
-            inputs.stopperCurrent.absoluteValue >=
-                    ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
+            inputs.stopperCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
         io.updateInputs()
         if (timer.advanceIfElapsed(0.1)) {
             Logger.processInputs(this::class.simpleName, inputs)

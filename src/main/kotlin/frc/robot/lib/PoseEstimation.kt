@@ -1,12 +1,14 @@
 package frc.robot.lib
 
 import edu.wpi.first.math.VecBuilder
+import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.Constants
 import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.subsystems.vision.Vision
 import org.littletonrobotics.junction.AutoLogOutput
+import kotlin.math.sqrt
 
 class PoseEstimation {
     private val vision: Vision = Vision.getInstance()
@@ -29,31 +31,40 @@ class PoseEstimation {
                 "PoseEstimation has not been initialized. Call initialize() first."
             )
         }
+    }
 
-        /**
-         * Averages ambiguity of estimated poses using a harmonic average. Can be from different targets
-         * in vision module, or between module.
-         *
-         * Note: The numerator is 1 instead of the usual 'n'.
-         * This is so when we have multiple lower values the ambiguity will be lower.
-         *
-         * @param ambiguities the ambiguities to average.
-         * @return the average of the ambiguities.
-         */
-        fun averageAmbiguity(ambiguities: List<Double>): Double {
-            return 1.0 / ambiguities.sumOf { 1.0 / it }
-        }
+    private fun isOutOfBounds(estimatedPose: Pose3d): Boolean {
+        val x = estimatedPose.x
+        val y = estimatedPose.y
+        return !(0 < x && x < Constants.FIELD_LENGTH) || !(0 < y && y < Constants.FIELD_WIDTH)
     }
 
     fun processVisionMeasurements(multiplier: Double) {
         val results = vision.results
 
         for (result in results) {
-            val ambiguities = result.distanceToTargets.map { d -> d * d }
-            val stddev = multiplier * averageAmbiguity(ambiguities)
+            val estimatedPose = result.estimatedRobotPose
+
+            val isFloating = estimatedPose.z > 0.1
+            val isOutOfBounds = isOutOfBounds(estimatedPose)
+
+            if (isFloating || isOutOfBounds) {
+                continue
+            }
+
+            val distances = result.distanceToTargets
+            val mean = distances.average()
+
+            val stddev = if (distances.size == 1) {
+                distances.first() * multiplier
+            } else {
+                val squaredDistances = distances.map { d -> (d - mean) * (d - mean) }
+                val variance = squaredDistances.average()
+                sqrt(variance)
+            }
 
             swerveDrive.estimator.addVisionMeasurement(
-                result.estimatedRobotPose.toPose2d(),
+                estimatedPose.toPose2d(),
                 result.timestamp,
                 VecBuilder.fill(
                     stddev,
@@ -64,12 +75,8 @@ class PoseEstimation {
         }
     }
 
-    @AutoLogOutput(key = "Robot/DistanceToSpeakerk")
-    fun getDistanceToSpeaker(): Double = getPoseRelativeToSpeaker().norm
-
-    @AutoLogOutput(key = "Robot/ToSpeaker")
-    fun getPoseRelativeToSpeaker(): Translation2d =
-        Constants.SPEAKER_POSE.minus(
-            SwerveDrive.getInstance().estimator.estimatedPosition.translation
-        )
+    @AutoLogOutput(key = "Robot/DistanceToSpeaker")
+    fun getDistanceToSpeaker(): Double = (
+            Constants.SPEAKER_POSE - SwerveDrive.getInstance().estimator.estimatedPosition.translation
+            ).norm
 }

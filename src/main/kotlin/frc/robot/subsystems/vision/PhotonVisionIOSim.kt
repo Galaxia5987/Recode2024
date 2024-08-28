@@ -36,10 +36,10 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
     override fun updateInputs() {
         val botPose = SwerveDrive.getInstance().estimator.estimatedPosition
         val botPose3d = pose2dToPose3d(botPose)
-        val latestResult: PhotonPipelineResult =
+        val latestResult =
             simCamera.process(
                 0.0,
-                botPose3d.plus(robotToCam.div(-1.0)),
+                botPose3d + robotToCam.inverse(),
                 VisionConstants.aprilTagFieldLayout.tags.map { a ->
                     VisionTargetSim(
                         a.pose,

@@ -1,39 +1,32 @@
 package frc.robot
 
-import com.pathplanner.lib.util.GeometryUtil
-import edu.wpi.first.math.geometry.Translation2d
 import com.pathplanner.lib.path.PathConstraints
+import com.pathplanner.lib.util.GeometryUtil
 import edu.wpi.first.math.geometry.Pose2d
+import edu.wpi.first.math.geometry.Pose3d
+import edu.wpi.first.math.geometry.Rotation2d
+import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
-import edu.wpi.first.wpilibj2.command.Command
-import edu.wpi.first.wpilibj2.command.Commands
-import frc.robot.scoreState.AmpState
-import frc.robot.scoreState.ClimbState
-import frc.robot.scoreState.ScoreState
-import frc.robot.scoreState.ShootState
-import frc.robot.subsystems.swerve.*
-import frc.robot.subsystems.vision.PhotonVisionIOReal
-import frc.robot.subsystems.vision.Vision
-import frc.robot.subsystems.vision.VisionConstants
-import org.photonvision.PhotonCamera
+import frc.robot.lib.getPoseByColor
+import frc.robot.lib.getTranslationByColor
+import frc.robot.subsystems.swerve.SwerveConstants
 import kotlin.math.sqrt
 
 object Constants {
     const val CONFIG_TIMEOUT: Int = 100 // [ms]
     const val LOOP_TIME = 0.02 // [s]
 
-    val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(2.0)
-    val MAX_ACCELERATION: Measure<Velocity<Velocity<Distance>>> = Units.MetersPerSecondPerSecond.of(1.0)
-    val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
-        MAX_VELOCITY.`in`(Units.MetersPerSecond)
-                / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+    private val EFFECTIVE_ROBOT_RADIUS: Measure<Distance> = Units.Meters.of(SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+    private val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(2.0)
+    private val MAX_ACCELERATION: Measure<Velocity<Velocity<Distance>>> = Units.MetersPerSecondPerSecond.of(1.0)
+    private val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
+        MAX_VELOCITY.`in`(Units.MetersPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
     )
-    val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second)
-        .of(
-            (MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond)
-                    / (SwerveConstants.ROBOT_LENGTH / sqrt(2.0)))
-        )
+    private val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> =
+        Units.RotationsPerSecond.per(Units.Second).of(
+                MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
+            )
     val PATH_CONSTRAINTS: PathConstraints = PathConstraints(
         MAX_VELOCITY.`in`(Units.MetersPerSecond),
         MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond),
@@ -41,30 +34,34 @@ object Constants {
         MAX_ANGULAR_ACCELERATION.`in`(Units.RotationsPerSecond.per(Units.Second))
     )
 
-    var SPEAKER_POSE: Translation2d = Translation2d(0.0, 5.5479442) // Blue
+    private val SPEAKER_POSE_BLUE = Translation2d(0.0, 5.5479442)
 
-    var chainLocations = arrayOf(Pose2d(), Pose2d(), Pose2d()) //left, right, middle
+    val SPEAKER_POSE: Translation2d by lazy { getTranslationByColor(SPEAKER_POSE_BLUE) }
+
+    val CHAIN_LOCATIONS: List<Pose2d> by lazy {
+        val blueChainLocations = listOf(
+            Triple(4.39, 4.67, -57.72), // Left
+            Triple(5.59, 4.09, 180.00), // Center
+            Triple(4.39, 3.46, 57.72) // Right
+        ).map { (x, y, theta) -> Pose2d(x, y, Rotation2d.fromDegrees(theta)) }
+
+        blueChainLocations.map { pose ->
+            getPoseByColor(pose)
+        }
+    }
 
     val CURRENT_MODE: Mode = Mode.REAL
+    const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
-    var CURRENT_STATE: ScoreState? = null
+    val ROBORIO_SERIAL_NUMBER: String = System.getenv("serialnum") ?: "Sim"
 
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
 
+    const val FIELD_LENGTH: Double = 16.54
+    const val FIELD_WIDTH: Double = 8.23
 
     enum class Mode {
-        REAL,
-        SIM,
-        REPLAY
-    }
-
-    fun initConstants() {
-        if (isRed) {
-            SPEAKER_POSE = GeometryUtil.flipFieldPosition(SPEAKER_POSE)
-
-            chainLocations = Array<Pose2d>(chainLocations.size)
-            { i -> GeometryUtil.flipFieldPose(chainLocations[i])}
-        }
+        REAL, SIM, REPLAY
     }
 }

@@ -4,12 +4,15 @@ import edu.wpi.first.apriltag.AprilTagFieldLayout
 import edu.wpi.first.apriltag.AprilTagFields
 import edu.wpi.first.math.geometry.Rotation3d
 import edu.wpi.first.math.geometry.Transform3d
+import edu.wpi.first.units.Distance
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
 
 object VisionConstants {
     val aprilTagFieldLayout: AprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField()
 
     var VISION_MEASUREMENT_MULTIPLIER = 0.5
-
+    val MAXIMUM_DISTANCE_FROM_TAG: Measure<Distance> = Units.Meters.of(5.0)
 
     val SPEAKER_RIGHT_CAMERA_POSE = Transform3d(
         -0.065833,

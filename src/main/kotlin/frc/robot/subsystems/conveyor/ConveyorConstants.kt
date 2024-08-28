@@ -17,7 +17,7 @@ object ConveyorConstants {
 
     val MOTOR_CONFIG: TalonFXConfiguration = TalonFXConfiguration()
 
-    val FEED_VELOCITY: MutableMeasure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0).mutableCopy()
+    val FEED_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0)
 
     val KP: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kP")
     val KI: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kI")

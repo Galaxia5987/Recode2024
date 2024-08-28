@@ -11,7 +11,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition
 import edu.wpi.first.math.kinematics.SwerveModuleState
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Voltage
 import edu.wpi.first.wpilibj.DriverStation
@@ -22,12 +21,13 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.Constants
 import frc.robot.lib.controllers.DieterController
+import frc.robot.lib.getSpeed
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
-import java.util.concurrent.locks.ReentrantLock
 import java.util.function.DoubleSupplier
 import java.util.function.Function
+import kotlin.math.abs
 import kotlin.math.hypot
 
 class SwerveDrive private constructor
@@ -176,6 +176,37 @@ class SwerveDrive private constructor
                 .minus(if (Constants.isRed) Rotation2d.fromDegrees(180.0) else Rotation2d())
         )
         estimator.resetPosition(pose.rotation, modulePositions, pose)
+    }
+
+    /**
+     * Determines if the swerve drive is skidding by calculating a weighted average of slip ratios
+     * across all swerve modules.
+     *
+     * @return `true` if the weighted average of slip ratios exceeds the predefined skid tolerance,
+     *         indicating that the robot is skidding; `false` otherwise.
+     */
+    private fun isSkidding(): Boolean {
+        var weightedAvg = 0.0
+        var denominator = 0.0
+
+        val chassisSpeed: Double = chassisSpeeds.getSpeed()
+        val slipRatios = Array(modules.size) { index ->
+            val moduleVelocity = modules[index]?.velocity ?: 0.0
+            val velocityDifference = moduleVelocity - chassisSpeed
+            velocityDifference / chassisSpeed
+        }
+
+        for (ratio in slipRatios){
+            weightedAvg += ratio * abs(ratio)
+            denominator += abs(ratio)
+        }
+
+        weightedAvg /= denominator
+        return weightedAvg > SwerveConstants.SKID_TOLERANCE
+    }
+
+    private fun isColliding() : Boolean {
+        return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE.`in`(Units.Gs)
     }
 
     fun checkSwerve() {
@@ -327,6 +358,7 @@ class SwerveDrive private constructor
                 .map<SwerveModuleState?>(Function<SwerveModule?, SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState })
                 .toList()
                 .toTypedArray<SwerveModuleState?>()
+        kinematics
         chassisSpeeds = kinematics.toChassisSpeeds(*currentModuleStates)
         velocity = hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond)
         absolutePositions = Arrays.stream(modules)
@@ -346,7 +378,11 @@ class SwerveDrive private constructor
         Arrays.stream(modules).forEach { obj: SwerveModule? -> obj!!.updateInputs() }
         updateGyroInputs()
         updateModulePositions()
-        estimator.update(odometryYaw, modulePositions)
+
+        if (!(isSkidding() || isColliding())) {
+            estimator.update(odometryYaw, modulePositions)
+        }
+
         botPose = estimator.estimatedPosition
 
         SwerveDriveKinematics.desaturateWheelSpeeds(
@@ -368,7 +404,7 @@ class SwerveDrive private constructor
             { chassisSpeeds },
             { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
             SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
-            {Constants.isRed},
+            { Constants.isRed },
             this
         )
     }

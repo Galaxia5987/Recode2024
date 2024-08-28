@@ -6,6 +6,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
+import frc.robot.commandGroups.IntakeCommands
+import frc.robot.scoreState.AmpState
+import frc.robot.scoreState.ClimbState
+import frc.robot.scoreState.ScoreState
+import frc.robot.scoreState.ShootState
+import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
@@ -20,8 +26,15 @@ object RobotContainer {
     private val testController = CommandXboxController(2)
 
     private val autoChooser: SendableChooser<Command> = AutoBuilder.buildAutoChooser()
+    private val shootState: ShootState by lazy { ShootState() }
+    private val ampState: AmpState by lazy { AmpState() }
+    private val climbState: ClimbState by lazy { ClimbState() }
+
+    private var currentState: ScoreState
 
     init {
+        currentState = shootState
+
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
@@ -30,13 +43,22 @@ object RobotContainer {
     private fun configureDefaultCommands() {
 
         swerveDrive.defaultCommand = swerveDrive.driveCommand(
-            { ControllerInputs.getDriverController().leftY },
-            { ControllerInputs.getDriverController().leftX },
-            { 0.6 * ControllerInputs.getDriverController().rightX })
+            { -ControllerInputs.driverController().leftY },
+            { -ControllerInputs.driverController().leftX },
+            { 0.6 * -ControllerInputs.driverController().rightX })
     }
 
     private fun configureButtonBindings() {
-        ControllerInputs.getDriverController().y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
+        ControllerInputs.operatorController().a().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
+        ControllerInputs.operatorController().b().onTrue(Commands.runOnce({ currentState = shootState }))
+        ControllerInputs.operatorController().x().onTrue(Commands.runOnce({ currentState = ampState }))
+        ControllerInputs.operatorController().y().onTrue(Commands.runOnce({ currentState = climbState }))
+
+        ControllerInputs.driverController().rightTrigger().whileTrue(IntakeCommands.intake())
+        ControllerInputs.driverController().rightBumper().whileTrue(IntakeCommands.outtake())
+
+        ControllerInputs.operatorController().x().whileTrue(Intake.getInstance().reset())
+
     }
 
     fun getAutonomousCommand(): Command = Commands.none()

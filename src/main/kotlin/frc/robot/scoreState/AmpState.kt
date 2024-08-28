@@ -2,8 +2,8 @@ package frc.robot.scoreState
 
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.ControllerInputs
+import frc.robot.lib.handleInterrupt
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
@@ -17,37 +17,28 @@ class AmpState : ScoreState {
     private val hood: Hood = Hood.getInstance()
     private val gripper: Gripper = Gripper.getInstance()
 
-    private fun init(): Runnable {
-        return Runnable {
-            Commands.parallel(
-                swerveDrive.driveAndAdjust(
-                    ScoreConstants.AMP_ROTATION,
-                    { -ControllerInputs.getDriverController().leftX },
-                    { -ControllerInputs.getDriverController().leftY },
-                    0.1,
-                    false
-                ), shooter.setVelocity(
-                    ScoreConstants.SHOOTER_TOP_AMP_VELOCITY,
-                    ScoreConstants.SHOOTER_BOTTOM_AMP_VELOCITY
-                ), conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY)
-                // TODO: Add LEDS
-            )
-        }
+    private fun init(): Command {
+        val driveAndAdjust = swerveDrive.driveAndAdjust(
+            ScoreConstants.AMP_ROTATION,
+            { -ControllerInputs.driverController().leftX },
+            { -ControllerInputs.driverController().leftY },
+            0.1,
+            false
+        )
+        val setShooterVelocity = shooter.setVelocity(
+            ScoreConstants.SHOOTER_TOP_AMP_VELOCITY, ScoreConstants.SHOOTER_BOTTOM_AMP_VELOCITY
+        )
+        return Commands.parallel(
+            driveAndAdjust, setShooterVelocity, conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY)
+            // TODO: Add LEDS
+        )
     }
 
-    private fun end(): Runnable {
-        return Runnable {
-            gripper.feed()
-                .andThen(shooter.stop())
-                .alongWith(conveyor.stop())
-        }
+    private fun end(): Command {
+        return gripper.feed().andThen(Commands.parallel(shooter.stop(), conveyor.stop(), gripper.stop()))
     }
 
     override fun execute(): Command {
-        return StartEndCommand(
-            { init() },
-            { end() },
-            swerveDrive, shooter, conveyor, hood, gripper
-        )
+        return init().handleInterrupt(end())
     }
 }

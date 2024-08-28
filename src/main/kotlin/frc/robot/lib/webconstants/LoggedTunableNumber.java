@@ -8,13 +8,12 @@
 package frc.robot.lib.webconstants;
 
 import frc.robot.lib.GeneralRobotLoop;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.DoubleConsumer;
+import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 /**
  * Class for a tunable number. Gets value from dashboard in tuning mode, returns default if not or
