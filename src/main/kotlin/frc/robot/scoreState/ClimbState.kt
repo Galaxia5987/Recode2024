@@ -17,7 +17,7 @@ class ClimbState : ScoreState {
     private val climb = Climb.getInstance()
 
     private fun nearestChain(): Pose2d {
-        return swerveDrive.estimator.estimatedPosition.nearest(Constants.CHAIN_LOCATIONS.asList())
+        return swerveDrive.estimator.estimatedPosition.nearest(Constants.CHAIN_LOCATIONS)
     }
 
     private fun pathFindToChain(): Command {
