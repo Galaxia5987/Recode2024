@@ -7,7 +7,7 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.Constants
-import frc.robot.commandGroups.CommandGroups
+import frc.robot.commandGroups.WarmupCommands
 import frc.robot.lib.PoseEstimation
 import frc.robot.lib.getRotationToTranslation
 import frc.robot.lib.handleInterrupt
@@ -31,7 +31,7 @@ class ShootState : ScoreState {
     }
 
     private fun warmup(distanceToSpeaker: Measure<Distance>): Command {
-        return CommandGroups.warmup(
+        return WarmupCommands.warmup(
             Units.Degrees.of(
                 ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
                     InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
@@ -68,7 +68,7 @@ class ShootState : ScoreState {
 
     private fun end(): Command {
         return gripper.feed().andThen(
-            CommandGroups.stopWarmup(), Commands.none() //TODO: Replace with LEDs command
+            WarmupCommands.stopWarmup(), Commands.none() //TODO: Replace with LEDs command
         )
     }
 
