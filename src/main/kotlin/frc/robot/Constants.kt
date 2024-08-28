@@ -8,7 +8,6 @@ import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.DriverStation
-import frc.robot.scoreState.ScoreState
 import frc.robot.subsystems.swerve.SwerveConstants
 import kotlin.math.sqrt
 
@@ -50,7 +49,7 @@ object Constants {
     val CURRENT_MODE: Mode = Mode.REAL
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
-    val ROBORIO_SERIAL_NUM: String = System.getenv("serialnum") ?: "Sim"
+    val ROBORIO_SERIAL_NUMBER: String = System.getenv("serialnum") ?: "Sim"
 
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red

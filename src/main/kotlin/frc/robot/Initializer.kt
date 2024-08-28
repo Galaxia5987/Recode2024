@@ -25,7 +25,7 @@ object Initializer {
         val moduleIOs: Array<ModuleIO>
 
         if (Constants.CURRENT_MODE == Constants.Mode.REAL) {
-            if (Constants.ROBORIO_SERIAL_NUM == Constants.ROBORIO_NEO_SERIAL) {
+            if (Constants.ROBORIO_SERIAL_NUMBER == Constants.ROBORIO_NEO_SERIAL) {
                 moduleIOs = Array<ModuleIO>(4) { i ->
                     ModuleIOSparkMax(
                         Ports.SwerveDriveNEO.DRIVE_IDS[i],

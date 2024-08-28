@@ -7,7 +7,6 @@ import com.ctre.phoenix6.signals.NeutralModeValue
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig
 import com.pathplanner.lib.util.PIDConstants
 import com.pathplanner.lib.util.ReplanningConfig
-import edu.wpi.first.hal.simulation.RoboRioDataJNI
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.Constants
@@ -106,7 +105,7 @@ object SwerveConstants {
 
     init {
         if (Constants.CURRENT_MODE == Constants.Mode.REAL) {
-            if (Constants.ROBORIO_SERIAL_NUM == Constants.ROBORIO_NEO_SERIAL) {
+            if (Constants.ROBORIO_SERIAL_NUMBER == Constants.ROBORIO_NEO_SERIAL) {
                 DRIVE_KP.initDefault(0.0006)
                 DRIVE_KI.initDefault(0.0)
                 DRIVE_KD.initDefault(0.0)
