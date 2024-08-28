@@ -19,7 +19,7 @@ class IntakeIOSim : IntakeIO {
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
     private val angleController: PIDController =
-        PIDController(IntakeConstants.Gains.kP, IntakeConstants.Gains.kI, IntakeConstants.Gains.kD)
+        PIDController(IntakeConstants.GAINS.kP, IntakeConstants.GAINS.kI, IntakeConstants.GAINS.kD)
 
     init {
         angleMotor.setController(angleController)

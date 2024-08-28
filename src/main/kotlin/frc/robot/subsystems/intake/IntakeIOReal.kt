@@ -45,8 +45,8 @@ class IntakeIOReal : IntakeIO {
         ).withFeedback(
             FeedbackConfigs().withRotorToSensorRatio(1.0).withSensorToMechanismRatio(IntakeConstants.GEAR_RATIO)
         ).withSlot0(
-            Slot0Configs().withKP(IntakeConstants.Gains.kP).withKI(IntakeConstants.Gains.kI)
-                .withKD(IntakeConstants.Gains.kD)
+            Slot0Configs().withKP(IntakeConstants.GAINS.kP).withKI(IntakeConstants.GAINS.kI)
+                .withKD(IntakeConstants.GAINS.kD)
         ).CurrentLimits.withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true)
             .withStatorCurrentLimit(80.0).withSupplyCurrentLimit(40.0)
 

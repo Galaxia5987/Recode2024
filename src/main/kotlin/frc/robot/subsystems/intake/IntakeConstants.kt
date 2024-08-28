@@ -5,22 +5,25 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import frc.robot.Constants
 import frc.robot.lib.Gains
-import frc.robot.lib.LoggedTunableNumber
+import frc.robot.lib.createGains
 
 object IntakeConstants {
     const val INTAKE_SPIN_POWER = -0.4
     const val INTAKE_CENTER_POWER = -0.4
     const val GEAR_RATIO = 55.56
 
-    val Gains by lazy {
-        if (Constants.CURRENT_MODE == Constants.Mode.SIM) Gains (
-            21.0,
-            0.0,
-            0.1,
-        ) else Gains(
-            10.1 / 360.0,
-            0.0,
-            0.0
+    val GAINS by lazy {
+        createGains(
+            Gains (
+                21.0,
+                0.0,
+                0.1,
+            ),
+            Gains(
+                10.1 / 360.0,
+                0.0,
+                0.0
+            )
         )
     }
 
