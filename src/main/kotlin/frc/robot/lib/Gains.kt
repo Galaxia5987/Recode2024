@@ -6,7 +6,8 @@ data class Gains(
     private val _kD: Double? = null,
     private val _kS: Double? = null,
     private val _kV: Double? = null,
-    private val _kA: Double? = null
+    private val _kA: Double? = null,
+    private val _kG: Double? = null
 ) {
     val kP: Double
         get() = _kP ?: throw IllegalStateException("kP has not been initialized")
@@ -25,4 +26,7 @@ data class Gains(
 
     val kA: Double
         get() = _kA ?: throw IllegalStateException("kA has not been initialized")
+
+    val kG: Double
+        get() = _kG ?: throw IllegalStateException("kG has not been initialized")
 }
