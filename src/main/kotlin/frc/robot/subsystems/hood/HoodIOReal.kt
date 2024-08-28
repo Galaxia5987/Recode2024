@@ -2,8 +2,11 @@ package frc.robot.subsystems.hood
 
 import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
+import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
+import com.ctre.phoenix6.signals.GravityTypeValue
+import com.ctre.phoenix6.signals.StaticFeedforwardSignValue
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
@@ -19,7 +22,34 @@ class HoodIOReal : HoodIO {
     private val angleControl = PositionTorqueCurrentFOC(0.0)
 
     init {
-        motor.configurator.apply(HoodConstants.MOTOR_CONFIGURATION)
+        val config = TalonFXConfiguration()
+            .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(HoodConstants.GEAR_RATIO))
+            .withMotionMagic(
+                MotionMagicConfigs()
+                    .withMotionMagicCruiseVelocity(
+                        HoodConstants.MAX_VELOCITY.`in`(Units.RotationsPerSecond)
+                    )
+                    .withMotionMagicJerk(16.0)
+            )
+            .withSlot0(
+                Slot0Configs()
+                    .withKP(HoodConstants.GAINS.kP)
+                    .withKI(HoodConstants.GAINS.kI)
+                    .withKD(HoodConstants.GAINS.kD)
+                    .withKS(HoodConstants.GAINS.kS)
+                    .withKV(HoodConstants.GAINS.kV)
+                    .withKA(HoodConstants.GAINS.kA)
+                    .withKG(HoodConstants.GAINS.kG)
+                    .withGravityType(GravityTypeValue.Arm_Cosine)
+                    .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign)
+            )
+            .withMotorOutput(MotorOutputConfigs().withInverted(HoodConstants.INVERTED_VALUE)).CurrentLimits
+            .withStatorCurrentLimitEnable(true)
+            .withSupplyCurrentLimitEnable(true)
+            .withStatorCurrentLimit(2 * HoodConstants.CURRENT_LIMIT)
+            .withSupplyCurrentLimit(HoodConstants.CURRENT_LIMIT)
+
+        motor.configurator.apply(config)
 
         encoder.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute)
     }
@@ -40,6 +70,19 @@ class HoodIOReal : HoodIO {
         motor.setControl(
             angleControl
                 .withPosition(inputs.internalAngle.plus(error).`in`(Units.Rotations))
+        )
+    }
+
+    override fun setPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {
+        motor.configurator.apply(
+            Slot0Configs()
+                .withKP(kP)
+                .withKI(kI)
+                .withKD(kD)
+                .withKS(kS)
+                .withKV(kV)
+                .withKA(kA)
+                .withKG(kG)
         )
     }
 
