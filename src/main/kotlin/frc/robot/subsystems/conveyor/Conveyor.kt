@@ -9,6 +9,13 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase() {
+    private val kP: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kP", ConveyorConstants.GAINS.kP)
+    private val kI: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kI", ConveyorConstants.GAINS.kI)
+    private val kD: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kD", ConveyorConstants.GAINS.kD)
+    private val kS: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kS", ConveyorConstants.GAINS.kS)
+    private val kV: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kV", ConveyorConstants.GAINS.kV)
+    private val kA: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kA", ConveyorConstants.GAINS.kA)
+
     @AutoLogOutput
     private var velocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
     private val inputs = io.inputs
@@ -62,7 +69,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
                 io.setPID(
                     kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
                 )
-            }, ConveyorConstants.KP, ConveyorConstants.KI, ConveyorConstants.KD, ConveyorConstants.KS, ConveyorConstants.KV, ConveyorConstants.KA
+            }, kP, kI, kD, kS, kV, kA
         )
 
         io.updateInputs()

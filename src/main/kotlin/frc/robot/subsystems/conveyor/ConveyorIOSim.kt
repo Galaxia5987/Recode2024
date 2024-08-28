@@ -18,9 +18,9 @@ class ConveyorIOSim : ConveyorIO {
     )
 
     private val controller: PIDController =
-        PIDController(ConveyorConstants.KP.get(), ConveyorConstants.KI.get(), ConveyorConstants.KD.get(), 0.02)
+        PIDController(ConveyorConstants.GAINS.kP, ConveyorConstants.GAINS.kI, ConveyorConstants.GAINS.kD, 0.02)
     private val feed: SimpleMotorFeedforward =
-        SimpleMotorFeedforward(ConveyorConstants.KS.get(), ConveyorConstants.KV.get(), ConveyorConstants.KA.get())
+        SimpleMotorFeedforward(ConveyorConstants.GAINS.kS, ConveyorConstants.GAINS.kV, ConveyorConstants.GAINS.kA)
 
     init {
         conveyor.setController(controller)
