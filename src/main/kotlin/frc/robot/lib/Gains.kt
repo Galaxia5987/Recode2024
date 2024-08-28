@@ -1,5 +1,7 @@
 package frc.robot.lib
 
+import frc.robot.Constants
+
 data class Gains(
     val kP: Double = 0.0,
     val kI: Double = 0.0,
@@ -9,3 +11,7 @@ data class Gains(
     val kA: Double = 0.0,
     val kG: Double = 0.0
 )
+
+fun createGains(simGains: Gains, realGains: Gains): Gains {
+    return if (Constants.CURRENT_MODE == Constants.Mode.SIM) simGains else realGains
+}
