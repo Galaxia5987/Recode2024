@@ -5,7 +5,7 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.*
 import frc.robot.Constants
-import frc.robot.lib.webconstants.LoggedTunableNumber
+import frc.robot.lib.LoggedTunableNumber
 
 object ConveyorConstants {
     const val GEAR_RATIO = 1.0
@@ -19,12 +19,18 @@ object ConveyorConstants {
 
     val FEED_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0)
 
-    val KP: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kP")
-    val KI: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kI")
-    val KD: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kD")
-    val KS: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kS")
-    val KV: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kV")
-    val KA: LoggedTunableNumber = LoggedTunableNumber("Conveyor/kA")
+    val KP: LoggedTunableNumber =
+        LoggedTunableNumber("Conveyor/kP")
+    val KI: LoggedTunableNumber =
+        LoggedTunableNumber("Conveyor/kI")
+    val KD: LoggedTunableNumber =
+        LoggedTunableNumber("Conveyor/kD")
+    val KS: LoggedTunableNumber =
+        LoggedTunableNumber("Conveyor/kS")
+    val KV: LoggedTunableNumber =
+        LoggedTunableNumber("Conveyor/kV")
+    val KA: LoggedTunableNumber =
+        LoggedTunableNumber("Conveyor/kA")
     val PID_VALUES = arrayOf(KP, KI, KD, KS, KV, KA)
 
     init {

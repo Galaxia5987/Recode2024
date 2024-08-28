@@ -8,6 +8,7 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import frc.robot.Ports
+import frc.robot.lib.LoggedTunableNumber
 
 class ConveyorIOReal : ConveyorIO {
     override val inputs = LoggedConveyorInputs()
@@ -30,24 +31,21 @@ class ConveyorIOReal : ConveyorIO {
         roller.stopMotor()
     }
 
+    override fun setPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+        roller.configurator.apply(
+            Slot0Configs()
+                .withKP(kP)
+                .withKI(kI)
+                .withKD(kD)
+                .withKS(kS)
+                .withKV(kV)
+                .withKA(kA)
+        )
+    }
+
     override fun updateInputs() {
         inputs.velocity.mut_replace(
             roller.velocity.value, Units.RotationsPerSecond
         )
-
-        if (hasPIDChanged(ConveyorConstants.PID_VALUES)) updatePID()
-    }
-
-    override fun updatePID() {
-        val slot0Configs =
-            Slot0Configs()
-                .withKP(ConveyorConstants.KP.get())
-                .withKI(ConveyorConstants.KI.get())
-                .withKD(ConveyorConstants.KD.get())
-                .withKS(ConveyorConstants.KS.get())
-                .withKV(ConveyorConstants.KV.get())
-                .withKA(ConveyorConstants.KA.get())
-
-        roller.configurator.apply(slot0Configs)
     }
 }
