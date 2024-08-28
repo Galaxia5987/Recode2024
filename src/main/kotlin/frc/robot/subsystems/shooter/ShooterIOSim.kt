@@ -35,16 +35,16 @@ class ShooterIOSim : ShooterIO {
     init {
         topMotor.setController(
             PIDController(
-                ShooterConstants.TOP_kP.get(),
-                ShooterConstants.TOP_kI.get(),
-                ShooterConstants.TOP_kD.get()
+                ShooterConstants.TOP_GAINS.kP,
+                ShooterConstants.TOP_GAINS.kI,
+                ShooterConstants.TOP_GAINS.kD
             )
         )
         bottomMotor.setController(
             PIDController(
-                ShooterConstants.BOTTOM_kP.get(),
-                ShooterConstants.BOTTOM_kI.get(),
-                ShooterConstants.BOTTOM_kD.get()
+                ShooterConstants.BOTTOM_GAINS.kP,
+                ShooterConstants.BOTTOM_GAINS.kI,
+                ShooterConstants.BOTTOM_GAINS.kD
             )
         )
     }
@@ -60,6 +60,14 @@ class ShooterIOSim : ShooterIO {
     override fun stop() {
         bottomMotor.setControl(stop)
         topMotor.setControl(stop)
+    }
+
+    override fun setTopPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+        topMotor.setController(PIDController(kP, kI, kD))
+    }
+
+    override fun setBottomPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+        bottomMotor.setController(PIDController(kP, kI, kD))
     }
 
     override fun updateInputs() {

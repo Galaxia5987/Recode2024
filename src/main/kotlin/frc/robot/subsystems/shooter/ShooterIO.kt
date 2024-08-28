@@ -1,7 +1,7 @@
 package frc.robot.subsystems.shooter
 
 import edu.wpi.first.units.*
-import frc.robot.lib.webconstants.LoggedTunableNumber
+import frc.robot.lib.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
@@ -14,17 +14,11 @@ interface ShooterIO {
 
     fun stop() {}
 
+    fun setTopPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
+
+    fun setBottomPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
+
     fun updateInputs() {}
-
-    fun updatePID() {}
-
-    fun hasPIDChanged(PIDValues: Array<LoggedTunableNumber>): Boolean{
-        var hasChanged = false
-        for (value in PIDValues){
-            if (value.hasChanged()) hasChanged = true
-        }
-        return hasChanged
-    }
 
     @Logged
     open class RollerInputs {
