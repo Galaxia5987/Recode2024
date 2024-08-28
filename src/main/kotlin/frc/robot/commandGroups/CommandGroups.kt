@@ -6,7 +6,6 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import edu.wpi.first.wpilibj2.command.StartEndCommand
 import frc.robot.ControllerInputs
 import frc.robot.lib.finallyDo
 import frc.robot.lib.getRotationToTranslation
@@ -85,7 +84,7 @@ object CommandGroups {
                     ),
                     CommandGroupsConstants.SUPER_POOP_TURN_TOLERANCE.`in`(Units.Rotations)
                 )
-            ).until { readyToSuperPoop() } // TODO: add LEDS
+            ).until { shooterConveyorHoodAtSetpoint() } // TODO: add LEDS
     }
 
     private fun shootOverStageEnd(): Command {
@@ -95,7 +94,7 @@ object CommandGroups {
 
     fun shootOverStage(): Command = shootOverStageInit().finallyDo(shootOverStageEnd())
 
-    fun readyToSuperPoop(): Boolean {
+    fun shooterConveyorHoodAtSetpoint(): Boolean {
         return shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()
     }
 }
