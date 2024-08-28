@@ -93,13 +93,7 @@ object CommandGroups {
         // TODO: LED MODE Default
     }
 
-    fun superPoop(): Command {
-        return StartEndCommand(
-            superPoopInit(),
-            superPoopEnd(),
-            shooter, hood, conveyor, swerveDrive
-        )
-    }
+    fun shootOverStage(): Command = shootOverStageInit().finallyDo(shootOverStageEnd())
 
     fun readyToSuperPoop(): Boolean {
         return shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()
