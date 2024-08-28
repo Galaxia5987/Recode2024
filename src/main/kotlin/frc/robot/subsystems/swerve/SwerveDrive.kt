@@ -206,7 +206,7 @@ class SwerveDrive private constructor
     }
 
     private fun isColliding() : Boolean {
-        return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE
+        return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE.`in`(Units.Gs)
     }
 
     fun checkSwerve() {
