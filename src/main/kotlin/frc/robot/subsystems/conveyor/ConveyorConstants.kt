@@ -3,7 +3,7 @@ package frc.robot.subsystems.conveyor
 import edu.wpi.first.units.*
 import frc.robot.Constants
 import frc.robot.lib.Gains
-import frc.robot.lib.LoggedTunableNumber
+import frc.robot.lib.createGains
 
 object ConveyorConstants {
     const val GEAR_RATIO = 1.0
@@ -16,20 +16,23 @@ object ConveyorConstants {
     val FEED_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0)
 
     val GAINS by lazy {
-        if (Constants.CURRENT_MODE == Constants.Mode.SIM) Gains(
-            0.0,
-            0.0,
-            0.0,
-            0.0,
-            1.87,
-            0.0
-        ) else Gains(
-            3.5,
-            0.0,
-            0.0,
-            0.0,
-            3.8,
-            0.0
+        createGains(
+            Gains(
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.87,
+                0.0
+            ),
+            Gains(
+                3.5,
+                0.0,
+                0.0,
+                0.0,
+                3.8,
+                0.0
+            )
         )
     }
 }
