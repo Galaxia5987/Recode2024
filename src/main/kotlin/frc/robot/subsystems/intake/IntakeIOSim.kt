@@ -19,7 +19,7 @@ class IntakeIOSim : IntakeIO {
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
     private val angleController: PIDController =
-        PIDController(IntakeConstants.ANGLE_KP.get(), IntakeConstants.ANGLE_KI.get(), IntakeConstants.ANGLE_KD.get())
+        PIDController(IntakeConstants.Gains.kP, IntakeConstants.Gains.kI, IntakeConstants.Gains.kD)
 
     init {
         angleMotor.setController(angleController)
@@ -41,6 +41,10 @@ class IntakeIOSim : IntakeIO {
         angleMotor.setControl(dutyCycle.withOutput(power))
     }
 
+    override fun setPID(kP: Double, kI: Double, kD: Double) {
+        angleController.setPID(kP, kI, kD)
+    }
+
     override fun updateInputs() {
         angleMotor.update(Timer.getFPGATimestamp())
         spinMotor.update(Timer.getFPGATimestamp())
@@ -49,5 +53,4 @@ class IntakeIOSim : IntakeIO {
         inputs.centerMotorVoltage = centerMotor.busVoltage
         inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position)
     }
-
 }

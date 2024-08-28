@@ -7,11 +7,16 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import frc.robot.lib.LoggedTunableNumber
 import frc.robot.lib.handleInterrupt
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Intake(private val io: IntakeIO) : SubsystemBase() {
+    private val angleKP = LoggedTunableNumber("Intake/Angle/kP", IntakeConstants.Gains.kP)
+    private val angleKI = LoggedTunableNumber("Intake/Angle/kI", IntakeConstants.Gains.kI)
+    private val angleKD = LoggedTunableNumber("Intake/Angle/kD", IntakeConstants.Gains.kD)
+
     @AutoLogOutput
     private var angleSetpoint: Measure<Angle> = Units.Degree.zero()
     private val inputs = io.inputs
@@ -89,6 +94,15 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
     }
 
     override fun periodic() {
+        LoggedTunableNumber.ifChanged(
+            hashCode(), { kPID: DoubleArray ->
+                io.setPID(
+                    kPID[0], kPID[1], kPID[2]
+                )
+            }, angleKP, angleKI, angleKD
+        )
+
+
         io.updateInputs()
         Logger.processInputs(this::class.simpleName, inputs)
     }
