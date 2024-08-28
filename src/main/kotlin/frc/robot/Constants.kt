@@ -23,8 +23,7 @@ object Constants {
         MAX_VELOCITY.`in`(Units.MetersPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
     )
     private val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> =
-        Units.RotationsPerSecond.per(Units.Second)
-            .of(
+        Units.RotationsPerSecond.per(Units.Second).of(
                 MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
             )
     val PATH_CONSTRAINTS: PathConstraints = PathConstraints(
@@ -38,15 +37,15 @@ object Constants {
 
     val SPEAKER_POSE: Translation2d by lazy { if (isRed) GeometryUtil.flipFieldPosition(SPEAKER_POSE_BLUE) else SPEAKER_POSE_BLUE }
 
-    private val CHAIN_LOCATIONS_BLUE: Array<Pose2d> = arrayOf(
-        Triple(4.39, 4.67, -57.72), // Left
-        Triple(5.59, 4.09, 180.00), // Center
-        Triple(4.39, 3.46, 57.72) // Right
-    ).map { (x, y, theta) -> Pose2d(x, y, Rotation2d.fromDegrees(theta)) }.toTypedArray()
+    val CHAIN_LOCATIONS: List<Pose2d> by lazy {
+        val blueChainLocations = listOf(
+            Triple(4.39, 4.67, -57.72), // Left
+            Triple(5.59, 4.09, 180.00), // Center
+            Triple(4.39, 3.46, 57.72) // Right
+        ).map { (x, y, theta) -> Pose2d(x, y, Rotation2d.fromDegrees(theta)) }
 
-    val CHAIN_LOCATIONS: Array<Pose2d>
-        get() = if (isRed) Array<Pose2d>(CHAIN_LOCATIONS_BLUE.size)
-        { i -> GeometryUtil.flipFieldPose(CHAIN_LOCATIONS_BLUE[i]) } else CHAIN_LOCATIONS_BLUE
+        if (isRed) blueChainLocations.map(GeometryUtil::flipFieldPose) else blueChainLocations
+    }
 
     val CURRENT_MODE: Mode = Mode.REAL
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
@@ -66,8 +65,6 @@ object Constants {
     }
 
     enum class Mode {
-        REAL,
-        SIM,
-        REPLAY
+        REAL, SIM, REPLAY
     }
 }
