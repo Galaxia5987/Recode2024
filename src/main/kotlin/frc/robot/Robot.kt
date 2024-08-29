@@ -21,6 +21,8 @@ import org.littletonrobotics.junction.inputs.LoggedPowerDistribution
 import org.littletonrobotics.junction.networktables.NT4Publisher
 import org.littletonrobotics.junction.wpilog.WPILOGReader
 import org.littletonrobotics.junction.wpilog.WPILOGWriter
+import edu.wpi.first.hal.FRCNetComm.tResourceType
+import edu.wpi.first.hal.FRCNetComm.tInstances
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -40,7 +42,7 @@ object Robot : LoggedRobot() {
     override fun robotInit() {
         // Report Kotlin language usage
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
-        HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin);
+        HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
         
         Initializer //initialize all subsystems and constants
 
