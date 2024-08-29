@@ -178,33 +178,6 @@ class SwerveDrive private constructor
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
 
-    /**
-     * Determines if the swerve drive is skidding by calculating a weighted average of slip ratios
-     * across all swerve modules.
-     *
-     * @return `true` if the weighted average of slip ratios exceeds the predefined skid tolerance,
-     *         indicating that the robot is skidding; `false` otherwise.
-     */
-    private fun isSkidding(): Boolean {
-        var weightedAvg = 0.0
-        var denominator = 0.0
-
-        val chassisSpeed: Double = chassisSpeeds.getSpeed()
-        val slipRatios = Array(modules.size) { index ->
-            val moduleVelocity = modules[index]?.velocity ?: 0.0
-            val velocityDifference = moduleVelocity - chassisSpeed
-            velocityDifference / chassisSpeed
-        }
-
-        for (ratio in slipRatios){
-            weightedAvg += ratio * abs(ratio)
-            denominator += abs(ratio)
-        }
-
-        weightedAvg /= denominator
-        return weightedAvg > SwerveConstants.SKID_TOLERANCE
-    }
-
     private fun isColliding() : Boolean {
         return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE.`in`(Units.Gs)
     }
@@ -336,7 +309,7 @@ class SwerveDrive private constructor
                 SwerveConstants.ROTATION_KDIETER.get()
             )
         turnController.enableContinuousInput(-0.5, 0.5)
-        turnController.setTolerance(2 / 360.0)
+        turnController.setTolerance(2.5 / 360.0)
         return run {
             drive(
                 MathUtil.applyDeadband(xJoystick.asDouble, deadband),
@@ -379,7 +352,7 @@ class SwerveDrive private constructor
         updateGyroInputs()
         updateModulePositions()
 
-        if (!(isSkidding() || isColliding())) {
+        if (!isColliding()) {
             estimator.update(odometryYaw, modulePositions)
         }
 
