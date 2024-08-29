@@ -28,8 +28,10 @@ class AmpState : ScoreState {
         val setShooterVelocity = shooter.setVelocity(
             ScoreConstants.SHOOTER_TOP_AMP_VELOCITY, ScoreConstants.SHOOTER_BOTTOM_AMP_VELOCITY
         )
+        val setHoodAngle = hood.setAngle(ScoreConstants.HOOD_AMP_ANGLE)
+
         return Commands.parallel(
-            driveAndAdjust, setShooterVelocity, conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY)
+            driveAndAdjust, setShooterVelocity, conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY), setHoodAngle,
             // TODO: Add LEDS
         )
     }
