@@ -50,7 +50,8 @@ object Constants {
         }
     }
 
-    val CURRENT_MODE: Mode = Mode.REAL
+    val CURRENT_MODE: Mode
+        get() = Mode.REAL
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
     val ROBORIO_SERIAL_NUMBER: String = System.getenv("serialnum") ?: "Sim"
