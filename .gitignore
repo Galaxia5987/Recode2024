@@ -159,6 +159,8 @@ gradle-app.setting
 .settings/
 bin/
 
+annotation/build/
+
 # Simulation GUI and other tools window save file
 *-window.json
 
