@@ -1,9 +1,7 @@
 package frc.robot
 
 import com.pathplanner.lib.path.PathConstraints
-import com.pathplanner.lib.util.GeometryUtil
 import edu.wpi.first.math.geometry.Pose2d
-import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
@@ -54,7 +52,8 @@ object Constants {
         get() = Mode.REAL
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
-    val ROBORIO_SERIAL_NUMBER: String = System.getenv("serialnum") ?: "Sim"
+    val ROBORIO_SERIAL_NUMBER: String
+        get() = System.getenv("serialnum") ?: "Sim"
 
     val isRed: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
