@@ -23,7 +23,7 @@ class AmpState : ScoreState {
             { -ControllerInputs.driverController().leftX },
             { -ControllerInputs.driverController().leftY },
             0.1,
-            false
+            true
         )
         val setShooterVelocity = shooter.setVelocity(
             ScoreConstants.SHOOTER_TOP_AMP_VELOCITY, ScoreConstants.SHOOTER_BOTTOM_AMP_VELOCITY
