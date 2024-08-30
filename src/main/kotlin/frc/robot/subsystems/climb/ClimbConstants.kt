@@ -12,12 +12,11 @@ object ClimbConstants {
     const val STOPPER_MOTOR_VOLTAGE_COMPENSATION_SATURATION = 12.0
     const val STOPPER_MOTOR_POWER = 0.5
     val MOTOR_CONFIG = TalonFXConfiguration()
-
     init {
         MOTOR_CONFIG.withMotorOutput(
             MotorOutputConfigs()
-                .withInverted(InvertedValue.Clockwise_Positive)
                 .withNeutralMode(NeutralModeValue.Brake)
+                .withInverted(InvertedValue.Clockwise_Positive)
         ).CurrentLimits
             .withStatorCurrentLimitEnable(false)
             .withSupplyCurrentLimitEnable(false)
