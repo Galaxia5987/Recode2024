@@ -41,6 +41,6 @@ class IOReal:IntakeIO {
     }
 
     override fun reset() {
-
+        motor.setPosition(0.0)
     }
 }
