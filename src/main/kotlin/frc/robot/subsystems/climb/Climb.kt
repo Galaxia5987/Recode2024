@@ -3,14 +3,14 @@ package frc.robot.subsystems.climb
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
-import java.util.function.Supplier
 import kotlin.math.absoluteValue
 
 class Climb private constructor(private val io:ClimbIO) :SubsystemBase() {
-    private var input: LoggedClimbInputs = io.inputs
+    private var inputs: LoggedClimbInputs = io.inputs
 
-    private var isStopperStuck: () -> Boolean = {false}
+    private var isStopperStuck:Boolean = false
 
     companion object{
         @Volatile
@@ -34,15 +34,16 @@ class Climb private constructor(private val io:ClimbIO) :SubsystemBase() {
     }
 
     fun lock():Command{
-        return Commands.run({io.lockClimb()}).until(isStopperStuck).andThen({io.disableLockMotor()})
+        return Commands.run({io.lockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()})
     }
 
 
     fun unlock():Command{
-        return Commands.run({io.unlockClimb()}).until(isStopperStuck).andThen({io.disableLockMotor()})
+        return Commands.run({io.unlockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()})
     }
 
     override fun periodic() {
-        super.periodic()
+        isStopperStuck=io.inputs.lockMotorCurrent.absoluteValue>ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
+        Logger.processInputs(this::class.simpleName,inputs)
     }
 }
