@@ -16,7 +16,7 @@ import java.util.Optional
 import kotlin.math.absoluteValue
 import edu.wpi.first.math.MathUtil
 import frc.robot.subsystems.climb.Climb
-import frc.robot.subsystems.climb.ClimbIOTalonFX
+import frc.robot.subsystems.climb.ClimbIOReal
 import java.util.function.DoubleSupplier
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import frc.robot.subsystems.swerve.SwerveDrive
@@ -41,7 +41,7 @@ object RobotContainer {
 
     init {
         Constants.initSwerve()
-        Climb.initialize(ClimbIOTalonFX())
+        Climb.initialize(ClimbIOReal())
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
         
@@ -79,8 +79,6 @@ object RobotContainer {
     private fun configureButtonBindings() {
         driverController.y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
         
-        driverController.start().onTrue(climb.lock().withTimeout(2.0))
-        driverController.back().onTrue(climb.open().withTimeout(2.0))   
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
