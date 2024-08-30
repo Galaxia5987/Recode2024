@@ -1,24 +1,21 @@
 package frc.robot.subsystems.climb
 
-import org.team9432.annotation.Logged
-
 interface ClimbIO {
     val inputs: LoggedClimbInputs
 
-    fun setPower(power: Double) {}
+    fun updateInput()
 
-    fun openStopper() {}
+    fun setPower(power:Double)
 
-    fun closeStopper() {}
+    fun lockClimb()
 
-    fun disableStopper() {}
+    fun unlockClimb()
 
-    fun updateInputs() {}
+    fun disableLockMotor()
 
-    @Logged
     open class ClimbInputs {
-        var stopperAppliedVoltage = 0.0
-        var stopperCurrent = 0.0
-        var mainMotorAppliedVoltage = 0.0
+        var climbMotorVoltage = 0.0
+        var lockMotorCurrent = 0.0
+
     }
 }
