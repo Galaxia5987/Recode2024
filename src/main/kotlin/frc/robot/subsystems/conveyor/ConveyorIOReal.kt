@@ -56,7 +56,7 @@ class ConveyorIOReal : ConveyorIO {
         roller.stopMotor()
     }
 
-    override fun setPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+    override fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
         roller.configurator.apply(
             Slot0Configs()
                 .withKP(kP)

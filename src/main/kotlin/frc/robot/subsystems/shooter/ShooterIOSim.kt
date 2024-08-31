@@ -62,11 +62,11 @@ class ShooterIOSim : ShooterIO {
         topMotor.setControl(stop)
     }
 
-    override fun setTopPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+    override fun setTopGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
         topMotor.setController(PIDController(kP, kI, kD))
     }
 
-    override fun setBottomPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+    override fun setBottomGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
         bottomMotor.setController(PIDController(kP, kI, kD))
     }
 

@@ -3,7 +3,6 @@ package frc.robot.subsystems.intake
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import frc.robot.lib.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface IntakeIO {
@@ -19,7 +18,7 @@ interface IntakeIO {
 
     fun resetEncoder() {}
 
-    fun setPID(kP: Double, kI: Double, kD: Double) {}
+    fun setGains(kP: Double, kI: Double, kD: Double) {}
 
     fun updateInputs() {}
 

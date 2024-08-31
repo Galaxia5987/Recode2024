@@ -94,7 +94,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
     override fun periodic() {
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPID: DoubleArray ->
-                io.setPID(
+                io.setGains(
                     kPID[0], kPID[1], kPID[2]
                 )
             }, angleKP, angleKI, angleKD

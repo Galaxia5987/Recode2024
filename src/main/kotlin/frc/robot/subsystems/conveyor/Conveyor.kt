@@ -66,7 +66,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     override fun periodic() {
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
-                io.setPID(
+                io.setGains(
                     kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
                 )
             }, kP, kI, kD, kS, kV, kA

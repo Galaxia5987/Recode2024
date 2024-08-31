@@ -82,7 +82,7 @@ class ShooterIOReal : ShooterIO {
         bottomMotor.stopMotor()
     }
 
-    override fun setTopPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+    override fun setTopGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
         topMotor.configurator.apply(
             Slot0Configs()
                 .withKP(kP)
@@ -94,7 +94,7 @@ class ShooterIOReal : ShooterIO {
         )
     }
 
-    override fun setBottomPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+    override fun setBottomGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
         bottomMotor.configurator.apply(
             Slot0Configs()
                 .withKP(kP)

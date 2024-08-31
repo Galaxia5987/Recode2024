@@ -85,7 +85,7 @@ class IntakeIOReal : IntakeIO {
         angleMotor.setPosition(0.0)
     }
 
-    override fun setPID(kP: Double, kI: Double, kD: Double) {
+    override fun setGains(kP: Double, kI: Double, kD: Double) {
 
     }
 

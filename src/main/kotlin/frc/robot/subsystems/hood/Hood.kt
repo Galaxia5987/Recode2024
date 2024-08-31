@@ -92,7 +92,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
         LoggedTunableNumber.ifChanged(
             hashCode(),
             { kPIDSVAG: DoubleArray ->
-                io.setPID(
+                io.setGains(
                     kPIDSVAG[0],
                     kPIDSVAG[1],
                     kPIDSVAG[2],

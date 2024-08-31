@@ -1,7 +1,6 @@
 package frc.robot.subsystems.shooter
 
 import edu.wpi.first.units.*
-import frc.robot.lib.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
@@ -14,9 +13,9 @@ interface ShooterIO {
 
     fun stop() {}
 
-    fun setTopPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
+    fun setTopGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
 
-    fun setBottomPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
+    fun setBottomGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
 
     fun updateInputs() {}
 

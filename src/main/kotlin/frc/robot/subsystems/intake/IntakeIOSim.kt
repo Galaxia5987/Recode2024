@@ -41,7 +41,7 @@ class IntakeIOSim : IntakeIO {
         angleMotor.setControl(dutyCycle.withOutput(power))
     }
 
-    override fun setPID(kP: Double, kI: Double, kD: Double) {
+    override fun setGains(kP: Double, kI: Double, kD: Double) {
         angleController.setPID(kP, kI, kD)
     }
 

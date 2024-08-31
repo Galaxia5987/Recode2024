@@ -96,14 +96,14 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     override fun periodic() {
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
-                io.setTopPID(
+                io.setTopGains(
                     kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
                 )
             }, topKP, topKI, topKD, topKS, topKV, topKA
         )
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
-                io.setTopPID(
+                io.setTopGains(
                     kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
                 )
             }, bottomKP, bottomKI, bottomKD, bottomKS, bottomKV, bottomKA

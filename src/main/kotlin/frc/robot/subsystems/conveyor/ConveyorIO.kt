@@ -12,7 +12,7 @@ interface ConveyorIO {
 
     fun stop() {}
 
-    fun setPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
+    fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
 
     @Logged
     open class ConveyorInputs {

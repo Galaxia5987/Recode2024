@@ -77,7 +77,7 @@ class HoodIOReal : HoodIO {
         )
     }
 
-    override fun setPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {
+    override fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {
         motor.configurator.apply(
             Slot0Configs()
                 .withKP(kP)

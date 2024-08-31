@@ -41,7 +41,7 @@ class HoodIOSim : HoodIO {
         motor.setControl(control.withPosition(angle.`in`(Units.Rotations)))
     }
 
-    override fun setPID(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {
+    override fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {
         motor.setController(PIDController(kP, kI, kD))
     }
 
