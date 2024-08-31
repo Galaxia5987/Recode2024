@@ -1,14 +1,9 @@
 package frc.robot.subsystems.shooter
 
-import com.ctre.phoenix6.configs.FeedbackConfigs
-import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
-import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.units.*
-import frc.robot.Constants
 import frc.robot.lib.Gains
-import frc.robot.lib.createGains
+import frc.robot.lib.selectGainsBasedOnMode
 
 object ShooterConstants {
     const val GEAR_RATIO_TOP: Double = 1.0
@@ -24,7 +19,7 @@ object ShooterConstants {
         Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0008)
 
     val TOP_GAINS by lazy {
-        createGains(
+        selectGainsBasedOnMode(
             Gains(
                 2.0,
                 0.0,
@@ -42,7 +37,7 @@ object ShooterConstants {
     }
 
     val BOTTOM_GAINS by lazy {
-        createGains(
+        selectGainsBasedOnMode(
             Gains(
                 2.0,
                 0.0,

@@ -1,9 +1,8 @@
 package frc.robot.subsystems.conveyor
 
 import edu.wpi.first.units.*
-import frc.robot.Constants
 import frc.robot.lib.Gains
-import frc.robot.lib.createGains
+import frc.robot.lib.selectGainsBasedOnMode
 
 object ConveyorConstants {
     const val GEAR_RATIO = 1.0
@@ -16,7 +15,7 @@ object ConveyorConstants {
     val FEED_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0)
 
     val GAINS by lazy {
-        createGains(
+        selectGainsBasedOnMode(
             Gains(
                 0.0,
                 0.0,
