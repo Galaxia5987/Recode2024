@@ -12,6 +12,6 @@ data class Gains(
     val kG: Double = 0.0
 )
 
-fun createGains(simGains: Gains, realGains: Gains): Gains {
+fun createGains(realGains: Gains, simGains: Gains): Gains {
     return if (Constants.CURRENT_MODE == Constants.Mode.SIM) simGains else realGains
 }
