@@ -87,6 +87,8 @@ class HoodIOReal : HoodIO {
                 .withKV(kV)
                 .withKA(kA)
                 .withKG(kG)
+                .withGravityType(GravityTypeValue.Arm_Cosine)
+                .withStaticFeedforwardSign(StaticFeedforwardSignValue.UseClosedLoopSign)
         )
     }
 
