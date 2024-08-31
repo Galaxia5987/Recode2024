@@ -18,29 +18,28 @@ class ConveyorIOReal : ConveyorIO {
     private val control = VelocityVoltage(0.0).withEnableFOC(true)
 
     init {
-        val config = TalonFXConfiguration()
-            .withMotorOutput(
-                MotorOutputConfigs()
-                    .withNeutralMode(NeutralModeValue.Coast)
-                    .withInverted(InvertedValue.Clockwise_Positive)
-            ).withSlot0(
-                Slot0Configs()
-                    .withKP(ConveyorConstants.GAINS.kP)
-                    .withKI(ConveyorConstants.GAINS.kI)
-                    .withKD(ConveyorConstants.GAINS.kD)
-                    .withKS(ConveyorConstants.GAINS.kS)
-                    .withKV(ConveyorConstants.GAINS.kV)
-                    .withKA(ConveyorConstants.GAINS.kA)
-            ).withCurrentLimits(
-                CurrentLimitsConfigs()
-                    .withStatorCurrentLimitEnable(true)
-                    .withSupplyCurrentLimitEnable(true)
-                    .withStatorCurrentLimit(80.0)
-                    .withSupplyCurrentLimit(40.0)
-            ).withFeedback(
-                FeedbackConfigs()
-                    .withSensorToMechanismRatio(ConveyorConstants.GEAR_RATIO)
-            )
+        val config = TalonFXConfiguration().apply {
+            MotorOutput = MotorOutputConfigs().apply {
+                NeutralMode = NeutralModeValue.Coast
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            Slot0 = Slot0Configs().apply {
+                kP = ConveyorConstants.GAINS.kP
+                kI = ConveyorConstants.GAINS.kI
+                kD = ConveyorConstants.GAINS.kD
+                kS = ConveyorConstants.GAINS.kS
+                kV = ConveyorConstants.GAINS.kV
+                kA = ConveyorConstants.GAINS.kA
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimit = 40.0
+            }
+            Feedback = FeedbackConfigs().apply { SensorToMechanismRatio = ConveyorConstants.GEAR_RATIO
+            }
+        }
 
         roller.configurator.apply(config)
     }

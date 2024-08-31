@@ -1,9 +1,6 @@
 package frc.robot.subsystems.intake
 
-import com.ctre.phoenix6.configs.FeedbackConfigs
-import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
-import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
@@ -40,15 +37,28 @@ class IntakeIOReal : IntakeIO {
         centerMotor.enableVoltageCompensation(12.0)
         centerMotor.burnFlash()
 
-        val config = TalonFXConfiguration().withMotorOutput(
-            MotorOutputConfigs().withNeutralMode(NeutralModeValue.Brake).withInverted(InvertedValue.Clockwise_Positive)
-        ).withFeedback(
-            FeedbackConfigs().withRotorToSensorRatio(1.0).withSensorToMechanismRatio(IntakeConstants.GEAR_RATIO)
-        ).withSlot0(
-            Slot0Configs().withKP(IntakeConstants.GAINS.kP).withKI(IntakeConstants.GAINS.kI)
-                .withKD(IntakeConstants.GAINS.kD)
-        ).CurrentLimits.withStatorCurrentLimitEnable(true).withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(80.0).withSupplyCurrentLimit(40.0)
+        val config = TalonFXConfiguration().apply {
+            MotorOutput.apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            Feedback = FeedbackConfigs().apply {
+                RotorToSensorRatio = 1.0
+                SensorToMechanismRatio = IntakeConstants.GEAR_RATIO
+            }
+            Slot0 = Slot0Configs().apply {
+                kP = IntakeConstants.GAINS.kP
+                kI = IntakeConstants.GAINS.kI
+                kD = IntakeConstants.GAINS.kD
+
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimit = 40.0
+            }
+        }
 
         angleMotor.configurator.apply(config)
 

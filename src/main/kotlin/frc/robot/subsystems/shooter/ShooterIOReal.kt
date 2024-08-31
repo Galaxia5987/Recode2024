@@ -1,9 +1,6 @@
 package frc.robot.subsystems.shooter
 
-import com.ctre.phoenix6.configs.FeedbackConfigs
-import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
-import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.NeutralModeValue
@@ -22,43 +19,54 @@ class ShooterIOReal : ShooterIO {
         topMotor.setNeutralMode(NeutralModeValue.Coast)
         bottomMotor.setNeutralMode(NeutralModeValue.Coast)
 
-        val topMotorConfiguration = TalonFXConfiguration()
-            .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(ShooterConstants.GEAR_RATIO_TOP))
-            .withSlot0(
-                Slot0Configs()
-                    .withKP(ShooterConstants.TOP_GAINS.kP)
-                    .withKI(ShooterConstants.TOP_GAINS.kI)
-                    .withKD(ShooterConstants.TOP_GAINS.kD)
-                    .withKS(ShooterConstants.TOP_GAINS.kS)
-                    .withKV(ShooterConstants.TOP_GAINS.kV)
-                    .withKA(ShooterConstants.TOP_GAINS.kA)
-            )
-            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.TOP_INVERSION)).CurrentLimits
-            .withStatorCurrentLimitEnable(true)
-            .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_TOP)
-            .withSupplyCurrentLimitEnable(true)
-            .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_TOP)
+        val topMotorConfig = TalonFXConfiguration().apply {
+            Feedback = FeedbackConfigs().apply {
+                SensorToMechanismRatio = ShooterConstants.GEAR_RATIO_TOP
+            }
+            Slot0 = Slot0Configs().apply {
+                kP = ShooterConstants.TOP_GAINS.kP
+                kI = ShooterConstants.TOP_GAINS.kI
+                kD = ShooterConstants.TOP_GAINS.kD
+                kS = ShooterConstants.TOP_GAINS.kS
+                kV = ShooterConstants.TOP_GAINS.kV
+                kA = ShooterConstants.TOP_GAINS.kA
+            }
+            MotorOutput = MotorOutputConfigs().apply {
+                Inverted = ShooterConstants.TOP_INVERSION
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 2 * ShooterConstants.CURRENT_LIMIT_TOP
+                SupplyCurrentLimit = ShooterConstants.CURRENT_LIMIT_TOP
+            }
+        }
 
+        val bottomMotorConfig = TalonFXConfiguration().apply {
+            Feedback = FeedbackConfigs().apply {
+                SensorToMechanismRatio = ShooterConstants.GEAR_RATIO_BOTTOM
+            }
+            Slot0 = Slot0Configs().apply {
+                kP = ShooterConstants.BOTTOM_GAINS.kP
+                kI = ShooterConstants.BOTTOM_GAINS.kI
+                kD = ShooterConstants.BOTTOM_GAINS.kD
+                kS = ShooterConstants.BOTTOM_GAINS.kS
+                kV = ShooterConstants.BOTTOM_GAINS.kV
+                kA = ShooterConstants.BOTTOM_GAINS.kA
+            }
+            MotorOutput = MotorOutputConfigs().apply {
+                Inverted = ShooterConstants.BOTTOM_INVERSION
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 2 * ShooterConstants.CURRENT_LIMIT_BOTTOM
+                SupplyCurrentLimit = ShooterConstants.CURRENT_LIMIT_BOTTOM
+            }
+        }
 
-        val bottomMotorConfiguration = TalonFXConfiguration()
-            .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(ShooterConstants.GEAR_RATIO_BOTTOM))
-            .withSlot0(
-                Slot0Configs()
-                    .withKP(ShooterConstants.BOTTOM_GAINS.kP)
-                    .withKI(ShooterConstants.BOTTOM_GAINS.kI)
-                    .withKD(ShooterConstants.BOTTOM_GAINS.kD)
-                    .withKS(ShooterConstants.BOTTOM_GAINS.kS)
-                    .withKV(ShooterConstants.BOTTOM_GAINS.kV)
-                    .withKA(ShooterConstants.BOTTOM_GAINS.kA)
-            )
-            .withMotorOutput(MotorOutputConfigs().withInverted(ShooterConstants.BOTTOM_INVERSION)).CurrentLimits
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(2 * ShooterConstants.CURRENT_LIMIT_BOTTOM)
-            .withSupplyCurrentLimit(ShooterConstants.CURRENT_LIMIT_BOTTOM)
-
-        topMotor.configurator.apply(topMotorConfiguration)
-        bottomMotor.configurator.apply(bottomMotorConfiguration)
+        topMotor.configurator.apply(topMotorConfig)
+        bottomMotor.configurator.apply(bottomMotorConfig)
     }
 
     override fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
