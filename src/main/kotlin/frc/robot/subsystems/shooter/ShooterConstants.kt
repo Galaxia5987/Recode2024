@@ -8,7 +8,6 @@ import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.units.*
 import frc.robot.Constants
 import frc.robot.lib.Gains
-import frc.robot.lib.LoggedTunableNumber
 import frc.robot.lib.createGains
 
 object ShooterConstants {
