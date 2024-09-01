@@ -1,7 +1,6 @@
 package frc.robot.subsystems.conveyor
 
 import edu.wpi.first.units.*
-import frc.robot.lib.webconstants.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface ConveyorIO {
@@ -13,15 +12,7 @@ interface ConveyorIO {
 
     fun stop() {}
 
-    fun updatePID() {}
-
-    fun hasPIDChanged(PIDValues: Array<LoggedTunableNumber>): Boolean {
-        var hasChanged = false
-        for (value in PIDValues) {
-            if (value.hasChanged()) hasChanged = true
-        }
-        return hasChanged
-    }
+    fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {}
 
     @Logged
     open class ConveyorInputs {

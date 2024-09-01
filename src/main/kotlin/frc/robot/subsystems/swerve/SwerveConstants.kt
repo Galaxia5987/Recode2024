@@ -14,7 +14,7 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import frc.robot.Constants
-import frc.robot.lib.webconstants.LoggedTunableNumber
+import frc.robot.lib.LoggedTunableNumber
 import kotlin.math.pow
 import kotlin.math.sqrt
 

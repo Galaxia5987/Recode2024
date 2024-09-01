@@ -2,6 +2,7 @@ package frc.robot.subsystems.hood
 
 import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.MotionMagicDutyCycle
+import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.math.trajectory.TrapezoidProfile
 import edu.wpi.first.units.Angle
@@ -26,9 +27,9 @@ class HoodIOSim : HoodIO {
     init {
         motor.setProfiledController(
             ProfiledPIDController(
-                HoodConstants.kP.get(),
-                HoodConstants.kI.get(),
-                HoodConstants.kD.get(),
+                HoodConstants.GAINS.kP,
+                HoodConstants.GAINS.kI,
+                HoodConstants.GAINS.kD,
                 TrapezoidProfile.Constraints(
                     HoodConstants.MAX_VELOCITY, HoodConstants.MAX_ACCELERATION
                 )
@@ -38,6 +39,10 @@ class HoodIOSim : HoodIO {
 
     override fun setAngle(angle: Measure<Angle>) {
         motor.setControl(control.withPosition(angle.`in`(Units.Rotations)))
+    }
+
+    override fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {
+        motor.setController(PIDController(kP, kI, kD))
     }
 
     override fun updateInputs() {

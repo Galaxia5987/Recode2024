@@ -58,7 +58,6 @@ class ModuleIOSparkMax(
 
         angleMotor.restoreFactoryDefaults()
         anglePIDController = angleMotor.pidController
-        updatePID()
         angleEncoder = angleMotor.encoder
 
         angleMotor.enableVoltageCompensation(
@@ -92,20 +91,6 @@ class ModuleIOSparkMax(
                     * SwerveConstants.WHEEL_DIAMETER
                     * Math.PI)
 
-        if (hasPIDChanged(SwerveConstants.PID_VALUES)) updatePID()
-    }
-
-    override fun updatePID() {
-        feedforward =
-            SimpleMotorFeedforward(
-                SwerveConstants.DRIVE_KS.get(),
-                SwerveConstants.DRIVE_KV.get(),
-                SwerveConstants.DRIVE_KA.get()
-            )
-        anglePIDController.setP(SwerveConstants.ANGLE_KP.get())
-        anglePIDController.setI(SwerveConstants.ANGLE_KI.get())
-        anglePIDController.setD(SwerveConstants.ANGLE_KD.get())
-        anglePIDController.setFF(SwerveConstants.ANGLE_KS.get())
     }
 
     override var angle

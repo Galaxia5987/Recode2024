@@ -4,10 +4,37 @@ import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import frc.robot.lib.LoggedTunableNumber
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
+    private val topKP =
+        LoggedTunableNumber("Shooter/Top kP", ShooterConstants.TOP_GAINS.kP)
+    private val topKI =
+        LoggedTunableNumber("Shooter/Top kI", ShooterConstants.TOP_GAINS.kI)
+    private val topKD =
+        LoggedTunableNumber("Shooter/Top kD", ShooterConstants.TOP_GAINS.kD)
+    private val topKS =
+        LoggedTunableNumber("Shooter/Top kS", ShooterConstants.TOP_GAINS.kS)
+    private val topKV =
+        LoggedTunableNumber("Shooter/Top kV", ShooterConstants.TOP_GAINS.kV)
+    private val topKA =
+        LoggedTunableNumber("Shooter/Top kA", ShooterConstants.TOP_GAINS.kA)
+
+    private val bottomKP =
+        LoggedTunableNumber("Shooter/Bottom kP", ShooterConstants.BOTTOM_GAINS.kP)
+    private val bottomKI =
+        LoggedTunableNumber("Shooter/Bottom kI", ShooterConstants.BOTTOM_GAINS.kI)
+    private val bottomKD =
+        LoggedTunableNumber("Shooter/Bottom kD", ShooterConstants.BOTTOM_GAINS.kD)
+    private val bottomKS =
+        LoggedTunableNumber("Shooter/Bottom kS", ShooterConstants.BOTTOM_GAINS.kS)
+    private val bottomKV =
+        LoggedTunableNumber("Shooter/Bottom kV", ShooterConstants.BOTTOM_GAINS.kV)
+    private val bottomKA =
+        LoggedTunableNumber("Shooter/Bottom kA", ShooterConstants.BOTTOM_GAINS.kA)
+
     private var topVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
     private var bottomVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
     private val timer = Timer()
@@ -67,6 +94,21 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         )
 
     override fun periodic() {
+        LoggedTunableNumber.ifChanged(
+            hashCode(), { kPIDSVA: DoubleArray ->
+                io.setTopGains(
+                    kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
+                )
+            }, topKP, topKI, topKD, topKS, topKV, topKA
+        )
+        LoggedTunableNumber.ifChanged(
+            hashCode(), { kPIDSVA: DoubleArray ->
+                io.setBottomGains(
+                    kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
+                )
+            }, bottomKP, bottomKI, bottomKD, bottomKS, bottomKV, bottomKA
+        )
+
         io.updateInputs()
         Logger.processInputs("$subsystemName/TopRoller", io.topRollerInputs)
         Logger.processInputs("$subsystemName/BottomRoller", io.bottomRollerInputs)

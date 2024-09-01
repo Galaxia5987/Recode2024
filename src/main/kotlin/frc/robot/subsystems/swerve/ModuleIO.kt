@@ -5,7 +5,6 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition
 import edu.wpi.first.math.kinematics.SwerveModuleState
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import frc.robot.lib.webconstants.LoggedTunableNumber
 import org.team9432.annotation.Logged
 
 interface ModuleIO {
@@ -27,16 +26,6 @@ interface ModuleIO {
         get() = SwerveModulePosition()
 
     fun updateInputs() {}
-
-    fun updatePID() {}
-
-    fun hasPIDChanged(PIDValues: Array<LoggedTunableNumber>): Boolean {
-        var hasChanged = false
-        for (value in PIDValues) {
-            if (value.hasChanged()) hasChanged = true
-        }
-        return hasChanged
-    }
 
     fun stop() {}
 

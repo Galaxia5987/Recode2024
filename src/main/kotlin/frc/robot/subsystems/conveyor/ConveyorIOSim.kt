@@ -18,9 +18,9 @@ class ConveyorIOSim : ConveyorIO {
     )
 
     private val controller: PIDController =
-        PIDController(ConveyorConstants.KP.get(), ConveyorConstants.KI.get(), ConveyorConstants.KD.get(), 0.02)
+        PIDController(ConveyorConstants.GAINS.kP, ConveyorConstants.GAINS.kI, ConveyorConstants.GAINS.kD, 0.02)
     private val feed: SimpleMotorFeedforward =
-        SimpleMotorFeedforward(ConveyorConstants.KS.get(), ConveyorConstants.KV.get(), ConveyorConstants.KA.get())
+        SimpleMotorFeedforward(ConveyorConstants.GAINS.kS, ConveyorConstants.GAINS.kV, ConveyorConstants.GAINS.kA)
 
     init {
         conveyor.setController(controller)
@@ -34,6 +34,9 @@ class ConveyorIOSim : ConveyorIO {
         conveyor.setControl(control.withVelocity(0.0))
     }
 
+    override fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double) {
+        conveyor.setController(PIDController(kP, kI, kD))
+    }
 
     override fun updateInputs() {
         conveyor.update(Timer.getFPGATimestamp())

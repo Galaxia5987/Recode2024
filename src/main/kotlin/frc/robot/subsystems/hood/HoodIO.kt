@@ -13,6 +13,8 @@ interface HoodIO {
 
     fun setAngle(angle: Measure<Angle>, torqueCompensation: Supplier<Double>) {}
 
+    fun setGains(kP: Double, kI: Double, kD: Double, kS: Double, kV: Double, kA: Double, kG: Double) {}
+
     fun updateInputs() {}
 
     @Logged

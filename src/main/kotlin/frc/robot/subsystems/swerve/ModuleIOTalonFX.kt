@@ -36,8 +36,6 @@ class ModuleIOTalonFX(
     override val inputs = LoggedModuleInputs()
 
     init {
-        updatePID()
-
         driveMotor.configurator.apply(driveConfig)
         driveMotor.setPosition(0.0)
 
@@ -90,29 +88,6 @@ class ModuleIOTalonFX(
         inputs.absolutePosition = encoder.absolutePosition.value
         inputs.moduleState = moduleState
 
-        if (hasPIDChanged(SwerveConstants.PID_VALUES)) updatePID()
-    }
-
-    override fun updatePID() {
-        driveConfig
-            .Slot0
-            .withKP(SwerveConstants.DRIVE_KP.get())
-            .withKI(SwerveConstants.DRIVE_KI.get())
-            .withKD(SwerveConstants.DRIVE_KD.get())
-            .withKV(SwerveConstants.DRIVE_KV.get())
-            .withKS(SwerveConstants.DRIVE_KS.get())
-            .withKA(SwerveConstants.DRIVE_KA.get())
-        angleConfig
-            .Slot0
-            .withKP(SwerveConstants.ANGLE_KP.get())
-            .withKI(SwerveConstants.ANGLE_KI.get())
-            .withKD(SwerveConstants.ANGLE_KD.get())
-            .withKV(SwerveConstants.ANGLE_KV.get())
-            .withKS(SwerveConstants.ANGLE_KS.get())
-            .withKA(SwerveConstants.ANGLE_KA.get())
-
-        driveMotor.configurator.apply(driveConfig.Slot0)
-        angleMotor.configurator.apply(angleConfig.Slot0)
     }
 
     override var angle

@@ -1,9 +1,11 @@
 package frc.robot.subsystems.intake
 
-import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
+import com.ctre.phoenix6.signals.InvertedValue
+import com.ctre.phoenix6.signals.NeutralModeValue
 import com.revrobotics.CANSparkBase
 import com.revrobotics.CANSparkLowLevel
 import com.revrobotics.CANSparkMax
@@ -35,9 +37,32 @@ class IntakeIOReal : IntakeIO {
         centerMotor.enableVoltageCompensation(12.0)
         centerMotor.burnFlash()
 
-        angleMotor.configurator.apply(IntakeConstants.MOTOR_CONFIG)
+        val config = TalonFXConfiguration().apply {
+            MotorOutput.apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            Feedback = FeedbackConfigs().apply {
+                RotorToSensorRatio = 1.0
+                SensorToMechanismRatio = IntakeConstants.GEAR_RATIO
+            }
+            Slot0 = Slot0Configs().apply {
+                kP = IntakeConstants.GAINS.kP
+                kI = IntakeConstants.GAINS.kI
+                kD = IntakeConstants.GAINS.kD
 
-        angleMotor.setPosition(120.0/360.0)
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimit = 40.0
+            }
+        }
+
+        angleMotor.configurator.apply(config)
+
+        angleMotor.setPosition(120.0 / 360.0)
     }
 
     override fun setSpinPower(power: Double) {
@@ -60,22 +85,14 @@ class IntakeIOReal : IntakeIO {
         angleMotor.setPosition(0.0)
     }
 
+    override fun setGains(kP: Double, kI: Double, kD: Double) {
+
+    }
+
     override fun updateInputs() {
         inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
         inputs.spinMotorVoltage = spinMotor.busVoltage
         inputs.centerMotorVoltage = centerMotor.busVoltage
         inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value
-
-        if (hasPIDChanged(IntakeConstants.PID_VALUES)) updatePID()
-    }
-
-    override fun updatePID() {
-        val slot0Configs = Slot0Configs()
-            .withKP(IntakeConstants.ANGLE_KP.get())
-            .withKI(IntakeConstants.ANGLE_KI.get())
-            .withKD(IntakeConstants.ANGLE_KD.get())
-            .withKG(IntakeConstants.ANGLE_KG.get())
-
-        angleMotor.configurator.apply(slot0Configs)
     }
 }

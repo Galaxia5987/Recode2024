@@ -65,20 +65,6 @@ class ModuleIOSim() : ModuleIO {
             )
         inputs.moduleState = moduleState
 
-        if (hasPIDChanged(SwerveConstants.PID_VALUES)) updatePID()
-    }
-
-    override fun updatePID() {
-        velocityController.setPID(
-            SwerveConstants.DRIVE_KP.get(),
-            SwerveConstants.DRIVE_KI.get(),
-            SwerveConstants.DRIVE_KD.get()
-        )
-        angleController.setPID(
-            SwerveConstants.ANGLE_KP.get(),
-            SwerveConstants.ANGLE_KI.get(),
-            SwerveConstants.ANGLE_KD.get()
-        )
     }
 
     override var angle
