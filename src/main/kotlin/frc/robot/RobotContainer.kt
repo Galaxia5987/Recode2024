@@ -54,6 +54,8 @@ object RobotContainer {
         ControllerInputs.operatorController().x().onTrue(Commands.runOnce({ currentState = ampState }))
         ControllerInputs.operatorController().y().onTrue(Commands.runOnce({ currentState = climbState }))
 
+        ControllerInputs.driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
+
         ControllerInputs.driverController().rightTrigger().whileTrue(IntakeCommands.intake())
         ControllerInputs.driverController().rightBumper().whileTrue(IntakeCommands.outtake())
 
