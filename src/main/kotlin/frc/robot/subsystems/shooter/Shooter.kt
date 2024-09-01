@@ -9,30 +9,30 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
-    private val topKP: LoggedTunableNumber =
+    private val topKP =
         LoggedTunableNumber("Shooter/Top kP", ShooterConstants.TOP_GAINS.kP)
-    private val topKI: LoggedTunableNumber =
+    private val topKI =
         LoggedTunableNumber("Shooter/Top kI", ShooterConstants.TOP_GAINS.kI)
-    private val topKD: LoggedTunableNumber =
+    private val topKD =
         LoggedTunableNumber("Shooter/Top kD", ShooterConstants.TOP_GAINS.kD)
-    private val topKS: LoggedTunableNumber =
+    private val topKS =
         LoggedTunableNumber("Shooter/Top kS", ShooterConstants.TOP_GAINS.kS)
-    private val topKV: LoggedTunableNumber =
+    private val topKV =
         LoggedTunableNumber("Shooter/Top kV", ShooterConstants.TOP_GAINS.kV)
-    private val topKA: LoggedTunableNumber =
+    private val topKA =
         LoggedTunableNumber("Shooter/Top kA", ShooterConstants.TOP_GAINS.kA)
 
-    private val bottomKP: LoggedTunableNumber =
+    private val bottomKP =
         LoggedTunableNumber("Shooter/Bottom kP", ShooterConstants.BOTTOM_GAINS.kP)
-    private val bottomKI: LoggedTunableNumber =
+    private val bottomKI =
         LoggedTunableNumber("Shooter/Bottom kI", ShooterConstants.BOTTOM_GAINS.kI)
-    private val bottomKD: LoggedTunableNumber =
+    private val bottomKD =
         LoggedTunableNumber("Shooter/Bottom kD", ShooterConstants.BOTTOM_GAINS.kD)
-    private val bottomKS: LoggedTunableNumber =
+    private val bottomKS =
         LoggedTunableNumber("Shooter/Bottom kS", ShooterConstants.BOTTOM_GAINS.kS)
-    private val bottomKV: LoggedTunableNumber =
+    private val bottomKV =
         LoggedTunableNumber("Shooter/Bottom kV", ShooterConstants.BOTTOM_GAINS.kV)
-    private val bottomKA: LoggedTunableNumber =
+    private val bottomKA =
         LoggedTunableNumber("Shooter/Bottom kA", ShooterConstants.BOTTOM_GAINS.kA)
 
     private var topVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
