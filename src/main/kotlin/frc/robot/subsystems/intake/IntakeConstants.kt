@@ -15,13 +15,10 @@ object IntakeConstants {
         selectGainsBasedOnMode(
             Gains (
                 21.0,
-                0.0,
-                0.1,
+                kD= 0.1
             ),
             Gains(
-                10.1 / 360.0,
-                0.0,
-                0.0
+                10.1 / 360.0
             )
         )
     }

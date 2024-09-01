@@ -17,20 +17,11 @@ object ConveyorConstants {
     val GAINS by lazy {
         selectGainsBasedOnMode(
             Gains(
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.87,
-                0.0
+                kV= 1.87
             ),
             Gains(
                 3.5,
-                0.0,
-                0.0,
-                0.0,
-                3.8,
-                0.0
+                kV= 3.8
             )
         )
     }
