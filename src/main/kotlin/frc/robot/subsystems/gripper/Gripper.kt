@@ -47,7 +47,7 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     }
 
     fun feed(): Command {
-        return setRollerPower(GripperConstants.INTAKE_POWER).withTimeout(0.4)
+        return setRollerPower(GripperConstants.INTAKE_POWER).withTimeout(0.4).andThen(setRollerPower(0.0))
     }
 
     fun stop(): Command {
