@@ -42,6 +42,8 @@ object SwerveConstants {
     val MOTION_MAGIC_CONFIGS = MotionMagicConfigs()
         .withMotionMagicCruiseVelocity(3.0)
         .withMotionMagicAcceleration(12.0)
+    val DRIVE_SLOT_0_CONFIG: Slot0Configs
+    val ANGLE_SLOT_0_CONFIG: Slot0Configs
 
     val STEERING_MULTIPLIER =
         LoggedTunableNumber("Steering multiplier", 0.6)
@@ -219,6 +221,21 @@ object SwerveConstants {
                 Translation2d(-ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2) // RR
             )
 
+        DRIVE_SLOT_0_CONFIG = Slot0Configs()
+            .withKP(DRIVE_KP.get())
+            .withKI(DRIVE_KI.get())
+            .withKD(DRIVE_KD.get())
+            .withKS(DRIVE_KS.get())
+            .withKV(DRIVE_KV.get())
+            .withKA(DRIVE_KA.get())
+        ANGLE_SLOT_0_CONFIG = Slot0Configs()
+            .withKP(ANGLE_KP.get())
+            .withKI(ANGLE_KI.get())
+            .withKD(ANGLE_KD.get())
+            .withKS(ANGLE_KS.get())
+            .withKV(ANGLE_KV.get())
+            .withKA(ANGLE_KA.get())
+
         FEEDBACK_CONFIGS_DRIVE =
             FeedbackConfigs()
                 .withRotorToSensorRatio(1.0)
@@ -229,6 +246,7 @@ object SwerveConstants {
                 .withVoltage(VOLTAGE_CONFIGS)
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)
                 .withFeedback(FEEDBACK_CONFIGS_DRIVE)
+                .withSlot0(DRIVE_SLOT_0_CONFIG)
 
         FEEDBACK_CONFIGS_ANGLE =
             FeedbackConfigs()
@@ -240,6 +258,7 @@ object SwerveConstants {
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)
                 .withFeedback(FEEDBACK_CONFIGS_ANGLE)
                 .withMotorOutput(MOTOR_OUTPUT_CONFIGS)
+                .withSlot0(ANGLE_SLOT_0_CONFIG)
                 .withMotionMagic(
                     MotionMagicConfigs()
                         .withMotionMagicCruiseVelocity(30.0)
