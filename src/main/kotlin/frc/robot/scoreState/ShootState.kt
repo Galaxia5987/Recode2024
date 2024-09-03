@@ -68,7 +68,9 @@ class ShootState : ScoreState {
 
     private fun end(): Command {
         return gripper.feed().andThen(
-            WarmupCommands.stopWarmup(), Commands.none() //TODO: Replace with LEDs command
+            Commands.parallel(
+                WarmupCommands.stopWarmup(), gripper.stop(), Commands.none() //TODO: Replace with LEDs command
+            )
         )
     }
 
