@@ -29,7 +29,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
 
         fun getInstance(): Conveyor {
             return instance ?: throw IllegalArgumentException(
-                "Conveyor has not been initialized. Call initialize(io: HoodIO) first."
+                "Conveyor has not been initialized. Call initialize(io: ConveyorIO) first."
             )
         }
     }
