@@ -6,12 +6,10 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.commandGroups.IntakeCommands
 import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
-import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
@@ -56,10 +54,6 @@ object RobotContainer {
 
         ControllerInputs.driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
-        ControllerInputs.driverController().rightTrigger().whileTrue(IntakeCommands.intake())
-        ControllerInputs.driverController().rightBumper().whileTrue(IntakeCommands.outtake())
-
-        ControllerInputs.operatorController().x().whileTrue(Intake.getInstance().reset())
 
     }
 
