@@ -5,7 +5,6 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import frc.robot.subsystems.hood.Hood
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
@@ -25,7 +24,7 @@ class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
         }
         fun getInstance():Intake{
             return instance ?: throw  IllegalStateException(
-                "Intake has not been initialized. Call initialize(io: IntakeIO) first."
+                "Intake has not been initialized. C all initialize(io: IntakeIO) first."
             )
         }
     }
