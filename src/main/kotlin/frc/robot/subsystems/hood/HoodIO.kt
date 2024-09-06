@@ -2,27 +2,19 @@ package frc.robot.subsystems.hood
 
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
-import java.util.function.Supplier
 
 interface HoodIO {
-    val inputs: LoggedHoodInputs
+    var inputs:LoggedInputHood
 
-    fun updateInternalEncoder() {}
+    fun updateInput()
 
-    fun setAngle(angle: MutableMeasure<Angle>) {}
-
-    fun setAngle(angle: MutableMeasure<Angle>, torqueCompensation: Supplier<Double>) {}
-
-    fun updateInputs() {}
+    fun setAngle(angle:Double)
 
     @Logged
-    open class HoodInputs {
-        var internalAngle: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
-        var voltage: MutableMeasure<Voltage> = MutableMeasure.zero(Units.Volts)
-        var absoluteEncoderAngle: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
-        var absoluteEncoderAngleNoOffset: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
+    open class InputHood{
+        var angle:MutableMeasure<Angle> =
+        var angleMotorVoltage = 0.0
+        var encoderPosition = 0.0
     }
 }
