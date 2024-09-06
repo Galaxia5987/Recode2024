@@ -3,6 +3,7 @@ package frc.robot.subsystems.hood
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import frc.robot.Constants
 
 class Hood private constructor(private var io: HoodIO):SubsystemBase(){
     private val inputs = io.inputs
@@ -28,8 +29,8 @@ class Hood private constructor(private var io: HoodIO):SubsystemBase(){
 
     fun setRestAngle():Command = Commands.run({io.setAngle(HoodConstants.restAngle)})
 
-    fun isNear():Command = Commands.run({
-        inputs.angle
+    fun atSetPoint():Command = Commands.run({
+        inputs.angle.isNear(inputs.angleSetPoint,HoodConstants.TOLERANCE)
     })
 
 }
