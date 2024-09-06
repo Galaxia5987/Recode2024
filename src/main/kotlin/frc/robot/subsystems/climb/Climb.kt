@@ -25,7 +25,7 @@ class Climb private constructor(private val io:ClimbIO) :SubsystemBase() {
         }
         fun getInstance(): Climb {
             return instance ?: throw  IllegalStateException(
-                "Climb has not been initialized. Call initialize(io: IntakeIO) first."
+                "Climb has not been initialized. Call initialize(io: ClimbIO) first."
             )
         }
     }
