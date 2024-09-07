@@ -29,7 +29,7 @@ object HoodConstants {
     val INVERTED_VALUE = InvertedValue.CounterClockwise_Positive
 
 
-    val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset", (58.095 - 33.48) / 360.0)
+    val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset", (-224.5 - 33.48) / 360.0)
 
     val GAINS by lazy {
         selectGainsBasedOnMode(
