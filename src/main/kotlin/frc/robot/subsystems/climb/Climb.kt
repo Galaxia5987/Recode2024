@@ -3,7 +3,6 @@ package frc.robot.subsystems.climb
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import edu.wpi.first.wpilibj2.command.StartEndCommand
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
@@ -49,18 +48,20 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
         return run { io.setPower(power.asDouble) }
     }
 
+    fun stop(): Command = setPower { 0.0 }.withTimeout(0.02)
+
     fun openClimb(): Command {
         return Commands.sequence(
-            setPower { -0.3 }.withTimeout(1.25),
+            setPower { 0.3 }.withTimeout(0.15),
+            stop(),
             open(),
-            setPower { -0.5 }.withTimeout(2.5),
+            setPower { -0.5 }.withTimeout(0.55),
+            stop()
         )
     }
 
     fun closeClimb(): Command {
-        return StartEndCommand(
-            { setPower { 0.5 } }, ::lock
-        )
+        return setPower { 0.5 }.withTimeout(0.65).andThen(lock().alongWith(stop()))
     }
 
     override fun periodic() {
