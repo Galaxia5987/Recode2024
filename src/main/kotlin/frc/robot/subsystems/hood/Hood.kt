@@ -29,8 +29,6 @@ class Hood private constructor(private var io: HoodIO):SubsystemBase(){
 
     fun setRestAngle():Command = Commands.run({io.setAngle(HoodConstants.restAngle)})
 
-    fun atSetPoint():Command = Commands.run({
-        inputs.angle.isNear(inputs.angleSetPoint,HoodConstants.TOLERANCE)
-    })
+    fun atSetPoint():Boolean = inputs.angle.isNear(inputs.angleSetPoint,HoodConstants.TOLERANCE)
 
 }
