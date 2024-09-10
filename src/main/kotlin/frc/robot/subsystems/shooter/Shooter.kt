@@ -35,8 +35,11 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     private val bottomKA =
         LoggedTunableNumber("Shooter/Bottom kA", ShooterConstants.BOTTOM_GAINS.kA)
 
-    private var topVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
-    private var bottomVelocitySetpoint: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
+    @AutoLogOutput
+    private var topVelocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+
+    @AutoLogOutput
+    private var bottomVelocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
     private val timer = Timer()
     private val subsystemName = this::class.simpleName
 
@@ -52,7 +55,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
             }
         }
 
-        fun getInstance() : Shooter {
+        fun getInstance(): Shooter {
             return instance ?: throw IllegalArgumentException(
                 "Shooter has not been initialized. Call initialize(io: ShooterIO) first."
             )
@@ -66,19 +69,20 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
 
     fun setVelocity(topVelocity: Measure<Velocity<Angle>>, bottomVelocity: Measure<Velocity<Angle>>): Command {
         return run {
-            topVelocitySetpoint.mut_replace(topVelocity)
-            bottomVelocitySetpoint.mut_replace(bottomVelocity)
+            topVelocitySetpoint = topVelocity
+            bottomVelocitySetpoint = bottomVelocity
             io.setTopVelocity(topVelocity)
             io.setBottomVelocity(bottomVelocity)
         }.withName("Set Top and Bottom Velocity Command")
     }
 
-    fun setVelocity(velocity: Measure<Velocity<Angle>>) : Command = setVelocity(velocity, velocity).withName("Set Velocity Command")
+    fun setVelocity(velocity: Measure<Velocity<Angle>>): Command =
+        setVelocity(velocity, velocity).withName("Set Velocity Command")
 
     fun stop(): Command {
         return run {
-            topVelocitySetpoint.mut_replace(ShooterConstants.STOP_POWER)
-            bottomVelocitySetpoint.mut_replace(ShooterConstants.STOP_POWER)
+            topVelocitySetpoint = ShooterConstants.STOP_POWER
+            bottomVelocitySetpoint = ShooterConstants.STOP_POWER
             io.stop()
         }.withName("Stop Shooter")
     }
