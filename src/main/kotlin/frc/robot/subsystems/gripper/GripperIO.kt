@@ -1,20 +1,17 @@
 package frc.robot.subsystems.gripper
 
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface GripperIO {
-    val inputs: LoggedGripperInputs
+    val inputs:LoggedGripperInputs
 
-    fun setRollerMotorPower(power: Double) {}
+    fun setPower(power:Double)
+    fun hasNote()
 
-    fun updateInputs() {}
-
+    fun updateInputs()
     @Logged
-    open class GripperInputs {
-        var rollerMotorVoltage: MutableMeasure<Voltage> = Units.Volts.of(0.0).mutableCopy()
+    open class GripperInputs{
+        var spinMotorPower:Double = 0.0
         var hasNote = false
     }
 }
