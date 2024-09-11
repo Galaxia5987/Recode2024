@@ -21,11 +21,13 @@ object ShooterConstants {
     val TOP_GAINS by lazy {
         selectGainsBasedOnMode(
             Gains(
-                2.0
-            ),
-            Gains(
                 0.4,
                 kV= 0.1282
+            ),
+            Gains(
+                2.0,
+                0.0,
+                0.0
             )
         )
     }
@@ -33,11 +35,13 @@ object ShooterConstants {
     val BOTTOM_GAINS by lazy {
         selectGainsBasedOnMode(
             Gains(
-                2.0
-            ),
-            Gains(
                 0.3,
                 kV= 0.1232
+            ),
+            Gains(
+                2.0,
+                0.0,
+                0.0
             )
         )
     }
