@@ -13,6 +13,8 @@ import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.swerve.SwerveDrive
+import frc.robot.ControllerInputs.driverController as driverController
+import frc.robot.ControllerInputs.operatorController as operatorController
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,26 +43,23 @@ object RobotContainer {
     }
 
     private fun configureDefaultCommands() {
-
         swerveDrive.defaultCommand = swerveDrive.driveCommand(
-            { -ControllerInputs.driverController().leftY },
-            { -ControllerInputs.driverController().leftX },
-            { 0.6 * -ControllerInputs.driverController().rightX })
+            { -driverController().leftY },
+            { -driverController().leftX },
+            { 0.6 * -driverController().rightX })
     }
 
     private fun configureButtonBindings() {
-        ControllerInputs.operatorController().a().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
-        ControllerInputs.operatorController().b().onTrue(Commands.runOnce({ currentState = shootState }))
-        ControllerInputs.operatorController().x().onTrue(Commands.runOnce({ currentState = ampState }))
-        ControllerInputs.operatorController().y().onTrue(Commands.runOnce({ currentState = climbState }))
+        driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
-        ControllerInputs.driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
+        driverController().rightTrigger().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
+        driverController().a().onTrue(Commands.runOnce({ currentState = shootState }))
+        driverController().b().onTrue(Commands.runOnce({ currentState = ampState }))
+        driverController().x().onTrue(Commands.runOnce({ currentState = climbState }))
 
-        ControllerInputs.driverController().rightTrigger().whileTrue(IntakeCommands.intake())
-        ControllerInputs.driverController().rightBumper().whileTrue(IntakeCommands.outtake())
-
-        ControllerInputs.operatorController().x().whileTrue(Intake.getInstance().reset())
-
+        driverController().leftTrigger().whileTrue(IntakeCommands.intake())
+        driverController().leftBumper().whileTrue(IntakeCommands.outtake())
+        driverController().start().whileTrue(Intake.getInstance().reset())
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
