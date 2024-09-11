@@ -86,7 +86,9 @@ class IntakeIOReal : IntakeIO {
     }
 
     override fun setGains(kP: Double, kI: Double, kD: Double) {
-
+        angleMotor.configurator.apply(
+            Slot0Configs()
+                .withKP(kP).withKI(kI).withKD(kD))
     }
 
     override fun updateInputs() {
