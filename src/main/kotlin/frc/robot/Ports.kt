@@ -17,9 +17,7 @@ class Ports {
     }
 
     object Gripper {
-        const val ANGLE_ID: Int = 6
         const val ROLLER_ID: Int = 7
-        const val ENCODER_ID: Int = 7
     }
 
     object Climb {
