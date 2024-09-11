@@ -14,8 +14,9 @@ object IntakeConstants {
     val GAINS by lazy {
         selectGainsBasedOnMode(
             Gains (
-                21.0,
-                kD= 0.1
+                kP = 55.0,
+                kI = 3.0,
+                kD = 0.1,
             ),
             Gains(
                 10.1 / 360.0
