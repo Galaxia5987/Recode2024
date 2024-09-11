@@ -40,6 +40,5 @@ class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
     override fun periodic() {
         io.updateInput()
         Logger.processInputs("Intake",input)
-        setAngle(input.angle)
     }
 }
