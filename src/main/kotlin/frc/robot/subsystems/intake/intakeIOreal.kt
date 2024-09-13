@@ -19,7 +19,7 @@ class intakeIOreal() : IntakeIO {
 
     private val rollerMotor = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
 
-    private val centerMotor=CANSparkMax(Ports.Intake.CENTER_MOTOR_ID,CANSparkLowLevel.MotorType.kBrushless)
+    private val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
 
     private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
 
@@ -27,26 +27,30 @@ class intakeIOreal() : IntakeIO {
 
     init {
 
-        val angleMotorConfig=TalonFXConfiguration()
-            .withMotorOutput(MotorOutputConfigs()
-                .withInverted(InvertedValue.Clockwise_Positive)
-                .withNeutralMode(NeutralModeValue.Brake))
-            .withCurrentLimits(CurrentLimitsConfigs()
-                .withSupplyCurrentLimitEnable(true)
-                .withStatorCurrentLimitEnable(true)
-                .withStatorCurrentLimit(80.0).withSupplyCurrentLimit(40.0)
+        val angleMotorConfig = TalonFXConfiguration()
+            .withMotorOutput(
+                MotorOutputConfigs()
+                    .withInverted(InvertedValue.Clockwise_Positive)
+                    .withNeutralMode(NeutralModeValue.Brake)
+            )
+            .withCurrentLimits(
+                CurrentLimitsConfigs()
+                    .withSupplyCurrentLimitEnable(true)
+                    .withStatorCurrentLimitEnable(true)
+                    .withStatorCurrentLimit(80.0).withSupplyCurrentLimit(40.0)
             )
             .withFeedback(FeedbackConfigs().withSensorToMechanismRatio(IntakeConstants.gearRatio))
             .withSlot0(Slot0Configs().withKP(IntakeConstants.kp).withKI(IntakeConstants.ki).withKD(IntakeConstants.kd))
+        angleMotor.configurator.apply(angleMotorConfig)
         rollerMotor.restoreFactoryDefaults()
-        rollerMotor.inverted=true
+        rollerMotor.inverted = true
         rollerMotor.setIdleMode(CANSparkBase.IdleMode.kCoast)
         rollerMotor.enableVoltageCompensation(12.0)
         rollerMotor.setSmartCurrentLimit(40)
         rollerMotor.burnFlash()
 
         centerMotor.restoreFactoryDefaults()
-        centerMotor.inverted=true
+        centerMotor.inverted = true
         centerMotor.setIdleMode(CANSparkBase.IdleMode.kCoast)
         centerMotor.enableVoltageCompensation(12.0)
         centerMotor.setSmartCurrentLimit(40)
@@ -75,9 +79,9 @@ class intakeIOreal() : IntakeIO {
     }
 
     override fun updateinputs() {
-    inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
-        inputs.spinMotorVoltage= rollerMotor.busVoltage
-        inputs.angleMotorVoltage= angleMotor.motorVoltage.value
-        inputs.centerMotorVoltage= rollerMotor.busVoltage
+        inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
+        inputs.spinMotorVoltage = rollerMotor.busVoltage
+        inputs.angleMotorVoltage = angleMotor.motorVoltage.value
+        inputs.centerMotorVoltage = rollerMotor.busVoltage
     }
 }
