@@ -9,5 +9,11 @@ interface IntakeIO {
     fun setAngleMotorPow(power: Double)
     fun reset()
 
+    fun setCenterPower(power: Double) {}
+    fun setRollerPower(power: Double){}
+    fun setAngleMotorAngle(angle:Measure<Angle>){}
+    fun setAngleMotorPow(power: Double){}
+    fun reset(){}
+    fun updateinputs(){}
 
 }
