@@ -1,6 +1,7 @@
 package frc.robot.subsystems.intake
 
 import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
@@ -17,7 +18,9 @@ class intakeIOreal() : IntakeIO {
 
     private val centerMotor=CANSparkMax(Ports.Intake.CENTER_MOTOR_ID,CANSparkLowLevel.MotorType.kBrushless)
 
-    private val angleMotor=TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
+    private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
+
+    private val angleMotorRequest = PositionVoltage(0.0)
 
     init {
 
