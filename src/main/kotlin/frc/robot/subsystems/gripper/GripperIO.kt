@@ -6,8 +6,6 @@ interface GripperIO {
     val inputs:LoggedGripperInputs
 
     fun setPower(power:Double)
-    fun hasNote()
-
     fun updateInputs()
     @Logged
     open class GripperInputs{
