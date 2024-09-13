@@ -8,6 +8,9 @@ import com.ctre.phoenix6.signals.NeutralModeValue
 import com.revrobotics.CANSparkBase
 import com.revrobotics.CANSparkLowLevel
 import com.revrobotics.CANSparkMax
+import edu.wpi.first.units.Angle
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
 import frc.robot.Ports
 
 class intakeIOreal() : IntakeIO {
@@ -52,7 +55,29 @@ class intakeIOreal() : IntakeIO {
     }
 
     override fun setCenterPower(power: Double) {
-
+        centerMotor.set(power)
     }
 
+    override fun setRollerPower(power: Double) {
+        rollerMotor.set(power)
+    }
+
+    override fun setAngleMotorPow(power: Double) {
+        angleMotor.set(power)
+    }
+
+    override fun setAngleMotorAngle(angle: Measure<Angle>) {
+        angleMotor.setControl(angleMotorRequest.withPosition(angle.`in`(Units.Rotations)))
+    }
+
+    override fun reset() {
+        angleMotor.setPosition(0.0)
+    }
+
+    override fun updateinputs() {
+    inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
+        inputs.spinMotorVoltage= rollerMotor.busVoltage
+        inputs.angleMotorVoltage= angleMotor.motorVoltage.value
+        inputs.centerMotorVoltage= rollerMotor.busVoltage
+    }
 }
