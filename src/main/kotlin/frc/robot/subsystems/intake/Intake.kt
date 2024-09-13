@@ -28,13 +28,13 @@ class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
             )
         }
     }
-    fun setAngle(angle: Double):Command = run { io.setAngle(angle) }.withName("Set Angle Intake")
+    fun setAngle(angle: Double):Command = runOnce { io.setAngle(angle) }.withName("Set Angle Intake")
 
     fun resetAngle():Command {
-       return Commands.run({ io.resetAngle() }).withName("resetAngle")
+       return Commands.runOnce({ io.resetAngle() }).withName("resetAngle")
     }
     fun setAnglePower(power:Double):Command {
-        return Commands.run({ io.setAnglePower(power) }).withName("setAnglePower")
+        return Commands.runOnce({ io.setAnglePower(power) }).withName("setAnglePower")
     }
 
     override fun periodic() {
