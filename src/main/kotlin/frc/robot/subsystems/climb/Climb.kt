@@ -30,16 +30,16 @@ class Climb private constructor(private val io:ClimbIO) :SubsystemBase() {
         }
     }
     fun setPower(power:DoubleSupplier):Command{
-        return Commands.run({io.setPower(power.asDouble)})
+        return Commands.run({io.setPower(power.asDouble)}).withName("setPower")
     }
 
     fun lock():Command{
-        return Commands.run({io.lockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()})
+        return Commands.runOnce({io.lockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()}).withName("lock")
     }
 
 
     fun unlock():Command{
-        return Commands.run({io.unlockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()})
+        return Commands.runOnce({io.unlockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()}).withName("unlock")
     }
 
     override fun periodic() {
