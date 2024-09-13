@@ -19,11 +19,6 @@ class GripperIOReal:GripperIO {
         spinMotor.set(power)
     }
 
-    override fun hasNote() {
-        sensor.get()
-    }
-
-
     override fun updateInputs() {
         inputs.spinMotorPower = spinMotor.get()
         inputs.hasNote = !sensor.get()
