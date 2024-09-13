@@ -9,8 +9,11 @@ import com.revrobotics.CANSparkLowLevel
 import com.revrobotics.CANSparkMax
 import frc.robot.Ports
 
-class intakeIOreal:IntakeIO {
-    private val rollerMotor=CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+class intakeIOreal() : IntakeIO {
+
+    override val inputs: LoggedIntakeInputs = LoggedIntakeInputs()
+
+    private val rollerMotor = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
 
     private val centerMotor=CANSparkMax(Ports.Intake.CENTER_MOTOR_ID,CANSparkLowLevel.MotorType.kBrushless)
 
