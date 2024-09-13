@@ -24,10 +24,8 @@ class Conveyor private constructor(private val io:ConveyorIO):SubsystemBase() {
             )
         }
     }
-    fun setPower(power:Double):Command=Commands.run({io.setSpinPower(power)})
-    fun conveyorIn():Command = Commands.run({io.setSpinPower(ConveyorConstants.CONVEYOR_POWER)})
-    fun conveyorOut():Command = Commands.run({io.setSpinPower(-ConveyorConstants.CONVEYOR_POWER)})
-    fun stopGripper():Command = Commands.run({io.setSpinPower(0.0)})
+    fun setPower(power:Double):Command=Commands.runOnce({io.setSpinPower(power)}).withName("setPower")
+    fun stopConveyor():Command = Commands.runOnce({io.setSpinPower(0.0)}).withName("stopGripper")
 
     override fun periodic() {
         io.updateInput()
