@@ -64,6 +64,10 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
         return setPower { 0.5 }.withTimeout(0.65).andThen(lock().alongWith(stop()))
     }
 
+    fun climb(): Command {
+        return setPower { 0.8 }.withTimeout(1.2).andThen(lock().alongWith(stop()))
+    }
+
     override fun periodic() {
         isStopperStuck =
             inputs.stopperCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
