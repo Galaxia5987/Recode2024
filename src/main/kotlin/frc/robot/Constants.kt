@@ -35,7 +35,8 @@ object Constants {
 
     private val SPEAKER_POSE_BLUE = Translation2d(0.0, 5.5479442)
 
-    val SPEAKER_POSE: Translation2d by lazy { getTranslationByColor(SPEAKER_POSE_BLUE) }
+    val SPEAKER_POSE: Translation2d
+        get() = getTranslationByColor(SPEAKER_POSE_BLUE)
 
     val CHAIN_LOCATIONS: List<Pose2d> by lazy {
         val blueChainLocations = listOf(
