@@ -7,21 +7,25 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.Constants
+import frc.robot.Robot
 import frc.robot.commandGroups.WarmupCommands
-import frc.robot.lib.PoseEstimation
-import frc.robot.lib.getRotationToTranslation
-import frc.robot.lib.handleInterrupt
+import frc.robot.lib.*
 import frc.robot.lib.math.interpolation.InterpolatingDouble
+import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
+import org.littletonrobotics.junction.AutoLogOutput
 
 class ShootState : ScoreState {
     private val swerveDrive = SwerveDrive.getInstance()
     private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val gripper = Gripper.getInstance()
+    private val hoodAngle: LoggedTunableNumber = LoggedTunableNumber("HoodAngle", 60.0)
+    private val shooterVelocity: LoggedTunableNumber = LoggedTunableNumber("ShooterVelocity", 60.0)
+    private val conveyorVelocity: LoggedTunableNumber = LoggedTunableNumber("ConveyorVelocity", 60.0)
 
 
     private fun getRotationToSpeaker(): Rotation2d {
@@ -31,50 +35,55 @@ class ShootState : ScoreState {
     }
 
     private fun warmup(distanceToSpeaker: Measure<Distance>): Command {
-        return WarmupCommands.warmup(
+        return Commands.defer({WarmupCommands.warmup(
             Units.Degrees.of(
-                ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
-                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-                ).value
+                hoodAngle.get()
+//                ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
+//                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+//                ).value
             ), Units.RotationsPerSecond.of(
-                ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
-                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-                ).value
+                shooterVelocity.get()
+//                ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
+//                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+//                ).value
             ), Units.RotationsPerSecond.of(
-                ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
-                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-                ).value
+                conveyorVelocity.get()
+//                ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
+//                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+//                ).value
             )
-        )
+        )}, setOf(hood, shooter, Conveyor.getInstance()))
     }
 
     private fun turnToSpeaker(): Command {
         return swerveDrive.turnCommand(
             Units.Rotations.of(
                 getRotationToSpeaker().rotations
-            ), 3.0 / 360.0
+            ), 5.0 / 360.0
         )
     }
 
+    @AutoLogOutput
     private fun readyToShoot(): Boolean {
         return shooter.atSetpoint() && hood.atSetpoint() && swerveDrive.atTurnSetpoint
     }
 
     private fun init(): Command {
         return Commands.parallel(
-            warmup(Units.Meters.of(PoseEstimation.getInstance().getDistanceToSpeaker())), turnToSpeaker()
+            warmup(Units.Meters.of(Robot.getDistanceToSpeaker())),
+//            turnToSpeaker()
         ).until(::readyToShoot).andThen(Commands.none()) //TODO: Replace with LEDs command
     }
 
     private fun end(): Command {
         return gripper.feed().andThen(
             Commands.parallel(
-                WarmupCommands.stopWarmup(), gripper.stop(), Commands.none() //TODO: Replace with LEDs command
+                shooter.stop(), Conveyor.getInstance().stop(), hood.setRestingAngle() //TODO: Replace with LEDs command
             )
         )
     }
 
     override fun execute(): Command {
-        return init().handleInterrupt(end())
+        return init().finallyDo(end())
     }
 }
