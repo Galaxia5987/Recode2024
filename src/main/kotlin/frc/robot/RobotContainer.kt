@@ -6,10 +6,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
-import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
@@ -24,14 +22,9 @@ object RobotContainer {
     private val testController = CommandXboxController(2)
 
     private val autoChooser: SendableChooser<Command> = AutoBuilder.buildAutoChooser()
-    private val shootState: ShootState by lazy { ShootState() }
-    private val ampState: AmpState by lazy { AmpState() }
-    private val climbState: ClimbState by lazy { ClimbState() }
 
-    private var currentState: ScoreState
 
     init {
-        currentState = shootState
 
         registerAutoCommands()
         configureButtonBindings()
@@ -47,11 +40,6 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
-        ControllerInputs.operatorController().a().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
-        ControllerInputs.operatorController().b().onTrue(Commands.runOnce({ currentState = shootState }))
-        ControllerInputs.operatorController().x().onTrue(Commands.runOnce({ currentState = ampState }))
-        ControllerInputs.operatorController().y().onTrue(Commands.runOnce({ currentState = climbState }))
-
         ControllerInputs.driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
 

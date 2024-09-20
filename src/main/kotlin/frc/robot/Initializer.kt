@@ -5,8 +5,6 @@ import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOTalonFX
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.conveyor.ConveyorIOReal
-import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.gripper.GripperIOReal
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodIOReal
 import frc.robot.subsystems.shooter.Shooter
@@ -96,6 +94,5 @@ object Initializer {
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
         Conveyor.initialize(ConveyorIOReal())
-        Gripper.initialize(GripperIOReal())
     }
 }
