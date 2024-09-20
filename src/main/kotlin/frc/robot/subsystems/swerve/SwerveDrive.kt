@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.Constants
 import frc.robot.lib.controllers.DieterController
-import frc.robot.lib.getSpeed
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
@@ -56,7 +55,6 @@ class SwerveDrive private constructor
     @AutoLogOutput
     private var turnAngleSetpoint: Measure<Angle> = Units.Degrees.zero()
 
-    @get:AutoLogOutput
     val atTurnSetpoint: Boolean
         get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.TURN_MAX_TOLERANCE)
 
@@ -141,8 +139,7 @@ class SwerveDrive private constructor
          */
         get() = inputs.yaw
 
-    @get:AutoLogOutput
-    val odometryYaw: Rotation2d
+    val gyroYaw: Rotation2d
         get() {
             val alliance = DriverStation.getAlliance()
             if (alliance.isPresent && alliance.get() == DriverStation.Alliance.Red) {
@@ -282,10 +279,7 @@ class SwerveDrive private constructor
                 0.0,
                 0.0,
                 turnController.calculate(
-                    estimator
-                        .estimatedPosition
-                        .rotation
-                        .rotations,
+                    gyroYaw.rotations,
                     rotation.`in`(Units.Rotations)
                 ),
                 false
@@ -317,7 +311,7 @@ class SwerveDrive private constructor
                 turnController.calculate(
                     if (usePoseEstimation
                     ) botPose.rotation.rotations
-                    else odometryYaw.rotations,
+                    else gyroYaw.rotations,
                     rotation.`in`(edu.wpi.first.units.Units.Rotations)
                 ),
                 true
@@ -353,7 +347,7 @@ class SwerveDrive private constructor
         updateModulePositions()
 
         if (!isColliding()) {
-            estimator.update(odometryYaw, modulePositions)
+            estimator.update(gyroYaw, modulePositions)
         }
 
         botPose = estimator.estimatedPosition
@@ -368,6 +362,9 @@ class SwerveDrive private constructor
         }
 
         Logger.processInputs("SwerveDrive", inputs)
+        Logger.recordOutput("SwerveDrive/atTurnSetpoint", atTurnSetpoint)
+        Logger.recordOutput("SwerveDrive/gyroYaw", gyroYaw)
+        Logger.recordOutput("SwerveDrive/rawYaw", yaw)
     }
 
     private fun configAutoBuilder() {
