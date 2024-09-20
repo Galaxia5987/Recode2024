@@ -157,10 +157,10 @@ object SwerveConstants {
                 ANGLE_KV.initDefault(1.32755)
                 ANGLE_KA.initDefault(0.1976375)
 
-                ROTATION_KP.initDefault(2.3)
+                ROTATION_KP.initDefault(3.5)
                 ROTATION_KI.initDefault(0.0)
-                ROTATION_KD.initDefault(0.2)
-                ROTATION_KDIETER.initDefault(0.002)
+                ROTATION_KD.initDefault(0.1)
+                ROTATION_KDIETER.initDefault(0.0)
 
                 ROBOT_WIDTH = 0.585
                 ROBOT_LENGTH = 0.585
