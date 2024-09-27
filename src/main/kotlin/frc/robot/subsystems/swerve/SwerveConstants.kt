@@ -106,6 +106,8 @@ object SwerveConstants {
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
     const val TURN_MAX_TOLERANCE = 3.0 / 360.0
+    const val SHOOT_TURN_TOLERANCE = 5.0 / 360.0
+    const val CLIMB_TURN_TOLERANCE = 4.0 / 360.0
     const val SKID_TOLERANCE = 0.15
     val COLLISION_TOLERANCE: Measure<Velocity<Velocity<Distance>>> = Units.Gs.of(1.8)
 
