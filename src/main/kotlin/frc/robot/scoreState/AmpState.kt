@@ -8,6 +8,7 @@ import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.shooter.Shooter
+import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 
 class AmpState : ScoreState {
@@ -19,9 +20,10 @@ class AmpState : ScoreState {
 
     private fun init(): Command {
         val driveAndAdjust = swerveDrive.driveAndAdjust(
-            ScoreConstants.AMP_ROTATION,
-            { -ControllerInputs.driverController().leftX },
+            {ScoreConstants.AMP_ROTATION},
             { -ControllerInputs.driverController().leftY },
+            { -ControllerInputs.driverController().leftX },
+            SwerveConstants.TURN_MAX_TOLERANCE,
             0.1,
             true
         )
