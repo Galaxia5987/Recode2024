@@ -288,10 +288,9 @@ class SwerveDrive private constructor
     }
 
     fun driveAndAdjust(
-        rotation: Measure<Angle>,
-        xJoystick: DoubleSupplier,
-        yJoystick: DoubleSupplier,
         rotation: ()->Measure<Angle>,
+        forward: DoubleSupplier,
+        strafe: DoubleSupplier,
         turnTolerance: Double,
         deadband: Double,
         usePoseEstimation: Boolean
@@ -308,8 +307,8 @@ class SwerveDrive private constructor
         turnController.setTolerance(turnTolerance)
         return run {
             drive(
-                MathUtil.applyDeadband(xJoystick.asDouble, deadband),
-                MathUtil.applyDeadband(yJoystick.asDouble, deadband),
+                MathUtil.applyDeadband(forward.asDouble, deadband),
+                MathUtil.applyDeadband(strafe.asDouble, deadband),
                 turnController.calculate(
                     if (usePoseEstimation
                     ) botPose.rotation.rotations
