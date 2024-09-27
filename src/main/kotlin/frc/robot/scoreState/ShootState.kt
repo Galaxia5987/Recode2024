@@ -7,6 +7,7 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.Constants
+import frc.robot.ControllerInputs
 import frc.robot.Robot
 import frc.robot.commandGroups.WarmupCommands
 import frc.robot.lib.*
@@ -15,6 +16,7 @@ import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.shooter.Shooter
+import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import org.littletonrobotics.junction.AutoLogOutput
 
@@ -23,10 +25,6 @@ class ShootState : ScoreState {
     private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val gripper = Gripper.getInstance()
-    private val hoodAngle: LoggedTunableNumber = LoggedTunableNumber("HoodAngle", 60.0)
-    private val shooterVelocity: LoggedTunableNumber = LoggedTunableNumber("ShooterVelocity", 60.0)
-    private val conveyorVelocity: LoggedTunableNumber = LoggedTunableNumber("ConveyorVelocity", 60.0)
-
 
     private fun getRotationToSpeaker(): Rotation2d {
         return swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
@@ -37,20 +35,17 @@ class ShootState : ScoreState {
     private fun warmup(distanceToSpeaker: Measure<Distance>): Command {
         return Commands.defer({WarmupCommands.warmup(
             Units.Degrees.of(
-                hoodAngle.get()
-//                ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
-//                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-//                ).value
+                ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
+                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+                ).value
             ), Units.RotationsPerSecond.of(
-                shooterVelocity.get()
-//                ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
-//                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-//                ).value
+                ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
+                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+                ).value
             ), Units.RotationsPerSecond.of(
-                conveyorVelocity.get()
-//                ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
-//                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-//                ).value
+                ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
+                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
+                ).value
             )
         )}, setOf(hood, shooter, Conveyor.getInstance()))
     }
