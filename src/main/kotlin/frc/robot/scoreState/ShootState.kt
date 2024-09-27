@@ -56,10 +56,15 @@ class ShootState : ScoreState {
     }
 
     private fun turnToSpeaker(): Command {
-        return swerveDrive.turnCommand(
-            Units.Rotations.of(
+        return swerveDrive.driveAndAdjust(
+            {Units.Rotations.of(
                 getRotationToSpeaker().rotations
-            ), 5.0 / 360.0
+            )},
+            {-ControllerInputs.driverController().leftY},
+            {-ControllerInputs.driverController().leftX},
+            SwerveConstants.SHOOT_TURN_TOLERANCE,
+            0.1,
+            false
         )
     }
 
@@ -71,7 +76,7 @@ class ShootState : ScoreState {
     private fun init(): Command {
         return Commands.parallel(
             warmup(Units.Meters.of(Robot.getDistanceToSpeaker())),
-//            turnToSpeaker()
+            turnToSpeaker()
         ).until(::readyToShoot).andThen(Commands.none()) //TODO: Replace with LEDs command
     }
 
