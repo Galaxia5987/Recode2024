@@ -291,6 +291,7 @@ class SwerveDrive private constructor
         rotation: Measure<Angle>,
         xJoystick: DoubleSupplier,
         yJoystick: DoubleSupplier,
+        turnTolerance: Double,
         deadband: Double,
         usePoseEstimation: Boolean
     ): Command {
@@ -303,7 +304,7 @@ class SwerveDrive private constructor
                 SwerveConstants.ROTATION_KDIETER.get()
             )
         turnController.enableContinuousInput(-0.5, 0.5)
-        turnController.setTolerance(2.5 / 360.0)
+        turnController.setTolerance(turnTolerance)
         return run {
             drive(
                 MathUtil.applyDeadband(xJoystick.asDouble, deadband),
