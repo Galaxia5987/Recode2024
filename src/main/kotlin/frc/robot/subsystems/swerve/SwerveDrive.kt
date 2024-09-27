@@ -291,11 +291,12 @@ class SwerveDrive private constructor
         rotation: Measure<Angle>,
         xJoystick: DoubleSupplier,
         yJoystick: DoubleSupplier,
+        rotation: ()->Measure<Angle>,
         turnTolerance: Double,
         deadband: Double,
         usePoseEstimation: Boolean
     ): Command {
-        turnAngleSetpoint = rotation
+        turnAngleSetpoint = rotation.invoke()
         val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
@@ -313,7 +314,7 @@ class SwerveDrive private constructor
                     if (usePoseEstimation
                     ) botPose.rotation.rotations
                     else gyroYaw.rotations,
-                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                    rotation.invoke().`in`(Units.Rotations)
                 ),
                 true
             )
