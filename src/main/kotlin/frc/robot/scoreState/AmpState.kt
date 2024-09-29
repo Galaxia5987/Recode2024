@@ -23,7 +23,7 @@ class AmpState : ScoreState {
             {ScoreConstants.AMP_ROTATION},
             { -ControllerInputs.driverController().leftY },
             { -ControllerInputs.driverController().leftX },
-            SwerveConstants.TURN_MAX_TOLERANCE,
+            SwerveConstants.AMP_TURN_TOLERANCE,
             0.1,
             true
         )
