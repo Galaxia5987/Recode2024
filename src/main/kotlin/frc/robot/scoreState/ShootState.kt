@@ -32,22 +32,21 @@ class ShootState : ScoreState {
         )
     }
 
-    private fun warmup(distanceToSpeaker: Measure<Distance>): Command {
-        return Commands.defer({WarmupCommands.warmup(
-            Units.Degrees.of(
-                ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
-                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-                ).value
-            ), Units.RotationsPerSecond.of(
-                ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
-                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-                ).value
-            ), Units.RotationsPerSecond.of(
-                ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
-                    InterpolatingDouble(distanceToSpeaker.`in`(Units.Meters))
-                ).value
+    private fun warmup(): Command {
+        return WarmupCommands.warmup(
+            {Units.Degrees.of(
+                    ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
+                        InterpolatingDouble(Robot.getDistanceToSpeaker())
+                    ).value
+                )}, {Units.RotationsPerSecond.of(
+                    ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
+                        InterpolatingDouble(Robot.getDistanceToSpeaker())
+                    ).value
+                )}, {Units.RotationsPerSecond.of(
+                    ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
+                        InterpolatingDouble(Robot.getDistanceToSpeaker())
+                    ).value )}
             )
-        )}, setOf(hood, shooter, Conveyor.getInstance()))
     }
 
     private fun turnToSpeaker(): Command {
@@ -59,7 +58,7 @@ class ShootState : ScoreState {
             {-ControllerInputs.driverController().leftX},
             SwerveConstants.SHOOT_TURN_TOLERANCE,
             0.1,
-            false
+false
         )
     }
 
@@ -70,9 +69,10 @@ class ShootState : ScoreState {
 
     private fun init(): Command {
         return Commands.parallel(
-            warmup(Units.Meters.of(Robot.getDistanceToSpeaker())),
-            turnToSpeaker()
-        ).until(::readyToShoot).andThen(Commands.none()) //TODO: Replace with LEDs command
+            warmup(),
+            turnToSpeaker(),
+            Commands.none().onlyIf(::readyToShoot) //TODO: Replace with LEDs command
+        )
     }
 
     private fun end(): Command {

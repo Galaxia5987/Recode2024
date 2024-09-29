@@ -20,9 +20,9 @@ object ShootingCommands {
     private fun shootOverStageInit(): Command {
         return Commands.parallel(
             WarmupCommands.warmup(
-                ShootOverStageConstants.HOOD_ANGLE_SUPER_POOP,
-                ShootOverStageConstants.SHOOTER_VELOCITY_SUPER_POOP,
-                ShootOverStageConstants.CONVEYOR_VELOCITY_SUPER_POOP
+                { ShootOverStageConstants.HOOD_ANGLE_SUPER_POOP },
+                { ShootOverStageConstants.SHOOTER_VELOCITY_SUPER_POOP },
+                { ShootOverStageConstants.CONVEYOR_VELOCITY_SUPER_POOP }
             ),
             swerveDrive.turnCommand(
                 Units.Degrees.of(

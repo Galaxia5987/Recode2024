@@ -80,6 +80,14 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
         }.withName("Set Angle Hood")
     }
 
+    fun setAngle(angleSupplier: () -> Measure<Angle>): Command {
+        return run {
+            val angle = angleSupplier.invoke()
+            angleSetpoint = angle
+            io.setAngle(angle)
+        }.withName("Set Angle Hood")
+    }
+
     fun setRestingAngle(): Command = setAngle(HoodConstants.RESTING_ANGLE).withName("Set Resting Angle Hood")
 
     @AutoLogOutput(key = "Hood/Pose")
