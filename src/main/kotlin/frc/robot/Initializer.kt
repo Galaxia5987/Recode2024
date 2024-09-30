@@ -11,6 +11,7 @@ import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodIOReal
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.intake.IntakeIOReal
+import frc.robot.subsystems.leds.LEDs
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
@@ -100,5 +101,6 @@ object Initializer {
         Conveyor.initialize(ConveyorIOReal())
         Intake.initialize(IntakeIOReal())
         Gripper.initialize(GripperIOReal())
+        LEDs.initialize(9, 58)
     }
 }
