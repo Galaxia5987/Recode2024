@@ -3,6 +3,7 @@ package frc.robot.scoreState
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.ControllerInputs
+import frc.robot.lib.handleInterrupt
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
@@ -42,6 +43,6 @@ class AmpState : ScoreState {
     }
 
     override fun execute(): Command {
-        return init().withTimeout(0.2).andThen(end())
+        return init().withTimeout(0.3).andThen(end()).handleInterrupt(end())
     }
 }
