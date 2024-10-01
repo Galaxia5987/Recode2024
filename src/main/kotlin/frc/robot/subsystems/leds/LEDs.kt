@@ -100,7 +100,7 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
             val currentSecondary = secondary
             val currentBlinkTime = blinkTime
             val currentMode = mode
-            setBlink(Color.kBlack, Color.kYellow, 0.1)
+            setBlink(Color.kBlack, LEDConstants.HAS_NOTE_COLOR, 0.1)
             if (intakeTimer.hasElapsed(2.0)) {
                 when (currentMode) {
                     Mode.SOLID -> setSolidMode(currentPrimary)
