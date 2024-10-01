@@ -37,7 +37,7 @@ class ClimbState : ScoreState {
 
     override fun execute(): Command {
         return Commands.sequence(
-            climb.openClimb(),
+            climb.openClimb().withTimeout(0.55),
             pathFindToChain(),
             climb.setPower { 0.8 }
         ).finallyDo(climb.stop().alongWith(climb.lock())) // TODO: Replace with LEDs command
