@@ -57,9 +57,9 @@ object Constants {
                 Mode.REAL
             }
             else{
-                if (System.getenv()["isReplay"] !="true") {
-                    Mode.SIM
-                } else Mode.REPLAY
+                if (System.getenv()["isReplay"] =="true") {
+                    Mode.REPLAY
+                } else Mode.SIM
             }
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
