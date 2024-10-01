@@ -1,8 +1,6 @@
 package frc.robot.scoreState
 
 import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.units.Distance
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
@@ -10,7 +8,8 @@ import frc.robot.Constants
 import frc.robot.ControllerInputs
 import frc.robot.Robot
 import frc.robot.commandGroups.WarmupCommands
-import frc.robot.lib.*
+import frc.robot.lib.finallyDo
+import frc.robot.lib.getRotationToTranslation
 import frc.robot.lib.math.interpolation.InterpolatingDouble
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
@@ -34,31 +33,42 @@ class ShootState : ScoreState {
 
     private fun warmup(): Command {
         return WarmupCommands.warmup(
-            {Units.Degrees.of(
+            {
+                Units.Degrees.of(
                     ScoreConstants.HOOD_ANGLE_BY_DISTANCE.getInterpolated(
                         InterpolatingDouble(Robot.getDistanceToSpeaker())
                     ).value
-                )}, {Units.RotationsPerSecond.of(
+                )
+            },
+            {
+                Units.RotationsPerSecond.of(
                     ScoreConstants.SHOOTER_VELOCITY_BY_DISTANCE.getInterpolated(
                         InterpolatingDouble(Robot.getDistanceToSpeaker())
                     ).value
-                )}, {Units.RotationsPerSecond.of(
+                )
+            },
+            {
+                Units.RotationsPerSecond.of(
                     ScoreConstants.CONVEYOR_VELOCITY_BY_DISTANCE.getInterpolated(
                         InterpolatingDouble(Robot.getDistanceToSpeaker())
-                    ).value )}
-            )
+                    ).value
+                )
+            }
+        )
     }
 
     private fun turnToSpeaker(): Command {
         return swerveDrive.driveAndAdjust(
-            {Units.Rotations.of(
-                getRotationToSpeaker().rotations
-            )},
-            {-ControllerInputs.driverController().leftY},
-            {-ControllerInputs.driverController().leftX},
+            {
+                Units.Rotations.of(
+                    getRotationToSpeaker().rotations
+                )
+            },
+            { -ControllerInputs.driverController().leftY },
+            { -ControllerInputs.driverController().leftX },
             SwerveConstants.SHOOT_TURN_TOLERANCE,
             0.1,
-false
+            false
         )
     }
 
