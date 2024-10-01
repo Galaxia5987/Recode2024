@@ -15,6 +15,8 @@ import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.intake.Intake
+import frc.robot.subsystems.leds.LEDConstants
+import frc.robot.subsystems.leds.LEDs
 import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.ControllerInputs.driverController as driverController
 import frc.robot.ControllerInputs.operatorController as operatorController
@@ -56,9 +58,12 @@ object RobotContainer {
         driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
         driverController().rightTrigger().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
-        driverController().a().onTrue(Commands.runOnce({ currentState = shootState }))
-        driverController().b().onTrue(Commands.runOnce({ currentState = ampState }))
-        driverController().x().onTrue(Commands.runOnce({ currentState = climbState }))
+        driverController().a().onTrue(Commands.runOnce({ currentState = shootState })
+            .alongWith(LEDs.getInstance().setSolidMode(LEDConstants.SHOOT_STATE_COLOR)))
+        driverController().b().onTrue(Commands.runOnce({ currentState = ampState })
+            .alongWith(LEDs.getInstance().setSolidMode(LEDConstants.AMP_STATE_COLOR)))
+        driverController().x().onTrue(Commands.runOnce({ currentState = climbState })
+            .alongWith(LEDs.getInstance().setSolidMode(LEDConstants.CLIMB_STATE_COLOR)))
 
         driverController().rightBumper().whileTrue(ShootingCommands.shootOverStage())
 

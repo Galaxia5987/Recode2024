@@ -14,6 +14,8 @@ import frc.robot.lib.math.interpolation.InterpolatingDouble
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.leds.LEDConstants
+import frc.robot.subsystems.leds.LEDs
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
@@ -24,6 +26,7 @@ class ShootState : ScoreState {
     private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val gripper = Gripper.getInstance()
+    private val leds = LEDs.getInstance()
 
     private fun getRotationToSpeaker(): Rotation2d {
         return swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
@@ -81,14 +84,15 @@ class ShootState : ScoreState {
         return Commands.parallel(
             warmup(),
             turnToSpeaker(),
-            Commands.none().onlyIf(::readyToShoot) //TODO: Replace with LEDs command
+            leds.setSolidMode(LEDConstants.READY_TO_SHOOT_COLOR).onlyIf(::readyToShoot)
         )
     }
 
     private fun end(): Command {
         return gripper.feed().andThen(
             Commands.parallel(
-                shooter.stop(), Conveyor.getInstance().stop(), hood.setRestingAngle() //TODO: Replace with LEDs command
+                shooter.stop(), Conveyor.getInstance().stop(),
+                hood.setRestingAngle(), leds.setSolidMode(LEDConstants.SHOOT_STATE_COLOR)
             )
         )
     }
