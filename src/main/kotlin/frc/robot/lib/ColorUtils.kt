@@ -6,7 +6,7 @@ import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.Constants
 
 fun getTranslationByColor(translation: Translation2d): Translation2d {
-    return if (Constants.isRed) {
+    return if (Constants.IS_RED) {
         GeometryUtil.flipFieldPosition(translation)
     } else {
         translation
@@ -14,7 +14,7 @@ fun getTranslationByColor(translation: Translation2d): Translation2d {
 }
 
 fun getPoseByColor(pose: Pose2d): Pose2d {
-    return if (Constants.isRed) {
+    return if (Constants.IS_RED) {
         GeometryUtil.flipFieldPose(pose)
     } else {
         pose

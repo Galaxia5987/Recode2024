@@ -57,7 +57,7 @@ object Constants {
     val ROBORIO_SERIAL_NUMBER: String
         get() = System.getenv("serialnum") ?: "Sim"
 
-    val isRed: Boolean
+    val IS_RED: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
 
     const val FIELD_LENGTH: Double = 16.54
