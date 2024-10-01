@@ -59,14 +59,14 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
     }
 
     fun setSolidMode(color: Color): Command {
-        return Commands.runOnce(Runnable {
+        return Commands.runOnce({
             primary = color
             mode = Mode.SOLID
         })
     }
 
     fun setBlink(primary: Color, secondary: Color, blinkTime: Double): Command {
-        return Commands.runOnce(Runnable {
+        return Commands.runOnce({
             this.primary = primary
             this.secondary = secondary
             this.blinkTime = blinkTime
@@ -75,7 +75,7 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
     }
 
     fun setRainbow(): Command {
-        return Commands.runOnce(Runnable {
+        return Commands.runOnce({
             mode = Mode.RAINBOW
         })
     }
