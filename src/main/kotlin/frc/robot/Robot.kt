@@ -23,6 +23,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGReader
 import org.littletonrobotics.junction.wpilog.WPILOGWriter
 import edu.wpi.first.hal.FRCNetComm.tResourceType
 import edu.wpi.first.hal.FRCNetComm.tInstances
+import frc.robot.subsystems.swerve.SwerveDrive
+import org.littletonrobotics.junction.AutoLogOutput
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -140,4 +142,10 @@ object Robot : LoggedRobot() {
 
     /** This function is called periodically during test mode.  */
     override fun testPeriodic() {}
+
+    @AutoLogOutput
+    fun getDistanceToSpeaker(): Double = (
+            Constants.SPEAKER_POSE - SwerveDrive.getInstance().estimator.estimatedPosition.translation
+            ).norm
+
 }

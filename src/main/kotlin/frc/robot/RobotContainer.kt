@@ -7,10 +7,13 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.commandGroups.IntakeCommands
+import frc.robot.commandGroups.ShootingCommands
 import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
+import frc.robot.subsystems.climb.Climb
+import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.ControllerInputs.driverController as driverController
@@ -57,9 +60,17 @@ object RobotContainer {
         driverController().b().onTrue(Commands.runOnce({ currentState = ampState }))
         driverController().x().onTrue(Commands.runOnce({ currentState = climbState }))
 
+        driverController().rightBumper().whileTrue(ShootingCommands.shootOverStage())
+
         driverController().leftTrigger().whileTrue(IntakeCommands.intake())
         driverController().leftBumper().whileTrue(IntakeCommands.outtake())
+        driverController().back()
+            .whileTrue(Gripper.getInstance().setRollerPower(0.4))
+            .onFalse(Gripper.getInstance().stop())
         driverController().start().whileTrue(Intake.getInstance().reset())
+
+        driverController().povUp().whileTrue(Climb.getInstance().openClimb())
+        driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
     }
 
     fun getAutonomousCommand(): Command = Commands.none()

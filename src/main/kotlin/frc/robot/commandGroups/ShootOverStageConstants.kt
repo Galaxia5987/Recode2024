@@ -8,7 +8,7 @@ import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.lib.getTranslationByColor
 
 object ShootOverStageConstants {
-    val HOOD_ANGLE_SUPER_POOP: Measure<Angle> = Units.Degrees.of(110.0)
+    val HOOD_ANGLE_SUPER_POOP: Measure<Angle> = Units.Degrees.of(87.0)
     val SHOOTER_VELOCITY_SUPER_POOP: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(77.07)
     val CONVEYOR_VELOCITY_SUPER_POOP: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(60.0)
 
@@ -16,7 +16,7 @@ object ShootOverStageConstants {
 
     val SUPER_POOP_TRANSLATION: Translation2d
         by lazy {
-            getTranslationByColor(SUPER_POOP_TRANSLATION)
+            getTranslationByColor(SUPER_POOP_TRANSLATION_BLUE)
         }
 
     val SUPER_POOP_TURN_TOLERANCE: Measure<Angle> = Units.Degrees.of(2.5)

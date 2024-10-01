@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
 import frc.robot.Constants
 import frc.robot.lib.controllers.DieterController
-import frc.robot.lib.getSpeed
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
@@ -56,9 +55,8 @@ class SwerveDrive private constructor
     @AutoLogOutput
     private var turnAngleSetpoint: Measure<Angle> = Units.Degrees.zero()
 
-    @get:AutoLogOutput
     val atTurnSetpoint: Boolean
-        get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.TURN_MAX_TOLERANCE)
+        get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.MAX_TURN_TOLERANCE)
 
     @AutoLogOutput
     var velocity = 0.0
@@ -141,8 +139,7 @@ class SwerveDrive private constructor
          */
         get() = inputs.yaw
 
-    @get:AutoLogOutput
-    val odometryYaw: Rotation2d
+    val gyroYaw: Rotation2d
         get() {
             val alliance = DriverStation.getAlliance()
             if (alliance.isPresent && alliance.get() == DriverStation.Alliance.Red) {
@@ -282,10 +279,7 @@ class SwerveDrive private constructor
                 0.0,
                 0.0,
                 turnController.calculate(
-                    estimator
-                        .estimatedPosition
-                        .rotation
-                        .rotations,
+                    gyroYaw.rotations,
                     rotation.`in`(Units.Rotations)
                 ),
                 false
@@ -294,13 +288,14 @@ class SwerveDrive private constructor
     }
 
     fun driveAndAdjust(
-        rotation: Measure<Angle>,
-        xJoystick: DoubleSupplier,
-        yJoystick: DoubleSupplier,
+        rotation: ()->Measure<Angle>,
+        forward: DoubleSupplier,
+        strafe: DoubleSupplier,
+        turnTolerance: Double,
         deadband: Double,
         usePoseEstimation: Boolean
     ): Command {
-        turnAngleSetpoint = rotation
+        turnAngleSetpoint = rotation.invoke()
         val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
@@ -309,16 +304,16 @@ class SwerveDrive private constructor
                 SwerveConstants.ROTATION_KDIETER.get()
             )
         turnController.enableContinuousInput(-0.5, 0.5)
-        turnController.setTolerance(2.5 / 360.0)
+        turnController.setTolerance(turnTolerance)
         return run {
             drive(
-                MathUtil.applyDeadband(xJoystick.asDouble, deadband),
-                MathUtil.applyDeadband(yJoystick.asDouble, deadband),
+                MathUtil.applyDeadband(forward.asDouble, deadband),
+                MathUtil.applyDeadband(strafe.asDouble, deadband),
                 turnController.calculate(
                     if (usePoseEstimation
                     ) botPose.rotation.rotations
-                    else odometryYaw.rotations,
-                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                    else gyroYaw.rotations,
+                    rotation.invoke().`in`(Units.Rotations)
                 ),
                 true
             )
@@ -353,7 +348,7 @@ class SwerveDrive private constructor
         updateModulePositions()
 
         if (!isColliding()) {
-            estimator.update(odometryYaw, modulePositions)
+            estimator.update(gyroYaw, modulePositions)
         }
 
         botPose = estimator.estimatedPosition
@@ -368,6 +363,9 @@ class SwerveDrive private constructor
         }
 
         Logger.processInputs("SwerveDrive", inputs)
+        Logger.recordOutput("SwerveDrive/atTurnSetpoint", atTurnSetpoint)
+        Logger.recordOutput("SwerveDrive/gyroYaw", gyroYaw)
+        Logger.recordOutput("SwerveDrive/rawYaw", yaw)
     }
 
     private fun configAutoBuilder() {

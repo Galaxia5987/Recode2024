@@ -13,8 +13,8 @@ object ScoreConstants {
     val AMP_ROTATION: Measure<Angle> = Units.Degrees.of(-90.0)
     val HOOD_AMP_ANGLE: Measure<Angle> = Units.Degrees.of(100.0)
     val SHOOTER_TOP_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(8.5)
-    val SHOOTER_BOTTOM_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(12.5)
-    val CONVEYOR_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(15.0)
+    val SHOOTER_BOTTOM_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(12.0)
+    val CONVEYOR_AMP_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(10.0)
 
     val HOOD_ANGLE_BY_DISTANCE: InterpolatingDoubleMap =
         parseCSVToMap(

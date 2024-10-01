@@ -2,6 +2,7 @@ package frc.robot.subsystems.gripper
 
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
+import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
@@ -47,11 +48,11 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     }
 
     fun feed(): Command {
-        return setRollerPower(GripperConstants.INTAKE_POWER).withTimeout(0.4).andThen(setRollerPower(0.0))
+        return setRollerPower(GripperConstants.INTAKE_POWER).withTimeout(0.4).andThen(stop())
     }
 
     fun stop(): Command {
-        return setRollerPower(0.0).withName("stop")
+        return setRollerPower(0.0).withTimeout(0.02).withName("stop")
     }
 
     override fun periodic() {

@@ -19,7 +19,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
-    val OFFSETS = arrayOf(0.535888671875,0.760986328125,0.0224609375,0.32275390625)
+    val OFFSETS = arrayOf(0.534423828125,0.757080078125,0.025634765625,0.328369140625)
 
     const val VOLT_COMP_SATURATION = 12.0
     const val NEUTRAL_DEADBAND = 0.0
@@ -105,7 +105,10 @@ object SwerveConstants {
     var MAX_OMEGA_VELOCITY = 0.0
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
-    const val TURN_MAX_TOLERANCE = 3.0 / 360.0
+    const val MAX_TURN_TOLERANCE = 3.0 / 360.0
+    const val AMP_TURN_TOLERANCE = 5.0 / 360.0
+    const val SHOOT_TURN_TOLERANCE = 5.0 / 360.0
+    const val CLIMB_TURN_TOLERANCE = 4.0 / 360.0
     const val SKID_TOLERANCE = 0.15
     val COLLISION_TOLERANCE: Measure<Velocity<Velocity<Distance>>> = Units.Gs.of(1.8)
 
@@ -157,10 +160,10 @@ object SwerveConstants {
                 ANGLE_KV.initDefault(1.32755)
                 ANGLE_KA.initDefault(0.1976375)
 
-                ROTATION_KP.initDefault(2.3)
+                ROTATION_KP.initDefault(3.5)
                 ROTATION_KI.initDefault(0.0)
-                ROTATION_KD.initDefault(0.2)
-                ROTATION_KDIETER.initDefault(0.002)
+                ROTATION_KD.initDefault(0.1)
+                ROTATION_KDIETER.initDefault(0.0)
 
                 ROBOT_WIDTH = 0.585
                 ROBOT_LENGTH = 0.585

@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.Constants
 import frc.robot.lib.finallyDo
 import frc.robot.subsystems.climb.Climb
+import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 
 class ClimbState : ScoreState {
@@ -27,7 +28,7 @@ class ClimbState : ScoreState {
                     swerveDrive.turnCommand(
                         Units.Rotations.of(
                             nearestChain().rotation.rotations
-                        ), 4.0 / 360
+                        ), SwerveConstants.CLIMB_TURN_TOLERANCE
                     )
                 )
             },
@@ -37,9 +38,9 @@ class ClimbState : ScoreState {
 
     override fun execute(): Command {
         return Commands.sequence(
-            climb.openClimb(),
+            climb.openClimb().withTimeout(0.55),
             pathFindToChain(),
             climb.setPower { 0.8 }
-        ).finallyDo(climb.stop().alongWith(climb.lock())) // TODO: Replace with LEDs command
+        ).finallyDo(climb.climb()) // TODO: Replace with LEDs command
     }
 }

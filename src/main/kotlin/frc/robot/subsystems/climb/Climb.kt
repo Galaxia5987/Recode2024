@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import frc.robot.lib.finallyDo
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
@@ -36,7 +37,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
         timer.reset()
     }
 
-    fun open(): Command {
+    fun unlock(): Command {
         return Commands.run(io::openStopper).until { isStopperStuck }.andThen(io::disableStopper)
     }
 
@@ -52,16 +53,25 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
 
     fun openClimb(): Command {
         return Commands.sequence(
-            setPower { 0.3 }.withTimeout(0.15),
-            stop(),
-            open(),
-            setPower { -0.5 }.withTimeout(0.55),
-            stop()
-        )
+            unlockClimb(),
+            setPower { -0.5 }
+        ).finallyDo(stop())
     }
 
     fun closeClimb(): Command {
-        return setPower { 0.5 }.withTimeout(0.65).andThen(lock().alongWith(stop()))
+        return setPower { 0.5 }.finallyDo(lock().alongWith(stop()))
+    }
+
+    fun unlockClimb(): Command {
+        return Commands.sequence(
+            setPower { 0.3 }.withTimeout(0.15),
+            stop(),
+            unlock()
+        )
+    }
+
+    fun climb(): Command {
+        return setPower { 0.8 }.withTimeout(1.2).andThen(lock().alongWith(stop()))
     }
 
     override fun periodic() {
