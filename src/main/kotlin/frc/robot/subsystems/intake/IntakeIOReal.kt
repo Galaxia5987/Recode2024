@@ -17,19 +17,12 @@ import frc.robot.Ports
 class IntakeIOReal : IntakeIO {
     override val inputs = LoggedIntakeInputs()
     private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
-    private val spinMotor = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val spinMotor = TalonFX(Ports.Intake.SPIN_MOTOR_ID)
     private val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
 
     init {
-        spinMotor.restoreFactoryDefaults()
-        spinMotor.inverted = true
-        spinMotor.setSmartCurrentLimit(40)
-        spinMotor.idleMode = CANSparkBase.IdleMode.kCoast
-        spinMotor.enableVoltageCompensation(12.0)
-        spinMotor.burnFlash()
-
         centerMotor.restoreFactoryDefaults()
         centerMotor.inverted = true
         centerMotor.setSmartCurrentLimit(40)
@@ -37,8 +30,23 @@ class IntakeIOReal : IntakeIO {
         centerMotor.enableVoltageCompensation(12.0)
         centerMotor.burnFlash()
 
-        val config = TalonFXConfiguration().apply {
-            MotorOutput.apply {
+        val spinConfig = TalonFXConfiguration().apply {
+            MotorOutput = MotorOutputConfigs().apply {
+                NeutralMode = NeutralModeValue.Coast
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimit = 40.0
+            }
+        }
+
+        spinMotor.configurator.apply(spinConfig)
+
+        val angleConfig = TalonFXConfiguration().apply {
+            MotorOutput = MotorOutputConfigs().apply {
                 NeutralMode = NeutralModeValue.Brake
                 Inverted = InvertedValue.Clockwise_Positive
             }
@@ -60,7 +68,7 @@ class IntakeIOReal : IntakeIO {
             }
         }
 
-        angleMotor.configurator.apply(config)
+        angleMotor.configurator.apply(angleConfig)
 
         angleMotor.setPosition(126.2 / 360.0)
     }
@@ -93,7 +101,7 @@ class IntakeIOReal : IntakeIO {
 
     override fun updateInputs() {
         inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
-        inputs.spinMotorVoltage = spinMotor.busVoltage
+        inputs.spinMotorVoltage = spinMotor.motorVoltage.value
         inputs.centerMotorVoltage = centerMotor.busVoltage
         inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value
     }

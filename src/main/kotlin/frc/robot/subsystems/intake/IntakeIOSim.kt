@@ -14,7 +14,7 @@ class IntakeIOSim : IntakeIO {
     override val inputs = LoggedIntakeInputs()
 
     private val angleMotor = TalonFXSim(1, IntakeConstants.GEAR_RATIO, 0.003, 360 * IntakeConstants.GEAR_RATIO)
-    private val spinMotor = SparkMaxSim(1, 1.0, 0.003, 1.0)
+    private val spinMotor = TalonFXSim(1, 1.0, 0.003, 1.0)
     private val centerMotor = SparkMaxSim(1, 1.0, 0.003, 1.0)
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
@@ -26,7 +26,7 @@ class IntakeIOSim : IntakeIO {
     }
 
     override fun setSpinPower(power: Double) {
-        spinMotor.set(power)
+        spinMotor.setControl(DutyCycleOut(power))
     }
 
     override fun setCenterPower(power: Double) {
@@ -49,7 +49,7 @@ class IntakeIOSim : IntakeIO {
         angleMotor.update(Timer.getFPGATimestamp())
         spinMotor.update(Timer.getFPGATimestamp())
         centerMotor.update(Timer.getFPGATimestamp())
-        inputs.spinMotorVoltage = spinMotor.busVoltage
+        inputs.spinMotorVoltage = spinMotor.appliedVoltage
         inputs.centerMotorVoltage = centerMotor.busVoltage
         inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position)
     }
