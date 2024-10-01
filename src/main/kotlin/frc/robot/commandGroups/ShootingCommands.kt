@@ -8,6 +8,7 @@ import frc.robot.lib.getRotationToTranslation
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.conveyor.Conveyor
+import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.swerve.SwerveDrive
 
 object ShootingCommands {
@@ -35,7 +36,7 @@ object ShootingCommands {
     }
 
     private fun shootOverStageEnd(): Command {
-        return WarmupCommands.stopWarmup()
+        return WarmupCommands.stopWarmup().alongWith(Gripper.getInstance().feed())
     }
 
     fun shootOverStage(): Command = shootOverStageInit().finallyDo(shootOverStageEnd())
