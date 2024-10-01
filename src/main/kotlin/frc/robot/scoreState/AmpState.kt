@@ -20,7 +20,7 @@ class AmpState : ScoreState {
 
     private fun init(): Command {
         val driveAndAdjust = swerveDrive.driveAndAdjust(
-            {ScoreConstants.AMP_ROTATION},
+            { ScoreConstants.AMP_ROTATION },
             { -ControllerInputs.driverController().leftY },
             { -ControllerInputs.driverController().leftX },
             SwerveConstants.AMP_TURN_TOLERANCE,
@@ -33,8 +33,10 @@ class AmpState : ScoreState {
         val setHoodAngle = hood.setAngle(ScoreConstants.HOOD_AMP_ANGLE)
 
         return Commands.parallel(
-            driveAndAdjust, setShooterVelocity, conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY), setHoodAngle,
-            // TODO: Add LEDS
+            driveAndAdjust,
+            setShooterVelocity,
+            conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY),
+            setHoodAngle,
         )
     }
 
