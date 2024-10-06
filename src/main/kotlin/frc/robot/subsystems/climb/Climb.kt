@@ -55,7 +55,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
         return Commands.sequence(
             unlockClimb(),
             setPower { -0.5 }
-        ).finallyDo(stop())
+        ).finallyDo(stop().alongWith(lock()))
     }
 
     fun closeClimb(): Command {
