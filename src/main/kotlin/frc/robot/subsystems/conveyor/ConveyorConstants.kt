@@ -9,9 +9,9 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 
 object ConveyorConstants {
-  const val TOLERANCE = 0.5
-  private val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
-  const val RUN_POWER: Double = 0.7
+    const val TOLERANCE = 0.5
+    private val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
+    const val RUN_POWER: Double = 0.7
 
     val CONFIG = TalonFXConfiguration().apply {
         MotorOutput = MotorOutputConfigs().apply {
