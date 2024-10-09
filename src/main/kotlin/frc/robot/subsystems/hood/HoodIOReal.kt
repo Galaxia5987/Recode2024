@@ -12,6 +12,9 @@ class HoodIOReal() :HoodIO {
     private var angleMotor:TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
     private var encoder:TalonSRX = TalonSRX(Ports.Hood.ENCODER_ID)
 
+    init {
+        angleMotor.configurator.apply(HoodConstants.MOTOR_CONFIGURATION)
+    }
 
     override fun setAngle(angle: Measure<Angle>) {
         angleMotor.setPosition(angle.`in`(Units.Rotation))

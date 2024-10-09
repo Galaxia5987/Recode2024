@@ -32,6 +32,7 @@ class Gripper private constructor(private val io:GripperIO):SubsystemBase(){
     fun gripperIn():Command = Commands.runOnce({io.setPower(GripperConstants.GRIPPER_POWER)}).withName("gripperIN")
     fun gripperOut():Command = Commands.runOnce({io.setPower(-GripperConstants.GRIPPER_POWER)}).withName("gripperOut")
     fun stopGripper():Command = Commands.runOnce({io.setPower(0.0)}).withName("stopGripper")
+    fun hasNote():Boolean = inputs.hasNote
 
     override fun periodic() {
         io.updateInputs()

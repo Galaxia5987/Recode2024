@@ -10,14 +10,17 @@ import edu.wpi.first.wpilibj.DigitalInput
 import frc.robot.Ports
 
 class GripperIOReal:GripperIO {
+    override val inputs: LoggedGripperInputs = LoggedGripperInputs()
+
     private val spinMotor: CANSparkMax =
         CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val sensor: DigitalInput = DigitalInput(8)
-    override val inputs: LoggedGripperInputs = LoggedGripperInputs()
 
     override fun setPower(power:Double) {
         spinMotor.set(power)
     }
+
+
 
     override fun updateInputs() {
         inputs.spinMotorPower = spinMotor.get()

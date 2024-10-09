@@ -1,7 +1,11 @@
 package frc.robot
 
 class Ports {
-  
+
+    object TLArm{
+        const val TL_MOTOR_ID = 0
+    }
+
     object Shooter {
         const val TOP_MOTOR_ID: Int = 11
         const val BOTTOM_MOTOR_ID: Int = 10

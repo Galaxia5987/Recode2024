@@ -15,6 +15,10 @@ object IntakeConstants {
     var ANGLE_KP = 0.0
     var ANGLE_KD = 0.0
     var ANGLE_KI = 0.0
+    var UP_ANGLE = 127.0
+    var DOWN_ANGLE = 21.0
+    var INTAKE_POWER_SPIN = 0.7
+    var INTAKE_POWER_CENTER = 0.7
 
     init{
         when(Constants.CURRENT_MODE){

@@ -23,7 +23,7 @@ class IntakeIOReal : IntakeIO {
     }
 
     override fun updateInput() {
-        inputs.angle = angleMotor.position.value*2*Math.PI
+        inputs.angle = angleMotor.position.value * 2 * Math.PI
         inputs.spinMotorPower = spinMotor.get()
         inputs.angleMotorVoltage = angleMotor.supplyVoltage.value
         inputs.spinMotorPower = angleMotor.get()
@@ -51,4 +51,5 @@ class IntakeIOReal : IntakeIO {
     override fun setsCenterMotorPower(power: Double) {
         centerMotor.set(power)
     }
+
 }

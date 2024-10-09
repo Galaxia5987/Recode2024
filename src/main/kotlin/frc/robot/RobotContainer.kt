@@ -6,9 +6,6 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
-import frc.robot.subsystems.shooter.Shooter
-import frc.robot.subsystems.shooter.ShooterIO
-import frc.robot.subsystems.shooter.ShooterIOReal
 import java.util.Optional
 import kotlin.math.absoluteValue
 import edu.wpi.first.math.MathUtil
@@ -18,6 +15,8 @@ import java.util.function.DoubleSupplier
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodIOReal
+import frc.robot.subsystems.shooter.Shooter
+import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.SwerveDrive
 
 /**
@@ -30,7 +29,7 @@ object RobotContainer {
     private val swerveDrive: SwerveDrive
     private val climb: Climb
     private val shooter: Shooter
-//    private val hood:Hood;
+    private val hood:Hood
 
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
@@ -42,12 +41,12 @@ object RobotContainer {
         Constants.initSwerve()
         Climb.initialize(ClimbIOReal())
         Shooter.initialize(ShooterIOReal())
-//        Hood.initialize(HoodIOReal())
+        Hood.initialize(HoodIOReal())
 
         swerveDrive = SwerveDrive.getInstance()
         climb = Climb.getInstance()
         shooter = Shooter.getInstance()
-//        hood = Hood.getInstance();
+        hood = Hood.getInstance();
 
         autoChooser = AutoBuilder.buildAutoChooser()
 
