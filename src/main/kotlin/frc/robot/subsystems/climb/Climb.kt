@@ -7,44 +7,48 @@ import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
 import kotlin.math.absoluteValue
 
-class Climb private constructor(private val io:ClimbIO) :SubsystemBase() {
+class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     private var inputs: LoggedClimbInputs = io.inputs
 
-    private var isStopperStuck:Boolean = false
+    private var isStopperStuck: Boolean = false
 
-    companion object{
+    companion object {
         @Volatile
         private var instance: Climb? = null
 
-        fun initialize(io: ClimbIO){
-            synchronized(this){
-                if(instance == null){
+        fun initialize(io: ClimbIO) {
+            synchronized(this) {
+                if (instance == null) {
                     instance = Climb(io)
                 }
             }
         }
+
         fun getInstance(): Climb {
-            return instance ?: throw  IllegalStateException(
+            return instance ?: throw IllegalStateException(
                 "Climb has not been initialized. Call initialize(io: ClimbIO) first."
             )
         }
     }
-    fun setPower(power:DoubleSupplier):Command{
-        return Commands.run({io.setPower(power.asDouble)}).withName("setPower")
+
+    fun setPower(power: DoubleSupplier): Command {
+        return Commands.run({ io.setPower(power.asDouble) }).withName("setPower")
     }
 
-    fun lock():Command{
-        return Commands.runOnce({io.lockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()}).withName("lock")
+    fun lock(): Command {
+        return Commands.runOnce({ io.lockClimb() }).until(::isStopperStuck).andThen({ io.disableLockMotor() })
+            .withName("lock")
     }
 
 
-    fun unlock():Command{
-        return Commands.runOnce({io.unlockClimb()}).until(::isStopperStuck).andThen({io.disableLockMotor()}).withName("unlock")
+    fun unlock(): Command {
+        return Commands.runOnce({ io.unlockClimb() }).until(::isStopperStuck).andThen({ io.disableLockMotor() })
+            .withName("unlock")
     }
 
     override fun periodic() {
-        isStopperStuck=io.inputs.lockMotorCurrent.absoluteValue>ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
+        isStopperStuck = io.inputs.lockMotorCurrent.absoluteValue > ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
         io.updateInput()
-        Logger.processInputs(this::class.simpleName,inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 }

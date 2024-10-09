@@ -14,7 +14,7 @@ object ShooterConstants {
     var configTop: TalonFXConfiguration = TalonFXConfiguration()
     var configBottom: TalonFXConfiguration = TalonFXConfiguration()
     var currentLimit: Double = 40.0
-    var runningVelocity = MutableMeasure.ofBaseUnits(3.0,Units.RotationsPerSecond)
+    var runningVelocity = MutableMeasure.ofBaseUnits(3.0, Units.RotationsPerSecond)
     var KP: Double = 0.0
     var KD: Double = 0.0
     var KI: Double = 0.0

@@ -11,17 +11,17 @@ import frc.robot.Constants
 import frc.robot.Ports
 import org.team9432.annotation.Logged
 
-class ConveyorIOReal:ConveyorIO {
-    override var inputs:LoggedConveyorInputs = LoggedConveyorInputs()
-    private var spinMotor:TalonFX = TalonFX(Ports.Conveyor.MOTOR_ID)
+class ConveyorIOReal : ConveyorIO {
+    override var inputs: LoggedConveyorInputs = LoggedConveyorInputs()
+    private var spinMotor: TalonFX = TalonFX(Ports.Conveyor.MOTOR_ID)
     private val controlRequest = VelocityVoltage(0.0)
 
-    init{
+    init {
         spinMotor.configurator.apply(ConveyorConstants.CONFIG)
     }
 
     override fun updateInput() {
-        inputs.spinMotorVelocity.mut_replace(spinMotor.get(),Units.RotationsPerSecond)
+        inputs.spinMotorVelocity.mut_replace(spinMotor.get(), Units.RotationsPerSecond)
     }
 
     override fun setSpinVelocity(vel: Measure<Velocity<Angle>>) {

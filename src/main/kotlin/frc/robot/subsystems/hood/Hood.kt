@@ -10,41 +10,43 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
-class Hood private constructor(private var io: HoodIO):SubsystemBase(){
+class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
     private val inputs = io.inputs
 
-        @AutoLogOutput
-        var angleSetPoint:MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
+    @AutoLogOutput
+    var angleSetPoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
 
-    companion object{
+    companion object {
         @Volatile
-        private var instance:Hood? = null
+        private var instance: Hood? = null
 
-        fun initialize(io:HoodIO){
-            synchronized(this){
-                if(instance == null){
+        fun initialize(io: HoodIO) {
+            synchronized(this) {
+                if (instance == null) {
                     instance = Hood(io)
                 }
             }
         }
-        fun getInstance():Hood{
-            return instance?:throw IllegalStateException(
+
+        fun getInstance(): Hood {
+            return instance ?: throw IllegalStateException(
                 "Hood has not been initialized. Call initialize(io: HoodIO) first."
             )
         }
     }
-    fun setAngle(angle:Measure<Angle>):Command = Commands.run({
+
+    fun setAngle(angle: Measure<Angle>): Command = Commands.run({
         io.setAngle(angle)
         angleSetPoint = angle.mutableCopy()
     }).withName("set Angle Hood")
 
-    fun setRestAngle():Command = Commands.runOnce({io.setAngle(HoodConstants.restAngle)}).withName("setRestAngle")
+    fun setRestAngle(): Command = Commands.runOnce({ io.setAngle(HoodConstants.restAngle) }).withName("setRestAngle")
 
-    fun atSetPoint():Boolean = inputs.angle.isNear(angleSetPoint,HoodConstants.TOLERANCE)
+    fun atSetPoint(): Boolean = inputs.angle.isNear(angleSetPoint, HoodConstants.TOLERANCE)
 
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs("Hood",inputs)
+        Logger.processInputs("Hood", inputs)
     }
 }

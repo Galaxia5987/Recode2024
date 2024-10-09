@@ -7,13 +7,14 @@ interface ClimbIO {
 
     fun updateInput()
 
-    fun setPower(power:Double)
+    fun setPower(power: Double)
 
     fun lockClimb()
 
     fun unlockClimb()
 
     fun disableLockMotor()
+
     @Logged
     open class ClimbInputs {
         var climbMotorVoltage = 0.0

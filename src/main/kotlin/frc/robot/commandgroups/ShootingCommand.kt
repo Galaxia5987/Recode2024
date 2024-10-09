@@ -13,13 +13,17 @@ import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterConstants
 
 class ShootingCommand {
-//    private val swerveDrive = SwerveDrive.getInstance()
+    //    private val swerveDrive = SwerveDrive.getInstance()
 //    private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
     private val shooter = Shooter.getInstance()
-    fun setAngle(angle:Measure<Angle>):Command = Commands.runOnce({hood.setAngle(angle)})
-    fun stopShooter():Command = Commands.parallel(conveyor.stopConveyor(),shooter.stop())
-    fun startShooter():Command = Commands.parallel(conveyor.setPower(Units.RotationsPerSecond.of(ConveyorConstants.RUN_POWER)),shooter.setShooterVel(ShooterConstants.runningVelocity))
-    fun setRestingAngle():Command = Commands.runOnce({hood.setRestAngle()})
+    fun setAngle(angle: Measure<Angle>): Command = Commands.runOnce({ hood.setAngle(angle) })
+    fun stopShooter(): Command = Commands.parallel(conveyor.stopConveyor(), shooter.stop())
+    fun startShooter(): Command = Commands.parallel(
+        conveyor.setPower(Units.RotationsPerSecond.of(ConveyorConstants.RUN_POWER)),
+        shooter.setShooterVel(ShooterConstants.runningVelocity)
+    )
+
+    fun setRestingAngle(): Command = Commands.runOnce({ hood.setRestAngle() })
 }

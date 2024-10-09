@@ -7,10 +7,10 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import frc.robot.Ports
 
-class HoodIOReal() :HoodIO {
-    override var inputs: LoggedInputHood =  LoggedInputHood()
-    private var angleMotor:TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
-    private var encoder:TalonSRX = TalonSRX(Ports.Hood.ENCODER_ID)
+class HoodIOReal() : HoodIO {
+    override var inputs: LoggedInputHood = LoggedInputHood()
+    private var angleMotor: TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
+    private var encoder: TalonSRX = TalonSRX(Ports.Hood.ENCODER_ID)
 
     init {
         angleMotor.configurator.apply(HoodConstants.MOTOR_CONFIGURATION)
@@ -21,8 +21,8 @@ class HoodIOReal() :HoodIO {
     }
 
     override fun updateInputs() {
-        inputs.angle.mut_replace(angleMotor.position.value,Units.Rotations)
-        inputs.angleMotorVoltage.mut_replace(angleMotor.supplyVoltage.value,Units.Volts)
-        inputs.encoderPosition.mut_replace(encoder.selectedSensorPosition,Units.Rotations)
+        inputs.angle.mut_replace(angleMotor.position.value, Units.Rotations)
+        inputs.angleMotorVoltage.mut_replace(angleMotor.supplyVoltage.value, Units.Volts)
+        inputs.encoderPosition.mut_replace(encoder.selectedSensorPosition, Units.Rotations)
     }
 }

@@ -14,7 +14,7 @@ interface ShooterIO {
 
     @Logged
     open class ShooterInputs {
-        var topVel:Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
-        var buttomVel:Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+        var topVel: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+        var buttomVel: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
     }
 }

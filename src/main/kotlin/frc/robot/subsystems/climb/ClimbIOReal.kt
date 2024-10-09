@@ -5,12 +5,12 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.hardware.TalonFX
 import frc.robot.Ports
 
-class ClimbIOReal:ClimbIO{
+class ClimbIOReal : ClimbIO {
     override val inputs = LoggedClimbInputs()
 
-    private val mainClimbMotor:TalonFX = TalonFX(Ports.Climb.MAIN_MOTOR_ID)
-    private val auxClimbMotor:TalonFX = TalonFX(Ports.Climb.AUX_MOTOR_ID)
-    private val lockMotor:TalonSRX = TalonSRX(Ports.Climb.STOPPER_ID)
+    private val mainClimbMotor: TalonFX = TalonFX(Ports.Climb.MAIN_MOTOR_ID)
+    private val auxClimbMotor: TalonFX = TalonFX(Ports.Climb.AUX_MOTOR_ID)
+    private val lockMotor: TalonSRX = TalonSRX(Ports.Climb.STOPPER_ID)
 
     init {
         mainClimbMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
@@ -28,11 +28,11 @@ class ClimbIOReal:ClimbIO{
     }
 
     override fun lockClimb() {
-        lockMotor.set(TalonSRXControlMode.PercentOutput,ClimbConstants.STOPPER_MOTOR_POWER)
+        lockMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)
     }
 
     override fun unlockClimb() {
-        lockMotor.set(TalonSRXControlMode.PercentOutput,-ClimbConstants.STOPPER_MOTOR_POWER)
+        lockMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)
     }
 
     override fun disableLockMotor() {

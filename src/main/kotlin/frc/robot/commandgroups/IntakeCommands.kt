@@ -9,9 +9,12 @@ object IntakeCommands {
     private val intake = Intake.getInstance()
     private val gripper = Gripper.getInstance()
 
-    private fun stop():Command = Commands.parallel(gripper.stopGripper(), intake.stop())
-    private fun intake():Command = Commands.parallel(gripper.gripperIn(), intake.intakeIn()).until{ gripper.hasNote()}.andThen(
-        stop())
-    private fun outtake():Command = Commands.parallel(gripper.gripperOut(), intake.intakeOut())
-        .finallyDo(Runnable {stop()})
+    private fun stop(): Command = Commands.parallel(gripper.stopGripper(), intake.stop())
+    private fun intake(): Command =
+        Commands.parallel(gripper.gripperIn(), intake.intakeIn()).until { gripper.hasNote() }.andThen(
+            stop()
+        )
+
+    private fun outtake(): Command = Commands.parallel(gripper.gripperOut(), intake.intakeOut())
+        .finallyDo(Runnable { stop() })
 }

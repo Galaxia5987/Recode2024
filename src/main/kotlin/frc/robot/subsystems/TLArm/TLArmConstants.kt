@@ -16,7 +16,7 @@ object TLArmConstants {
     var KI = 0.0
     var KV = 0.0
 
-    var CURRENT_LIMIT:Measure<Current> = Units.Amps.of(40.0)
+    var CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
 
     fun a() {
         val i = 2

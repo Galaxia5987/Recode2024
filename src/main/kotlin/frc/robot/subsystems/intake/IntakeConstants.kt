@@ -20,15 +20,16 @@ object IntakeConstants {
     var INTAKE_POWER_SPIN = 0.7
     var INTAKE_POWER_CENTER = 0.7
 
-    init{
-        when(Constants.CURRENT_MODE){
-            Constants.Mode.REAL ->{
+    init {
+        when (Constants.CURRENT_MODE) {
+            Constants.Mode.REAL -> {
                 ANGLE_KP = 20.0
                 ANGLE_KD = 0.0
                 ANGLE_KI = 0.03
 
             }
-            Constants.Mode.SIM , Constants.Mode.REPLAY->{
+
+            Constants.Mode.SIM, Constants.Mode.REPLAY -> {
                 ANGLE_KP = 10.1 / 360.0
                 ANGLE_KD = 0.0
                 ANGLE_KI = 0.0
