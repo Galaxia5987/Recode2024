@@ -17,6 +17,14 @@ object ShootingCommands {
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
 
+    fun closeShoot(): Command {
+        return WarmupCommands.warmup(
+            {Units.Degrees.of(93.0)},
+            {Units.RotationsPerSecond.of(45.0)},
+            {Units.RotationsPerSecond.of(45.0)}
+        ).finallyDo(WarmupCommands.stopWarmup().alongWith(Gripper.getInstance().feed()))
+    }
+
     private fun shootOverStageInit(): Command {
         return Commands.parallel(
             WarmupCommands.warmup(
