@@ -97,6 +97,10 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         }.withName("Stop Shooter")
     }
 
+    fun rollNote(): Command {
+        return setVelocity(Units.RotationsPerSecond.of(-5.0), Units.RotationsPerSecond.of(5.0))
+    }
+
     @AutoLogOutput
     fun atSetpoint(): Boolean =
         io.topRollerInputs.velocity.isNear(
