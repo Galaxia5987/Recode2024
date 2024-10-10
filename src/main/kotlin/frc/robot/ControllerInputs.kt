@@ -3,17 +3,18 @@ package frc.robot
 import edu.wpi.first.wpilibj.GenericHID
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import edu.wpi.first.wpilibj2.command.button.CommandPS5Controller
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 
 object ControllerInputs {
     private val driverController = CommandXboxController(0)
-    private val operatorController = CommandXboxController(1)
+    private val operatorController = CommandPS5Controller(1)
 
     fun driverController(): CommandXboxController {
         return driverController
     }
 
-    fun operatorController(): CommandXboxController {
+    fun operatorController(): CommandPS5Controller {
         return operatorController
     }
 

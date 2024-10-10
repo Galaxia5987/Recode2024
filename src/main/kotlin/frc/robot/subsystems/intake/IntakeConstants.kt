@@ -7,7 +7,7 @@ import frc.robot.lib.Gains
 import frc.robot.lib.selectGainsBasedOnMode
 
 object IntakeConstants {
-    const val INTAKE_SPIN_POWER = -0.4
+    const val INTAKE_SPIN_POWER = -0.6
     const val INTAKE_CENTER_POWER = -0.4
     const val GEAR_RATIO = 55.56
 
@@ -24,6 +24,6 @@ object IntakeConstants {
         )
     }
 
-    val INTAKE_ANGLE: Measure<Angle> = Units.Degree.of(6.5)
+    val INTAKE_ANGLE: Measure<Angle> = Units.Degree.of(20.0)
     val REST_ANGLE: Measure<Angle> = Units.Degree.of(126.2)
 }
