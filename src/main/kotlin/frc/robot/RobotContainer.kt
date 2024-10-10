@@ -78,7 +78,7 @@ object RobotContainer {
         driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
     }
 
-    fun getAutonomousCommand(): Command = Commands.none()
+    fun getAutonomousCommand(): Command = autoChooser.selected
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
