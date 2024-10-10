@@ -1,0 +1,158 @@
+{
+  "version": 1.0,
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 4.405829473236555,
+        "y": 6.2875272824337
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.0501701465332856,
+        "y": 6.919011622325457
+      },
+      "isLocked": false,
+      "linkedName": "A Score"
+    },
+    {
+      "anchor": {
+        "x": 8.118015665417921,
+        "y": 7.436381206571257
+      },
+      "prevControl": {
+        "x": 7.868538394154919,
+        "y": 7.452539520937758
+      },
+      "nextControl": {
+        "x": 8.367492936680923,
+        "y": 7.420222892204755
+      },
+      "isLocked": false,
+      "linkedName": "center note line #1"
+    },
+    {
+      "anchor": {
+        "x": 4.405829473236555,
+        "y": 6.2875272824337
+      },
+      "prevControl": {
+        "x": 6.852831290317109,
+        "y": 6.859809965460605
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "A Score"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.2,
+      "rotationDegrees": 19.040968887761917
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.25,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "stopShooter"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "stop intake",
+      "waypointRelativePos": 1.65,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stopIntake"
+              }
+            },
+            {
+              "type": "named",
+              "data": {
+                "name": "shoot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "warmup",
+      "waypointRelativePos": 1.8,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "warmup"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "score",
+      "waypointRelativePos": 2.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "score"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 3.0,
+    "maxAngularVelocity": 360.0,
+    "maxAngularAcceleration": 500.0
+  },
+  "goalEndState": {
+    "velocity": 0.0,
+    "rotation": 34.12669257634329
+  },
+  "reversed": false,
+  "folder": "A",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 35.02998138725523
+  },
+  "useDefaultConstraints": true
+}
