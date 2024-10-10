@@ -11,7 +11,7 @@ object IntakeCommands {
     private val intake = Intake.getInstance()
     private val gripper = Gripper.getInstance()
 
-    private fun stopIntake(): Command = Commands.parallel(intake.stop(), gripper.stop())
+    fun stopIntake(): Command = Commands.parallel(intake.stop(), gripper.stop())
 
     fun intake(): Command {
         return Commands.parallel(
