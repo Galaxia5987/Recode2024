@@ -19,7 +19,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
-    val OFFSETS = arrayOf(0.534423828125,0.757080078125,0.025634765625,0.328369140625)
+    val OFFSETS = arrayOf(0.53369140625,0.76123046875,0.0224609375,0.326171875)
 
     const val VOLT_COMP_SATURATION = 12.0
     const val NEUTRAL_DEADBAND = 0.0
@@ -28,8 +28,8 @@ object SwerveConstants {
     const val NEO_CURRENT_LIMIT = 40.0
     const val NEO_550_CURRENT_LIMIT = 20.0
     val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
-        .withSupplyCurrentLimit(40.0)
-        .withStatorCurrentLimit(80.0)
+        .withSupplyCurrentLimit(50.0)
+        .withStatorCurrentLimit(100.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
     val VOLTAGE_CONFIGS = VoltageConfigs()

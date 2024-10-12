@@ -71,7 +71,7 @@ class ShootState : ScoreState {
             { -ControllerInputs.driverController().leftX },
             SwerveConstants.SHOOT_TURN_TOLERANCE,
             0.1,
-            false
+            true
         )
     }
 

@@ -33,7 +33,6 @@ class AmpState : ScoreState {
         val setHoodAngle = hood.setAngle(ScoreConstants.HOOD_AMP_ANGLE)
 
         return Commands.parallel(
-            driveAndAdjust,
             setShooterVelocity,
             conveyor.setVelocity(ScoreConstants.CONVEYOR_AMP_VELOCITY),
             setHoodAngle,

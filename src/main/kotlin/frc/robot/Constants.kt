@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.DriverStation
 import frc.robot.lib.getPoseByColor
 import frc.robot.lib.getTranslationByColor
 import frc.robot.subsystems.swerve.SwerveConstants
+import org.littletonrobotics.junction.LoggedRobot
 import kotlin.math.sqrt
 
 object Constants {
@@ -51,13 +52,21 @@ object Constants {
     }
 
     val CURRENT_MODE: Mode
-        get() = Mode.REAL
+        get() =
+            if (LoggedRobot.isReal()){
+                Mode.REAL
+            }
+            else{
+                if (System.getenv()["isReplay"] =="true") {
+                    Mode.REPLAY
+                } else Mode.SIM
+            }
     const val ROBORIO_NEO_SERIAL = "030e2d4d"
 
     val ROBORIO_SERIAL_NUMBER: String
         get() = System.getenv("serialnum") ?: "Sim"
 
-    val isRed: Boolean
+    val IS_RED: Boolean
         get() = DriverStation.getAlliance().isPresent && DriverStation.getAlliance().get() == DriverStation.Alliance.Red
 
     const val FIELD_LENGTH: Double = 16.54
