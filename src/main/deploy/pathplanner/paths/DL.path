@@ -24,8 +24,8 @@
         "y": 2.879935937132121
       },
       "nextControl": {
-        "x": 1.9022323780984725,
-        "y": 3.2178347199476556
+        "x": 1.902232378098472,
+        "y": 3.217834719947656
       },
       "isLocked": false,
       "linkedName": null
@@ -105,9 +105,9 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.5,
-    "maxAcceleration": 3.0,
-    "maxAngularVelocity": 360.0,
-    "maxAngularAcceleration": 500.0
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0
   },
   "goalEndState": {
     "velocity": 0,
