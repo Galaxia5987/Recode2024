@@ -4,11 +4,13 @@ import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig
-import com.pathplanner.lib.util.PIDConstants
-import com.pathplanner.lib.util.ReplanningConfig
+import com.pathplanner.lib.config.ModuleConfig
+import com.pathplanner.lib.config.PIDConstants
+import com.pathplanner.lib.config.RobotConfig
+import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
@@ -97,7 +99,8 @@ object SwerveConstants {
     var FEEDBACK_CONFIGS_ANGLE: FeedbackConfigs? = null
     var ANGLE_MOTOR_CONFIGS: TalonFXConfiguration? = null
     var ENCODER_CONFIGS: CANcoderConfiguration? = null
-    val HOLONOMIC_PATH_FOLLOWER_CONFIG: HolonomicPathFollowerConfig
+    val ROBOT_CONFIG: RobotConfig
+    val DRIVE_CONTROLLER: PPHolonomicDriveController
 
     var DRIVE_MOTOR_MOMENT_OF_INERTIA = 0.025
     var ANGLE_MOTOR_MOMENT_OF_INERTIA = 0.004
@@ -272,11 +275,15 @@ object SwerveConstants {
             CANcoderConfiguration()
                 .withMagnetSensor(MagnetSensorConfigs().withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1))
 
-        HOLONOMIC_PATH_FOLLOWER_CONFIG = HolonomicPathFollowerConfig(
+        ROBOT_CONFIG = RobotConfig(
+            56.0, 4.14,
+            ModuleConfig(WHEEL_DIAMETER/2, MAX_X_Y_VELOCITY, 1.542,
+                DCMotor.getKrakenX60Foc(1).withReduction(1/DRIVE_REDUCTION), TALON_FX_CURRENT_LIMIT_CONFIGS.StatorCurrentLimit, 2),
+            ROBOT_WIDTH, ROBOT_LENGTH
+        )
+        DRIVE_CONTROLLER = PPHolonomicDriveController(
             PIDConstants(5.5, 0.0, 0.15),
-            PIDConstants(3.0, 0.0, 0.4),
-            MAX_X_Y_VELOCITY, sqrt((ROBOT_LENGTH / 2.0).pow(2.0) + (ROBOT_WIDTH / 2.0).pow(2.0)),
-            ReplanningConfig()
+            PIDConstants(3.0, 0.0, 0.4)
         )
     }
 }

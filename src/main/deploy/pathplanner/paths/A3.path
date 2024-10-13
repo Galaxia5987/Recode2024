@@ -1,5 +1,5 @@
 {
-  "version": 1.0,
+  "version": "2025.0",
   "waypoints": [
     {
       "anchor": {
@@ -106,31 +106,15 @@
           ]
         }
       }
-    },
-    {
-      "name": "score",
-      "waypointRelativePos": 2.0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "score"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {
     "maxVelocity": 4.5,
     "maxAcceleration": 2.5,
     "maxAngularVelocity": 540.0,
-    "maxAngularAcceleration": 720.0
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,

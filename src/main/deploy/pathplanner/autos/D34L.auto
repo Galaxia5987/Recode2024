@@ -1,5 +1,5 @@
 {
-  "version": 1.0,
+  "version": "2025.0",
   "command": {
     "type": "sequential",
     "data": {
@@ -19,9 +19,21 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "D3"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
                       }
                     },
                     {
@@ -31,9 +43,21 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "DL"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
                       }
                     }
                   ]
