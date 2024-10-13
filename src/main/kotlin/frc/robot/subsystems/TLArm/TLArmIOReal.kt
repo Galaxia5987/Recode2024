@@ -10,11 +10,12 @@ class TLArmIOReal : TLArmIO {
     override var inputs = LoggedTLArmInputs()
     val motor: TalonFX = TalonFX(Ports.TLArm.TL_MOTOR_ID)
     override fun updateInput() {
-        inputs.currentPose = Units.Centimeter.of(motor.position.value*TLArmConstants.DramRatio)
+        inputs.currentPose =
+            Units.Centimeter.of(motor.position.value * TLArmConstants.dramRadius.`in`(Units.Centimeter))
 
     }
 
     override fun setPosition(setPoint: Measure<Distance>) {
-        motor.setPosition(setPoint.`in`(Units.Meters)/TLArmConstants.DramRatio)
+        motor.setPosition(setPoint.`in`(Units.Meters) / TLArmConstants.dramRadius.`in`(Units.Meters))
     }
 }
