@@ -8,7 +8,7 @@ import frc.robot.Ports
 
 class TLArmIOReal : TLArmIO {
     override var inputs = LoggedTLArmInputs()
-    var motor: TalonFX = TalonFX(Ports.TLArm.TL_MOTOR_ID)
+    val motor: TalonFX = TalonFX(Ports.TLArm.TL_MOTOR_ID)
     override fun updateInput() {
         inputs.currentPose = Units.Centimeter.of(motor.position.value*TLArmConstants.DramRatio)
 
