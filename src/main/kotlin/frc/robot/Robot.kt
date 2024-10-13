@@ -81,7 +81,9 @@ object Robot : LoggedRobot() {
         robotContainer = RobotContainer
         compressor.enableDigital()
 
-        DriverStation.silenceJoystickConnectionWarning(true)
+
+        CommandScheduler.getInstance().onCommandInitialize { println("Command started: $it") }
+        CommandScheduler.getInstance().onCommandFinish { println("Command ended: $it") }
     }
 
     /**
@@ -117,7 +119,9 @@ object Robot : LoggedRobot() {
     }
 
     /** This function is called periodically during autonomous.  */
-    override fun autonomousPeriodic() {}
+    override fun autonomousPeriodic() {
+
+    }
 
     /** This function is called once when teleop is enabled.  */
     override fun teleopInit() {
