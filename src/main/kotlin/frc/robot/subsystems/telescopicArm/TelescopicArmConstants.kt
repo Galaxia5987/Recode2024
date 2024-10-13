@@ -1,4 +1,4 @@
-package frc.robot.subsystems.TLArm
+package frc.robot.subsystems.telescopicArm
 
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.InvertedValue
@@ -8,7 +8,7 @@ import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 
-object TLArmConstants {
+object TelescopicArmConstants {
     const val KP = 0.0
     const val KD = 0.0
     const val KI = 0.0
