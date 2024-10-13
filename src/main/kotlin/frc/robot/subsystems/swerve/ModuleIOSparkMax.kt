@@ -141,4 +141,10 @@ class ModuleIOSparkMax(
 
     private val encoderAngle: Double
         get() = 1.0 - encoder.absolutePosition
+
+    override fun setIdleMode(isBreakMode: Boolean) {
+        val mode = if (isBreakMode) CANSparkBase.IdleMode.kBrake else CANSparkBase.IdleMode.kCoast
+        angleMotor.setIdleMode(mode)
+        driveMotor.setIdleMode(mode)
+    }
 }
