@@ -7,6 +7,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Current
+import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 
@@ -16,7 +17,7 @@ object TLArmConstants {
     const val KI = 0.0
     const val KV = 0.0
     val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
-    val dramRadius:Measure<Distance> = Units.Centimeter.of(3.0)
+    val dramRadius: Measure<Distance> = Units.Centimeter.of(3.0)
 
     val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
         MotorOutput = MotorOutputConfigs().apply {
