@@ -11,6 +11,8 @@ class Intake private constructor(val io:IntakeIO):SubsystemBase() {
     fun intake():Command{
         Commands.parallel(io.setSpinPower(), io.setCenterPower(), io.setAngle())
 
+    private var angleSetpoint: Measure<Angle> = Units.Degree.zero()
+
     companion object{
         @Volatile
         private var instance: Intake?=null
