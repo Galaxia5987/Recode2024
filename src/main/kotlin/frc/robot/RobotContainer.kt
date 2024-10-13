@@ -82,12 +82,8 @@ object RobotContainer {
         driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
     }
 
-//    fun getAutonomousCommand(): Command = autoChooser.selected
+    fun getAutonomousCommand(): Command = autoChooser.selected
 
-    fun getAutonomousCommand(): Command {
-        val path = PathPlannerPath.fromPathFile("NewPath")
-        return AutoBuilder.followPath(path)
-    }
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
