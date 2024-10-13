@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 
-class TelescopicArm private constructor(private var io: TelescopicArmIO): SubsystemBase() {
+class TelescopicArm private constructor(private var io: TelescopicArmIO) : SubsystemBase() {
     private var inputs = io.inputs
 
     companion object {
@@ -26,5 +26,9 @@ class TelescopicArm private constructor(private var io: TelescopicArmIO): Subsys
         )
     }
 
-    fun setPosition(setPoint: Measure<Distance>): Command = Commands.runOnce({ io.setPosition(setPoint) })
+    fun setPosition(setPoint: Measure<Distance>): Command = Commands.runOnce({ io.setDistance(setPoint) })
+
+    override fun periodic() {
+        io.updateInput()
+    }
 }

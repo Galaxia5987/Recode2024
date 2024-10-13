@@ -1,15 +1,11 @@
 package frc.robot.subsystems.shooter
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 
-class Shooter private constructor(private var io: ShooterIO): SubsystemBase(){
+class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
     private var input = io.inputs
 
     companion object {
@@ -44,4 +40,8 @@ class Shooter private constructor(private var io: ShooterIO): SubsystemBase(){
             setTopVel(vel)
             setBottomVel(vel)
         })
+
+    override fun periodic() {
+        io.updateInput()
+    }
 }
