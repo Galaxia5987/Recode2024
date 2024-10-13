@@ -10,6 +10,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 class Intake private constructor(val io:IntakeIO):SubsystemBase() {
     fun intake():Command{
         Commands.parallel(io.setSpinPower(), io.setCenterPower(), io.setAngle())
+
+    companion object{
+        @Volatile
+        private var instance: Intake?=null
+        fun initialize(io: IntakeIO){
+            synchronized(this)
+            {if (instance==null){instance= Intake(io) } }
+        }
+       fun getInstance(): Intake {
+         return instance?:throw IllegalStateException(" Intake Instance null")
+       }
+    }
     fun intake():Command {
        return Commands.parallel(
             Commands.runOnce({io.setSpinPower(IntakeConstants.SPIN_POWER)}),
@@ -37,7 +49,6 @@ class Intake private constructor(val io:IntakeIO):SubsystemBase() {
         io.setCenterPower(0.0)})
         }
 
-}
     fun SetAngle(angle: Measure<Angle>): Command{
         return Commands.run({
             angleSetpoint=angle
