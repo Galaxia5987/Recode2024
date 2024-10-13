@@ -1,5 +1,6 @@
 package frc.robot.subsystems.TLArm
 
+import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Unit
 import edu.wpi.first.wpilibj2.command.Command
@@ -24,5 +25,5 @@ class TLArm private constructor(private var io: TLArmIO) {
             "telescopic arm has not been initialized. Call initialize(io:TLArmIO) first"
         )
     }
-    fun setPosition(setPoint:Double):Command = Commands.runOnce({io.setPosition(setPoint)})
+    fun setPosition(setPoint:Measure<Distance>):Command = Commands.runOnce({io.setPosition(setPoint)})
 }

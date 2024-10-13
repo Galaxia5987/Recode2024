@@ -16,6 +16,7 @@ object TLArmConstants {
     var KI = 0.0
     var KV = 0.0
     var CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
+    var DramRatio:Double = 3.0 //the Circumference of the drams compare to cm
     val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
         MotorOutput = MotorOutputConfigs().apply {
             Inverted = InvertedValue.Clockwise_Positive
