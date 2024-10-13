@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers
 import frc.robot.commandGroups.IntakeCommands
 import frc.robot.commandGroups.ShootingCommands
 import frc.robot.scoreState.AmpState
@@ -53,6 +54,8 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
+        RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop()).onTrue(swerveDrive.setBrakeMode())
+
         driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
         driverController().rightTrigger().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
