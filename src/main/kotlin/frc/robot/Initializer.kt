@@ -9,6 +9,8 @@ import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.gripper.GripperIOReal
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodIOReal
+import frc.robot.subsystems.intake.IOReal
+import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
@@ -89,6 +91,7 @@ object Initializer {
         initVision()
         initSwerve()
         PoseEstimation.initialize()
+        Intake.initialize(IOReal())
         Climb.initialize(ClimbIOTalonFX())
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
