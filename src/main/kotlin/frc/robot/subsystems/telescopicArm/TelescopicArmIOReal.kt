@@ -1,6 +1,8 @@
 package frc.robot.subsystems.telescopicArm
 
 import com.ctre.phoenix6.hardware.TalonFX
+import com.ctre.phoenix6.signals.InvertedValue
+import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
@@ -14,6 +16,31 @@ class TelescopicArmIOReal : TelescopicArmIO {
         inputs.currentPose =
             Units.Centimeter.of(motor.position.value * TelescopicArmConstants.dramRadius.`in`(Units.Centimeter))
 
+    val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
+        MotorOutput = MotorOutputConfigs().apply {
+            Inverted = InvertedValue.Clockwise_Positive
+            NeutralMode = NeutralModeValue.Brake
+        }
+        CurrentLimits = CurrentLimitsConfigs().apply {
+            val currentLimit = TelescopicArmConstants.CURRENT_LIMIT.`in`(Units.Amps)
+            StatorCurrentLimit = currentLimit * 2
+            SupplyCurrentLimit = currentLimit
+            SupplyCurrentLimitEnable = true
+            StatorCurrentLimitEnable = true
+        }
+        Slot0 = Slot0Configs().apply {
+            kP = TelescopicArmConstants.KP
+            kD = TelescopicArmConstants.KD
+            kI = TelescopicArmConstants.KI
+            kV = TelescopicArmConstants.KV
+        }
+        Feedback = FeedbackConfigs().apply {
+            SensorToMechanismRatio = 2 * Math.PI
+        }
+    }
+
+    init {
+        motor.configurator.apply(MOTOR_CONFIGURATION)
     }
 
     override fun setDistance(distance: Measure<Distance>) {
