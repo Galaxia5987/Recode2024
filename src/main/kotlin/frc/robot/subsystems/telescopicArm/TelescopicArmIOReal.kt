@@ -1,5 +1,7 @@
 package frc.robot.subsystems.telescopicArm
 
+import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
@@ -15,6 +17,8 @@ class TelescopicArmIOReal : TelescopicArmIO {
     override fun updateInput() {
         inputs.currentPose =
             Units.Centimeter.of(motor.position.value * TelescopicArmConstants.dramRadius.`in`(Units.Centimeter))
+        inputs.voltage = Units.Volt.of(motor.supplyVoltage.value)
+    }
 
     val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
         MotorOutput = MotorOutputConfigs().apply {
