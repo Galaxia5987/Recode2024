@@ -4,8 +4,9 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import org.team9432.annotation.Logged
 
-interface IntakeIO {
-    fun setSpinPower(power:Double) {}
+ interface IntakeIO {
+    val inputs: LoggedIntakeInputs
+    fun setSpinPower(power: Double) {}
     fun setCenterPower(power: Double) {}
     fun setAnglePower(power: Double) {}
     fun setAngle(angle: Measure<Angle>) {}
