@@ -7,8 +7,9 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import edu.wpi.first.wpilibj2.command.SubsystemBase
 
-class Shooter private constructor(private var io: ShooterIO) {
+class Shooter private constructor(private var io: ShooterIO): SubsystemBase(){
     private var input = io.inputs
 
     companion object {

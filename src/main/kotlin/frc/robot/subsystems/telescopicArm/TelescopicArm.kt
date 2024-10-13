@@ -4,8 +4,9 @@ import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import edu.wpi.first.wpilibj2.command.SubsystemBase
 
-class TelescopicArm private constructor(private var io: TelescopicArmIO) {
+class TelescopicArm private constructor(private var io: TelescopicArmIO): SubsystemBase() {
     private var inputs = io.inputs
 
     companion object {
