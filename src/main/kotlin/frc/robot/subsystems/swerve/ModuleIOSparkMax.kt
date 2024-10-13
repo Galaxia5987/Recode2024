@@ -43,7 +43,6 @@ class ModuleIOSparkMax(
         driveMotor.enableVoltageCompensation(
             SwerveConstants.VOLT_COMP_SATURATION
         )
-        driveMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
         driveMotor.setSmartCurrentLimit(
             SwerveConstants.NEO_CURRENT_LIMIT.toInt()
         )
