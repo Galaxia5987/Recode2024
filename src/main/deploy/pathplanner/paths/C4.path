@@ -58,24 +58,6 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "follow path rotation",
-      "waypointRelativePos": 0,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "followPathRotation"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
       "name": "stop shoot",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
@@ -86,7 +68,7 @@
             {
               "type": "named",
               "data": {
-                "name": "stopShooter"
+                "name": null
               }
             }
           ]
@@ -128,7 +110,7 @@
             {
               "type": "named",
               "data": {
-                "name": "adjustToTarget"
+                "name": null
               }
             }
           ]
@@ -146,7 +128,7 @@
             {
               "type": "named",
               "data": {
-                "name": "shoot"
+                "name": null
               }
             }
           ]

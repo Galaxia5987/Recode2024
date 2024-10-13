@@ -68,13 +68,13 @@
             {
               "type": "named",
               "data": {
-                "name": "followPathRotation"
+                "name": null
               }
             },
             {
               "type": "named",
               "data": {
-                "name": "stopShooter"
+                "name": null
               }
             }
           ]
@@ -116,7 +116,7 @@
             {
               "type": "named",
               "data": {
-                "name": "shoot"
+                "name": null
               }
             }
           ]

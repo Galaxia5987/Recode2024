@@ -70,18 +70,6 @@
               "data": {
                 "name": "intake"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "followPathRotation"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "stopShooter"
-              }
             }
           ]
         }
@@ -95,12 +83,6 @@
         "type": "parallel",
         "data": {
           "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "adjustToTarget"
-              }
-            },
             {
               "type": "named",
               "data": {

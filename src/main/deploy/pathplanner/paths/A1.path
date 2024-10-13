@@ -66,12 +66,6 @@
               "data": {
                 "name": "intake"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "stopShooter"
-              }
             }
           ]
         }
@@ -89,12 +83,6 @@
               "type": "named",
               "data": {
                 "name": "stopIntake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "shoot"
               }
             }
           ]

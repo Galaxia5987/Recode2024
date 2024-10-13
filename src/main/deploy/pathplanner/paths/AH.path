@@ -72,7 +72,7 @@
       }
     },
     {
-      "name": "shoot",
+      "name": "warmup",
       "waypointRelativePos": 1.5,
       "endWaypointRelativePos": null,
       "command": {
@@ -82,13 +82,7 @@
             {
               "type": "named",
               "data": {
-                "name": "adjustToTarget"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "shoot"
+                "name": "warmup"
               }
             }
           ]

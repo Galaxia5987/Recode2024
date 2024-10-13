@@ -70,12 +70,6 @@
               "data": {
                 "name": "intake"
               }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "followPathRotation"
-              }
             }
           ]
         }
@@ -92,13 +86,7 @@
             {
               "type": "named",
               "data": {
-                "name": "retractIntake"
-              }
-            },
-            {
-              "type": "named",
-              "data": {
-                "name": "adjustToTarget"
+                "name": "stopIntake"
               }
             }
           ]
