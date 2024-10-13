@@ -10,6 +10,7 @@ interface IntakeIO {
     fun setAnglePower(power: Double) {}
     fun setAngle(angle:Double) {}
     fun reset() {}
+    fun updateInputs() {}
 
     @Logged
     open class IntakeInputs {
