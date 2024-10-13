@@ -16,7 +16,24 @@ object TLArmConstants {
     var KI = 0.0
     var KV = 0.0
     var CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
-    val MOTOR_CONFIGURATION = TalonFXConfiguration()
-
+    val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
+        MotorOutput = MotorOutputConfigs().apply {
+            Inverted = InvertedValue.Clockwise_Positive
+            NeutralMode = NeutralModeValue.Brake
+        }
+        CurrentLimits = CurrentLimitsConfigs().apply {
+            val currentLimit = CURRENT_LIMIT.`in`(Units.Amps)
+            StatorCurrentLimit = currentLimit * 2
+            SupplyCurrentLimit = currentLimit
+            SupplyCurrentLimitEnable = true
+            StatorCurrentLimitEnable = true
+        }
+        Slot0 = Slot0Configs().apply {
+            kP = KP
+            kD = KD
+            kI = KI
+            kV = KV
+        }
+    }
 
 }
