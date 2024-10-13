@@ -385,6 +385,8 @@ class SwerveDrive private constructor
 
     fun setBrakeMode() = setIdleMode(true)
 
+    fun setCoastMode() = setIdleMode(false)
+
     fun characterize(): Command {
         val routine =
             SysIdRoutine(
