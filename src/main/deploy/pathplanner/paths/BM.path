@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 0.0,
+      "waypointRelativePos": 0.4995555555555521,
       "endWaypointRelativePos": null,
       "command": {
         "type": "sequential",
@@ -49,6 +49,12 @@
           ]
         }
       }
+    },
+    {
+      "name": "score",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": null
     }
   ],
   "globalConstraints": {
