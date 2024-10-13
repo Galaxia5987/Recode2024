@@ -1,9 +1,6 @@
 package frc.robot.subsystems.TLArm
 
-import com.ctre.phoenix6.configs.CurrentLimitsConfigs
-import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
-import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Current
@@ -36,6 +33,9 @@ object TLArmConstants {
             kD = KD
             kI = KI
             kV = KV
+        }
+        Feedback = FeedbackConfigs().apply {
+            SensorToMechanismRatio = 2 * Math.PI
         }
     }
 
