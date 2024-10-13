@@ -37,6 +37,8 @@ interface ModuleIO {
 
     fun setVoltage(volts: Double) {}
 
+    fun setIdleMode(isBreakMode: Boolean) {}
+
     @Logged
     open class ModuleInputs {
         var driveMotorVelocity = 0.0

@@ -3,7 +3,6 @@ package frc.robot.subsystems.swerve
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
-import com.ctre.phoenix6.signals.NeutralModeValue
 import com.pathplanner.lib.util.HolonomicPathFollowerConfig
 import com.pathplanner.lib.util.PIDConstants
 import com.pathplanner.lib.util.ReplanningConfig
@@ -37,7 +36,6 @@ object SwerveConstants {
         .withPeakReverseVoltage(VOLT_COMP_SATURATION)
     val MOTOR_OUTPUT_CONFIGS = MotorOutputConfigs()
         .withDutyCycleNeutralDeadband(NEUTRAL_DEADBAND)
-        .withNeutralMode(NeutralModeValue.Brake)
         .withInverted(InvertedValue.Clockwise_Positive)
     val MOTION_MAGIC_CONFIGS = MotionMagicConfigs()
         .withMotionMagicCruiseVelocity(3.0)

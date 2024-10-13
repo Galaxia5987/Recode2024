@@ -70,6 +70,8 @@ class SwerveModule
         }
     }
 
+    fun setIdleMode(isBrakeMode: Boolean) = io.setIdleMode(isBrakeMode)
+
     fun characterize(voltage: Double) {
         io.setVoltage(voltage)
         io.angle = Rotation2d()
