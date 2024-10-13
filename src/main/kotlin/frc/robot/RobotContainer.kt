@@ -55,6 +55,7 @@ object RobotContainer {
 
     private fun configureButtonBindings() {
         RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop()).onTrue(swerveDrive.setBrakeMode())
+        RobotModeTriggers.disabled().debounce(7.0).onTrue(swerveDrive.setCoastMode())
 
         driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
