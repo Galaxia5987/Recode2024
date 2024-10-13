@@ -2,11 +2,13 @@ package frc.robot
 
 import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
+import com.pathplanner.lib.path.PathPlannerPath
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
+import frc.robot.ControllerInputs.driverController
 import frc.robot.commandGroups.IntakeCommands
 import frc.robot.commandGroups.ShootingCommands
 import frc.robot.commandGroups.WarmupCommands
@@ -19,8 +21,7 @@ import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
-import frc.robot.ControllerInputs.driverController as driverController
-import frc.robot.ControllerInputs.operatorController as operatorController
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -33,7 +34,7 @@ object RobotContainer {
 
     private val testController = CommandXboxController(2)
 
-    private val autoChooser: SendableChooser<Command> = AutoBuilder.buildAutoChooser()
+    private val autoChooser: SendableChooser<Command>
     private val shootState: ShootState by lazy { ShootState() }
     private val ampState: AmpState by lazy { AmpState() }
     private val climbState: ClimbState by lazy { ClimbState() }
@@ -43,11 +44,14 @@ object RobotContainer {
     init {
         currentState = shootState
 
-        SmartDashboard.putData("autoChooser", autoChooser)
-
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
+
+        swerveDrive.configAutoBuilder()
+
+        autoChooser = AutoBuilder.buildAutoChooser()
+        SmartDashboard.putData("autoChooser", autoChooser)
     }
 
     private fun configureDefaultCommands() {
@@ -78,17 +82,23 @@ object RobotContainer {
         driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
     }
 
-    fun getAutonomousCommand(): Command = autoChooser.selected
+//    fun getAutonomousCommand(): Command = autoChooser.selected
+
+    fun getAutonomousCommand(): Command {
+        val path = PathPlannerPath.fromPathFile("NewPath")
+        return AutoBuilder.followPath(path)
+    }
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
         register("score", shootState.execute())
-        register("closeShoot", ShootingCommands.closeShoot().withTimeout(4.0))
+        register("closeShoot", ShootingCommands.closeShoot().withTimeout(0.5))
         register("warmup", WarmupCommands.warmup())
         register("ampScore", ampState.execute())
         register("intake", IntakeCommands.intake())
         register("outtake", IntakeCommands.outtake())
         register("stopIntake", IntakeCommands.stopIntake())
         register("rollShooter", Shooter.getInstance().rollNote())
+        println("Commands registered!!")
     }
 }
