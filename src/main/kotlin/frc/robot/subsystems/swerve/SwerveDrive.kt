@@ -94,7 +94,6 @@ class SwerveDrive private constructor
             SwerveDrivePoseEstimator(
                 kinematics, yaw, modulePositions, botPose
             )
-        configAutoBuilder()
     }
 
     companion object {
@@ -368,13 +367,14 @@ class SwerveDrive private constructor
         Logger.recordOutput("SwerveDrive/rawYaw", yaw)
     }
 
-    private fun configAutoBuilder() {
-        AutoBuilder.configureHolonomic(
+    fun configAutoBuilder() {
+        AutoBuilder.configure(
             { botPose },
             this::resetPose,
             { chassisSpeeds },
-            { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
-            SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
+            { speeds: ChassisSpeeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
+            SwerveConstants.DRIVE_CONTROLLER,
+            SwerveConstants.ROBOT_CONFIG,
             { Constants.IS_RED },
             this
         )
