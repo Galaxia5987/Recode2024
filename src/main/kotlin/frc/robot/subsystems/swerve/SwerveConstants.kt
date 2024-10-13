@@ -99,7 +99,6 @@ object SwerveConstants {
     var FEEDBACK_CONFIGS_ANGLE: FeedbackConfigs? = null
     var ANGLE_MOTOR_CONFIGS: TalonFXConfiguration? = null
     var ENCODER_CONFIGS: CANcoderConfiguration? = null
-    val ROBOT_CONFIG: RobotConfig
     val DRIVE_CONTROLLER: PPHolonomicDriveController
 
     var DRIVE_MOTOR_MOMENT_OF_INERTIA = 0.025
@@ -275,12 +274,6 @@ object SwerveConstants {
             CANcoderConfiguration()
                 .withMagnetSensor(MagnetSensorConfigs().withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1))
 
-        ROBOT_CONFIG = RobotConfig(
-            56.0, 4.14,
-            ModuleConfig(WHEEL_DIAMETER/2, MAX_X_Y_VELOCITY, 1.542,
-                DCMotor.getKrakenX60Foc(1).withReduction(1/DRIVE_REDUCTION), TALON_FX_CURRENT_LIMIT_CONFIGS.StatorCurrentLimit, 2),
-            ROBOT_WIDTH, ROBOT_LENGTH
-        )
         DRIVE_CONTROLLER = PPHolonomicDriveController(
             PIDConstants(5.5, 0.0, 0.15),
             PIDConstants(3.0, 0.0, 0.4)

@@ -1,6 +1,7 @@
 package frc.robot.subsystems.swerve
 
 import com.pathplanner.lib.auto.AutoBuilder
+import com.pathplanner.lib.config.RobotConfig
 import edu.wpi.first.math.MathUtil
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
@@ -374,7 +375,7 @@ class SwerveDrive private constructor
             { chassisSpeeds },
             { speeds: ChassisSpeeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
             SwerveConstants.DRIVE_CONTROLLER,
-            SwerveConstants.ROBOT_CONFIG,
+            RobotConfig.fromGUISettings(),
             { Constants.IS_RED },
             this
         )
