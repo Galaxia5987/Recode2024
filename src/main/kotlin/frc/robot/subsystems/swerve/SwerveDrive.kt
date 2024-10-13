@@ -380,6 +380,9 @@ class SwerveDrive private constructor
         )
     }
 
+    private fun setIdleMode(isBrakeMode: Boolean) =
+        Commands.runOnce({ modules.forEach { it?.setIdleMode(isBrakeMode) } })
+
     fun characterize(): Command {
         val routine =
             SysIdRoutine(
