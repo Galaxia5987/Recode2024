@@ -11,12 +11,13 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 
 object TLArmConstants {
-    var KP = 0.0
-    var KD = 0.0
-    var KI = 0.0
-    var KV = 0.0
-    var CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
-    var DramRatio:Double = 3.0 //the Circumference of the drams compare to cm
+    const val KP = 0.0
+    const val KD = 0.0
+    const val KI = 0.0
+    const val KV = 0.0
+    val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
+    val dramRadius:Measure<Distance> = Units.Centimeter.of(3.0)
+
     val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
         MotorOutput = MotorOutputConfigs().apply {
             Inverted = InvertedValue.Clockwise_Positive
