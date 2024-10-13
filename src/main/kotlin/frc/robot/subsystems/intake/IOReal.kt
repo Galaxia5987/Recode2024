@@ -27,11 +27,6 @@ class IOReal : IntakeIO {
     private val angleControl = PositionVoltage(0.0)
 
     init {
-        spinMotor.restoreFactoryDefaults()
-        spinMotor.setSmartCurrentLimit(40)
-        spinMotor.setIdleMode(CANSparkBase.IdleMode.kCoast)
-        spinMotor.inverted=true
-        spinMotor.burnFlash()
 
         centerMotor.restoreFactoryDefaults()
         centerMotor.setSmartCurrentLimit(40)
