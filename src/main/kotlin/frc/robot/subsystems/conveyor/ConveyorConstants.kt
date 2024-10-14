@@ -7,7 +7,7 @@ import frc.robot.lib.selectGainsBasedOnMode
 object ConveyorConstants {
     const val GEAR_RATIO = 1.0
 
-    val AT_SETPOINT_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(1.0)
+    val AT_SETPOINT_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.03)
 
     val MOMENT_OF_INERTIA: Measure<Mult<Mult<Mass, Distance>, Distance>> =
         Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.000_05)

@@ -12,7 +12,7 @@ object HoodConstants {
     const val GEAR_RATIO: Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
     const val ENCODER_TICKS_PER_REVOLUTION = 4096.0
     const val SIMULATION_LENGTH = 3.0
-    val MAX_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(1.0)
+    val MAX_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.03)
 
     val MOMENT_OF_INERTIA: Measure<Mult<Mult<Mass, Distance>, Distance>> =
         Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
