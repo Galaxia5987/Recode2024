@@ -48,6 +48,7 @@ fun Translation2d.getRotationToTranslation(other: Translation2d): Rotation2d = (
 fun Command.handleInterrupt(command: Command): WrapperCommand = handleInterrupt { command.schedule() }
 
 fun Command.finallyDo(command: Command): WrapperCommand = finallyDo(Runnable {
+    this.cancel()
     if (command.isScheduled) command.cancel()
     command.schedule()
 })
