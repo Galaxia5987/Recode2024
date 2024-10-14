@@ -34,7 +34,7 @@ object HoodConstants {
     val GAINS by lazy {
         selectGainsBasedOnMode(
             Gains(
-                kP = 1700.0, kD = 305.0, kG =  5.5
+                kP = 1700.0, kD = 335.0, kG =  5.5
             ), Gains(
                 20.0
             )
