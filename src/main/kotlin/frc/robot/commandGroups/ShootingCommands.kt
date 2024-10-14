@@ -10,6 +10,7 @@ import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.swerve.SwerveDrive
+import org.littletonrobotics.junction.Logger
 
 object ShootingCommands {
     private val swerveDrive = SwerveDrive.getInstance()
@@ -54,6 +55,11 @@ object ShootingCommands {
     fun shootOverStage(): Command = shootOverStageInit().finallyDo(shootOverStageEnd())
 
     fun shooterConveyorHoodAtSetpoint(): Boolean {
-        return shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()
+        return (shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()).also {
+            Logger.recordOutput(
+                "ShootingCommands/atScoringSetpoint",
+                it
+            )
+        }
     }
 }
