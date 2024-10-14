@@ -72,7 +72,9 @@ object RobotContainer {
         driverController().rightBumper().whileTrue(ShootingCommands.shootOverStage())
 
         driverController().leftTrigger().whileTrue(IntakeCommands.intake())
+            .onFalse(IntakeCommands.stopIntake())
         driverController().leftBumper().whileTrue(IntakeCommands.outtake())
+            .onFalse(IntakeCommands.stopIntake())
         driverController().back()
             .whileTrue(Gripper.getInstance().setRollerPower(0.4))
             .onFalse(Gripper.getInstance().stop())
