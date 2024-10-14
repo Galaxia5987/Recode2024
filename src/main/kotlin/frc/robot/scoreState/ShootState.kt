@@ -77,7 +77,7 @@ class ShootState : ScoreState {
         return shooter.atSetpoint() && hood.atSetpoint() && swerveDrive.atTurnSetpoint
     }
 
-    private fun init(): Command {
+    fun init(): Command {
         return Commands.parallel(
             warmup(),
             turnToSpeaker(),
@@ -85,7 +85,7 @@ class ShootState : ScoreState {
         )
     }
 
-    private fun end(): Command {
+    fun end(): Command {
         return gripper.feed().andThen(
             Commands.parallel(
                 shooter.stop(), Conveyor.getInstance().stop(), hood.setRestingAngle() //TODO: Replace with LEDs command
