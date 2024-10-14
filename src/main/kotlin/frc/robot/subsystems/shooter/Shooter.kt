@@ -90,7 +90,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         setVelocity(velocity, velocity).withName("Set Velocity Command")
 
     fun stop(): Command {
-        return run {
+        return runOnce {
             topVelocitySetpoint = ShooterConstants.STOP_POWER
             bottomVelocitySetpoint = ShooterConstants.STOP_POWER
             io.stop()

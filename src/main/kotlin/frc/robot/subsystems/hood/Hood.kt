@@ -74,7 +74,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
     fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
 
     fun setAngle(angle: Measure<Angle>): Command {
-        return run {
+        return runOnce {
             angleSetpoint = angle
             io.setAngle(angle)
         }.withName("Set Angle Hood")
