@@ -19,7 +19,6 @@ object IntakeCommands {
         )
             .until { gripper.hasNote }
             .andThen(Commands.parallel(intake.stop(), gripper.setRollerPower(0.0), ControllerInputs.startRumble()))
-            .finallyDo(stopIntake().alongWith(ControllerInputs.stopRumble()))
             .withName("intake")
     }
 
@@ -27,8 +26,6 @@ object IntakeCommands {
         return Commands.parallel(
             intake.outtake(),
             gripper.setRollerPower(-0.7)
-        )
-            .finallyDo(stopIntake())
-            .withName("outtake")
+        ).withName("outtake")
     }
 }
