@@ -90,7 +90,6 @@ object RobotContainer {
         register("score", shootState.execute())
         register("closeShoot", ShootingCommands.closeShoot().withTimeout(0.5))
         register("warmup", WarmupCommands.warmup())
-        register("ampScore", ampState.execute())
         register("intake", IntakeCommands.intake())
         register("outtake", IntakeCommands.outtake())
         register("stopIntake", IntakeCommands.stopIntake())
