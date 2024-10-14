@@ -69,7 +69,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
 
     @AutoLogOutput
     fun atSetpoint(): Boolean =
-        inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE)
+        inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE.`in`(Units.Percent))
 
     fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
 
