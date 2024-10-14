@@ -24,6 +24,9 @@ object ShootingCommands {
             { Units.RotationsPerSecond.of(45.0) }
         )
     }
+
+    fun finishScore(): Command {
+        return WarmupCommands.stopWarmup().alongWith(Gripper.getInstance().feed())
     }
 
     private fun shootOverStageInit(): Command {
