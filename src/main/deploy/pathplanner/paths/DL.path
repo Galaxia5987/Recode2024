@@ -67,7 +67,7 @@
       }
     },
     {
-      "name": "Event Marker",
+      "name": "warmup",
       "waypointRelativePos": 1.25,
       "endWaypointRelativePos": null,
       "command": {

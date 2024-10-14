@@ -90,7 +90,7 @@
       }
     },
     {
-      "name": "stop intake",
+      "name": "stopIntake",
       "waypointRelativePos": 2.0,
       "endWaypointRelativePos": null,
       "command": {
