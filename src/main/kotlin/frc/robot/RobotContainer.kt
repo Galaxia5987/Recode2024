@@ -89,8 +89,8 @@ object RobotContainer {
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
-        register("score", shootState.init().until{ShootingCommands.shooterConveyorHoodAtSetpoint()}.andThen(shootState.end()))
-        register("closeShoot", ShootingCommands.closeShoot().until{ShootingCommands.shooterConveyorHoodAtSetpoint()}.andThen(ShootingCommands.finishScore()))
+        register("score", shootState.init().until{ShootingCommands.shooterConveyorHoodAtSetpoint()}.withTimeout(2.0).andThen(shootState.end()))
+        register("closeShoot", ShootingCommands.closeShoot().until{ShootingCommands.shooterConveyorHoodAtSetpoint()}.withTimeout(2.0).andThen(ShootingCommands.finishScore()))
         register("warmup", WarmupCommands.warmup())
         register("intake", IntakeCommands.intake())
         register("outtake", IntakeCommands.outtake())
