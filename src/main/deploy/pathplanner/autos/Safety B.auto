@@ -7,7 +7,7 @@
         {
           "type": "named",
           "data": {
-            "name": "closeShoot"
+            "name": "score"
           }
         },
         {
