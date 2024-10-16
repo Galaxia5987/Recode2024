@@ -44,18 +44,13 @@
       "linkedName": "A Score"
     }
   ],
-  "rotationTargets": [
-    {
-      "waypointRelativePos": 0.2,
-      "rotationDegrees": 19.040968887761917
-    }
-  ],
+  "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.1620162016201652,
       "endWaypointRelativePos": null,
       "command": {
         "type": "parallel",
@@ -118,13 +113,13 @@
   },
   "goalEndState": {
     "velocity": 0.0,
-    "rotation": 34.12669257634329
+    "rotation": 22.091302146538926
   },
   "reversed": false,
   "folder": "A",
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 35.02998138725523
+    "rotation": 19.930227616143537
   },
   "useDefaultConstraints": true
 }

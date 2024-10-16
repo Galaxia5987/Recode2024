@@ -25,15 +25,33 @@
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "A1"
                       }
                     },
                     {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
+                      }
+                    },
+                    {
                       "type": "path",
                       "data": {
                         "pathName": "A2"
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "score"
                       }
                     }
                   ]

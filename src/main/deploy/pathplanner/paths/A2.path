@@ -46,12 +46,8 @@
   ],
   "rotationTargets": [
     {
-      "waypointRelativePos": 0.45,
-      "rotationDegrees": -17.673583095917124
-    },
-    {
-      "waypointRelativePos": 1,
-      "rotationDegrees": -21.464665960120904
+      "waypointRelativePos": 0.9703264094955506,
+      "rotationDegrees": -13.61361752322379
     }
   ],
   "constraintZones": [],
@@ -59,7 +55,7 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 0.25,
+      "waypointRelativePos": 0.2016201620162057,
       "endWaypointRelativePos": null,
       "command": {
         "type": "parallel",
