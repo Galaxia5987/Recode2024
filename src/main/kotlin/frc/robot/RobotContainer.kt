@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.ControllerInputs.driverController
+import frc.robot.ControllerInputs.operatorController
 import frc.robot.commandGroups.IntakeCommands
 import frc.robot.commandGroups.ShootingCommands
 import frc.robot.commandGroups.WarmupCommands
@@ -86,6 +87,18 @@ object RobotContainer {
 
         driverController().povUp().whileTrue(Climb.getInstance().openClimb())
         driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
+
+        driverController().povLeft().onTrue(Gripper.getInstance().enableSensor())
+        driverController().povRight().onTrue(Gripper.getInstance().disableSensor())
+
+        operatorController().R2().whileTrue(Climb.getInstance().openClimb())
+        operatorController().L2().whileTrue(Climb.getInstance().closeClimb())
+
+        operatorController().R1().whileTrue(Gripper.getInstance().setRollerPower(-0.4))
+        operatorController().L1().whileTrue(Gripper.getInstance().setRollerPower(0.4))
+
+        operatorController().cross().onTrue(Gripper.getInstance().enableSensor())
+        operatorController().circle().onTrue(Gripper.getInstance().disableSensor())
     }
 
     fun getAutonomousCommand(): Command = autoChooser.selected
