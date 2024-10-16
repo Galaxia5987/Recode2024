@@ -18,7 +18,7 @@ object IntakeCommands {
         return Commands.parallel(
             intake.intake(), gripper.setRollerPower(0.4)
         )
-            .until { gripper.hasNote }
+            .until { gripper.hasNote && gripper.useSensor }
             .andThen(Commands.parallel(intake.stop(), gripper.setRollerPower(0.0), ControllerInputs.startRumble().onlyIf{Robot.isTeleop}))
             .withName("intake")
     }

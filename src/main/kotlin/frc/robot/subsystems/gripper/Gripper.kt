@@ -16,6 +16,8 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     val hasNote: Boolean
         get() = io.inputs.hasNote
 
+    var useSensor = true
+
     companion object {
         @Volatile
         private var instance: Gripper? = null
@@ -54,6 +56,10 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     fun stop(): Command {
         return setRollerPower(0.0).withTimeout(0.02).withName("stop")
     }
+
+    fun disableSensor(): Command = Commands.runOnce({useSensor=false})
+
+    fun enableSensor(): Command = Commands.runOnce({useSensor=true})
 
     override fun periodic() {
         io.updateInputs()
