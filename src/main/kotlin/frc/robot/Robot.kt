@@ -81,9 +81,7 @@ object Robot : LoggedRobot() {
         robotContainer = RobotContainer
         compressor.enableDigital()
 
-
-        CommandScheduler.getInstance().onCommandInitialize { println("Command started: $it") }
-        CommandScheduler.getInstance().onCommandFinish { println("Command ended: $it") }
+        DriverStation.silenceJoystickConnectionWarning(true)
     }
 
     /**
