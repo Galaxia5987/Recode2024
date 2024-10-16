@@ -18,6 +18,8 @@ import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.hood.HoodConstants
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
@@ -47,6 +49,8 @@ object RobotContainer {
         registerAutoCommands()
         configureButtonBindings()
         configureDefaultCommands()
+
+        Hood.getInstance().setAngle(HoodConstants.RESTING_ANGLE)
 
         swerveDrive.configAutoBuilder()
 
