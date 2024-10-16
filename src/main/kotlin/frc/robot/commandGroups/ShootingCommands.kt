@@ -3,6 +3,7 @@ package frc.robot.commandGroups
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import frc.robot.ControllerInputs
 import frc.robot.lib.finallyDo
 import frc.robot.lib.getRotationToTranslation
 import frc.robot.subsystems.hood.Hood
@@ -37,13 +38,14 @@ object ShootingCommands {
                 { ShootOverStageConstants.SHOOTER_VELOCITY_SUPER_POOP },
                 { ShootOverStageConstants.CONVEYOR_VELOCITY_SUPER_POOP }
             ),
-            swerveDrive.turnCommand(
-                Units.Degrees.of(
-                    swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
-                        ShootOverStageConstants.SUPER_POOP_TRANSLATION
-                    ).degrees
-                ),
-                ShootOverStageConstants.SUPER_POOP_TURN_TOLERANCE.`in`(Units.Rotations)
+            swerveDrive.driveAndAdjust(
+                {Units.Degrees.of(swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
+                    ShootOverStageConstants.SUPER_POOP_TRANSLATION).degrees)},
+                {-ControllerInputs.driverController().leftY},
+                {-ControllerInputs.driverController().leftX},
+                ShootOverStageConstants.SUPER_POOP_TURN_TOLERANCE,
+                0.1,
+                true
             )
         ).until { shooterConveyorHoodAtSetpoint() }
     }

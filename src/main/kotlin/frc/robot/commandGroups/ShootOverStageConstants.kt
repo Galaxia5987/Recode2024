@@ -12,12 +12,10 @@ object ShootOverStageConstants {
     val SHOOTER_VELOCITY_SUPER_POOP: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(77.07)
     val CONVEYOR_VELOCITY_SUPER_POOP: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(60.0)
 
-    private val SUPER_POOP_TRANSLATION_BLUE = Translation2d()
+    private val SUPER_POOP_TRANSLATION_BLUE = Translation2d(0.8, 7.1)
 
     val SUPER_POOP_TRANSLATION: Translation2d
-        by lazy {
-            getTranslationByColor(SUPER_POOP_TRANSLATION_BLUE)
-        }
+        get() = getTranslationByColor(SUPER_POOP_TRANSLATION_BLUE)
 
     val SUPER_POOP_TURN_TOLERANCE: Measure<Angle> = Units.Degrees.of(2.5)
 }
