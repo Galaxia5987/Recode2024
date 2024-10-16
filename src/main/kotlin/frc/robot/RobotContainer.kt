@@ -51,8 +51,6 @@ object RobotContainer {
         configureButtonBindings()
         configureDefaultCommands()
 
-        Hood.getInstance().setAngle(HoodConstants.RESTING_ANGLE)
-
         swerveDrive.configAutoBuilder()
 
         autoChooser = AutoBuilder.buildAutoChooser()
