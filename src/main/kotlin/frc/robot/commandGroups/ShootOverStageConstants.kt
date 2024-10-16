@@ -17,5 +17,5 @@ object ShootOverStageConstants {
     val SUPER_POOP_TRANSLATION: Translation2d
         get() = getTranslationByColor(SUPER_POOP_TRANSLATION_BLUE)
 
-    val SUPER_POOP_TURN_TOLERANCE: Measure<Angle> = Units.Degrees.of(2.5)
+    const val SUPER_POOP_TURN_TOLERANCE = 0.06
 }
