@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 2.4005051572444116,
-        "y": 5.545975061415772
+        "x": 1.3535296301361848,
+        "y": 5.555088802485298
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.3283379900093135,
-        "y": 5.278130556261113
+        "x": 1.611209889086445,
+        "y": 5.259503852341039
       },
       "isLocked": false,
-      "linkedName": "Middle Spike"
+      "linkedName": "B"
     },
     {
       "anchor": {
-        "x": 2.458724917449835,
-        "y": 4.384048768097537
+        "x": 2.430784861569723,
+        "y": 4.188468376936754
       },
       "prevControl": {
-        "x": 2.415278583972573,
-        "y": 4.630244657802021
+        "x": 1.862670392007451,
+        "y": 4.672762678858691
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Low Spike"
+      "linkedName": "Low Spike alt"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 0,
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -49,7 +49,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": -41.18592516570965
+    "rotation": -10.124671655397837
   },
   "reversed": false,
   "folder": "B",
