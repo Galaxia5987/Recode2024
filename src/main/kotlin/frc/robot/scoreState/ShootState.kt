@@ -94,6 +94,6 @@ class ShootState : ScoreState {
     }
 
     override fun execute(): Command {
-        return init().finallyDo(end())
+        return init().finallyDo(end()).withName("Speaker")
     }
 }

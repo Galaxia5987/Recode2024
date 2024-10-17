@@ -24,6 +24,7 @@ import frc.robot.subsystems.hood.HoodConstants
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
+import org.littletonrobotics.junction.AutoLogOutput
 
 
 /**
@@ -111,5 +112,10 @@ object RobotContainer {
         register("outtake", IntakeCommands.outtake())
         register("stopIntake", IntakeCommands.stopIntake())
         register("rollShooter", Shooter.getInstance().rollNote())
+    }
+
+    @AutoLogOutput
+    fun getState(): String {
+        return currentState.execute().name
     }
 }

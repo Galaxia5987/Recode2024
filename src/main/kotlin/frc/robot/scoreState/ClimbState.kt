@@ -42,5 +42,6 @@ class ClimbState : ScoreState {
             pathFindToChain(),
             climb.setPower { 0.8 }
         ).finallyDo(climb.climb()) // TODO: Replace with LEDs command
+            .withName("Climb")
     }
 }

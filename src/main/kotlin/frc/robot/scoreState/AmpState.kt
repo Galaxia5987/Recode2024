@@ -44,5 +44,6 @@ class AmpState : ScoreState {
 
     override fun execute(): Command {
         return init().withTimeout(0.3).andThen(end()).handleInterrupt(end())
+            .withName("Amp")
     }
 }
