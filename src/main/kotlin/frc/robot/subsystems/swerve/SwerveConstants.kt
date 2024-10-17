@@ -21,7 +21,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
-    val OFFSETS = arrayOf(0.532958984375, 0.76123046875, 0.013427734375, 0.329345703125)
+    val OFFSETS = arrayOf(0.534912109375, 0.759033203125, 0.01806640625, 0.327880859375)
 
     const val VOLT_COMP_SATURATION = 12.0
     const val NEUTRAL_DEADBAND = 0.0
