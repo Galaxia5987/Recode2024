@@ -2,7 +2,6 @@ package frc.robot
 
 import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
-import com.pathplanner.lib.path.PathPlannerPath
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
@@ -19,8 +18,6 @@ import frc.robot.scoreState.ScoreState
 import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.hood.HoodConstants
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
@@ -105,8 +102,8 @@ object RobotContainer {
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
-        register("score", shootState.init().until{ShootingCommands.shooterConveyorHoodAtSetpoint()}.withTimeout(2.0).andThen(shootState.end()))
-        register("closeShoot", ShootingCommands.closeShoot().until{ShootingCommands.shooterConveyorHoodAtSetpoint()}.withTimeout(2.0).andThen(ShootingCommands.finishScore()))
+        register("score", shootState.init().until{ShootingCommands.shooterConveyorHoodAtSetpoint()})
+        register("finishScore", shootState.end())
         register("warmup", WarmupCommands.warmup())
         register("intake", IntakeCommands.intake())
         register("outtake", IntakeCommands.outtake())
