@@ -20,6 +20,8 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
         robotToCam
     )
 
+    override val name = simCamera.camera.name
+
 
     init {
         VisionSim.system.addAprilTags(VisionConstants.aprilTagFieldLayout)

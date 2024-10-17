@@ -6,6 +6,8 @@ import org.team9432.annotation.Logged
 interface VisionIO {
     val inputs: LoggedVisionInputs
 
+    val name: String
+
     fun setPipeLine(pipeLineIndex: Int) {
 
     }
