@@ -1,6 +1,7 @@
 package frc.robot.subsystems.vision
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.littletonrobotics.junction.Logger
 
 class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBase() {
     var results: MutableList<VisionResult> = ArrayList()
@@ -29,6 +30,7 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
         results.clear()
         for (io: VisionIO in ios) {
             io.updateInputs()
+            Logger.processInputs("vision/${io.name}", io.inputs)
             results.add(io.getLatestResult())
         }
     }
