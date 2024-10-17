@@ -11,15 +11,15 @@ import kotlin.math.hypot
 fun ChassisSpeeds.getSpeed() = hypot(vxMetersPerSecond, vyMetersPerSecond)
 
 fun List<Any>.toDoubleArray(): DoubleArray {
-    return this.map { it as Double }.toDoubleArray()
+    return this.map { it as Double }.toTypedArray().toDoubleArray()
 }
 
 fun List<Any>.toIntArray(): IntArray {
-    return this.map { it as Int }.toIntArray()
+    return this.map { it as Int }.toTypedArray().toIntArray()
 }
 
 fun List<Any>.toBooleanArray(): BooleanArray {
-    return this.map { it as Boolean }.toBooleanArray()
+    return this.map { it as Boolean }.toTypedArray().toBooleanArray()
 }
 
 fun LogTable.put(key: String, defaultValue: List<Any>) {
