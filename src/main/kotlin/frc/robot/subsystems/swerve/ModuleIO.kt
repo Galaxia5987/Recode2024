@@ -54,6 +54,6 @@ interface ModuleIO {
         var moduleDistance = 0.0
         var moduleState = SwerveModuleState()
 
-        var encoderHasFaults = false
+        var noEncoderFaults = true
     }
 }
