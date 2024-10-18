@@ -28,7 +28,7 @@ object ShootingCommands {
     }
 
     fun finishScore(): Command {
-        return WarmupCommands.stopWarmup().alongWith(Gripper.getInstance().feed())
+        return Gripper.getInstance().feed().alongWith(Commands.waitSeconds(0.5)).andThen(WarmupCommands.stopWarmup())
     }
 
     private fun shootOverStageInit(): Command {
