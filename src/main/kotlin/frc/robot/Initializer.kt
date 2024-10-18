@@ -101,6 +101,6 @@ object Initializer {
         Conveyor.initialize(ConveyorIOReal())
         Intake.initialize(IntakeIOReal())
         Gripper.initialize(GripperIOReal())
-        LEDs.initialize(9, 58)
+        LEDs.initialize(9, 97)
     }
 }
