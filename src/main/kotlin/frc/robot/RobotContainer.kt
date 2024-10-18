@@ -19,9 +19,9 @@ import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.leds.LEDConstants
 import frc.robot.subsystems.leds.LEDs
+import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
 import org.littletonrobotics.junction.AutoLogOutput
 
@@ -33,7 +33,11 @@ import org.littletonrobotics.junction.AutoLogOutput
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
-    private val swerveDrive: SwerveDrive = SwerveDrive.getInstance()
+    private val swerveDrive = SwerveDrive.getInstance()
+    private val gripper = Gripper.getInstance()
+    private val climb = Climb.getInstance()
+    private val intake = Intake.getInstance()
+    private val leds = LEDs.getInstance()
 
     private val testController = CommandXboxController(2)
 
@@ -67,11 +71,16 @@ object RobotContainer {
     private fun configureButtonBindings() {
         driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
-        driverController().rightTrigger().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
-        driverController().a().onTrue(Commands.runOnce({ currentState = shootState })
-            .alongWith(LEDs.getInstance().setSolidMode(LEDConstants.SHOOT_STATE_COLOR)))
-        driverController().b().onTrue(Commands.runOnce({ currentState = ampState })
-            .alongWith(LEDs.getInstance().setSolidMode(LEDConstants.AMP_STATE_COLOR)))
+        driverController().rightTrigger()
+            .whileTrue(Commands.defer({ currentState.execute() }, currentState.execute().requirements))
+        driverController().a().onTrue(
+            Commands.runOnce({ currentState = shootState })
+                .alongWith(leds.setSolidMode(LEDConstants.SHOOT_STATE_COLOR))
+        )
+        driverController().b().onTrue(
+            Commands.runOnce({ currentState = ampState })
+                .alongWith(leds.setSolidMode(LEDConstants.AMP_STATE_COLOR))
+        )
 
         driverController().x().whileTrue(ShootingCommands.closeShoot())
             .onFalse(ShootingCommands.finishScore())
@@ -85,23 +94,23 @@ object RobotContainer {
         driverController().leftBumper().whileTrue(IntakeCommands.outtake())
             .onFalse(IntakeCommands.stopIntake())
         driverController().back()
-            .whileTrue(Gripper.getInstance().setRollerPower(0.4))
-            .onFalse(Gripper.getInstance().stop())
-        driverController().start().whileTrue(Intake.getInstance().reset())
+            .whileTrue(gripper.setRollerPower(0.4))
+            .onFalse(gripper.stop())
+        driverController().start().whileTrue(intake.reset())
 
-        driverController().povUp().whileTrue(Climb.getInstance().openClimb())
-        driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
+        driverController().povUp().whileTrue(climb.openClimb())
+        driverController().povDown().whileTrue(climb.closeClimb())
 
-        operatorController().R2().whileTrue(Climb.getInstance().openClimb())
-        operatorController().L2().whileTrue(Climb.getInstance().closeClimb())
+        operatorController().R2().whileTrue(climb.openClimb())
+        operatorController().L2().whileTrue(climb.closeClimb())
 
-        operatorController().R1().whileTrue(Gripper.getInstance().setRollerPower(-0.4))
-        operatorController().L1().whileTrue(Gripper.getInstance().setRollerPower(0.4))
+        operatorController().R1().whileTrue(gripper.setRollerPower(-0.4))
+        operatorController().L1().whileTrue(gripper.setRollerPower(0.4))
 
-        operatorController().cross().onTrue(Gripper.getInstance().enableSensor())
-        operatorController().circle().onTrue(Gripper.getInstance().disableSensor())
+        operatorController().cross().onTrue(gripper.enableSensor())
+        operatorController().circle().onTrue(gripper.disableSensor())
 
-        operatorController().options().whileTrue(Intake.getInstance().reset())
+        operatorController().options().whileTrue(intake.reset())
     }
 
     fun getAutonomousCommand(): Command = autoChooser.selected
@@ -109,7 +118,7 @@ object RobotContainer {
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
-        register("score", shootState.init().until{ShootingCommands.shooterConveyorHoodAtSetpoint()})
+        register("score", shootState.init().until { ShootingCommands.shooterConveyorHoodAtSetpoint() })
         register("finishScore", shootState.end())
         register("warmup", WarmupCommands.warmup())
         register("intake", IntakeCommands.intake())
