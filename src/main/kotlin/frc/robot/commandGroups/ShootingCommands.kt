@@ -21,7 +21,15 @@ object ShootingCommands {
 
     fun closeShoot(): Command {
         return WarmupCommands.warmup(
-            { Units.Degrees.of(93.0) },
+            { Units.Degrees.of(97.0) },
+            { Units.RotationsPerSecond.of(45.0) },
+            { Units.RotationsPerSecond.of(45.0) }
+        )
+    }
+
+    fun trussSetpoint(): Command {
+        return WarmupCommands.warmup(
+            { Units.Degrees.of(77.0) },
             { Units.RotationsPerSecond.of(45.0) },
             { Units.RotationsPerSecond.of(45.0) }
         )
