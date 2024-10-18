@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj.util.Color
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import frc.robot.subsystems.gripper.Gripper
 
 class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
     private val ledStrip = AddressableLED(port)
@@ -80,6 +79,26 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
         })
     }
 
+    fun intakeCommand(): Command {
+        return Commands.runOnce({
+            val currentPrimary = primary
+            val currentSecondary = secondary
+            val currentBlinkTime = blinkTime
+            val currentMode = mode
+            setBlink(Color.kBlack, LEDConstants.HAS_NOTE_COLOR, 0.1)
+                .andThen(Commands.waitSeconds(2.0))
+                .andThen(Commands.runOnce(
+                    {
+                        when (currentMode) {
+                            Mode.SOLID -> setSolidMode(currentPrimary)
+                            Mode.BLINK -> setBlink(currentPrimary, currentSecondary, currentBlinkTime)
+                            Mode.RAINBOW -> setRainbow()
+                        }
+                    }
+                ))
+        })
+    }
+
     private fun setSolidColor(color: Color) {
         for (i in 0 until ledBuffer.length) {
             ledBuffer.setLED(i, color)
@@ -94,21 +113,6 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
     }
 
     override fun periodic() {
-        if (Gripper.getInstance().hasNote) {
-            intakeTimer.reset()
-            val currentPrimary = primary
-            val currentSecondary = secondary
-            val currentBlinkTime = blinkTime
-            val currentMode = mode
-            setBlink(Color.kBlack, LEDConstants.HAS_NOTE_COLOR, 0.1)
-            if (intakeTimer.hasElapsed(2.0)) {
-                when (currentMode) {
-                    Mode.SOLID -> setSolidMode(currentPrimary)
-                    Mode.BLINK -> setBlink(currentPrimary, currentSecondary, currentBlinkTime)
-                    Mode.RAINBOW -> setRainbow()
-                }
-            }
-        }
         when (mode) {
             Mode.SOLID -> {
                 setSolidColor(primary)

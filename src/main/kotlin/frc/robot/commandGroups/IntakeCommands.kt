@@ -6,6 +6,7 @@ import frc.robot.ControllerInputs
 import frc.robot.lib.finallyDo
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.leds.LEDs
 
 object IntakeCommands {
     private val intake = Intake.getInstance()
@@ -18,7 +19,13 @@ object IntakeCommands {
             intake.intake(), gripper.setRollerPower(0.4)
         )
             .until { gripper.hasNote }
-            .andThen(Commands.parallel(intake.stop(), gripper.setRollerPower(0.0), ControllerInputs.startRumble()))
+            .andThen(
+                Commands.parallel(
+                    intake.stop(),
+                    gripper.setRollerPower(0.0),
+                    ControllerInputs.startRumble(),
+                    LEDs.getInstance().intakeCommand()
+                ))
             .finallyDo(stopIntake().alongWith(ControllerInputs.stopRumble()))
             .withName("intake")
     }
