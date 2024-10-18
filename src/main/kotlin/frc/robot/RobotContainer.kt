@@ -68,7 +68,11 @@ object RobotContainer {
         driverController().rightTrigger().whileTrue(Commands.defer({currentState.execute()}, currentState.execute().requirements))
         driverController().a().onTrue(Commands.runOnce({ currentState = shootState }))
         driverController().b().onTrue(Commands.runOnce({ currentState = ampState }))
-        driverController().x().onTrue(Commands.runOnce({ currentState = climbState }))
+
+        driverController().x().whileTrue(ShootingCommands.closeShoot())
+            .onFalse(ShootingCommands.finishScore())
+        driverController().povLeft().whileTrue(ShootingCommands.trussSetpoint())
+            .onFalse(ShootingCommands.finishScore())
 
         driverController().rightBumper().whileTrue(ShootingCommands.shootOverStage())
 
@@ -84,9 +88,6 @@ object RobotContainer {
         driverController().povUp().whileTrue(Climb.getInstance().openClimb())
         driverController().povDown().whileTrue(Climb.getInstance().closeClimb())
 
-        driverController().povLeft().onTrue(Gripper.getInstance().enableSensor())
-        driverController().povRight().onTrue(Gripper.getInstance().disableSensor())
-
         operatorController().R2().whileTrue(Climb.getInstance().openClimb())
         operatorController().L2().whileTrue(Climb.getInstance().closeClimb())
 
@@ -95,6 +96,8 @@ object RobotContainer {
 
         operatorController().cross().onTrue(Gripper.getInstance().enableSensor())
         operatorController().circle().onTrue(Gripper.getInstance().disableSensor())
+
+        operatorController().options().whileTrue(Intake.getInstance().reset())
     }
 
     fun getAutonomousCommand(): Command = autoChooser.selected
