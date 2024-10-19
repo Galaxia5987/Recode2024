@@ -105,7 +105,9 @@ object RobotContainer {
         operatorController().L2().whileTrue(climb.closeClimb())
 
         operatorController().R1().whileTrue(gripper.setRollerPower(-0.4))
+            .onFalse(gripper.stop())
         operatorController().L1().whileTrue(gripper.setRollerPower(0.4))
+            .onFalse(gripper.stop())
 
         operatorController().cross().onTrue(gripper.enableSensor())
         operatorController().circle().onTrue(gripper.disableSensor())
