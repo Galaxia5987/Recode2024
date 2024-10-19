@@ -31,7 +31,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 2.0
+                              "waitTime": 0.6
                             }
                           }
                         ]
@@ -81,7 +81,7 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.5
+                              "waitTime": 1.7
                             }
                           }
                         ]
@@ -112,7 +112,38 @@
                           {
                             "type": "wait",
                             "data": {
-                              "waitTime": 1.5
+                              "waitTime": 1.4
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "finishScore"
+                      }
+                    },
+                    {
+                      "type": "path",
+                      "data": {
+                        "pathName": "A2"
+                      }
+                    },
+                    {
+                      "type": "race",
+                      "data": {
+                        "commands": [
+                          {
+                            "type": "named",
+                            "data": {
+                              "name": "score"
+                            }
+                          },
+                          {
+                            "type": "wait",
+                            "data": {
+                              "waitTime": 1.0
                             }
                           }
                         ]
