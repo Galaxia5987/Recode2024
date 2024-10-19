@@ -8,8 +8,6 @@ import frc.robot.Robot
 import frc.robot.RobotContainer
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.leds.LEDConstants
-import frc.robot.subsystems.leds.LEDs
 
 object IntakeCommands {
     private val intake = Intake.getInstance()
@@ -17,14 +15,7 @@ object IntakeCommands {
 
     fun stopIntake(): Command = Commands.parallel(
         intake.stop(), gripper.stop(),
-        ControllerInputs.stopRumble()
-            .andThen(Commands.waitSeconds(2.0))
-            .andThen(
-                ConditionalCommand(
-                    LEDs.getInstance().setSolidMode(LEDConstants.SHOOT_STATE_COLOR),
-                    LEDs.getInstance().setSolidMode(LEDConstants.AMP_STATE_COLOR),
-                    { RobotContainer.getState()=="Speaker"})
-            ))
+        ControllerInputs.stopRumble())
 
     fun intake(): Command {
         return Commands.parallel(
@@ -35,8 +26,7 @@ object IntakeCommands {
                 Commands.parallel(
                     intake.stop(),
                     gripper.setRollerPower(0.0),
-                    ControllerInputs.startRumble().onlyIf{Robot.isTeleop},
-                    LEDs.getInstance().setSolidMode(LEDConstants.HAS_NOTE_COLOR)
+                    ControllerInputs.startRumble().onlyIf{Robot.isTeleop}
                 ))
             .withName("intake")
     }
