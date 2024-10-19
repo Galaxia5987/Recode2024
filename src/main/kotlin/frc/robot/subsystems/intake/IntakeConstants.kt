@@ -24,6 +24,6 @@ object IntakeConstants {
         )
     }
 
-    val INTAKE_ANGLE: Measure<Angle> = Units.Degree.of(20.0)
-    val REST_ANGLE: Measure<Angle> = Units.Degree.of(126.2)
+    val INTAKE_ANGLE: Measure<Angle> = Units.Degree.of(25.0)
+    val REST_ANGLE: Measure<Angle> = Units.Degree.of(127.0)
 }
