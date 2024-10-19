@@ -38,9 +38,9 @@ object ShootingCommands {
 
     fun trussSetpoint(): Command {
         return WarmupCommands.warmup(
-            { Units.Degrees.of(77.0) },
-            { Units.RotationsPerSecond.of(45.0) },
-            { Units.RotationsPerSecond.of(45.0) }
+            { Units.Degrees.of(75.0) },
+            { Units.RotationsPerSecond.of(50.0) },
+            { Units.RotationsPerSecond.of(50.0) }
         )
             .alongWith(turnToSpeaker())
     }
