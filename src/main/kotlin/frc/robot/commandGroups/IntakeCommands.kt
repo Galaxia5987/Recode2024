@@ -3,7 +3,7 @@ package frc.robot.commandGroups
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.ControllerInputs
-import frc.robot.lib.finallyDo
+import frc.robot.Robot
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.leds.LEDs
@@ -23,7 +23,7 @@ object IntakeCommands {
                 Commands.parallel(
                     intake.stop(),
                     gripper.setRollerPower(0.0),
-                    ControllerInputs.startRumble(),
+                    ControllerInputs.startRumble().onlyIf{Robot.isTeleop},
                     LEDs.getInstance().intakeCommand()
                 ))
             .withName("intake")
