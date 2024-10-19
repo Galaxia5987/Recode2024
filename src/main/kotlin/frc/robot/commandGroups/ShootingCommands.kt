@@ -42,6 +42,7 @@ object ShootingCommands {
             { Units.RotationsPerSecond.of(45.0) },
             { Units.RotationsPerSecond.of(45.0) }
         )
+            .alongWith(turnToSpeaker())
     }
 
     fun finishScore(): Command {
