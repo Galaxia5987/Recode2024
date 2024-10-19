@@ -62,7 +62,7 @@ object Robot : LoggedRobot() {
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
                 LoggedPowerDistribution.getInstance(0, PowerDistribution.ModuleType.kCTRE)
-                Logger.addDataReceiver(WPILOGWriter("/home/lvuser/logs"))
+                Logger.addDataReceiver(WPILOGWriter())
                 Logger.addDataReceiver(NT4Publisher())
             }
 
