@@ -26,7 +26,6 @@ object IntakeCommands {
                     ControllerInputs.startRumble(),
                     LEDs.getInstance().intakeCommand()
                 ))
-            .finallyDo(stopIntake().alongWith(ControllerInputs.stopRumble()))
             .withName("intake")
     }
 
