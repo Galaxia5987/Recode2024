@@ -83,24 +83,6 @@
           ]
         }
       }
-    },
-    {
-      "name": "warmup",
-      "waypointRelativePos": 1.8,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "parallel",
-        "data": {
-          "commands": [
-            {
-              "type": "named",
-              "data": {
-                "name": "warmup"
-              }
-            }
-          ]
-        }
-      }
     }
   ],
   "globalConstraints": {

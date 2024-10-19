@@ -8,40 +8,24 @@
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.3068121248935265,
-        "y": 4.985954645693396
+        "x": 4.521052363575665,
+        "y": 4.976216453026026
       },
       "isLocked": false,
       "linkedName": "Middle Spike"
     },
     {
       "anchor": {
-        "x": 5.06639115294838,
-        "y": 4.255590195640653
+        "x": 6.381047163043318,
+        "y": 4.051088149625884
       },
       "prevControl": {
-        "x": 4.486023024439659,
-        "y": 4.756817215716364
-      },
-      "nextControl": {
-        "x": 5.280631391630518,
-        "y": 4.070564534960625
-      },
-      "isLocked": false,
-      "linkedName": null
-    },
-    {
-      "anchor": {
-        "x": 8.085230879833054,
-        "y": 4.099779112962734
-      },
-      "prevControl": {
-        "x": 6.936124145088562,
-        "y": 4.128993690968907
+        "x": 5.348798740302108,
+        "y": 4.245852002973283
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "center note line #3"
+      "linkedName": "BStage"
     }
   ],
   "rotationTargets": [],
@@ -50,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "intake",
-      "waypointRelativePos": 1.0225022502250227,
+      "waypointRelativePos": 1,
       "endWaypointRelativePos": null,
       "command": null
     }
@@ -64,7 +48,7 @@
     "unlimited": false
   },
   "goalEndState": {
-    "velocity": 0,
+    "velocity": 1.0,
     "rotation": 0.0
   },
   "reversed": false,
