@@ -30,7 +30,6 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
         results.clear()
         for (io: VisionIO in ios) {
             io.updateInputs()
-            Logger.processInputs("vision/${io.name}", io.inputs)
             results.add(io.getLatestResult())
         }
     }
