@@ -30,8 +30,8 @@ object SwerveConstants {
     const val NEO_CURRENT_LIMIT = 40.0
     const val NEO_550_CURRENT_LIMIT = 20.0
     val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
-        .withSupplyCurrentLimit(30.0)
-        .withStatorCurrentLimit(60.0)
+        .withSupplyCurrentLimit(40.0)
+        .withStatorCurrentLimit(80.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
     val VOLTAGE_CONFIGS = VoltageConfigs()
