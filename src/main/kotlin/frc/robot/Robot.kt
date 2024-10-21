@@ -44,7 +44,7 @@ object Robot : LoggedRobot() {
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
         
-        initializeSubsystems(Constants.CURRENT_MODE)
+        initializeSubsystems()
 
         // Initialize logger
         listOf(
