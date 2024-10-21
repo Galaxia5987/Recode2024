@@ -127,6 +127,8 @@ object RobotContainer {
         register("outtake", IntakeCommands.outtake())
         register("stopIntake", IntakeCommands.stopIntake())
         register("rollShooter", Shooter.getInstance().rollNote())
+        register("setpointShoot", ShootingCommands.closeShoot())
+        register("finishSetpointShoot", ShootingCommands.finishScore())
     }
 
     @AutoLogOutput
