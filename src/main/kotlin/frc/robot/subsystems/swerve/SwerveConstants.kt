@@ -21,7 +21,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
-    val OFFSETS = arrayOf(0.52978515625, 0.761474609375, 0.017333984375, 0.326904296875)
+    val OFFSETS = arrayOf(0.533203125, 0.761962890625, 0.017578125, 0.326416015625)
 
     const val VOLT_COMP_SATURATION = 12.0
     const val NEUTRAL_DEADBAND = 0.0
@@ -30,8 +30,8 @@ object SwerveConstants {
     const val NEO_CURRENT_LIMIT = 40.0
     const val NEO_550_CURRENT_LIMIT = 20.0
     val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
-        .withSupplyCurrentLimit(50.0)
-        .withStatorCurrentLimit(100.0)
+        .withSupplyCurrentLimit(30.0)
+        .withStatorCurrentLimit(60.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
     val VOLTAGE_CONFIGS = VoltageConfigs()
@@ -247,6 +247,8 @@ object SwerveConstants {
                 .withSensorToMechanismRatio(1 / DRIVE_REDUCTION)
         DRIVE_MOTOR_CONFIGS =
             TalonFXConfiguration()
+                .withClosedLoopRamps(ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.2))
+                .withOpenLoopRamps(OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.2))
                 .withMotorOutput(MOTOR_OUTPUT_CONFIGS)
                 .withVoltage(VOLTAGE_CONFIGS)
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)

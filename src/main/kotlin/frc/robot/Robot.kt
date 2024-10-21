@@ -72,7 +72,7 @@ object Robot : LoggedRobot() {
                 val logPath = LogFileUtil.findReplayLog()
                 Logger.setReplaySource(WPILOGReader(logPath))
                 Logger.addDataReceiver(
-                        WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")))
+                        WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_replay")))
             }
         }
         Logger.start()

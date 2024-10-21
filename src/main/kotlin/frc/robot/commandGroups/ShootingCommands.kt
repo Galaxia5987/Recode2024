@@ -8,10 +8,10 @@ import frc.robot.Constants
 import frc.robot.ControllerInputs
 import frc.robot.lib.finallyDo
 import frc.robot.lib.getRotationToTranslation
-import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import org.littletonrobotics.junction.Logger
@@ -46,7 +46,10 @@ object ShootingCommands {
     }
 
     fun finishScore(): Command {
-        return Gripper.getInstance().feed().alongWith(Commands.waitSeconds(0.5)).andThen(WarmupCommands.stopWarmup())
+        return Gripper.getInstance().feed()
+            .alongWith(
+                Commands.waitSeconds(0.5).andThen(WarmupCommands.stopWarmup())
+            )
     }
 
     fun turnToSpeaker(): Command {
@@ -72,10 +75,15 @@ object ShootingCommands {
                 { ShootOverStageConstants.CONVEYOR_VELOCITY_SUPER_POOP }
             ),
             swerveDrive.driveAndAdjust(
-                {Units.Degrees.of(swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
-                    ShootOverStageConstants.SUPER_POOP_TRANSLATION).degrees)},
-                {-ControllerInputs.driverController().leftY},
-                {-ControllerInputs.driverController().leftX},
+                {
+                    Units.Degrees.of(
+                        swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
+                            ShootOverStageConstants.SUPER_POOP_TRANSLATION
+                        ).degrees
+                    )
+                },
+                { -ControllerInputs.driverController().leftY },
+                { -ControllerInputs.driverController().leftX },
                 ShootOverStageConstants.SUPER_POOP_TURN_TOLERANCE,
                 0.1,
                 true

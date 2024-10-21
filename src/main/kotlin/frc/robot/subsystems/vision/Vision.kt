@@ -4,7 +4,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
 
 class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBase() {
-    var results: MutableList<VisionResult> = ArrayList()
+    var results: MutableList<LoggedVisionInputs> = ArrayList()
         private set
 
     companion object {
@@ -30,8 +30,8 @@ class Vision private constructor(private val ios: List<VisionIO>) : SubsystemBas
         results.clear()
         for (io: VisionIO in ios) {
             io.updateInputs()
-            Logger.processInputs("vision/${io.name}", io.inputs)
-            results.add(io.getLatestResult())
+            Logger.processInputs(io.name, io.inputs)
+            results.add(io.inputs)
         }
     }
 }

@@ -65,7 +65,7 @@ object RobotContainer {
         swerveDrive.defaultCommand = swerveDrive.driveCommand(
             { -driverController().leftY },
             { -driverController().leftX },
-            { 0.6 * -driverController().rightX })
+            { 0.5 * -driverController().rightX })
     }
 
     private fun configureButtonBindings() {
@@ -127,6 +127,8 @@ object RobotContainer {
         register("outtake", IntakeCommands.outtake())
         register("stopIntake", IntakeCommands.stopIntake())
         register("rollShooter", Shooter.getInstance().rollNote())
+        register("setpointShoot", ShootingCommands.closeShoot())
+        register("finishSetpointShoot", ShootingCommands.finishScore())
     }
 
     @AutoLogOutput
