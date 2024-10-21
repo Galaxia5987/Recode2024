@@ -247,6 +247,8 @@ object SwerveConstants {
                 .withSensorToMechanismRatio(1 / DRIVE_REDUCTION)
         DRIVE_MOTOR_CONFIGS =
             TalonFXConfiguration()
+                .withClosedLoopRamps(ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.2))
+                .withOpenLoopRamps(OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.2))
                 .withMotorOutput(MOTOR_OUTPUT_CONFIGS)
                 .withVoltage(VOLTAGE_CONFIGS)
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)
