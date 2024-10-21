@@ -28,7 +28,7 @@ import frc.robot.subsystems.vision.*
 import org.photonvision.PhotonCamera
 import org.photonvision.simulation.PhotonCameraSim
 
-val MAP = when (Constants.CURRENT_MODE) {
+private val MAP = when (Constants.CURRENT_MODE) {
     Mode.REAL -> mapOf(
         Climb to ClimbIOTalonFX(),
         Conveyor to ConveyorIOReal(),
@@ -73,7 +73,7 @@ val MAP = when (Constants.CURRENT_MODE) {
     )
 }
 
-    fun createModuleIOs(): Array<ModuleIO> {
+    private fun createModuleIOs(): Array<ModuleIO> {
     return when (Constants.CURRENT_MODE) {
             Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
                 Constants.ROBORIO_NEO_SERIAL -> {
