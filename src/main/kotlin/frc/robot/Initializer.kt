@@ -18,7 +18,7 @@ import frc.robot.subsystems.vision.*
 import org.photonvision.PhotonCamera
 import org.photonvision.simulation.PhotonCameraSim
 
-val MAP = when (Constants.CURRENT_MODE) {
+private val MAP = when (Constants.CURRENT_MODE) {
     Mode.REAL -> mapOf(
         Climb to ClimbIOTalonFX(),
         Conveyor to ConveyorIOReal(),
@@ -63,7 +63,7 @@ val MAP = when (Constants.CURRENT_MODE) {
     )
 }
 
-fun createModuleIOs(): Array<ModuleIO> {
+private fun createModuleIOs(): Array<ModuleIO> {
     return when (Constants.CURRENT_MODE) {
         Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
             Constants.ROBORIO_NEO_SERIAL -> {
@@ -106,7 +106,7 @@ fun createModuleIOs(): Array<ModuleIO> {
     }
 }
 
-fun initSwerve() {
+private fun initSwerve() {
     val moduleIOs: Array<ModuleIO> = createModuleIOs()
 
     val gyroIO = when (Constants.CURRENT_MODE) {
@@ -124,7 +124,7 @@ fun initSwerve() {
     SwerveDrive.initialize(gyroIO, SwerveConstants.OFFSETS, *moduleIOs)
 }
 
-fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
+private fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
     return when (Constants.CURRENT_MODE) {
         Mode.REAL -> PhotonVisionIOReal(PhotonCamera(cameraName), robotToCam)
         Mode.SIM -> PhotonVisionIOSim(
@@ -142,7 +142,7 @@ fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
     }
 }
 
-fun initVision() {
+private fun initVision() {
     val speakerRightCamera = initPhotonCamera("rightOV2311", VisionConstants.SPEAKER_RIGHT_CAMERA_POSE)
     val speakerLeftCamera = initPhotonCamera("leftOV2311", VisionConstants.SPEAKER_LEFT_CAMERA_POSE)
     val intakeAprilTagCamera = initPhotonCamera("frontOV2311", VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,)
