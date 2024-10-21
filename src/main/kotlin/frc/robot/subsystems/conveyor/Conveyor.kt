@@ -9,12 +9,12 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase() {
-    private val kP = LoggedTunableNumber("Conveyor/kP", ConveyorConstants.GAINS.kP)
-    private val kI = LoggedTunableNumber("Conveyor/kI", ConveyorConstants.GAINS.kI)
-    private val kD = LoggedTunableNumber("Conveyor/kD", ConveyorConstants.GAINS.kD)
-    private val kS = LoggedTunableNumber("Conveyor/kS", ConveyorConstants.GAINS.kS)
-    private val kV = LoggedTunableNumber("Conveyor/kV", ConveyorConstants.GAINS.kV)
-    private val kA = LoggedTunableNumber("Conveyor/kA", ConveyorConstants.GAINS.kA)
+    private val kP = LoggedTunableNumber("Conveyor/kP", GAINS.kP)
+    private val kI = LoggedTunableNumber("Conveyor/kI", GAINS.kI)
+    private val kD = LoggedTunableNumber("Conveyor/kD", GAINS.kD)
+    private val kS = LoggedTunableNumber("Conveyor/kS", GAINS.kS)
+    private val kV = LoggedTunableNumber("Conveyor/kV", GAINS.kV)
+    private val kA = LoggedTunableNumber("Conveyor/kA", GAINS.kA)
 
     @AutoLogOutput
     private var velocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
@@ -56,10 +56,10 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         io.setVelocity(velocity)
     }
 
-    fun feed() = setVelocity(ConveyorConstants.FEED_VELOCITY)
+    fun feed() = setVelocity(FEED_VELOCITY)
 
     fun atSetPoint(): Boolean {
-        return inputs.velocity.isNear(velocitySetpoint, ConveyorConstants.AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
+        return inputs.velocity.isNear(velocitySetpoint, AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
     }
 
     fun stop(): Command {

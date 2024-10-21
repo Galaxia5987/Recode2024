@@ -11,15 +11,8 @@ object ClimbConstants {
     const val STOPPER_MOTOR_CURRENT_THRESHOLD = 10 //The current threshold for the stopper to stop at(when it hits something)
     const val STOPPER_MOTOR_VOLTAGE_COMPENSATION_SATURATION = 12.0
     const val STOPPER_MOTOR_POWER = 0.5
-    val MOTOR_CONFIG = TalonFXConfiguration()
 
     init {
-        MOTOR_CONFIG.withMotorOutput(
-            MotorOutputConfigs()
-                .withInverted(InvertedValue.Clockwise_Positive)
-                .withNeutralMode(NeutralModeValue.Brake)
-        ).CurrentLimits
-            .withStatorCurrentLimitEnable(false)
-            .withSupplyCurrentLimitEnable(false)
+
     }
 }

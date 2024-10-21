@@ -15,9 +15,7 @@ import frc.robot.subsystems.leds.LEDs
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
-import frc.robot.subsystems.vision.PhotonVisionIOReal
-import frc.robot.subsystems.vision.Vision
-import frc.robot.subsystems.vision.VisionConstants
+import frc.robot.subsystems.vision.*
 import org.photonvision.PhotonCamera
 
 object Initializer {
@@ -70,22 +68,22 @@ object Initializer {
         val speakerRightCamera =
             PhotonVisionIOReal(
                 PhotonCamera("rightOV2311"),
-                VisionConstants.SPEAKER_RIGHT_CAMERA_POSE
+                SPEAKER_RIGHT_CAMERA_POSE
             )
         val speakerLeftCamera =
             PhotonVisionIOReal(
                 PhotonCamera("leftOV2311"),
-                VisionConstants.SPEAKER_LEFT_CAMERA_POSE,
+                SPEAKER_LEFT_CAMERA_POSE,
             )
         val intakeAprilTagCamera =
             PhotonVisionIOReal(
                 PhotonCamera("frontOV2311"),
-                VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,
+                INTAKE_APRILTAG_CAMERA_POSE,
             )
         val driverCamera =
             PhotonVisionIOReal(
                 PhotonCamera("Driver_Camera"),
-                VisionConstants.DRIVER_CAMERA_POSE,
+                DRIVER_CAMERA_POSE,
             )
 
         Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))

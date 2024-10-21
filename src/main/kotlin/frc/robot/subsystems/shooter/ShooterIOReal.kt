@@ -21,47 +21,47 @@ class ShooterIOReal : ShooterIO {
 
         val topMotorConfig = TalonFXConfiguration().apply {
             Feedback = FeedbackConfigs().apply {
-                SensorToMechanismRatio = ShooterConstants.GEAR_RATIO_TOP
+                SensorToMechanismRatio = GEAR_RATIO_TOP
             }
             Slot0 = Slot0Configs().apply {
-                kP = ShooterConstants.TOP_GAINS.kP
-                kI = ShooterConstants.TOP_GAINS.kI
-                kD = ShooterConstants.TOP_GAINS.kD
-                kS = ShooterConstants.TOP_GAINS.kS
-                kV = ShooterConstants.TOP_GAINS.kV
-                kA = ShooterConstants.TOP_GAINS.kA
+                kP = TOP_GAINS.kP
+                kI = TOP_GAINS.kI
+                kD = TOP_GAINS.kD
+                kS = TOP_GAINS.kS
+                kV = TOP_GAINS.kV
+                kA = TOP_GAINS.kA
             }
             MotorOutput = MotorOutputConfigs().apply {
-                Inverted = ShooterConstants.TOP_INVERSION
+                Inverted = TOP_INVERSION
             }
             CurrentLimits = CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
                 SupplyCurrentLimitEnable = true
-                StatorCurrentLimit = 2 * ShooterConstants.CURRENT_LIMIT_TOP
-                SupplyCurrentLimit = ShooterConstants.CURRENT_LIMIT_TOP
+                StatorCurrentLimit = 2 * CURRENT_LIMIT_TOP
+                SupplyCurrentLimit = CURRENT_LIMIT_TOP
             }
         }
 
         val bottomMotorConfig = TalonFXConfiguration().apply {
             Feedback = FeedbackConfigs().apply {
-                SensorToMechanismRatio = ShooterConstants.GEAR_RATIO_BOTTOM
+                SensorToMechanismRatio = GEAR_RATIO_BOTTOM
             }
             Slot0 = Slot0Configs().apply {
-                kP = ShooterConstants.BOTTOM_GAINS.kP
-                kI = ShooterConstants.BOTTOM_GAINS.kI
-                kD = ShooterConstants.BOTTOM_GAINS.kD
-                kS = ShooterConstants.BOTTOM_GAINS.kS
-                kV = ShooterConstants.BOTTOM_GAINS.kV
-                kA = ShooterConstants.BOTTOM_GAINS.kA
+                kP = BOTTOM_GAINS.kP
+                kI = BOTTOM_GAINS.kI
+                kD = BOTTOM_GAINS.kD
+                kS = BOTTOM_GAINS.kS
+                kV = BOTTOM_GAINS.kV
+                kA = BOTTOM_GAINS.kA
             }
             MotorOutput = MotorOutputConfigs().apply {
-                Inverted = ShooterConstants.BOTTOM_INVERSION
+                Inverted = BOTTOM_INVERSION
             }
             CurrentLimits = CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
                 SupplyCurrentLimitEnable = true
-                StatorCurrentLimit = 2 * ShooterConstants.CURRENT_LIMIT_BOTTOM
-                SupplyCurrentLimit = ShooterConstants.CURRENT_LIMIT_BOTTOM
+                StatorCurrentLimit = 2 * CURRENT_LIMIT_BOTTOM
+                SupplyCurrentLimit = CURRENT_LIMIT_BOTTOM
             }
         }
 

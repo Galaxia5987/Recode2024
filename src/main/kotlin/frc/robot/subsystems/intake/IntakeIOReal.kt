@@ -52,12 +52,12 @@ class IntakeIOReal : IntakeIO {
             }
             Feedback = FeedbackConfigs().apply {
                 RotorToSensorRatio = 1.0
-                SensorToMechanismRatio = IntakeConstants.GEAR_RATIO
+                SensorToMechanismRatio = GEAR_RATIO
             }
             Slot0 = Slot0Configs().apply {
-                kP = IntakeConstants.GAINS.kP
-                kI = IntakeConstants.GAINS.kI
-                kD = IntakeConstants.GAINS.kD
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kD
 
             }
             CurrentLimits = CurrentLimitsConfigs().apply {

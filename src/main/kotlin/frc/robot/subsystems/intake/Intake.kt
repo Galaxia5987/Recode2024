@@ -11,9 +11,9 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Intake(private val io: IntakeIO) : SubsystemBase() {
-    private val angleKP = LoggedTunableNumber("Intake/Angle/kP", IntakeConstants.GAINS.kP)
-    private val angleKI = LoggedTunableNumber("Intake/Angle/kI", IntakeConstants.GAINS.kI)
-    private val angleKD = LoggedTunableNumber("Intake/Angle/kD", IntakeConstants.GAINS.kD)
+    private val angleKP = LoggedTunableNumber("Intake/Angle/kP", GAINS.kP)
+    private val angleKI = LoggedTunableNumber("Intake/Angle/kI", GAINS.kI)
+    private val angleKD = LoggedTunableNumber("Intake/Angle/kD", GAINS.kD)
 
     @AutoLogOutput
     private var angleSetpoint: Measure<Angle> = Units.Degree.zero()
@@ -60,17 +60,17 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
 
     fun intake(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.INTAKE_ANGLE),
-            setSpinPower(IntakeConstants.INTAKE_SPIN_POWER),
-            setCenterPower(IntakeConstants.INTAKE_CENTER_POWER)
+            setAngle(INTAKE_ANGLE),
+            setSpinPower(INTAKE_SPIN_POWER),
+            setCenterPower(INTAKE_CENTER_POWER)
         )
     }
 
     fun outtake(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.REST_ANGLE),
-            setSpinPower(-IntakeConstants.INTAKE_SPIN_POWER),
-            setCenterPower(-IntakeConstants.INTAKE_CENTER_POWER)
+            setAngle(REST_ANGLE),
+            setSpinPower(-INTAKE_SPIN_POWER),
+            setCenterPower(-INTAKE_CENTER_POWER)
         )
     }
 
@@ -81,7 +81,7 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
     }
 
     fun stop(): Command {
-        return setAngle(IntakeConstants.REST_ANGLE).alongWith(stopSpin())
+        return setAngle(REST_ANGLE).alongWith(stopSpin())
     }
 
     fun reset(): Command {
