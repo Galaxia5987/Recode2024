@@ -1,26 +1,68 @@
 package frc.robot
 
+import com.sun.jdi.InterfaceType
 import frc.robot.lib.PoseEstimation
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOTalonFX
-import frc.robot.subsystems.conveyor.Conveyor
-import frc.robot.subsystems.conveyor.ConveyorIOReal
-import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.gripper.GripperIOReal
-import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.hood.HoodIOReal
-import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.intake.IntakeIOReal
 import frc.robot.subsystems.leds.LEDs
-import frc.robot.subsystems.shooter.Shooter
-import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
 import frc.robot.subsystems.vision.PhotonVisionIOReal
+import frc.robot.Constants.Mode
+import frc.robot.subsystems.climb.ClimbIO
+import frc.robot.subsystems.climb.LoggedClimbInputs
+import frc.robot.subsystems.conveyor.*
+import frc.robot.subsystems.gripper.*
+import frc.robot.subsystems.hood.*
+import frc.robot.subsystems.intake.*
+import frc.robot.subsystems.shooter.*
 import frc.robot.subsystems.vision.Vision
 import frc.robot.subsystems.vision.VisionConstants
 import org.photonvision.PhotonCamera
 
-object Initializer {
+val MAP = when (Constants.CURRENT_MODE) {
+    Mode.REAL -> mapOf(
+        Climb to ClimbIOTalonFX(),
+        Conveyor to ConveyorIOReal(),
+        Gripper to GripperIOReal(),
+        Intake to IntakeIOReal(),
+        Hood to HoodIOReal(),
+        LEDs to LEDs.initialize(9, 97),
+        Shooter to ShooterIOReal()
+    )
+
+    Mode.SIM -> mapOf(
+        Climb to object : ClimbIO {
+            override val inputs = LoggedClimbInputs()
+        },
+        Conveyor to ConveyorIOSim(),
+        Gripper to GripperIOSim(),
+        Intake to IntakeIOSim(),
+        Hood to HoodIOSim(),
+        Shooter to ShooterIOSim()
+    )
+
+    Mode.REPLAY -> mapOf(
+        Climb to object : ClimbIO {
+            override val inputs = LoggedClimbInputs()
+        },
+        Conveyor to object : ConveyorIO {
+            override val inputs = LoggedConveyorInputs()
+        },
+        Gripper to object : GripperIO {
+            override val inputs = LoggedGripperInputs()
+        },
+        Intake to object : IntakeIO {
+            override val inputs = LoggedIntakeInputs()
+        },
+        Hood to object : HoodIO {
+            override val inputs = LoggedHoodInputs()
+        },
+        Shooter to object : ShooterIO {
+            override val topRollerInputs = LoggedRollerInputs()
+            override val bottomRollerInputs = LoggedRollerInputs()
+        }
+    )
+}
 
     fun initSwerve() {
         val moduleIOs: Array<ModuleIO> = when (Constants.CURRENT_MODE) {
