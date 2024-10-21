@@ -124,6 +124,23 @@ fun initSwerve() {
     SwerveDrive.initialize(gyroIO, SwerveConstants.OFFSETS, *moduleIOs)
 }
 
+fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
+    return when (Constants.CURRENT_MODE) {
+        Mode.REAL -> PhotonVisionIOReal(PhotonCamera(cameraName), robotToCam)
+        Mode.SIM -> PhotonVisionIOSim(
+            PhotonCameraSim(
+                PhotonCamera(
+                    cameraName
+                )
+            ),
+            robotToCam
+        )
+        Mode.REPLAY -> object: VisionIO {
+            override val inputs = LoggedVisionInputs()
+            override val name = cameraName
+        }
+    }
+}
 
 fun initVision() {
     val speakerRightCamera =
