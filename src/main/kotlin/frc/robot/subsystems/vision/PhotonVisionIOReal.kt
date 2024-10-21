@@ -40,17 +40,13 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         val tags = latestResult.targets
 
         inputs.distanceToTargets.clear()
+        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
 
+        inputs.timestamp = estimatedPose.get().timestampSeconds
         for (tag in tags) {
             val distanceToTarget = tag.bestCameraToTarget.translation.norm
-            if (distanceToTarget > VisionConstants.MAXIMUM_DISTANCE_FROM_TAG.`in`(Units.Meters)) {
-                return
-            }
-
             inputs.distanceToTargets.add(distanceToTarget)
         }
 
-        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
-        inputs.timestamp = estimatedPose.get().timestampSeconds
     }
 }
