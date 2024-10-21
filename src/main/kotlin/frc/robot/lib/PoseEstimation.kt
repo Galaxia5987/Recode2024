@@ -43,7 +43,7 @@ class PoseEstimation {
         val results = vision.results
 
         for (result in results) {
-            val estimatedPose = result.estimatedRobotPose
+            val estimatedPose = result.poseFieldOriented
 
             val isFloating = estimatedPose.z > 0.1
             val isOutOfBounds = isOutOfBounds(estimatedPose)

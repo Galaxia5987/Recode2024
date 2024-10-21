@@ -6,7 +6,7 @@ import org.photonvision.PhotonCamera
 import org.photonvision.PhotonPoseEstimator
 
 class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCam: Transform3d) : VisionIO {
-    private var visionResult = VisionResult()
+    override val inputs = LoggedVisionInputs()
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
         VisionConstants.aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
@@ -24,9 +24,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         camera.pipelineIndex = pipeLineIndex
     }
 
-    override fun getLatestResult(): VisionResult = visionResult
-
-    override fun updateResult() {
+    override fun updateInputs() {
         val latestResult = camera.latestResult
 
         if (!latestResult.hasTargets()) {
@@ -41,17 +39,18 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
 
         val tags = latestResult.targets
 
+        inputs.distanceToTargets.clear()
+
         for (tag in tags) {
-            visionResult.distanceToTargets.clear()
             val distanceToTarget = tag.bestCameraToTarget.translation.norm
             if (distanceToTarget > VisionConstants.MAXIMUM_DISTANCE_FROM_TAG.`in`(Units.Meters)) {
                 return
             }
 
-            visionResult.distanceToTargets.add(distanceToTarget)
+            inputs.distanceToTargets.add(distanceToTarget)
         }
 
-        visionResult.estimatedRobotPose = estimatedPose.get().estimatedPose
-        visionResult.timestamp = estimatedPose.get().timestampSeconds
+        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
+        inputs.timestamp = estimatedPose.get().timestampSeconds
     }
 }
