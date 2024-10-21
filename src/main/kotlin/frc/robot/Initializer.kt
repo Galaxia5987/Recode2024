@@ -1,5 +1,6 @@
 package frc.robot
 
+import com.sun.jdi.InterfaceType
 import frc.robot.lib.PoseEstimation
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOTalonFX
@@ -108,50 +109,47 @@ val MAP = when (Constants.CURRENT_MODE) {
             }
         }
 
-        val gyroIO = when (Constants.CURRENT_MODE) {
-            Constants.Mode.REAL -> GyroIOReal()
-            else -> GyroIOSim()
-        }
-
-        SwerveDrive.initialize(gyroIO, SwerveConstants.OFFSETS, *moduleIOs)
+    val gyroIO = when (Constants.CURRENT_MODE) {
+        Constants.Mode.REAL -> GyroIOReal()
+        else -> GyroIOSim()
     }
 
+    SwerveDrive.initialize(gyroIO, SwerveConstants.OFFSETS, *moduleIOs)
+}
 
-    fun initVision() {
-        val speakerRightCamera =
-            PhotonVisionIOReal(
-                PhotonCamera("rightOV2311"),
-                VisionConstants.SPEAKER_RIGHT_CAMERA_POSE
-            )
-        val speakerLeftCamera =
-            PhotonVisionIOReal(
-                PhotonCamera("leftOV2311"),
-                VisionConstants.SPEAKER_LEFT_CAMERA_POSE,
-            )
-        val intakeAprilTagCamera =
-            PhotonVisionIOReal(
-                PhotonCamera("frontOV2311"),
-                VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,
-            )
-        val driverCamera =
-            PhotonVisionIOReal(
-                PhotonCamera("Driver_Camera"),
-                VisionConstants.DRIVER_CAMERA_POSE,
-            )
 
-        Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
-    }
+fun initVision() {
+    val speakerRightCamera =
+        PhotonVisionIOReal(
+            PhotonCamera("rightOV2311"),
+            VisionConstants.SPEAKER_RIGHT_CAMERA_POSE
+        )
+    val speakerLeftCamera =
+        PhotonVisionIOReal(
+            PhotonCamera("leftOV2311"),
+            VisionConstants.SPEAKER_LEFT_CAMERA_POSE,
+        )
+    val intakeAprilTagCamera =
+        PhotonVisionIOReal(
+            PhotonCamera("frontOV2311"),
+            VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,
+        )
+    val driverCamera =
+        PhotonVisionIOReal(
+            PhotonCamera("Driver_Camera"),
+            VisionConstants.DRIVER_CAMERA_POSE,
+        )
 
-    init {
-        initVision()
-        initSwerve()
-        PoseEstimation.initialize()
-        Climb.initialize(ClimbIOTalonFX())
-        Shooter.initialize(ShooterIOReal())
-        Hood.initialize(HoodIOReal())
-        Conveyor.initialize(ConveyorIOReal())
-        Intake.initialize(IntakeIOReal())
-        Gripper.initialize(GripperIOReal())
-        LEDs.initialize(9, 97)
-    }
+    Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
+}
+
+fun initializeSubsystems(currentMode: Constants.Mode) {
+    PoseEstimation.initialize()
+
+    (MAP[Climb] as? ClimbIO)?.let { Climb.initialize(it) }
+    (MAP[Shooter] as? ShooterIO)?.let { Shooter.initialize(it) }
+    (MAP[Hood] as? HoodIO)?.let { Hood.initialize(it) }
+    (MAP[Conveyor] as? ConveyorIO)?.let { Conveyor.initialize(it) }
+    (MAP[Intake] as? IntakeIO)?.let { Intake.initialize(it) }
+    (MAP[Gripper] as? GripperIO)?.let { Gripper.initialize(it) }
 }
