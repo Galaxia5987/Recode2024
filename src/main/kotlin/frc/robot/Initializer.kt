@@ -133,7 +133,7 @@ fun initVision() {
     Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
 }
 
-fun initializeSubsystems(currentMode: Constants.Mode) {
+fun initializeSubsystems() {
     PoseEstimation.initialize()
 
     (MAP[Climb] as? ClimbIO)?.let { Climb.initialize(it) }
