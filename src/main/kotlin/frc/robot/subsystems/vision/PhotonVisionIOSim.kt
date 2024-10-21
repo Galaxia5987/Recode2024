@@ -29,7 +29,7 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
     }
 
     override fun getLatestResult(): VisionResult =
-        VisionResult(inputs.poseFieldOriented, inputs.timestamp, inputs.distanceToTargets, inputs.poseAmbiguities)
+        VisionResult(inputs.poseFieldOriented, inputs.timestamp)
 
     private fun pose2dToPose3d(pose: Pose2d): Pose3d = Pose3d(
         pose.x, pose.y, 0.0, Rotation3d(0.0, 0.0, pose.rotation.radians)
@@ -65,8 +65,6 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
 
         for (tag in tags) {
             inputs.distanceToTargets.add(tag.bestCameraToTarget.translation.norm)
-            inputs.tagAreas.add(tag.area)
-            inputs.poseAmbiguities.add(tag.poseAmbiguity)
         }
 
     }
