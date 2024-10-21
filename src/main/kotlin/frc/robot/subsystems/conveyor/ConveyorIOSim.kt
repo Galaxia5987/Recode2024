@@ -12,15 +12,15 @@ class ConveyorIOSim : ConveyorIO {
     private val control = VelocityVoltage(0.0)
     private val conveyor = TalonFXSim(
         1,
-        ConveyorConstants.GEAR_RATIO,
-        ConveyorConstants.MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
+        GEAR_RATIO,
+        MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
         1.0
     )
 
     private val controller: PIDController =
-        PIDController(ConveyorConstants.GAINS.kP, ConveyorConstants.GAINS.kI, ConveyorConstants.GAINS.kD, 0.02)
+        PIDController(GAINS.kP, GAINS.kI, GAINS.kD, 0.02)
     private val feed: SimpleMotorFeedforward =
-        SimpleMotorFeedforward(ConveyorConstants.GAINS.kS, ConveyorConstants.GAINS.kV, ConveyorConstants.GAINS.kA)
+        SimpleMotorFeedforward(GAINS.kS, GAINS.kV, GAINS.kA)
 
     init {
         conveyor.setController(controller)

@@ -85,7 +85,7 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
             val currentSecondary = secondary
             val currentBlinkTime = blinkTime
             val currentMode = mode
-            setBlink(Color.kBlack, LEDConstants.HAS_NOTE_COLOR, 0.1)
+            setBlink(Color.kBlack, HAS_NOTE_COLOR, 0.1)
                 .andThen(Commands.waitSeconds(2.0))
                 .andThen(Commands.runOnce(
                     {

@@ -24,12 +24,12 @@ class ConveyorIOReal : ConveyorIO {
                 Inverted = InvertedValue.Clockwise_Positive
             }
             Slot0 = Slot0Configs().apply {
-                kP = ConveyorConstants.GAINS.kP
-                kI = ConveyorConstants.GAINS.kI
-                kD = ConveyorConstants.GAINS.kD
-                kS = ConveyorConstants.GAINS.kS
-                kV = ConveyorConstants.GAINS.kV
-                kA = ConveyorConstants.GAINS.kA
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kD
+                kS = GAINS.kS
+                kV = GAINS.kV
+                kA = GAINS.kA
             }
             CurrentLimits = CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
@@ -37,7 +37,7 @@ class ConveyorIOReal : ConveyorIO {
                 StatorCurrentLimit = 80.0
                 SupplyCurrentLimit = 40.0
             }
-            Feedback = FeedbackConfigs().apply { SensorToMechanismRatio = ConveyorConstants.GEAR_RATIO
+            Feedback = FeedbackConfigs().apply { SensorToMechanismRatio = GEAR_RATIO
             }
         }
 

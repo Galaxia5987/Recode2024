@@ -16,93 +16,91 @@ import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import org.littletonrobotics.junction.Logger
 
-object ShootingCommands {
-    private val swerveDrive = SwerveDrive.getInstance()
-    private val shooter = Shooter.getInstance()
-    private val hood = Hood.getInstance()
-    private val conveyor = Conveyor.getInstance()
+private val swerveDrive = SwerveDrive.getInstance()
+private val shooter = Shooter.getInstance()
+private val hood = Hood.getInstance()
+private val conveyor = Conveyor.getInstance()
 
-    private fun getRotationToSpeaker(): Rotation2d {
-        return swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
-            Constants.SPEAKER_POSE
+private fun getRotationToSpeaker(): Rotation2d {
+    return swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
+        Constants.SPEAKER_POSE
+    )
+}
+
+fun closeShoot(): Command {
+    return warmup(
+        { Units.Degrees.of(97.0) },
+        { Units.RotationsPerSecond.of(45.0) },
+        { Units.RotationsPerSecond.of(45.0) }
+    )
+}
+
+fun trussSetpoint(): Command {
+    return warmup(
+        { Units.Degrees.of(75.0) },
+        { Units.RotationsPerSecond.of(50.0) },
+        { Units.RotationsPerSecond.of(50.0) }
+    )
+        .alongWith(turnToSpeaker())
+}
+
+fun finishScore(): Command {
+    return Gripper.getInstance().feed()
+        .alongWith(
+            Commands.waitSeconds(0.5).andThen(stopWarmup())
         )
-    }
+}
 
-    fun closeShoot(): Command {
-        return WarmupCommands.warmup(
-            { Units.Degrees.of(97.0) },
-            { Units.RotationsPerSecond.of(45.0) },
-            { Units.RotationsPerSecond.of(45.0) }
-        )
-    }
-
-    fun trussSetpoint(): Command {
-        return WarmupCommands.warmup(
-            { Units.Degrees.of(75.0) },
-            { Units.RotationsPerSecond.of(50.0) },
-            { Units.RotationsPerSecond.of(50.0) }
-        )
-            .alongWith(turnToSpeaker())
-    }
-
-    fun finishScore(): Command {
-        return Gripper.getInstance().feed()
-            .alongWith(
-                Commands.waitSeconds(0.5).andThen(WarmupCommands.stopWarmup())
+fun turnToSpeaker(): Command {
+    return swerveDrive.driveAndAdjust(
+        {
+            Units.Rotations.of(
+                getRotationToSpeaker().rotations
             )
-    }
+        },
+        { -ControllerInputs.driverController().leftY },
+        { -ControllerInputs.driverController().leftX },
+        SwerveConstants.SHOOT_TURN_TOLERANCE,
+        0.1,
+        true
+    )
+}
 
-    fun turnToSpeaker(): Command {
-        return swerveDrive.driveAndAdjust(
+private fun shootOverStageInit(): Command {
+    return Commands.parallel(
+        warmup(
+            { HOOD_ANGLE_SUPER_POOP },
+            { SHOOTER_VELOCITY_SUPER_POOP },
+            { CONVEYOR_VELOCITY_SUPER_POOP }
+        ),
+        swerveDrive.driveAndAdjust(
             {
-                Units.Rotations.of(
-                    getRotationToSpeaker().rotations
+                Units.Degrees.of(
+                    swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
+                        SUPER_POOP_TRANSLATION
+                    ).degrees
                 )
             },
             { -ControllerInputs.driverController().leftY },
             { -ControllerInputs.driverController().leftX },
-            SwerveConstants.SHOOT_TURN_TOLERANCE,
+            SUPER_POOP_TURN_TOLERANCE,
             0.1,
             true
         )
-    }
+    ).until { shooterConveyorHoodAtSetpoint() }
+}
 
-    private fun shootOverStageInit(): Command {
-        return Commands.parallel(
-            WarmupCommands.warmup(
-                { ShootOverStageConstants.HOOD_ANGLE_SUPER_POOP },
-                { ShootOverStageConstants.SHOOTER_VELOCITY_SUPER_POOP },
-                { ShootOverStageConstants.CONVEYOR_VELOCITY_SUPER_POOP }
-            ),
-            swerveDrive.driveAndAdjust(
-                {
-                    Units.Degrees.of(
-                        swerveDrive.estimator.estimatedPosition.translation.getRotationToTranslation(
-                            ShootOverStageConstants.SUPER_POOP_TRANSLATION
-                        ).degrees
-                    )
-                },
-                { -ControllerInputs.driverController().leftY },
-                { -ControllerInputs.driverController().leftX },
-                ShootOverStageConstants.SUPER_POOP_TURN_TOLERANCE,
-                0.1,
-                true
-            )
-        ).until { shooterConveyorHoodAtSetpoint() }
-    }
+private fun shootOverStageEnd(): Command {
+    return stopWarmup().alongWith(Gripper.getInstance().feed())
+}
 
-    private fun shootOverStageEnd(): Command {
-        return WarmupCommands.stopWarmup().alongWith(Gripper.getInstance().feed())
-    }
+fun shootOverStage(): Command = shootOverStageInit().finallyDo(shootOverStageEnd())
 
-    fun shootOverStage(): Command = shootOverStageInit().finallyDo(shootOverStageEnd())
-
-    fun shooterConveyorHoodAtSetpoint(): Boolean {
-        return (shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()).also {
-            Logger.recordOutput(
-                "ShootingCommands/atScoringSetpoint",
-                it
-            )
-        }
+fun shooterConveyorHoodAtSetpoint(): Boolean {
+    return (shooter.atSetpoint() && conveyor.atSetPoint() && hood.atSetpoint()).also {
+        Logger.recordOutput(
+            "ShootingCommands/atScoringSetpoint",
+            it
+        )
     }
 }
