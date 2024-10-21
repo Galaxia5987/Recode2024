@@ -10,22 +10,20 @@ import frc.robot.subsystems.conveyor.Conveyor
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.shooter.Shooter
 
-object WarmupCommands {
-    private val hood = Hood.getInstance()
-    private val shooter = Shooter.getInstance()
-    private val conveyor = Conveyor.getInstance()
+private val hood = Hood.getInstance()
+private val shooter = Shooter.getInstance()
+private val conveyor = Conveyor.getInstance()
 
-    fun warmup(
-        hoodAngle: () -> Measure<Angle> = { Units.Degrees.of(65.0) },
-        shooterVelocity: () -> Measure<Velocity<Angle>> = { Units.RotationsPerSecond.of(70.0) },
-        conveyorVelocity: () -> Measure<Velocity<Angle>> = { Units.RotationsPerSecond.of(60.0) }
-    ): Command {
-        return Commands.parallel(
-                hood.setAngle(hoodAngle),
-                shooter.setVelocity(shooterVelocity),
-                conveyor.setVelocity(conveyorVelocity)
-            )
-    }
-
-    fun stopWarmup(): Command = Commands.parallel(shooter.stop(), conveyor.stop(), hood.setRestingAngle())
+fun warmup(
+    hoodAngle: () -> Measure<Angle> = { Units.Degrees.of(65.0) },
+    shooterVelocity: () -> Measure<Velocity<Angle>> = { Units.RotationsPerSecond.of(70.0) },
+    conveyorVelocity: () -> Measure<Velocity<Angle>> = { Units.RotationsPerSecond.of(60.0) }
+): Command {
+    return Commands.parallel(
+            hood.setAngle(hoodAngle),
+            shooter.setVelocity(shooterVelocity),
+            conveyor.setVelocity(conveyorVelocity)
+        )
 }
+
+fun stopWarmup(): Command = Commands.parallel(shooter.stop(), conveyor.stop(), hood.setRestingAngle())

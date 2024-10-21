@@ -13,13 +13,13 @@ import edu.wpi.first.wpilibj.Timer
 class IntakeIOSim : IntakeIO {
     override val inputs = LoggedIntakeInputs()
 
-    private val angleMotor = TalonFXSim(1, IntakeConstants.GEAR_RATIO, 0.003, 360 * IntakeConstants.GEAR_RATIO)
+    private val angleMotor = TalonFXSim(1, GEAR_RATIO, 0.003, 360 * GEAR_RATIO)
     private val spinMotor = TalonFXSim(1, 1.0, 0.003, 1.0)
     private val centerMotor = SparkMaxSim(1, 1.0, 0.003, 1.0)
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
     private val angleController: PIDController =
-        PIDController(IntakeConstants.GAINS.kP, IntakeConstants.GAINS.kI, IntakeConstants.GAINS.kD)
+        PIDController(GAINS.kP, GAINS.kI, GAINS.kD)
 
     init {
         angleMotor.setController(angleController)

@@ -18,11 +18,11 @@ class GripperIOReal : GripperIO {
 
     init {
         rollerMotor.restoreFactoryDefaults()
-        rollerMotor.setSmartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt())
+        rollerMotor.setSmartCurrentLimit(currentLimit.`in`(Units.Amp).toInt())
         rollerMotor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).enableLimitSwitch(false)
         rollerMotor.getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).enableLimitSwitch(false)
         rollerMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
-        rollerMotor.inverted = GripperConstants.ROLLER_INVERTED_VALUE
+        rollerMotor.inverted = ROLLER_INVERTED_VALUE
         rollerMotor.burnFlash()
 
         timer.start()
