@@ -92,9 +92,9 @@ object Initializer {
     }
 
     init {
-//        initVision()
+        initVision()
         initSwerve()
-//        PoseEstimation.initialize()
+        PoseEstimation.initialize()
         Climb.initialize(ClimbIOTalonFX())
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
