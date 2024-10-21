@@ -10,7 +10,7 @@ import frc.robot.lib.LoggedTunableNumber
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
-class Intake(private val io: IntakeIO) : SubsystemBase() {
+class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
     private val angleKP = LoggedTunableNumber("Intake/Angle/kP", IntakeConstants.GAINS.kP)
     private val angleKI = LoggedTunableNumber("Intake/Angle/kI", IntakeConstants.GAINS.kI)
     private val angleKD = LoggedTunableNumber("Intake/Angle/kD", IntakeConstants.GAINS.kD)
