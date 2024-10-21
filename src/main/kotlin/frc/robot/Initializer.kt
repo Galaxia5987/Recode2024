@@ -73,9 +73,9 @@ val MAP = when (Constants.CURRENT_MODE) {
     )
 }
 
-    fun initSwerve() {
-        val moduleIOs: Array<ModuleIO> = when (Constants.CURRENT_MODE) {
-            Constants.Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
+    fun createModuleIOs(): Array<ModuleIO> {
+    return when (Constants.CURRENT_MODE) {
+            Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
                 Constants.ROBORIO_NEO_SERIAL -> {
                     Array(4) { i ->
                         ModuleIOSparkMax(
@@ -103,14 +103,32 @@ val MAP = when (Constants.CURRENT_MODE) {
                     }
                 }
             }
-            else -> {
-                Array(4) { ModuleIOSim() }
+            Mode.SIM -> {
+            Array(4) { ModuleIOSim() }
+        }
+        Mode.REPLAY -> {
+            Array(4) {
+                object : ModuleIO {
+                    override val inputs = LoggedModuleInputs()
+                }
             }
         }
+    }
+}
+
+fun initSwerve() {
+    val moduleIOs: Array<ModuleIO> = createModuleIOs()
 
     val gyroIO = when (Constants.CURRENT_MODE) {
-        Constants.Mode.REAL -> GyroIOReal()
-        else -> GyroIOSim()
+        Mode.REAL -> {
+            GyroIOReal()
+        }
+        Mode.SIM -> {
+            GyroIOSim()
+        }
+        Mode.REPLAY -> {
+            object: GyroIO {}
+        }
     }
 
     SwerveDrive.initialize(gyroIO, SwerveConstants.OFFSETS, *moduleIOs)
@@ -154,3 +172,4 @@ fun initializeSubsystems() {
     (MAP[Intake] as? IntakeIO)?.let { Intake.initialize(it) }
     (MAP[Gripper] as? GripperIO)?.let { Gripper.initialize(it) }
 }
+
