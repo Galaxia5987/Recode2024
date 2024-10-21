@@ -134,6 +134,8 @@ fun initVision() {
 }
 
 fun initializeSubsystems() {
+    initVision()
+    initSwerve()
     PoseEstimation.initialize()
 
     (MAP[Climb] as? ClimbIO)?.let { Climb.initialize(it) }
