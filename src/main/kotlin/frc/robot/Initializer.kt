@@ -92,7 +92,7 @@ object Initializer {
     }
 
     init {
-        initVision()
+//        initVision()
         initSwerve()
         PoseEstimation.initialize()
         Climb.initialize(ClimbIOTalonFX())

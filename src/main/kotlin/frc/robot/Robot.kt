@@ -94,7 +94,7 @@ object Robot : LoggedRobot() {
      * SmartDashboard integrated updating.
      */
     override fun robotPeriodic() {
-        PoseEstimation.getInstance().processVisionMeasurements(VisionConstants.VISION_MEASUREMENT_MULTIPLIER)
+//        PoseEstimation.getInstance().processVisionMeasurements(VisionConstants.VISION_MEASUREMENT_MULTIPLIER)
         CommandScheduler.getInstance().run()
     }
 
