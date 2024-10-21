@@ -1,6 +1,5 @@
 package frc.robot
 
-import com.sun.jdi.InterfaceType
 import frc.robot.lib.PoseEstimation
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOTalonFX
