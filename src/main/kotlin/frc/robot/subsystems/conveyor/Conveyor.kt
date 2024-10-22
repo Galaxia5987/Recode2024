@@ -20,6 +20,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     private var velocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
     private val inputs = io.inputs
     private val timer = Timer()
+    private var atSetpoint = false
 
     companion object {
         private var instance: Conveyor? = null
@@ -57,7 +58,6 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
 
     fun feed() = setVelocity(ConveyorConstants.FEED_VELOCITY)
 
-    @AutoLogOutput
     fun atSetPoint(): Boolean {
         return inputs.velocity.isNear(velocitySetpoint, ConveyorConstants.AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
     }
@@ -70,6 +70,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     }
 
     override fun periodic() {
+        atSetpoint = atSetPoint().also { Logger.recordOutput("Conveyor/atSetpoint", atSetpoint) }
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
                 io.setGains(

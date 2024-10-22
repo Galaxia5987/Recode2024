@@ -11,15 +11,15 @@ import kotlin.math.hypot
 fun ChassisSpeeds.getSpeed() = hypot(vxMetersPerSecond, vyMetersPerSecond)
 
 fun List<Any>.toDoubleArray(): DoubleArray {
-    return this.map { it as Double }.toDoubleArray()
+    return this.map { it as Double }.toTypedArray().toDoubleArray()
 }
 
 fun List<Any>.toIntArray(): IntArray {
-    return this.map { it as Int }.toIntArray()
+    return this.map { it as Int }.toTypedArray().toIntArray()
 }
 
 fun List<Any>.toBooleanArray(): BooleanArray {
-    return this.map { it as Boolean }.toBooleanArray()
+    return this.map { it as Boolean }.toTypedArray().toBooleanArray()
 }
 
 fun LogTable.put(key: String, defaultValue: List<Any>) {
@@ -48,6 +48,7 @@ fun Translation2d.getRotationToTranslation(other: Translation2d): Rotation2d = (
 fun Command.handleInterrupt(command: Command): WrapperCommand = handleInterrupt { command.schedule() }
 
 fun Command.finallyDo(command: Command): WrapperCommand = finallyDo(Runnable {
+    this.cancel()
     if (command.isScheduled) command.cancel()
     command.schedule()
 })

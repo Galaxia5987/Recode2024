@@ -3,11 +3,13 @@ package frc.robot.subsystems.swerve
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig
-import com.pathplanner.lib.util.PIDConstants
-import com.pathplanner.lib.util.ReplanningConfig
+import com.pathplanner.lib.config.ModuleConfig
+import com.pathplanner.lib.config.PIDConstants
+import com.pathplanner.lib.config.RobotConfig
+import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
@@ -18,7 +20,7 @@ import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
-    val OFFSETS = arrayOf(0.53369140625,0.76123046875,0.0224609375,0.326171875)
+    val OFFSETS = arrayOf(0.533203125, 0.761962890625, 0.017578125, 0.326416015625)
 
     const val VOLT_COMP_SATURATION = 12.0
     const val NEUTRAL_DEADBAND = 0.0
@@ -27,8 +29,8 @@ object SwerveConstants {
     const val NEO_CURRENT_LIMIT = 40.0
     const val NEO_550_CURRENT_LIMIT = 20.0
     val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
-        .withSupplyCurrentLimit(50.0)
-        .withStatorCurrentLimit(100.0)
+        .withSupplyCurrentLimit(30.0)
+        .withStatorCurrentLimit(60.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
     val VOLTAGE_CONFIGS = VoltageConfigs()
@@ -95,7 +97,7 @@ object SwerveConstants {
     var FEEDBACK_CONFIGS_ANGLE: FeedbackConfigs? = null
     var ANGLE_MOTOR_CONFIGS: TalonFXConfiguration? = null
     var ENCODER_CONFIGS: CANcoderConfiguration? = null
-    val HOLONOMIC_PATH_FOLLOWER_CONFIG: HolonomicPathFollowerConfig
+    val DRIVE_CONTROLLER: PPHolonomicDriveController
 
     var DRIVE_MOTOR_MOMENT_OF_INERTIA = 0.025
     var ANGLE_MOTOR_MOMENT_OF_INERTIA = 0.004
@@ -103,10 +105,10 @@ object SwerveConstants {
     var MAX_OMEGA_VELOCITY = 0.0
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
-    const val MAX_TURN_TOLERANCE = 3.0 / 360.0
-    const val AMP_TURN_TOLERANCE = 5.0 / 360.0
-    const val SHOOT_TURN_TOLERANCE = 5.0 / 360.0
-    const val CLIMB_TURN_TOLERANCE = 4.0 / 360.0
+    const val MAX_TURN_TOLERANCE = 0.06
+    const val AMP_TURN_TOLERANCE = 0.03
+    const val SHOOT_TURN_TOLERANCE = 0.06
+    const val CLIMB_TURN_TOLERANCE = 0.04
     const val SKID_TOLERANCE = 0.15
     val COLLISION_TOLERANCE: Measure<Velocity<Velocity<Distance>>> = Units.Gs.of(1.8)
 
@@ -163,8 +165,8 @@ object SwerveConstants {
                 ROTATION_KD.initDefault(0.1)
                 ROTATION_KDIETER.initDefault(0.0)
 
-                ROBOT_WIDTH = 0.585
-                ROBOT_LENGTH = 0.585
+                ROBOT_WIDTH = 0.9
+                ROBOT_LENGTH = 0.9
                 WHEEL_DIAMETER = 0.09854
                 DRIVE_REDUCTION = (1 / 2.0) * (24.0 / 22.0) * (15.0 / 45.0)
                 ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
@@ -243,6 +245,8 @@ object SwerveConstants {
                 .withSensorToMechanismRatio(1 / DRIVE_REDUCTION)
         DRIVE_MOTOR_CONFIGS =
             TalonFXConfiguration()
+                .withClosedLoopRamps(ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.2))
+                .withOpenLoopRamps(OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.2))
                 .withMotorOutput(MOTOR_OUTPUT_CONFIGS)
                 .withVoltage(VOLTAGE_CONFIGS)
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)
@@ -270,11 +274,9 @@ object SwerveConstants {
             CANcoderConfiguration()
                 .withMagnetSensor(MagnetSensorConfigs().withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1))
 
-        HOLONOMIC_PATH_FOLLOWER_CONFIG = HolonomicPathFollowerConfig(
+        DRIVE_CONTROLLER = PPHolonomicDriveController(
             PIDConstants(5.5, 0.0, 0.15),
-            PIDConstants(3.0, 0.0, 0.4),
-            MAX_X_Y_VELOCITY, sqrt((ROBOT_LENGTH / 2.0).pow(2.0) + (ROBOT_WIDTH / 2.0).pow(2.0)),
-            ReplanningConfig()
+            PIDConstants(3.0, 0.0, 0.4)
         )
     }
 }

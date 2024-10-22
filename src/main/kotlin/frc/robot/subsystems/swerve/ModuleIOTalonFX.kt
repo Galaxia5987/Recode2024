@@ -8,8 +8,6 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.CANcoder
 import com.ctre.phoenix6.hardware.TalonFX
-import com.ctre.phoenix6.signals.InvertedValue
-import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.SwerveModulePosition
 import edu.wpi.first.math.kinematics.SwerveModuleState
@@ -78,12 +76,12 @@ class ModuleIOTalonFX(
             )
         inputs.moduleState = moduleState
 
-        inputs.encoderHasFaults =
-            encoder.fault_Hardware.value ||
-                    encoder.fault_Undervoltage.value ||
-                    encoder.fault_BadMagnet.value ||
-                    encoder.fault_BootDuringEnable.value ||
-                    encoder.fault_UnlicensedFeatureInUse.value
+        inputs.noEncoderFaults =
+            !encoder.fault_Hardware.value ||
+                    !encoder.fault_Undervoltage.value ||
+                    !encoder.fault_BadMagnet.value ||
+                    !encoder.fault_BootDuringEnable.value ||
+                    !encoder.fault_UnlicensedFeatureInUse.value
 
         inputs.absolutePosition = encoder.absolutePosition.value
         inputs.moduleState = moduleState

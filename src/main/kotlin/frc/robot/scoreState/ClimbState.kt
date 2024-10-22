@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.Constants
 import frc.robot.lib.finallyDo
 import frc.robot.subsystems.climb.Climb
+import frc.robot.subsystems.leds.LEDs
 import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 
@@ -41,6 +42,7 @@ class ClimbState : ScoreState {
             climb.openClimb().withTimeout(0.55),
             pathFindToChain(),
             climb.setPower { 0.8 }
-        ).finallyDo(climb.climb()) // TODO: Replace with LEDs command
+        ).finallyDo(climb.climb().alongWith(LEDs.getInstance().setRainbow()))
+            .withName("Climb")
     }
 }

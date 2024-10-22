@@ -1,0 +1,83 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 8.085230879833054,
+        "y": 4.099779112962734
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 7.0821970350939525,
+        "y": 4.099779112962734
+      },
+      "isLocked": false,
+      "linkedName": "center note line #3"
+    },
+    {
+      "anchor": {
+        "x": 5.13455850161997,
+        "y": 4.099779112962734
+      },
+      "prevControl": {
+        "x": 5.426704281641067,
+        "y": 3.9147534522827057
+      },
+      "nextControl": {
+        "x": 4.6068741471410055,
+        "y": 4.433979204132745
+      },
+      "isLocked": false,
+      "linkedName": null
+    },
+    {
+      "anchor": {
+        "x": 3.7809497208555514,
+        "y": 5.52155524239874
+      },
+      "prevControl": {
+        "x": 4.248382968889307,
+        "y": 4.830143563015478
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": null
+    }
+  ],
+  "rotationTargets": [],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "stopIntake",
+      "waypointRelativePos": 0.4682139253279515,
+      "endWaypointRelativePos": null,
+      "command": null
+    },
+    {
+      "name": "warmup",
+      "waypointRelativePos": 0.9687184661957615,
+      "endWaypointRelativePos": null,
+      "command": null
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "reversed": false,
+  "folder": "B",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 0.0
+  },
+  "useDefaultConstraints": true
+}

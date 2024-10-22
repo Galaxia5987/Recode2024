@@ -70,7 +70,7 @@ class IntakeIOReal : IntakeIO {
 
         angleMotor.configurator.apply(angleConfig)
 
-        angleMotor.setPosition(126.2 / 360.0)
+        angleMotor.setPosition(127.0 / 360.0)
     }
 
     override fun setSpinPower(power: Double) {

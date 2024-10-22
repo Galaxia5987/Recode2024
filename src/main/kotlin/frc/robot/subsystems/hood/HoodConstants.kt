@@ -12,7 +12,7 @@ object HoodConstants {
     const val GEAR_RATIO: Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
     const val ENCODER_TICKS_PER_REVOLUTION = 4096.0
     const val SIMULATION_LENGTH = 3.0
-    const val MAX_TOLERANCE: Double = 0.75 / 360
+    val MAX_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.03)
 
     val MOMENT_OF_INERTIA: Measure<Mult<Mult<Mass, Distance>, Distance>> =
         Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
@@ -29,12 +29,12 @@ object HoodConstants {
     val INVERTED_VALUE = InvertedValue.CounterClockwise_Positive
 
 
-    val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset", (144.93 - 33.48) / 360.0)
+    val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset", (5.537 - 33.48) / 360.0)
 
     val GAINS by lazy {
         selectGainsBasedOnMode(
             Gains(
-                kP = 1700.0, kD = 305.0, kG =  5.5
+                kP = 1700.0, kD = 335.0, kG =  5.5
             ), Gains(
                 20.0
             )

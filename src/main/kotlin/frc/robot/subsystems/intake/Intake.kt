@@ -40,13 +40,13 @@ class Intake(private val io: IntakeIO) : SubsystemBase() {
 
 
     fun setSpinPower(power: Double): Command {
-        return Commands.run({
+        return Commands.runOnce({
             io.setSpinPower(power)
         })
     }
 
     fun setCenterPower(power: Double): Command {
-        return Commands.run({
+        return Commands.runOnce({
             io.setCenterPower(power)
         })
     }

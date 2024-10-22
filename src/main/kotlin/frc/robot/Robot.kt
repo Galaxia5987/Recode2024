@@ -62,7 +62,7 @@ object Robot : LoggedRobot() {
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
                 LoggedPowerDistribution.getInstance(0, PowerDistribution.ModuleType.kCTRE)
-                Logger.addDataReceiver(WPILOGWriter("/home/lvuser/logs"))
+                Logger.addDataReceiver(WPILOGWriter())
                 Logger.addDataReceiver(NT4Publisher())
             }
 
@@ -72,7 +72,7 @@ object Robot : LoggedRobot() {
                 val logPath = LogFileUtil.findReplayLog()
                 Logger.setReplaySource(WPILOGReader(logPath))
                 Logger.addDataReceiver(
-                        WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_sim")))
+                        WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_replay")))
             }
         }
         Logger.start()
@@ -117,7 +117,9 @@ object Robot : LoggedRobot() {
     }
 
     /** This function is called periodically during autonomous.  */
-    override fun autonomousPeriodic() {}
+    override fun autonomousPeriodic() {
+
+    }
 
     /** This function is called once when teleop is enabled.  */
     override fun teleopInit() {

@@ -1,0 +1,134 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 3.159180164514176,
+        "y": 3.0488853285398885
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 4.103591569412924,
+        "y": 2.4279013300701906
+      },
+      "isLocked": false,
+      "linkedName": "D0"
+    },
+    {
+      "anchor": {
+        "x": 7.948514519356831,
+        "y": 0.7897304155653457
+      },
+      "prevControl": {
+        "x": 5.963221740994124,
+        "y": 0.9485777602083015
+      },
+      "nextControl": {
+        "x": 8.289498832812923,
+        "y": 0.7624475616972773
+      },
+      "isLocked": false,
+      "linkedName": "center note line #5"
+    },
+    {
+      "anchor": {
+        "x": 3.159180164514176,
+        "y": 3.0488853285398885
+      },
+      "prevControl": {
+        "x": 4.757624899865186,
+        "y": 1.3912389363240267
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "D0"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.4,
+      "rotationDegrees": -13.139447246161174
+    },
+    {
+      "waypointRelativePos": 1.0,
+      "rotationDegrees": 0.0
+    }
+  ],
+  "constraintZones": [],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "intake",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "intake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "stopIntake",
+      "waypointRelativePos": 1.45,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "stopIntake"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "warmup",
+      "waypointRelativePos": 1.6,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "parallel",
+        "data": {
+          "commands": [
+            {
+              "type": "named",
+              "data": {
+                "name": "warmup"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.5,
+    "maxAcceleration": 2.5,
+    "maxAngularVelocity": 540.0,
+    "maxAngularAcceleration": 720.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -43.66778014613041
+  },
+  "reversed": false,
+  "folder": "D",
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": -43.08016528393722
+  },
+  "useDefaultConstraints": false
+}
