@@ -139,4 +139,10 @@ class ModuleIOTalonFX(
     override fun setVoltage(volts: Double) {
         driveMotor.setControl(VoltageOut(volts))
     }
+
+    override fun setIdleMode(isBreakMode: Boolean) {
+        val mode = if (isBreakMode) NeutralModeValue.Brake else NeutralModeValue.Coast
+        angleMotor.setNeutralMode(mode)
+        driveMotor.setNeutralMode(mode)
+    }
 }

@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.ControllerInputs.driverController
 import frc.robot.ControllerInputs.operatorController
+import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers
 import frc.robot.commandGroups.IntakeCommands
 import frc.robot.commandGroups.ShootingCommands
 import frc.robot.commandGroups.WarmupCommands
@@ -69,6 +70,9 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
+        RobotModeTriggers.autonomous().or(RobotModeTriggers.teleop()).onTrue(swerveDrive.setBrakeMode())
+        RobotModeTriggers.disabled().debounce(7.0).onTrue(swerveDrive.setCoastMode())
+
         driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
 
         driverController().rightTrigger()

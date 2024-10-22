@@ -43,7 +43,6 @@ class ModuleIOSparkMax(
         driveMotor.enableVoltageCompensation(
             SwerveConstants.VOLT_COMP_SATURATION
         )
-        driveMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
         driveMotor.setSmartCurrentLimit(
             SwerveConstants.NEO_CURRENT_LIMIT.toInt()
         )
@@ -142,4 +141,10 @@ class ModuleIOSparkMax(
 
     private val encoderAngle: Double
         get() = 1.0 - encoder.absolutePosition
+
+    override fun setIdleMode(isBreakMode: Boolean) {
+        val mode = if (isBreakMode) CANSparkBase.IdleMode.kBrake else CANSparkBase.IdleMode.kCoast
+        angleMotor.setIdleMode(mode)
+        driveMotor.setIdleMode(mode)
+    }
 }
