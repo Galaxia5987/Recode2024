@@ -161,6 +161,7 @@ wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
 // Create version file
+project.compileKotlin.dependsOn(createVersionFile)
 project.compileJava.dependsOn(createVersionFile)
 gversion {
     srcDir       = "src/main/kotlin/"
