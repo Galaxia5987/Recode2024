@@ -161,7 +161,7 @@ wpi.java.configureExecutableTasks(jar)
 wpi.java.configureTestTasks(test)
 
 // Create version file
-project.compileJava.dependsOn(createVersionFile)
+project.compileKotlin.dependsOn(createVersionFile)
 gversion {
     srcDir       = "src/main/kotlin/"
     classPackage = "frc.robot"
