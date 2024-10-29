@@ -47,6 +47,7 @@ private val MAP = when (Constants.CURRENT_MODE) {
         Gripper to GripperIOSim(),
         Intake to IntakeIOSim(),
         Hood to HoodIOSim(),
+        LEDs to LEDs.initialize(9, 97),
         Shooter to ShooterIOSim()
     )
 
@@ -66,6 +67,7 @@ private val MAP = when (Constants.CURRENT_MODE) {
         Hood to object : HoodIO {
             override val inputs = LoggedHoodInputs()
         },
+        LEDs to LEDs.initialize(9, 97),
         Shooter to object : ShooterIO {
             override val topRollerInputs = LoggedRollerInputs()
             override val bottomRollerInputs = LoggedRollerInputs()
