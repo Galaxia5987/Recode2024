@@ -56,7 +56,7 @@ object Robot : LoggedRobot() {
         Logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH)
         when (BuildConstants.DIRTY) {
             0 -> Logger.recordMetadata("GitDirty", "All changes committed")
-            1 -> Logger.recordMetadata("GitDirty", "Uncomitted changes")
+            1 -> Logger.recordMetadata("GitDirty", "Uncommitted changes")
             else -> Logger.recordMetadata("GitDirty", "Unknown")
         }
         when (Constants.CURRENT_MODE) {
