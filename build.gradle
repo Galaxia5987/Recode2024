@@ -167,7 +167,7 @@ gversion {
     srcDir       = "src/main/kotlin/"
     classPackage = "frc.robot"
     className    = "BuildConstants"
-    dateFormat   = "yyyy-MM-dd HH:mm:ss z"
+    dateFormat   = "yyyy-MM-dd HH:mm z"
     timeZone     = "Asia/Jerusalem"
     indent       = "  "
 }
