@@ -49,11 +49,11 @@ object Robot : LoggedRobot() {
         Initializer //initialize all subsystems and constants
 
         // Initialize logger
-        Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME)
-        Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE)
-        Logger.recordMetadata("GitSHA", BuildConstants.GIT_SHA)
-        Logger.recordMetadata("GitDate", BuildConstants.GIT_DATE)
-        Logger.recordMetadata("GitBranch", BuildConstants.GIT_BRANCH)
+        Logger.recordMetadata("Project name", BuildConstants.MAVEN_NAME)
+        Logger.recordMetadata("Build date", BuildConstants.BUILD_DATE)
+        Logger.recordMetadata("Last commit hash", BuildConstants.GIT_SHA)
+        Logger.recordMetadata("Last commit timestamp", BuildConstants.GIT_DATE)
+        Logger.recordMetadata("Branch name", BuildConstants.GIT_BRANCH)
         when (BuildConstants.DIRTY) {
             0 -> Logger.recordMetadata("GitDirty", "All changes committed")
             1 -> Logger.recordMetadata("GitDirty", "Uncommitted changes")
