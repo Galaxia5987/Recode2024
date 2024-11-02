@@ -54,7 +54,7 @@ object Robot : LoggedRobot() {
         Logger.recordMetadata("Last commit hash", BuildConstants.GIT_SHA)
         Logger.recordMetadata("Last commit timestamp", BuildConstants.GIT_DATE)
         Logger.recordMetadata(
-            "GitDirty",
+            "Diff status",
             when (BuildConstants.DIRTY) {
                 0 -> "All changes committed"
                 1 -> "Uncommitted changes"
