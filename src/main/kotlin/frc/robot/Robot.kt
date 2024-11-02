@@ -53,12 +53,15 @@ object Robot : LoggedRobot() {
         Logger.recordMetadata("Build date", BuildConstants.BUILD_DATE)
         Logger.recordMetadata("Last commit hash", BuildConstants.GIT_SHA)
         Logger.recordMetadata("Last commit timestamp", BuildConstants.GIT_DATE)
-        Logger.recordMetadata("Branch name", BuildConstants.GIT_BRANCH)
-        when (BuildConstants.DIRTY) {
-            0 -> Logger.recordMetadata("GitDirty", "All changes committed")
-            1 -> Logger.recordMetadata("GitDirty", "Uncommitted changes")
-            else -> Logger.recordMetadata("GitDirty", "Unknown")
-        }
+        Logger.recordMetadata(
+            "GitDirty",
+            when (BuildConstants.DIRTY) {
+                0 -> "All changes committed"
+                1 -> "Uncommitted changes"
+                else -> "Unknown"
+            },
+        )
+
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
                 LoggedPowerDistribution.getInstance(0, PowerDistribution.ModuleType.kCTRE)
