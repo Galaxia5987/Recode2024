@@ -53,6 +53,7 @@ object Robot : LoggedRobot() {
         Logger.recordMetadata("Build date", BuildConstants.BUILD_DATE)
         Logger.recordMetadata("Last commit hash", BuildConstants.GIT_SHA)
         Logger.recordMetadata("Last commit timestamp", BuildConstants.GIT_DATE)
+        @Suppress("KotlinConstantConditions")
         Logger.recordMetadata(
             "Diff status",
             when (BuildConstants.DIRTY) {
