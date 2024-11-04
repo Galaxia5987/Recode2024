@@ -48,10 +48,13 @@ object Robot : LoggedRobot() {
         Initializer //initialize all subsystems and constants
 
         // Initialize logger
-        Logger.recordMetadata("Project name", BuildConstants.MAVEN_NAME)
-        Logger.recordMetadata("Build date", BuildConstants.BUILD_DATE)
-        Logger.recordMetadata("Last commit hash", BuildConstants.GIT_SHA)
-        Logger.recordMetadata("Last commit timestamp", BuildConstants.GIT_DATE)
+        listOf(
+            "Project name" to BuildConstants.MAVEN_NAME,
+            "Build date" to BuildConstants.BUILD_DATE,
+            "Last commit hash" to BuildConstants.GIT_SHA,
+            "Last commit timestamp" to BuildConstants.GIT_DATE,
+            "Branch" to BuildConstants.GIT_BRANCH
+        ).forEach { (key, value) -> Logger.recordMetadata(key, value) }
         @Suppress("KotlinConstantConditions")
         Logger.recordMetadata(
             "Diff status",
