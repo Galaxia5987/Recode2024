@@ -34,7 +34,6 @@ import org.littletonrobotics.junction.AutoLogOutput
  */
 object Robot : LoggedRobot() {
     private val compressor = Compressor(PneumaticsModuleType.CTREPCM)
-    private var robotContainer: RobotContainer? = null
     private var autonomousCommand: Command? = null
 
     /**
@@ -78,7 +77,6 @@ object Robot : LoggedRobot() {
         Logger.start()
         SignalLogger.enableAutoLogging(true)
 
-        robotContainer = RobotContainer
         compressor.enableDigital()
 
         DriverStation.silenceJoystickConnectionWarning(true)
@@ -110,7 +108,7 @@ object Robot : LoggedRobot() {
      */
     override fun autonomousInit() {
         // Make sure command is compiled beforehand, otherwise there will be a delay.
-        autonomousCommand = robotContainer!!.getAutonomousCommand()
+        autonomousCommand = RobotContainer.getAutonomousCommand()
 
         // Schedule the autonomous command
         autonomousCommand!!.schedule()
