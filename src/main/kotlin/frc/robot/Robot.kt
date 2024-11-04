@@ -41,7 +41,7 @@ object Robot : LoggedRobot() {
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
      */
-    override fun robotInit() {
+    init {
         // Report Kotlin language usage
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
