@@ -34,7 +34,7 @@ import org.littletonrobotics.junction.AutoLogOutput
  */
 object Robot : LoggedRobot() {
     private val compressor = Compressor(PneumaticsModuleType.CTREPCM)
-    private var autonomousCommand: Command? = null
+    private lateinit var autonomousCommand: Command
 
     /**
      * This function is run when the robot is first started up and should be used for any
@@ -111,7 +111,7 @@ object Robot : LoggedRobot() {
         autonomousCommand = RobotContainer.getAutonomousCommand()
 
         // Schedule the autonomous command
-        autonomousCommand!!.schedule()
+        autonomousCommand.schedule()
     }
 
     /** This function is called periodically during autonomous.  */
@@ -121,9 +121,7 @@ object Robot : LoggedRobot() {
 
     /** This function is called once when teleop is enabled.  */
     override fun teleopInit() {
-        if (autonomousCommand != null) {
-            autonomousCommand!!.cancel()
-        }
+        autonomousCommand.cancel()
     }
 
     /** This function is called periodically during operator control.  */
