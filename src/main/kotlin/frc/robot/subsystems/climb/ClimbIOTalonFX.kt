@@ -33,8 +33,7 @@ class ClimbIOTalonFX : ClimbIO {
             }
         }
 
-        mainMotor.configurator.apply(motorConfig)
-        auxMotor.configurator.apply(motorConfig)
+        listOf(mainMotor, auxMotor).forEach { it.configurator.apply(motorConfig) }
         auxMotor.setControl(StrictFollower(mainMotor.deviceID))
 
         stopperMotor.configFactoryDefault()
