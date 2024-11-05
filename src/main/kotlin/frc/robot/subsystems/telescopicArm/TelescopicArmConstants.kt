@@ -14,5 +14,5 @@ object TelescopicArmConstants {
     const val MOMENT_OF_INERTIA = 3.0
     const val CONVERSION_FACTOR = 2 * Math.PI
     val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
-    val dramRadius: Measure<Distance> = Units.Centimeter.of(3.0)
+    val DRUM_RADIUS: Measure<Distance> = Units.Centimeter.of(3.0)
 }

@@ -39,7 +39,8 @@ class TelescopicArmIOReal : TelescopicArmIO {
             kV = TelescopicArmConstants.KV
         }
         Feedback = FeedbackConfigs().apply {
-            SensorToMechanismRatio = TelescopicArmConstants.CONVERSION_FACTOR* TelescopicArmConstants.dramRadius.`in`(Units.Meters)
+            SensorToMechanismRatio =
+                TelescopicArmConstants.CONVERSION_FACTOR * TelescopicArmConstants.DRUM_RADIUS.`in`(Units.Meters)
         }
     }
 
