@@ -34,14 +34,13 @@ import org.littletonrobotics.junction.AutoLogOutput
  */
 object Robot : LoggedRobot() {
     private val compressor = Compressor(PneumaticsModuleType.CTREPCM)
-    private var robotContainer: RobotContainer? = null
-    private var autonomousCommand: Command? = null
+    private lateinit var autonomousCommand: Command
 
     /**
      * This function is run when the robot is first started up and should be used for any
      * initialization code.
      */
-    override fun robotInit() {
+    init {
         // Report Kotlin language usage
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
@@ -49,10 +48,13 @@ object Robot : LoggedRobot() {
         Initializer //initialize all subsystems and constants
 
         // Initialize logger
-        Logger.recordMetadata("Project name", BuildConstants.MAVEN_NAME)
-        Logger.recordMetadata("Build date", BuildConstants.BUILD_DATE)
-        Logger.recordMetadata("Last commit hash", BuildConstants.GIT_SHA)
-        Logger.recordMetadata("Last commit timestamp", BuildConstants.GIT_DATE)
+        listOf(
+            "Project name" to BuildConstants.MAVEN_NAME,
+            "Build date" to BuildConstants.BUILD_DATE,
+            "Last commit hash" to BuildConstants.GIT_SHA,
+            "Last commit timestamp" to BuildConstants.GIT_DATE,
+            "Branch" to BuildConstants.GIT_BRANCH
+        ).forEach { (key, value) -> Logger.recordMetadata(key, value) }
         @Suppress("KotlinConstantConditions")
         Logger.recordMetadata(
             "Diff status",
@@ -82,7 +84,6 @@ object Robot : LoggedRobot() {
         Logger.start()
         SignalLogger.enableAutoLogging(true)
 
-        robotContainer = RobotContainer
         compressor.enableDigital()
 
         DriverStation.silenceJoystickConnectionWarning(true)
@@ -114,10 +115,10 @@ object Robot : LoggedRobot() {
      */
     override fun autonomousInit() {
         // Make sure command is compiled beforehand, otherwise there will be a delay.
-        autonomousCommand = robotContainer!!.getAutonomousCommand()
+        autonomousCommand = RobotContainer.getAutonomousCommand()
 
         // Schedule the autonomous command
-        autonomousCommand!!.schedule()
+        autonomousCommand.schedule()
     }
 
     /** This function is called periodically during autonomous.  */
@@ -127,9 +128,7 @@ object Robot : LoggedRobot() {
 
     /** This function is called once when teleop is enabled.  */
     override fun teleopInit() {
-        if (autonomousCommand != null) {
-            autonomousCommand!!.cancel()
-        }
+        autonomousCommand.cancel()
     }
 
     /** This function is called periodically during operator control.  */
