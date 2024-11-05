@@ -3,6 +3,7 @@ package frc.robot.subsystems.climb
 import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.DutyCycleOut
@@ -21,14 +22,16 @@ class ClimbIOTalonFX : ClimbIO {
     private val percentOutput = DutyCycleOut(0.0).withEnableFOC(true)
 
     init {
-        val motorConfig = TalonFXConfiguration()
-            .withMotorOutput(
-            MotorOutputConfigs()
-                .withInverted(InvertedValue.Clockwise_Positive)
-                .withNeutralMode(NeutralModeValue.Brake)
-        ).CurrentLimits
-            .withStatorCurrentLimitEnable(false)
-            .withSupplyCurrentLimitEnable(false)
+        val motorConfig = TalonFXConfiguration().apply {
+            MotorOutput = MotorOutputConfigs().apply {
+                Inverted = InvertedValue.Clockwise_Positive
+                NeutralMode = NeutralModeValue.Brake
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = false
+                SupplyCurrentLimitEnable = false
+            }
+        }
 
         mainMotor.configurator.apply(motorConfig)
         auxMotor.configurator.apply(motorConfig)
