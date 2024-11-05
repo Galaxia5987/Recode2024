@@ -17,7 +17,7 @@ class TelescopicArmIOSim : TelescopicArmIO {
         1,
         TelescopicArmConstants.GEAR_RATIO,
         TelescopicArmConstants.MOMENT_OF_INERTIA,
-        TelescopicArmConstants.CONVERSION_FACTOR*TelescopicArmConstants.dramRadius.`in`(Units.Centimeter)
+        TelescopicArmConstants.CONVERSION_FACTOR*TelescopicArmConstants.dramRadius.`in`(Units.Meters)
     )
     private var positionControler: PIDController =
         PIDController(TelescopicArmConstants.KP, TelescopicArmConstants.KI, TelescopicArmConstants.KD)
