@@ -5,6 +5,7 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.littletonrobotics.junction.Logger
 
 class TelescopicArm private constructor(private var io: TelescopicArmIO) : SubsystemBase() {
     private val inputs = io.inputs
@@ -30,5 +31,6 @@ class TelescopicArm private constructor(private var io: TelescopicArmIO) : Subsy
 
     override fun periodic() {
         io.updateInputs()
+        Logger.processInputs("Telescopic arm", inputs)
     }
 }

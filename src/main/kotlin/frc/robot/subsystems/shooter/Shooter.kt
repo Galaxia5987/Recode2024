@@ -4,9 +4,10 @@ import edu.wpi.first.units.*
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import org.littletonrobotics.junction.Logger
 
 class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
-    private var inputs = io.inputs
+    private val inputs = io.inputs
 
     companion object {
         @Volatile
@@ -43,5 +44,6 @@ class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInput()
+        Logger.processInputs("Shooter", inputs)
     }
 }
