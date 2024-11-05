@@ -4,6 +4,8 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
+import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
 class TelescopicArmIOSim : TelescopicArmIO {
@@ -23,7 +25,9 @@ class TelescopicArmIOSim : TelescopicArmIO {
     }
 
     override fun updateInput() {
-        TODO("Not yet implemented")
+        motor.update(Timer.getFPGATimestamp())
+        val distanceToRotation = motor.position * TelescopicArmConstants.dramRadius.`in`(Units.Centimeter)
+        inputs.currentPose = Units.Centimeter.of(distanceToRotation)
     }
 
     override fun setDistance(distance: Measure<Distance>) {
