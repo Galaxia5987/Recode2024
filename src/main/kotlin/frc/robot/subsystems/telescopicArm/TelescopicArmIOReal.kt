@@ -16,7 +16,7 @@ class TelescopicArmIOReal : TelescopicArmIO {
     var controlRequest: PositionTorqueCurrentFOC = PositionTorqueCurrentFOC(0.0)
     override fun updateInput() {
         inputs.currentPose =
-            Units.Centimeter.of(motor.position.value * TelescopicArmConstants.dramRadius.`in`(Units.Centimeter))
+            Units.Centimeter.of(motor.position.value)
         inputs.voltage = Units.Volt.of(motor.supplyVoltage.value)
     }
 
@@ -39,7 +39,7 @@ class TelescopicArmIOReal : TelescopicArmIO {
             kV = TelescopicArmConstants.KV
         }
         Feedback = FeedbackConfigs().apply {
-            SensorToMechanismRatio = 2 * Math.PI
+            SensorToMechanismRatio = TelescopicArmConstants.CONVERSION_FACTOR* TelescopicArmConstants.dramRadius.`in`(Units.Centimeter)
         }
     }
 
@@ -50,9 +50,8 @@ class TelescopicArmIOReal : TelescopicArmIO {
     override fun setDistance(distance: Measure<Distance>) {
         motor.setControl(
             controlRequest.withPosition(
-                distance.`in`(Units.Meters) / TelescopicArmConstants.dramRadius.`in`(
-                    Units.Meters
-                )
+                distance.`in`(Units.Meters)
+
             )
         )
     }
