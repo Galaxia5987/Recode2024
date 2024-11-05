@@ -14,6 +14,6 @@ interface TelescopicArmIO {           //TL for telescopic
     @Logged
     open class TLArmInputs {
         var currentPose: Measure<Distance> = Units.Meters.zero()
-        var voltage:Measure<Voltage> = Units.Volt.zero()
+        var voltage: Measure<Voltage> = Units.Volt.zero()
     }
 }
