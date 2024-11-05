@@ -27,7 +27,9 @@ class TelescopicArmIOSim : TelescopicArmIO {
     }
 
     override fun setDistance(distance: Measure<Distance>) {
-        motor.setControl(controlRequest.withPosition(distance.`in`(Units.Meters) / TelescopicArmConstants.dramRadius.`in`(
-            Units.Meters)))
+        val rotationToDistance = distance.`in`(Units.Meters) / TelescopicArmConstants.dramRadius.`in`(
+            Units.Meters
+        )
+        motor.setControl(controlRequest.withPosition(rotationToDistance))
     }
 }
