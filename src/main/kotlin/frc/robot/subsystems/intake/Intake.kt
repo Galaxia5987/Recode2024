@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
 
 class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
-    private var input:LoggedIntakeInput = io.inputs
+    private val inputs = io.inputs
 
     companion object{
         @Volatile
@@ -52,6 +52,6 @@ class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
 
     override fun periodic() {
         io.updateInput()
-        Logger.processInputs("Intake",input)
+        Logger.processInputs("Intake", inputs)
     }
 }

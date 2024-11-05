@@ -6,7 +6,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 
 class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
-    private var input = io.inputs
+    private var inputs = io.inputs
 
     companion object {
         @Volatile

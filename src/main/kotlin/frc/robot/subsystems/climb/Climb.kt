@@ -8,7 +8,7 @@ import java.util.function.DoubleSupplier
 import kotlin.math.absoluteValue
 
 class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
-    private var inputs: LoggedClimbInputs = io.inputs
+    private val inputs = io.inputs
 
     private var isStopperStuck: Boolean = false
 

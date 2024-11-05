@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 
 class TelescopicArm private constructor(private var io: TelescopicArmIO) : SubsystemBase() {
-    private var inputs = io.inputs
+    private val inputs = io.inputs
 
     companion object {
         @Volatile
