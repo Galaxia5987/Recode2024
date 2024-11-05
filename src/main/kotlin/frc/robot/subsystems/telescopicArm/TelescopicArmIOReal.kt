@@ -48,7 +48,7 @@ class TelescopicArmIOReal : TelescopicArmIO {
         motor.configurator.apply(MOTOR_CONFIGURATION)
     }
 
-    override fun setDistance(distance: Measure<Distance>) {
+    override fun setHeight(distance: Measure<Distance>) {
         motor.setControl(
             controlRequest.withPosition(
                 distance.`in`(Units.Meters)

@@ -31,7 +31,7 @@ class TelescopicArmIOSim : TelescopicArmIO {
         inputs.currentPose = Units.Centimeter.of(motor.position)
     }
 
-    override fun setDistance(distance: Measure<Distance>) {
+    override fun setHeight(distance: Measure<Distance>) {
         motor.setControl(controlRequest.withPosition(distance.`in`(Units.Meters)))
     }
 }

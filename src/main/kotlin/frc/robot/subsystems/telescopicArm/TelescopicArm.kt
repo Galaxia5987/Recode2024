@@ -26,7 +26,7 @@ class TelescopicArm private constructor(private var io: TelescopicArmIO) : Subsy
         )
     }
 
-    fun setPosition(setPoint: Measure<Distance>): Command = Commands.runOnce({ io.setDistance(setPoint) })
+    fun setHeight(setPoint: Measure<Distance>): Command = Commands.runOnce({ io.setHeight(setPoint) })
 
     override fun periodic() {
         io.updateInputs()
