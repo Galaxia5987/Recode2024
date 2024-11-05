@@ -1,5 +1,6 @@
 package frc.robot.subsystems.telescopicArm
 
+import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
@@ -7,6 +8,7 @@ import frc.robot.lib.motors.TalonFXSim
 
 class TelescopicArmIOSim : TelescopicArmIO {
     override var inputs: LoggedTLArmInputs = LoggedTLArmInputs()
+    var controlRequest: PositionVoltage = PositionVoltage(0.0)
     private var motor = TalonFXSim(
         1,
         TelescopicArmConstants.GEAR_RATIO,
@@ -25,6 +27,7 @@ class TelescopicArmIOSim : TelescopicArmIO {
     }
 
     override fun setDistance(distance: Measure<Distance>) {
-        TODO("Not yet implemented")
+        motor.setControl(controlRequest.withPosition(distance.`in`(Units.Meters) / TelescopicArmConstants.dramRadius.`in`(
+            Units.Meters)))
     }
 }
