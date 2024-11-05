@@ -1,9 +1,6 @@
 package frc.robot.subsystems.telescopicArm
 
-import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.controls.PositionVoltage
-import com.ctre.phoenix6.signals.InvertedValue
-import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
@@ -28,7 +25,8 @@ class TelescopicArmIOSim : TelescopicArmIO {
     init {
         motor.setController(positionControler)
     }
-    override fun updateInput() {
+
+    override fun updateInputs() {
         motor.update(Timer.getFPGATimestamp())
         inputs.currentPose = Units.Centimeter.of(motor.position)
     }

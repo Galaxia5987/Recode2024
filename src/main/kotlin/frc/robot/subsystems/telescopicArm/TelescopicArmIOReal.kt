@@ -14,7 +14,7 @@ class TelescopicArmIOReal : TelescopicArmIO {
     override var inputs = LoggedTLArmInputs()
     val motor: TalonFX = TalonFX(Ports.TLArm.TL_MOTOR_ID)
     var controlRequest: PositionTorqueCurrentFOC = PositionTorqueCurrentFOC(0.0)
-    override fun updateInput() {
+    override fun updateInputs() {
         inputs.currentPose =
             Units.Centimeter.of(motor.position.value)
         inputs.voltage = Units.Volt.of(motor.supplyVoltage.value)

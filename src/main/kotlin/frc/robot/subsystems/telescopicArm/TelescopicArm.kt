@@ -29,6 +29,6 @@ class TelescopicArm private constructor(private var io: TelescopicArmIO) : Subsy
     fun setPosition(setPoint: Measure<Distance>): Command = Commands.runOnce({ io.setDistance(setPoint) })
 
     override fun periodic() {
-        io.updateInput()
+        io.updateInputs()
     }
 }
