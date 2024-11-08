@@ -1,9 +1,7 @@
 package frc.robot.subsystems.vision
 
-import edu.wpi.first.math.geometry.Pose2d
-import edu.wpi.first.math.geometry.Pose3d
-import edu.wpi.first.math.geometry.Rotation3d
 import edu.wpi.first.math.geometry.Transform3d
+import frc.robot.lib.toPose3d
 import frc.robot.subsystems.swerve.SwerveDrive
 import org.photonvision.PhotonPoseEstimator
 import org.photonvision.estimation.TargetModel
@@ -27,13 +25,10 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
         VisionSim.system.addCamera(simCamera, robotToCam)
     }
 
-    private fun pose2dToPose3d(pose: Pose2d): Pose3d = Pose3d(
-        pose.x, pose.y, 0.0, Rotation3d(0.0, 0.0, pose.rotation.radians)
-    )
 
     override fun updateInputs() {
         val botPose = SwerveDrive.getInstance().estimator.estimatedPosition
-        val botPose3d = pose2dToPose3d(botPose)
+        val botPose3d = botPose.toPose3d()
         val latestResult =
             simCamera.process(
                 0.0,
