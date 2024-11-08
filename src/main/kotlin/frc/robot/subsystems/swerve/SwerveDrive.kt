@@ -117,7 +117,7 @@ class SwerveDrive private constructor
     /**
      * Updates the offset for the gyro.
      *
-     * @param angle The desired angle. [rad]
+     * @param angle The desired angle.
      */
     fun resetGyro(angle: Rotation2d = Rotation2d()) {
         gyroIO.resetGyro(angle)
@@ -127,7 +127,7 @@ class SwerveDrive private constructor
         /**
          * Gets the raw yaw reading from the gyro.
          *
-         * @return Yaw angle reading from gyro. [rad]
+         * @return Yaw angle reading from gyro.
          */
         get() = inputs.rawYaw
 
@@ -135,7 +135,7 @@ class SwerveDrive private constructor
         /**
          * Gets the yaw reading from the gyro with the calculated offset.
          *
-         * @return Yaw angle with offset. [rad]
+         * @return Yaw angle with offset.
          */
         get() = inputs.yaw
 
