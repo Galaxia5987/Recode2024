@@ -384,9 +384,9 @@ class SwerveDrive private constructor
     private fun setIdleMode(isBrakeMode: Boolean) =
         Commands.runOnce({ modules.forEach { it?.setIdleMode(isBrakeMode) } }).ignoringDisable(true)
 
-    fun setBrakeMode() = setIdleMode(true)
+    fun setBrakeMode(): Command = setIdleMode(true)
 
-    fun setCoastMode() = setIdleMode(false)
+    fun setCoastMode(): Command = setIdleMode(false)
 
     fun characterize(): Command {
         val routine =
