@@ -190,7 +190,7 @@ class SwerveDrive private constructor
 
     fun lock() {
         desiredModuleStates =
-            arrayOf<SwerveModuleState?>(
+            arrayOf(
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(315.0)),
