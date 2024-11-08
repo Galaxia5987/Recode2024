@@ -84,7 +84,7 @@ object Robot : LoggedRobot() {
         Logger.start()
         SignalLogger.enableAutoLogging(true)
 
-        RobotContainer //Initialize robot container
+        RobotContainer // Initialize robot container.
         compressor.enableDigital()
 
         DriverStation.silenceJoystickConnectionWarning(true)
