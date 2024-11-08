@@ -123,15 +123,15 @@ object RobotContainer {
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
-        register("score", shootState.init().until { ShootingCommands.shooterConveyorHoodAtSetpoint() })
+        register("score", shootState.init().until { shooterConveyorHoodAtSetpoint() })
         register("finishScore", shootState.end())
-        register("warmup", WarmupCommands.warmup())
-        register("intake", IntakeCommands.intake())
-        register("outtake", IntakeCommands.outtake())
-        register("stopIntake", IntakeCommands.stopIntake())
+        register("warmup", warmup())
+        register("intake", intake())
+        register("outtake", outtake())
+        register("stopIntake", stopIntake())
         register("rollShooter", Shooter.getInstance().rollNote())
-        register("setpointShoot", ShootingCommands.closeShoot())
-        register("finishSetpointShoot", ShootingCommands.finishScore())
+        register("setpointShoot", closeShoot())
+        register("finishSetpointShoot", finishScore())
     }
 
     @AutoLogOutput
