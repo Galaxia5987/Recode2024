@@ -204,7 +204,7 @@ class SwerveDrive private constructor
      * @param chassisSpeeds Desired chassis speeds.
      * @param fieldOriented Should the drive be field oriented.
      */
-    fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
+    private fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
         var speeds = chassisSpeeds
         desiredSpeeds = speeds
 
