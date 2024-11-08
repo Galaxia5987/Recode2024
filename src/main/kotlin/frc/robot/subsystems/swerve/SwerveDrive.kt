@@ -26,7 +26,6 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
 import java.util.function.DoubleSupplier
-import java.util.function.Function
 import kotlin.math.abs
 import kotlin.math.hypot
 
@@ -206,26 +205,26 @@ class SwerveDrive private constructor
      * @param fieldOriented Should the drive be field oriented.
      */
     fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
-        var chassisSpeeds = chassisSpeeds
-        desiredSpeeds = chassisSpeeds
+        var speeds = chassisSpeeds
+        desiredSpeeds = speeds
 
         val fieldOrientedChassisSpeeds =
             ChassisSpeeds.fromFieldRelativeSpeeds(
-                chassisSpeeds.vxMetersPerSecond,
-                chassisSpeeds.vyMetersPerSecond,
-                chassisSpeeds.omegaRadiansPerSecond,
+                speeds.vxMetersPerSecond,
+                speeds.vyMetersPerSecond,
+                speeds.omegaRadiansPerSecond,
                 yaw
             )
 
-        if (ChassisSpeeds(0.0, 0.0, 0.0) == chassisSpeeds) {
+        if (ChassisSpeeds(0.0, 0.0, 0.0) == speeds) {
             Arrays.stream(modules).forEach { obj: SwerveModule? -> obj!!.stop() }
             return
         }
 
         if (fieldOriented) {
-            chassisSpeeds = fieldOrientedChassisSpeeds
+            speeds = fieldOrientedChassisSpeeds
         }
-        setModuleStates(kinematics.toSwerveModuleStates(chassisSpeeds))
+        setModuleStates(kinematics.toSwerveModuleStates(speeds))
     }
 
     /**
