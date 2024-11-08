@@ -33,11 +33,11 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
             simCamera.process(
                 0.0,
                 botPose3d + robotToCam.inverse(),
-                aprilTagFieldLayout.tags.map { a ->
+                aprilTagFieldLayout.tags.map {
                     VisionTargetSim(
-                        a.pose,
+                        it.pose,
                         TargetModel.kAprilTag36h11,
-                        a.ID
+                        it.ID
                     )
                 }
             )
