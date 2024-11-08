@@ -7,7 +7,6 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import frc.robot.lib.LoggedTunableNumber
-import frc.robot.subsystems.intake.IntakeConstants.GAINS
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
@@ -61,17 +60,17 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
 
     fun intake(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.INTAKE_ANGLE),
-            setSpinPower(IntakeConstants.INTAKE_SPIN_POWER),
-            setCenterPower(IntakeConstants.INTAKE_CENTER_POWER)
+            setAngle(INTAKE_ANGLE),
+            setSpinPower(INTAKE_SPIN_POWER),
+            setCenterPower(INTAKE_CENTER_POWER)
         )
     }
 
     fun outtake(): Command {
         return Commands.parallel(
-            setAngle(IntakeConstants.REST_ANGLE),
-            setSpinPower(-IntakeConstants.INTAKE_SPIN_POWER),
-            setCenterPower(-IntakeConstants.INTAKE_CENTER_POWER)
+            setAngle(REST_ANGLE),
+            setSpinPower(-INTAKE_SPIN_POWER),
+            setCenterPower(-INTAKE_CENTER_POWER)
         )
     }
 
@@ -82,7 +81,7 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
     }
 
     fun stop(): Command {
-        return setAngle(IntakeConstants.REST_ANGLE).alongWith(stopSpin())
+        return setAngle(REST_ANGLE).alongWith(stopSpin())
     }
 
     fun reset(): Command {

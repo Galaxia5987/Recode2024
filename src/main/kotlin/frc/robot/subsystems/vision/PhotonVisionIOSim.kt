@@ -11,7 +11,7 @@ import org.photonvision.simulation.VisionTargetSim
 class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robotToCam: Transform3d) : VisionIO {
     override val inputs = LoggedVisionInputs()
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
-        VisionConstants.aprilTagFieldLayout,
+        aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
         simCamera.camera,
         robotToCam
@@ -21,7 +21,7 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
 
 
     init {
-        VisionSim.system.addAprilTags(VisionConstants.aprilTagFieldLayout)
+        VisionSim.system.addAprilTags(aprilTagFieldLayout)
         VisionSim.system.addCamera(simCamera, robotToCam)
     }
 
@@ -33,7 +33,7 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
             simCamera.process(
                 0.0,
                 botPose3d + robotToCam.inverse(),
-                VisionConstants.aprilTagFieldLayout.tags.map { a ->
+                aprilTagFieldLayout.tags.map { a ->
                     VisionTargetSim(
                         a.pose,
                         TargetModel.kAprilTag36h11,

@@ -155,9 +155,9 @@ fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
 }
 
 fun initVision() {
-    val speakerRightCamera = initPhotonCamera("rightOV2311", VisionConstants.SPEAKER_RIGHT_CAMERA_POSE)
-    val speakerLeftCamera = initPhotonCamera("leftOV2311", VisionConstants.SPEAKER_LEFT_CAMERA_POSE)
-    val intakeAprilTagCamera = initPhotonCamera("frontOV2311", VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,)
+    val speakerRightCamera = initPhotonCamera("rightOV2311", SPEAKER_RIGHT_CAMERA_POSE)
+    val speakerLeftCamera = initPhotonCamera("leftOV2311", SPEAKER_LEFT_CAMERA_POSE)
+    val intakeAprilTagCamera = initPhotonCamera("frontOV2311", INTAKE_APRILTAG_CAMERA_POSE,)
 
     Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
 }
