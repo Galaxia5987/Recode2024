@@ -323,7 +323,7 @@ class SwerveDrive private constructor
     fun updateSwerveOutputs() {
         currentModuleStates =
             Arrays.stream<SwerveModule?>(modules)
-                .map<SwerveModuleState?>(Function<SwerveModule?, SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState })
+                .map<SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState }
                 .toList()
                 .toTypedArray<SwerveModuleState?>()
         kinematics
