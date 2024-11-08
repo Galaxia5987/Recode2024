@@ -26,20 +26,20 @@ object Initializer {
                 Constants.ROBORIO_NEO_SERIAL -> {
                     Array(4) { i ->
                         ModuleIOSparkMax(
-                            Ports.SwerveDriveNEO.DRIVE_IDS[i],
-                            Ports.SwerveDriveNEO.ANGLE_IDS[i],
-                            Ports.SwerveDriveNEO.ENCODER_IDS[i],
-                            Ports.SwerveDriveNEO.DRIVE_INVERTED[i],
-                            Ports.SwerveDriveNEO.ANGLE_INVERTED[i]
+                            SwerveDriveNEOPorts.DRIVE_IDS[i],
+                            SwerveDriveNEOPorts.ANGLE_IDS[i],
+                            SwerveDriveNEOPorts.ENCODER_IDS[i],
+                            SwerveDriveNEOPorts.DRIVE_INVERTED[i],
+                            SwerveDriveNEOPorts.ANGLE_INVERTED[i]
                         )
                     }
                 }
                 else -> {
                     Array(4) { i ->
                         ModuleIOTalonFX(
-                            Ports.SwerveDriveWCP.DRIVE_IDS[i],
-                            Ports.SwerveDriveWCP.ANGLE_IDS[i],
-                            Ports.SwerveDriveWCP.ENCODER_IDS[i],
+                            SwerveDriveWCPPorts.DRIVE_IDS[i],
+                            SwerveDriveWCPPorts.ANGLE_IDS[i],
+                            SwerveDriveWCPPorts.ENCODER_IDS[i],
                             SwerveConstants.DRIVE_MOTOR_CONFIGS
                                 ?: throw IllegalStateException("drive motor config is null"),
                             SwerveConstants.ANGLE_MOTOR_CONFIGS

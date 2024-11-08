@@ -32,7 +32,7 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
 
         fun getInstance() : Gripper {
             return instance ?: throw IllegalArgumentException(
-                "Gripper has not been initialized. Call initialize(io: GripperIO) first."
+                "GripperPorts has not been initialized. Call initialize(io: GripperIO) first."
             )
         }
     }

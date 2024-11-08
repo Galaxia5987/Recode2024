@@ -11,13 +11,13 @@ import com.ctre.phoenix6.controls.StrictFollower
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import frc.robot.Ports
+import frc.robot.ClimbPorts
 
 class ClimbIOTalonFX : ClimbIO {
     override val inputs = LoggedClimbInputs()
-    private val mainMotor = TalonFX(Ports.Climb.MAIN_MOTOR_ID)
-    private val auxMotor = TalonFX(Ports.Climb.AUX_MOTOR_ID)
-    private val stopperMotor = TalonSRX(Ports.Climb.STOPPER_ID)
+    private val mainMotor = TalonFX(ClimbPorts.MAIN_MOTOR_ID)
+    private val auxMotor = TalonFX(ClimbPorts.AUX_MOTOR_ID)
+    private val stopperMotor = TalonSRX(ClimbPorts.STOPPER_ID)
 
     private val percentOutput = DutyCycleOut(0.0).withEnableFOC(true)
 

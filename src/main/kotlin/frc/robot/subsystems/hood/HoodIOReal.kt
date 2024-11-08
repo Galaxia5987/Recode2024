@@ -11,13 +11,13 @@ import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import frc.robot.Ports
+import frc.robot.HoodPorts
 import frc.robot.lib.Utils
 
 class HoodIOReal : HoodIO {
     override val inputs = LoggedHoodInputs()
-    private val motor: TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
-    private val encoder = TalonSRX(Ports.Hood.ENCODER_ID)
+    private val motor: TalonFX = TalonFX(HoodPorts.MOTOR_ID)
+    private val encoder = TalonSRX(HoodPorts.ENCODER_ID)
 
     private val angleControl = PositionTorqueCurrentFOC(0.0)
 

@@ -5,13 +5,13 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.*
-import frc.robot.Ports
+import frc.robot.ShooterPorts
 
 class ShooterIOReal : ShooterIO {
     override val topRollerInputs = LoggedRollerInputs()
     override val bottomRollerInputs = LoggedRollerInputs()
-    private val topMotor = TalonFX(Ports.Shooter.TOP_MOTOR_ID)
-    private val bottomMotor = TalonFX(Ports.Shooter.BOTTOM_MOTOR_ID)
+    private val topMotor = TalonFX(ShooterPorts.TOP_MOTOR_ID)
+    private val bottomMotor = TalonFX(ShooterPorts.BOTTOM_MOTOR_ID)
     private val topControl = VelocityVoltage(0.0)
     private val bottomControl = VelocityVoltage(0.0)
 
