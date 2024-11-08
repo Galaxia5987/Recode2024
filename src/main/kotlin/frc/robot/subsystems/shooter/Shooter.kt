@@ -10,30 +10,30 @@ import org.littletonrobotics.junction.Logger
 
 class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     private val topKP =
-        LoggedTunableNumber("Shooter/Top kP", ShooterConstants.TOP_GAINS.kP)
+        LoggedTunableNumber("Shooter/Top kP", TOP_GAINS.kP)
     private val topKI =
-        LoggedTunableNumber("Shooter/Top kI", ShooterConstants.TOP_GAINS.kI)
+        LoggedTunableNumber("Shooter/Top kI", TOP_GAINS.kI)
     private val topKD =
-        LoggedTunableNumber("Shooter/Top kD", ShooterConstants.TOP_GAINS.kD)
+        LoggedTunableNumber("Shooter/Top kD", TOP_GAINS.kD)
     private val topKS =
-        LoggedTunableNumber("Shooter/Top kS", ShooterConstants.TOP_GAINS.kS)
+        LoggedTunableNumber("Shooter/Top kS", TOP_GAINS.kS)
     private val topKV =
-        LoggedTunableNumber("Shooter/Top kV", ShooterConstants.TOP_GAINS.kV)
+        LoggedTunableNumber("Shooter/Top kV", TOP_GAINS.kV)
     private val topKA =
-        LoggedTunableNumber("Shooter/Top kA", ShooterConstants.TOP_GAINS.kA)
+        LoggedTunableNumber("Shooter/Top kA", TOP_GAINS.kA)
 
     private val bottomKP =
-        LoggedTunableNumber("Shooter/Bottom kP", ShooterConstants.BOTTOM_GAINS.kP)
+        LoggedTunableNumber("Shooter/Bottom kP", BOTTOM_GAINS.kP)
     private val bottomKI =
-        LoggedTunableNumber("Shooter/Bottom kI", ShooterConstants.BOTTOM_GAINS.kI)
+        LoggedTunableNumber("Shooter/Bottom kI", BOTTOM_GAINS.kI)
     private val bottomKD =
-        LoggedTunableNumber("Shooter/Bottom kD", ShooterConstants.BOTTOM_GAINS.kD)
+        LoggedTunableNumber("Shooter/Bottom kD", BOTTOM_GAINS.kD)
     private val bottomKS =
-        LoggedTunableNumber("Shooter/Bottom kS", ShooterConstants.BOTTOM_GAINS.kS)
+        LoggedTunableNumber("Shooter/Bottom kS", BOTTOM_GAINS.kS)
     private val bottomKV =
-        LoggedTunableNumber("Shooter/Bottom kV", ShooterConstants.BOTTOM_GAINS.kV)
+        LoggedTunableNumber("Shooter/Bottom kV", BOTTOM_GAINS.kV)
     private val bottomKA =
-        LoggedTunableNumber("Shooter/Bottom kA", ShooterConstants.BOTTOM_GAINS.kA)
+        LoggedTunableNumber("Shooter/Bottom kA", BOTTOM_GAINS.kA)
 
     @AutoLogOutput
     private var topVelocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
@@ -91,8 +91,8 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
 
     fun stop(): Command {
         return runOnce {
-            topVelocitySetpoint = ShooterConstants.STOP_POWER
-            bottomVelocitySetpoint = ShooterConstants.STOP_POWER
+            topVelocitySetpoint = STOP_POWER
+            bottomVelocitySetpoint = STOP_POWER
             io.stop()
         }.withName("Stop Shooter")
     }
@@ -104,9 +104,9 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     @AutoLogOutput
     fun atSetpoint(): Boolean =
         io.topRollerInputs.velocity.isNear(
-            topVelocitySetpoint, ShooterConstants.TOP_ROLLER_TOLERANCE.`in`(Units.Percent)
+            topVelocitySetpoint, TOP_ROLLER_TOLERANCE.`in`(Units.Percent)
         ) && io.bottomRollerInputs.velocity.isNear(
-            bottomVelocitySetpoint, ShooterConstants.BOTTOM_ROLLER_TOLERANCE.`in`(
+            bottomVelocitySetpoint, BOTTOM_ROLLER_TOLERANCE.`in`(
                 Units.Percent
             )
         )

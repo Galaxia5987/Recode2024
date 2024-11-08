@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.PowerDistribution
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import frc.robot.lib.PoseEstimation
+import frc.robot.subsystems.vision.VISION_MEASUREMENT_MULTIPLIER
 import frc.robot.subsystems.swerve.SwerveDrive
-import frc.robot.subsystems.vision.VisionConstants
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
@@ -98,7 +98,7 @@ object Robot : LoggedRobot() {
      * SmartDashboard integrated updating.
      */
     override fun robotPeriodic() {
-        PoseEstimation.getInstance().processVisionMeasurements(VisionConstants.VISION_MEASUREMENT_MULTIPLIER)
+        PoseEstimation.getInstance().processVisionMeasurements(VISION_MEASUREMENT_MULTIPLIER)
         CommandScheduler.getInstance().run()
     }
 

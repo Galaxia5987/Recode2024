@@ -16,9 +16,9 @@ class HoodIOSim : HoodIO {
     private val motor: TalonFXSim =
         TalonFXSim(
             1,
-            HoodConstants.GEAR_RATIO,
-            HoodConstants.MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
-            HoodConstants.GEAR_RATIO
+            GEAR_RATIO,
+            MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
+            GEAR_RATIO
         )
 
     private val control = MotionMagicDutyCycle(0.0)
@@ -27,11 +27,11 @@ class HoodIOSim : HoodIO {
     init {
         motor.setProfiledController(
             ProfiledPIDController(
-                HoodConstants.GAINS.kP,
-                HoodConstants.GAINS.kI,
-                HoodConstants.GAINS.kD,
+                GAINS.kP,
+                GAINS.kI,
+                GAINS.kD,
                 TrapezoidProfile.Constraints(
-                    HoodConstants.MAX_VELOCITY, HoodConstants.MAX_ACCELERATION
+                    MAX_VELOCITY, MAX_ACCELERATION
                 )
             )
         )

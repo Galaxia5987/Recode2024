@@ -12,13 +12,13 @@ import com.revrobotics.CANSparkMax
 import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import frc.robot.Ports
+import frc.robot.IntakePorts
 
 class IntakeIOReal : IntakeIO {
     override val inputs = LoggedIntakeInputs()
-    private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
-    private val spinMotor = TalonFX(Ports.Intake.SPIN_MOTOR_ID)
-    private val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val angleMotor = TalonFX(IntakePorts.ANGLE_MOTOR_ID)
+    private val spinMotor = TalonFX(IntakePorts.SPIN_MOTOR_ID)
+    private val centerMotor = CANSparkMax(IntakePorts.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
 
@@ -52,12 +52,12 @@ class IntakeIOReal : IntakeIO {
             }
             Feedback = FeedbackConfigs().apply {
                 RotorToSensorRatio = 1.0
-                SensorToMechanismRatio = IntakeConstants.GEAR_RATIO
+                SensorToMechanismRatio = GEAR_RATIO
             }
             Slot0 = Slot0Configs().apply {
-                kP = IntakeConstants.GAINS.kP
-                kI = IntakeConstants.GAINS.kI
-                kD = IntakeConstants.GAINS.kD
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kD
 
             }
             CurrentLimits = CurrentLimitsConfigs().apply {

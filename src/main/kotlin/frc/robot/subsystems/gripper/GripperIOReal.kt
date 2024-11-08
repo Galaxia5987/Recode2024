@@ -7,22 +7,22 @@ import com.revrobotics.SparkLimitSwitch
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Timer
-import frc.robot.Ports
+import frc.robot.GripperPorts
 
 class GripperIOReal : GripperIO {
     override val inputs = LoggedGripperInputs()
     private val rollerMotor: CANSparkMax =
-        CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
+        CANSparkMax(GripperPorts.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
     private val timer = Timer()
     private val sensor: DigitalInput = DigitalInput(8)
 
     init {
         rollerMotor.restoreFactoryDefaults()
-        rollerMotor.setSmartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt())
+        rollerMotor.setSmartCurrentLimit(currentLimit.`in`(Units.Amp).toInt())
         rollerMotor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).enableLimitSwitch(false)
         rollerMotor.getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).enableLimitSwitch(false)
         rollerMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
-        rollerMotor.inverted = GripperConstants.ROLLER_INVERTED_VALUE
+        rollerMotor.inverted = ROLLER_INVERTED_VALUE
         rollerMotor.burnFlash()
 
         timer.start()

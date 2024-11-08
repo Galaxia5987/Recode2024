@@ -16,13 +16,13 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
 class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
-    private val kP = LoggedTunableNumber("Hood/kP", HoodConstants.GAINS.kP)
-    private val kI = LoggedTunableNumber("Hood/kI", HoodConstants.GAINS.kI)
-    private val kD = LoggedTunableNumber("Hood/kD", HoodConstants.GAINS.kD)
-    private val kS = LoggedTunableNumber("Hood/kS", HoodConstants.GAINS.kS)
-    private val kV = LoggedTunableNumber("Hood/kV", HoodConstants.GAINS.kV)
-    private val kA = LoggedTunableNumber("Hood/kA", HoodConstants.GAINS.kA)
-    private val kG = LoggedTunableNumber("Hood/kG", HoodConstants.GAINS.kG)
+    private val kP = LoggedTunableNumber("Hood/kP", GAINS.kP)
+    private val kI = LoggedTunableNumber("Hood/kI", GAINS.kI)
+    private val kD = LoggedTunableNumber("Hood/kD", GAINS.kD)
+    private val kS = LoggedTunableNumber("Hood/kS", GAINS.kS)
+    private val kV = LoggedTunableNumber("Hood/kV", GAINS.kV)
+    private val kA = LoggedTunableNumber("Hood/kA", GAINS.kA)
+    private val kG = LoggedTunableNumber("Hood/kG", GAINS.kG)
 
     private val inputs: LoggedHoodInputs = io.inputs
 
@@ -32,11 +32,11 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
     private val encoderTimer = Timer()
 
     @AutoLogOutput
-    private val mechanism2d = Mechanism2d(HoodConstants.SIMULATION_LENGTH, HoodConstants.SIMULATION_LENGTH)
-    private val root = mechanism2d.getRoot("Hood", HoodConstants.MECHANISM_2D_POSE.x, HoodConstants.MECHANISM_2D_POSE.y)
+    private val mechanism2d = Mechanism2d(SIMULATION_LENGTH, SIMULATION_LENGTH)
+    private val root = mechanism2d.getRoot("Hood", MECHANISM_2D_POSE.x, MECHANISM_2D_POSE.y)
     private val hood = root.append(
         MechanismLigament2d(
-            "Hood", HoodConstants.HOOD_LENGTH.`in`(Units.Meters), 45.0
+            "Hood", HOOD_LENGTH.`in`(Units.Meters), 45.0
         )
     )
 
@@ -69,7 +69,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
 
     @AutoLogOutput
     fun atSetpoint(): Boolean =
-        inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE.`in`(Units.Percent))
+        inputs.absoluteEncoderAngle.isNear(angleSetpoint, MAX_TOLERANCE.`in`(Units.Percent))
 
     fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
 
@@ -88,12 +88,12 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
         }.withName("Set Angle Hood")
     }
 
-    fun setRestingAngle(): Command = setAngle(HoodConstants.RESTING_ANGLE).withName("Set Resting Angle Hood")
+    fun setRestingAngle(): Command = setAngle(RESTING_ANGLE).withName("Set Resting Angle Hood")
 
     @AutoLogOutput(key = "Hood/Pose")
     private fun getPose3d(): Pose3d = Pose3d(
-        HoodConstants.ROOT_POSITION,
-        Rotation3d(0.0, getAngle().plus(HoodConstants.SIMULATION_OFFSET).`in`(Units.Radians), 0.0)
+        ROOT_POSITION,
+        Rotation3d(0.0, getAngle().plus(SIMULATION_OFFSET).`in`(Units.Radians), 0.0)
     )
 
     override fun periodic() {

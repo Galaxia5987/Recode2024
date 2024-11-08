@@ -15,9 +15,7 @@ import frc.robot.subsystems.leds.LEDs
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.swerve.*
-import frc.robot.subsystems.vision.PhotonVisionIOReal
-import frc.robot.subsystems.vision.Vision
-import frc.robot.subsystems.vision.VisionConstants
+import frc.robot.subsystems.vision.*
 import org.photonvision.PhotonCamera
 
 object Initializer {
@@ -28,20 +26,20 @@ object Initializer {
                 Constants.ROBORIO_NEO_SERIAL -> {
                     Array(4) { i ->
                         ModuleIOSparkMax(
-                            Ports.SwerveDriveNEO.DRIVE_IDS[i],
-                            Ports.SwerveDriveNEO.ANGLE_IDS[i],
-                            Ports.SwerveDriveNEO.ENCODER_IDS[i],
-                            Ports.SwerveDriveNEO.DRIVE_INVERTED[i],
-                            Ports.SwerveDriveNEO.ANGLE_INVERTED[i]
+                            SwerveDriveNEOPorts.DRIVE_IDS[i],
+                            SwerveDriveNEOPorts.ANGLE_IDS[i],
+                            SwerveDriveNEOPorts.ENCODER_IDS[i],
+                            SwerveDriveNEOPorts.DRIVE_INVERTED[i],
+                            SwerveDriveNEOPorts.ANGLE_INVERTED[i]
                         )
                     }
                 }
                 else -> {
                     Array(4) { i ->
                         ModuleIOTalonFX(
-                            Ports.SwerveDriveWCP.DRIVE_IDS[i],
-                            Ports.SwerveDriveWCP.ANGLE_IDS[i],
-                            Ports.SwerveDriveWCP.ENCODER_IDS[i],
+                            SwerveDriveWCPPorts.DRIVE_IDS[i],
+                            SwerveDriveWCPPorts.ANGLE_IDS[i],
+                            SwerveDriveWCPPorts.ENCODER_IDS[i],
                             SwerveConstants.DRIVE_MOTOR_CONFIGS
                                 ?: throw IllegalStateException("drive motor config is null"),
                             SwerveConstants.ANGLE_MOTOR_CONFIGS
@@ -70,22 +68,22 @@ object Initializer {
         val speakerRightCamera =
             PhotonVisionIOReal(
                 PhotonCamera("rightOV2311"),
-                VisionConstants.SPEAKER_RIGHT_CAMERA_POSE
+                SPEAKER_RIGHT_CAMERA_POSE
             )
         val speakerLeftCamera =
             PhotonVisionIOReal(
                 PhotonCamera("leftOV2311"),
-                VisionConstants.SPEAKER_LEFT_CAMERA_POSE,
+                SPEAKER_LEFT_CAMERA_POSE,
             )
         val intakeAprilTagCamera =
             PhotonVisionIOReal(
                 PhotonCamera("frontOV2311"),
-                VisionConstants.INTAKE_APRILTAG_CAMERA_POSE,
+                INTAKE_APRILTAG_CAMERA_POSE,
             )
         val driverCamera =
             PhotonVisionIOReal(
                 PhotonCamera("Driver_Camera"),
-                VisionConstants.DRIVER_CAMERA_POSE,
+                DRIVER_CAMERA_POSE,
             )
 
         Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
