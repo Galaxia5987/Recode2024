@@ -1,4 +1,4 @@
-import os
+import xos
 import re
 import subprocess
 import time
@@ -84,7 +84,6 @@ def download_log_file(log_file, repo):
 
     ds_log = (DRIVERSTATION_LOGS_DIRECTORY / log_file.stem).with_suffix(DRIVERSTATION_FILE_EXTENSION)
     copy_file(ds_log)
-
 
 
 def is_competition_log(log_file) -> bool:

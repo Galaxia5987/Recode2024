@@ -4,7 +4,8 @@
 package frc.robot
 
 import com.ctre.phoenix6.SignalLogger
-import edu.wpi.first.hal.FRCNetComm
+import edu.wpi.first.hal.FRCNetComm.tInstances
+import edu.wpi.first.hal.FRCNetComm.tResourceType
 import edu.wpi.first.hal.HAL
 import edu.wpi.first.wpilibj.Compressor
 import edu.wpi.first.wpilibj.DriverStation
@@ -13,7 +14,9 @@ import edu.wpi.first.wpilibj.PowerDistribution
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import frc.robot.lib.PoseEstimation
+import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.subsystems.vision.VisionConstants
+import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
 import org.littletonrobotics.junction.Logger
@@ -21,10 +24,6 @@ import org.littletonrobotics.junction.inputs.LoggedPowerDistribution
 import org.littletonrobotics.junction.networktables.NT4Publisher
 import org.littletonrobotics.junction.wpilog.WPILOGReader
 import org.littletonrobotics.junction.wpilog.WPILOGWriter
-import edu.wpi.first.hal.FRCNetComm.tResourceType
-import edu.wpi.first.hal.FRCNetComm.tInstances
-import frc.robot.subsystems.swerve.SwerveDrive
-import org.littletonrobotics.junction.AutoLogOutput
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to

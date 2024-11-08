@@ -14,7 +14,7 @@ class ShooterIOSim : ShooterIO {
         1,
         ShooterConstants.GEAR_RATIO_TOP,
         ShooterConstants.MOMENT_OF_INERTIA_TOP.`in`(
-            Units.Kilograms.mult<Distance>(Units.Meters).mult(Units.Meters)
+            Units.Kilograms.mult(Units.Meters).mult(Units.Meters)
         ),
         1.0
     )

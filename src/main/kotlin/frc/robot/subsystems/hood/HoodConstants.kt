@@ -15,7 +15,7 @@ object HoodConstants {
     val MAX_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.03)
 
     val MOMENT_OF_INERTIA: Measure<Mult<Mult<Mass, Distance>, Distance>> =
-        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003);
+        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0003)
     val MAX_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(1.0)
     val MAX_ACCELERATION: Measure<Velocity<Velocity<Angle>>> = Units.RotationsPerSecond.per(Units.Second).of(4.0)
     val RESTING_ANGLE: Measure<Angle> = Units.Degrees.of(100.0)

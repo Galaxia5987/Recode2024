@@ -3,20 +3,16 @@ package frc.robot.subsystems.swerve
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
-import com.pathplanner.lib.config.ModuleConfig
 import com.pathplanner.lib.config.PIDConstants
-import com.pathplanner.lib.config.RobotConfig
 import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
-import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import frc.robot.Constants
 import frc.robot.lib.LoggedTunableNumber
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
