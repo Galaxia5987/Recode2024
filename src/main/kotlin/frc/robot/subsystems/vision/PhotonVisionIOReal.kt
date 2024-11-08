@@ -14,7 +14,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         robotToCam
     )
 
-    override val name = camera.name
+    override val name: String = camera.name
 
     init {
         camera.pipelineIndex = 0
