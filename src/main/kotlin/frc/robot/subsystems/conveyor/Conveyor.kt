@@ -56,10 +56,10 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         io.setVelocity(velocity)
     }
 
-    fun feed() = setVelocity(ConveyorConstants.FEED_VELOCITY)
+    fun feed() = setVelocity(FEED_VELOCITY)
 
     fun atSetPoint(): Boolean {
-        return inputs.velocity.isNear(velocitySetpoint, ConveyorConstants.AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
+        return inputs.velocity.isNear(velocitySetpoint, AT_SETPOINT_TOLERANCE.`in`(Units.Percent))
     }
 
     fun stop(): Command {
