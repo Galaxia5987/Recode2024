@@ -39,8 +39,8 @@ class ClimbIOTalonFX : ClimbIO {
         stopperMotor.configFactoryDefault()
         stopperMotor.enableCurrentLimit(true)
         stopperMotor.enableVoltageCompensation(true)
-        stopperMotor.configVoltageCompSaturation(ClimbConstants.STOPPER_MOTOR_VOLTAGE_COMPENSATION_SATURATION)
-        stopperMotor.configPeakCurrentLimit(ClimbConstants.STOPPER_MOTOR_CURRENT_LIMIT)
+        stopperMotor.configVoltageCompSaturation(STOPPER_MOTOR_VOLTAGE_COMPENSATION_SATURATION)
+        stopperMotor.configPeakCurrentLimit(STOPPER_MOTOR_CURRENT_LIMIT)
         stopperMotor.setNeutralMode(NeutralMode.Brake)
         stopperMotor.inverted = true
     }
@@ -50,11 +50,11 @@ class ClimbIOTalonFX : ClimbIO {
     }
 
     override fun openStopper() {
-        stopperMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)
+        stopperMotor.set(TalonSRXControlMode.PercentOutput, STOPPER_MOTOR_POWER)
     }
 
     override fun closeStopper() {
-        stopperMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)
+        stopperMotor.set(TalonSRXControlMode.PercentOutput, -STOPPER_MOTOR_POWER)
     }
 
     override fun disableStopper() {

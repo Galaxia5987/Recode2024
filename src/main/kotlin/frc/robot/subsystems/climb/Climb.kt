@@ -76,7 +76,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
 
     override fun periodic() {
         isStopperStuck =
-            inputs.stopperCurrent.absoluteValue >= ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
+            inputs.stopperCurrent.absoluteValue >= STOPPER_MOTOR_CURRENT_THRESHOLD.absoluteValue
         io.updateInputs()
         if (timer.advanceIfElapsed(0.1)) {
             Logger.processInputs(this::class.simpleName, inputs)
