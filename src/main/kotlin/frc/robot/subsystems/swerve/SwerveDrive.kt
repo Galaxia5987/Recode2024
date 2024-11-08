@@ -396,7 +396,7 @@ class SwerveDrive private constructor
                     { volts: Measure<Voltage?> ->
                         for (module in modules) {
                             module!!.characterize(
-                                volts.`in`(edu.wpi.first.units.Units.Volts)
+                                volts.`in`(Units.Volts)
                             )
                         }
                     },
