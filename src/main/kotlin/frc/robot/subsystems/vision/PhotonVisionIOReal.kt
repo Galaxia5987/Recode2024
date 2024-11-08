@@ -1,7 +1,6 @@
 package frc.robot.subsystems.vision
 
 import edu.wpi.first.math.geometry.Transform3d
-import edu.wpi.first.units.Units
 import org.photonvision.PhotonCamera
 import org.photonvision.PhotonPoseEstimator
 
@@ -14,7 +13,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
         robotToCam
     )
 
-    override val name = camera.name
+    override val name: String = camera.name
 
     init {
         camera.pipelineIndex = 0

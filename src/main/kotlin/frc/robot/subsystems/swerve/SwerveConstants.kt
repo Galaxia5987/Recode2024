@@ -3,20 +3,16 @@ package frc.robot.subsystems.swerve
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
-import com.pathplanner.lib.config.ModuleConfig
 import com.pathplanner.lib.config.PIDConstants
-import com.pathplanner.lib.config.RobotConfig
 import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
-import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import frc.robot.Constants
 import frc.robot.lib.LoggedTunableNumber
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
@@ -28,22 +24,22 @@ object SwerveConstants {
 
     const val NEO_CURRENT_LIMIT = 40.0
     const val NEO_550_CURRENT_LIMIT = 20.0
-    val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
+    private val TALON_FX_CURRENT_LIMIT_CONFIGS: CurrentLimitsConfigs = CurrentLimitsConfigs()
         .withSupplyCurrentLimit(30.0)
         .withStatorCurrentLimit(60.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
-    val VOLTAGE_CONFIGS = VoltageConfigs()
+    private val VOLTAGE_CONFIGS: VoltageConfigs = VoltageConfigs()
         .withPeakForwardVoltage(VOLT_COMP_SATURATION)
         .withPeakReverseVoltage(VOLT_COMP_SATURATION)
-    val MOTOR_OUTPUT_CONFIGS = MotorOutputConfigs()
+    private val MOTOR_OUTPUT_CONFIGS: MotorOutputConfigs = MotorOutputConfigs()
         .withDutyCycleNeutralDeadband(NEUTRAL_DEADBAND)
         .withInverted(InvertedValue.Clockwise_Positive)
-    val MOTION_MAGIC_CONFIGS = MotionMagicConfigs()
+    private val MOTION_MAGIC_CONFIGS: MotionMagicConfigs = MotionMagicConfigs()
         .withMotionMagicCruiseVelocity(3.0)
         .withMotionMagicAcceleration(12.0)
-    val DRIVE_SLOT_0_CONFIG: Slot0Configs
-    val ANGLE_SLOT_0_CONFIG: Slot0Configs
+    private val DRIVE_SLOT_0_CONFIG: Slot0Configs
+    private val ANGLE_SLOT_0_CONFIG: Slot0Configs
 
     val STEERING_MULTIPLIER =
         LoggedTunableNumber("Steering multiplier", 0.6)

@@ -10,7 +10,6 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.Velocity
 import frc.robot.Ports
-import frc.robot.lib.LoggedTunableNumber
 
 class ConveyorIOReal : ConveyorIO {
     override val inputs = LoggedConveyorInputs()

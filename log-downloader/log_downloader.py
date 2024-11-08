@@ -86,7 +86,6 @@ def download_log_file(log_file, repo):
     copy_file(ds_log)
 
 
-
 def is_competition_log(log_file) -> bool:
     return re.search(r"_[pqe]", log_file.name) is not None
 
