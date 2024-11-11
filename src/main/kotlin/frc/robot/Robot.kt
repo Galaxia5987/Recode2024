@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.PowerDistribution
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import frc.robot.lib.PoseEstimation
-import frc.robot.subsystems.vision.VISION_MEASUREMENT_MULTIPLIER
 import frc.robot.subsystems.swerve.SwerveDrive
+import frc.robot.subsystems.vision.VISION_MEASUREMENT_MULTIPLIER
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
@@ -128,7 +128,9 @@ object Robot : LoggedRobot() {
 
     /** This function is called once when teleop is enabled.  */
     override fun teleopInit() {
-        autonomousCommand.cancel()
+        if (::autonomousCommand.isInitialized) {
+            autonomousCommand.cancel()
+        }
     }
 
     /** This function is called periodically during operator control.  */
