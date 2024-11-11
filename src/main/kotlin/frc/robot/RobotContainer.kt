@@ -41,6 +41,7 @@ object RobotContainer {
 
     private val testController = CommandXboxController(2)
 
+    @AutoLogOutput
     private val autoChooser: SendableChooser<Command>
     private val shootState: ShootState by lazy { ShootState() }
     private val ampState: AmpState by lazy { AmpState() }
