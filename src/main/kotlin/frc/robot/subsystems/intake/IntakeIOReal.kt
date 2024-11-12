@@ -81,7 +81,7 @@ class IntakeIOReal : IntakeIO {
         centerMotor.set(power)
     }
 
-    override fun setAngle(angle: Measure<Angle>) {
+    override fun setAngle(angle: Measure<AngleUnit>) {
         angleMotor.setControl(positionControl.withPosition(angle.`in`(Units.Rotations)))
     }
 
@@ -100,9 +100,9 @@ class IntakeIOReal : IntakeIO {
     }
 
     override fun updateInputs() {
-        inputs.angleMotorAngle = Units.Rotations.of(angleMotor.position.value)
-        inputs.spinMotorVoltage = spinMotor.motorVoltage.value
+        inputs.angleMotorAngle = angleMotor.position.value
+        inputs.spinMotorVoltage = spinMotor.motorVoltage.value.`in`(Units.Volts)
         inputs.centerMotorVoltage = centerMotor.busVoltage
-        inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value
+        inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value.`in`(Units.Volts)
     }
 }

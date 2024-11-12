@@ -1,18 +1,20 @@
 package frc.robot.subsystems.conveyor
 
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.units.measure.Dimensionless
+import edu.wpi.first.units.measure.MomentOfInertia
 import frc.robot.lib.Gains
 import frc.robot.lib.selectGainsBasedOnMode
 
 object ConveyorConstants {
     const val GEAR_RATIO = 1.0
 
-    val AT_SETPOINT_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.1)
+    val AT_SETPOINT_TOLERANCE: Dimensionless = Units.Percent.of(0.1)
 
-    val MOMENT_OF_INERTIA: Measure<Mult<Mult<Mass, Distance>, Distance>> =
-        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.000_05)
+    val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(0.000_05)
 
-    val FEED_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(70.0)
+    val FEED_VELOCITY: AngularVelocity = Units.RotationsPerSecond.of(70.0)
 
     val GAINS by lazy {
         selectGainsBasedOnMode(

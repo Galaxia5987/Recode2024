@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.lib.Utils
 import frc.robot.lib.units.Units
+import edu.wpi.first.units.Units as WpiUnits
 
 class ModuleIOSparkMax(
     driveMotorID: Int,

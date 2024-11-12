@@ -4,14 +4,12 @@ import com.ctre.phoenix.motorcontrol.FeedbackDevice
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.configs.*
 import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
-import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.GravityTypeValue
 import com.ctre.phoenix6.signals.StaticFeedforwardSignValue
 import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import frc.robot.Ports
 import frc.robot.lib.Utils
 
@@ -70,7 +68,7 @@ class HoodIOReal : HoodIO {
         motor.setPosition(getEncoderPosition())
     }
 
-    override fun setAngle(angle: Measure<Angle>) {
+    override fun setAngle(angle: Angle) {
         val error = angle.minus(inputs.absoluteEncoderAngle)
         motor.setControl(
             angleControl
@@ -94,13 +92,12 @@ class HoodIOReal : HoodIO {
     }
 
     override fun updateInputs() {
-        inputs.internalAngle.mut_replace(motor.position.value, Units.Rotations)
-        inputs.absoluteEncoderAngle.mut_replace(getEncoderPosition(), Units.Rotations)
-        inputs.voltage.mut_replace(motor.motorVoltage.value, Units.Volts)
-        inputs.absoluteEncoderAngleNoOffset.mut_replace(
+        inputs.internalAngle = motor.position.value
+        inputs.absoluteEncoderAngle = Units.Rotations.of(getEncoderPosition())
+        inputs.voltage = motor.motorVoltage.value
+        inputs.absoluteEncoderAngleNoOffset = Units.Rotations.of(
             ((encoder.getSelectedSensorPosition() % HoodConstants.ENCODER_TICKS_PER_REVOLUTION)
-                    / HoodConstants.ENCODER_TICKS_PER_REVOLUTION),
-            Units.Rotations
+                    / HoodConstants.ENCODER_TICKS_PER_REVOLUTION)
         )
     }
 }

@@ -1,8 +1,7 @@
 package frc.robot.subsystems.intake
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import frc.robot.lib.Gains
 import frc.robot.lib.selectGainsBasedOnMode
 
@@ -24,6 +23,6 @@ object IntakeConstants {
         )
     }
 
-    val INTAKE_ANGLE: Measure<Angle> = Units.Degree.of(25.0)
-    val REST_ANGLE: Measure<Angle> = Units.Degree.of(127.0)
+    val INTAKE_ANGLE: Angle = Units.Degree.of(25.0)
+    val REST_ANGLE: Angle = Units.Degree.of(127.0)
 }

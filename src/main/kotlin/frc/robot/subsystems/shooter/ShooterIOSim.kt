@@ -4,6 +4,7 @@ import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.VelocityVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
@@ -13,9 +14,7 @@ class ShooterIOSim : ShooterIO {
     private val topMotor = TalonFXSim(
         1,
         ShooterConstants.GEAR_RATIO_TOP,
-        ShooterConstants.MOMENT_OF_INERTIA_TOP.`in`(
-            Units.Kilograms.mult<Distance>(Units.Meters).mult(Units.Meters)
-        ),
+        ShooterConstants.MOMENT_OF_INERTIA_TOP.`in`(Units.KilogramSquareMeters),
         1.0
     )
 
@@ -23,7 +22,7 @@ class ShooterIOSim : ShooterIO {
         1,
         ShooterConstants.GEAR_RATIO_BOTTOM,
         ShooterConstants.MOMENT_OF_INERTIA_BOTTOM.`in`(
-            Units.Kilograms.mult(Units.Meters).mult(Units.Meters)
+            Units.KilogramSquareMeters
         ),
         1.0
     )
@@ -49,11 +48,11 @@ class ShooterIOSim : ShooterIO {
         )
     }
 
-    override fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
+    override fun setTopVelocity(velocity: AngularVelocity) {
         topMotor.setControl(topControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
-    override fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {
+    override fun setBottomVelocity(velocity: AngularVelocity) {
         bottomMotor.setControl(bottomControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
@@ -74,12 +73,7 @@ class ShooterIOSim : ShooterIO {
         topMotor.update(Timer.getFPGATimestamp())
         bottomMotor.update(Timer.getFPGATimestamp())
 
-        topRollerInputs.velocity.mut_replace(
-            topMotor.velocity, Units.RotationsPerSecond
-        )
-
-        bottomRollerInputs.velocity.mut_replace(
-            bottomMotor.velocity, Units.RotationsPerSecond
-        )
+        topRollerInputs.velocity = Units.RotationsPerSecond.of(topMotor.velocity)
+        bottomRollerInputs.velocity = Units.RotationsPerSecond.of(bottomMotor.velocity)
     }
 }

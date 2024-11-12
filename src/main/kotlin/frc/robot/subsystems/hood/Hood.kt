@@ -2,10 +2,8 @@ package frc.robot.subsystems.hood
 
 import edu.wpi.first.math.geometry.Pose3d
 import edu.wpi.first.math.geometry.Rotation3d
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d
@@ -27,7 +25,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
     private val inputs: LoggedHoodInputs = io.inputs
 
     @AutoLogOutput
-    private var angleSetpoint: Measure<Angle> = Units.Rotations.zero()
+    private var angleSetpoint: Angle = Units.Rotations.zero()
     private val timer = Timer()
     private val encoderTimer = Timer()
 
@@ -71,16 +69,16 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
     fun atSetpoint(): Boolean =
         inputs.absoluteEncoderAngle.isNear(angleSetpoint, HoodConstants.MAX_TOLERANCE.`in`(Units.Percent))
 
-    fun getAngle(): MutableMeasure<Angle> = inputs.internalAngle
+    fun getAngle(): Angle = inputs.internalAngle
 
-    fun setAngle(angle: Measure<Angle>): Command {
+    fun setAngle(angle: Angle): Command {
         return runOnce {
             angleSetpoint = angle
             io.setAngle(angle)
         }.withName("Set Angle Hood")
     }
 
-    fun setAngle(angleSupplier: () -> Measure<Angle>): Command {
+    fun setAngle(angleSupplier: () -> Angle): Command {
         return run {
             val angle = angleSupplier.invoke()
             angleSetpoint = angle

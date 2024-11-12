@@ -1,15 +1,17 @@
 package frc.robot.subsystems.shooter
 
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
     val topRollerInputs: LoggedRollerInputs
     val bottomRollerInputs: LoggedRollerInputs
 
-    fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {}
+    fun setTopVelocity(velocity: AngularVelocity) {}
 
-    fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {}
+    fun setBottomVelocity(velocity: AngularVelocity) {}
 
     fun stop() {}
 
@@ -21,7 +23,7 @@ interface ShooterIO {
 
     @Logged
     open class RollerInputs {
-        var velocity: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
-        var voltage: MutableMeasure<Voltage> = MutableMeasure.zero(Units.Volts)
+        var velocity: AngularVelocity = Units.RotationsPerSecond.zero()
+        var voltage: Voltage = Units.Volts.zero()
     }
 }

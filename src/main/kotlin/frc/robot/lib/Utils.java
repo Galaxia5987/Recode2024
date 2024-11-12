@@ -2,9 +2,8 @@ package frc.robot.lib;
 
 import edu.wpi.first.math.geometry.*;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
-import edu.wpi.first.units.Angle;
-import edu.wpi.first.units.Measure;
 import edu.wpi.first.units.Units;
+import edu.wpi.first.units.measure.Angle;
 import frc.robot.Constants;
 import java.util.Comparator;
 import java.util.List;
@@ -31,7 +30,7 @@ public class Utils {
         return Rotation2d.fromRadians(normalize(angle.getRadians()));
     }
 
-    public static Measure<Angle> normalize(Measure<Angle> angle) {
+    public static Angle normalize(Angle angle) {
         return Units.Radians.of(normalize(angle.in(Units.Radians)));
     }
 

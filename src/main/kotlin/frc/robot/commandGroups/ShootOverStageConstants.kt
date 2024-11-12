@@ -1,16 +1,15 @@
 package frc.robot.commandGroups
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
 import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.AngularVelocity
 import frc.robot.lib.getTranslationByColor
 
 object ShootOverStageConstants {
-    val HOOD_ANGLE_SUPER_POOP: Measure<Angle> = Units.Degrees.of(87.0)
-    val SHOOTER_VELOCITY_SUPER_POOP: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(77.07)
-    val CONVEYOR_VELOCITY_SUPER_POOP: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(60.0)
+    val HOOD_ANGLE_SUPER_POOP: Angle = Units.Degrees.of(87.0)
+    val SHOOTER_VELOCITY_SUPER_POOP: AngularVelocity = Units.RotationsPerSecond.of(77.07)
+    val CONVEYOR_VELOCITY_SUPER_POOP: AngularVelocity = Units.RotationsPerSecond.of(60.0)
 
     private val SUPER_POOP_TRANSLATION_BLUE = Translation2d(0.8, 7.1)
 

@@ -1,6 +1,6 @@
 package frc.robot.subsystems.intake
 
-import edu.wpi.first.units.Angle
+import edu.wpi.first.units.AngleUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import org.team9432.annotation.Logged
@@ -12,7 +12,7 @@ interface IntakeIO {
 
     fun setCenterPower(power: Double) {}
 
-    fun setAngle(angle: Measure<Angle>) {}
+    fun setAngle(angle: Measure<AngleUnit>) {}
 
     fun setAnglePower(power: Double) {}
 
@@ -26,7 +26,7 @@ interface IntakeIO {
     open class IntakeInputs {
         var spinMotorVoltage = 0.0
         var centerMotorVoltage = 0.0
-        var angleMotorAngle: Measure<Angle> = Units.Degree.of(120.0)
+        var angleMotorAngle: Measure<AngleUnit> = Units.Degree.of(120.0)
         var angleMotorAppliedVoltage = 0.0
     }
 }

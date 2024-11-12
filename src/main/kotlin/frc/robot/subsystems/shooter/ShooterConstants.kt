@@ -2,6 +2,9 @@ package frc.robot.subsystems.shooter
 
 import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.units.measure.Dimensionless
+import edu.wpi.first.units.measure.MomentOfInertia
 import frc.robot.lib.Gains
 import frc.robot.lib.selectGainsBasedOnMode
 
@@ -9,14 +12,10 @@ object ShooterConstants {
     const val GEAR_RATIO_TOP: Double = 1.0
     const val GEAR_RATIO_BOTTOM: Double = 1.0
 
-    val TOP_ROLLER_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.03)
-    val BOTTOM_ROLLER_TOLERANCE: Measure<Dimensionless> = Units.Percent.of(0.03)
-    val MOMENT_OF_INERTIA_TOP: Measure<Mult<Mult<Mass, Distance>, Distance>> =
-        Units.Kilograms.mult(Units.Meters).mult(
-            Units.Meters
-        ).of(0.0008)
-    val MOMENT_OF_INERTIA_BOTTOM: Measure<Mult<Mult<Mass, Distance>, Distance>> =
-        Units.Kilograms.mult(Units.Meters).mult(Units.Meters).of(0.0008)
+    val TOP_ROLLER_TOLERANCE: Dimensionless = Units.Percent.of(0.03)
+    val BOTTOM_ROLLER_TOLERANCE: Dimensionless = Units.Percent.of(0.03)
+    val MOMENT_OF_INERTIA_TOP: MomentOfInertia = Units.KilogramSquareMeters.of(.0008)
+    val MOMENT_OF_INERTIA_BOTTOM: MomentOfInertia = Units.KilogramSquareMeters.of(.0008)
 
     val TOP_GAINS by lazy {
         selectGainsBasedOnMode(
@@ -46,7 +45,7 @@ object ShooterConstants {
         )
     }
 
-    val STOP_POWER: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+    val STOP_POWER: AngularVelocity = Units.RotationsPerSecond.zero()
 
     const val CURRENT_LIMIT_TOP = 40.0
     const val CURRENT_LIMIT_BOTTOM = 40.0

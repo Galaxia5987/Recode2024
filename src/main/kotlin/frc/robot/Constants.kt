@@ -5,6 +5,11 @@ import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularAcceleration
+import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.units.measure.Distance
+import edu.wpi.first.units.measure.LinearAcceleration
+import edu.wpi.first.units.measure.LinearVelocity
 import edu.wpi.first.wpilibj.DriverStation
 import frc.robot.lib.getPoseByColor
 import frc.robot.lib.getTranslationByColor
@@ -17,13 +22,13 @@ object Constants {
     const val LOOP_TIME = 0.02 // [s]
     const val IS_TUNING_MODE = true
 
-    private val EFFECTIVE_ROBOT_RADIUS: Measure<Distance> = Units.Meters.of(SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
-    private val MAX_VELOCITY: Measure<Velocity<Distance>> = Units.MetersPerSecond.of(4.5)
-    private val MAX_ACCELERATION: Measure<Velocity<Velocity<Distance>>> = Units.MetersPerSecondPerSecond.of(3.0)
-    private val MAX_ANGULAR_VELOCITY: Measure<Velocity<Angle>> = Units.RotationsPerSecond.of(
+    private val EFFECTIVE_ROBOT_RADIUS: Distance = Units.Meters.of(SwerveConstants.ROBOT_LENGTH / sqrt(2.0))
+    private val MAX_VELOCITY: LinearVelocity = Units.MetersPerSecond.of(4.5)
+    private val MAX_ACCELERATION: LinearAcceleration = Units.MetersPerSecondPerSecond.of(3.0)
+    private val MAX_ANGULAR_VELOCITY: AngularVelocity = Units.RotationsPerSecond.of(
         MAX_VELOCITY.`in`(Units.MetersPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
     )
-    private val MAX_ANGULAR_ACCELERATION: Measure<Velocity<Velocity<Angle>>> =
+    private val MAX_ANGULAR_ACCELERATION: AngularAcceleration =
         Units.RotationsPerSecond.per(Units.Second).of(
                 MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
             )
