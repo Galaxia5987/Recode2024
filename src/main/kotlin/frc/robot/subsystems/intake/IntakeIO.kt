@@ -18,6 +18,11 @@ interface IntakeIO {
 
     fun setsCenterMotorPower(power: Double){}
 
+    fun stopCenterMotor(){}
+
+    fun stopSpinMotor(){}
+
+
     @Logged
     open class IntakeInput {
         var angle: Double = 0.0

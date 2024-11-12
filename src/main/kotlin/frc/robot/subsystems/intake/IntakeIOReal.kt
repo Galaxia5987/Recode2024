@@ -52,4 +52,11 @@ class IntakeIOReal : IntakeIO {
         centerMotor.set(power)
     }
 
+    override fun stopCenterMotor() {
+        centerMotor.set(0.0)
+    }
+
+    override fun stopSpinMotor() {
+        spinMotor.set(0.0)
+    }
 }

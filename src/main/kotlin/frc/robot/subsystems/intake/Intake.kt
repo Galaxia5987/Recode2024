@@ -37,13 +37,13 @@ class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
         return Commands.runOnce({io.setsSpinMotorPower(power)}).withName("setSpinMotorPower")
     }
     fun stopSpinMotor():Command{
-        return Commands.runOnce({io.setsSpinMotorPower(0.0)}).withName("StopSpin")
+        return Commands.runOnce(io::stopSpinMotor).withName("StopSpin")
     }
     fun setCenterMotorPower(power:Double):Command{
         return Commands.runOnce({io.setsCenterMotorPower(power)}).withName("setCenterMotorPower")
     }
     fun stopCenterMotor():Command{
-        return Commands.runOnce({io.setsCenterMotorPower(0.0)}).withName("StopCenterMotor")
+        return Commands.runOnce(io::stopCenterMotor).withName("StopCenterMotor")
     }
 
     fun stop():Command = Commands.parallel(stopSpinMotor(),stopCenterMotor(),setAngle(IntakeConstants.UP_ANGLE))
