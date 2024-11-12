@@ -7,6 +7,7 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Power
 import edu.wpi.first.units.Voltage
 import edu.wpi.first.wpilibj.DigitalInput
+import frc.robot.Constants
 import frc.robot.Ports
 
 class GripperIOReal : GripperIO {
@@ -18,6 +19,10 @@ class GripperIOReal : GripperIO {
 
     override fun setPower(power: Double) {
         spinMotor.set(power)
+    }
+
+    override fun stop() {
+        spinMotor.set(0.0)
     }
 
 
