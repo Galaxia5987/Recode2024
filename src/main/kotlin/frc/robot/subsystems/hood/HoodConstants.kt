@@ -33,24 +33,26 @@ object HoodConstants {
 
             }
         }
-        MOTOR_CONFIGURATION.withMotorOutput(
-            MotorOutputConfigs()
-                .withNeutralMode(NeutralModeValue.Brake)
-                .withInverted(InvertedValue.Clockwise_Positive)
-        ).withFeedback(
-            FeedbackConfigs()
-                .withRotorToSensorRatio(1.0)
-                .withSensorToMechanismRatio(GEAR_RATIO)
-        ).withSlot0(
-            Slot0Configs()
-                .withKP(ANGLE_KP)
-                .withKI(ANGLE_KI)
-                .withKD(ANGLE_KD)
-        ).CurrentLimits
-            .withStatorCurrentLimitEnable(true)
-            .withSupplyCurrentLimitEnable(true)
-            .withStatorCurrentLimit(80.0)
-            .withSupplyCurrentLimit(40.0)
+        MOTOR_CONFIGURATION.apply {
+            MotorOutput.apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            Feedback.apply {
+                RotorToSensorRatio = 1.0
+                SensorToMechanismRatio = GEAR_RATIO
+            }
+            Slot0.apply {
+                kP = ANGLE_KP
+                kI = ANGLE_KI
+                kD = ANGLE_KD
+            }
+            CurrentLimits.apply {
+                StatorCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimitEnable = true
+                SupplyCurrentLimit = 40.0
+            }
+        }
     }
-}
 }
