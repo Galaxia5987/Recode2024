@@ -37,7 +37,7 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
             estimatedPose = estimator.update(result)
 
             if (estimatedPose.isEmpty) {
-                return
+                continue
             }
 
             val tags = result.targets
