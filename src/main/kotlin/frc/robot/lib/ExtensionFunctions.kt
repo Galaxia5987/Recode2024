@@ -1,7 +1,6 @@
 package frc.robot.lib
 
-import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.math.geometry.*
 import edu.wpi.first.math.kinematics.ChassisSpeeds
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.WrapperCommand
@@ -52,3 +51,7 @@ fun Command.finallyDo(command: Command): WrapperCommand = finallyDo(Runnable {
     if (command.isScheduled) command.cancel()
     command.schedule()
 })
+
+fun Pose2d.toPose3d(): Pose3d = Pose3d(
+    x, y, 0.0, Rotation3d(0.0, 0.0, rotation.radians)
+)

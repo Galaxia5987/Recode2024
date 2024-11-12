@@ -2,7 +2,6 @@ package frc.robot
 
 import com.pathplanner.lib.auto.AutoBuilder
 import com.pathplanner.lib.auto.NamedCommands
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
@@ -10,9 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import frc.robot.ControllerInputs.driverController
 import frc.robot.ControllerInputs.operatorController
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers
-import frc.robot.commandGroups.IntakeCommands
-import frc.robot.commandGroups.ShootingCommands
-import frc.robot.commandGroups.WarmupCommands
+import frc.robot.commandGroups.*
 import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
@@ -20,11 +17,13 @@ import frc.robot.scoreState.ShootState
 import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.leds.LEDConstants
+import frc.robot.subsystems.leds.AMP_STATE_COLOR
 import frc.robot.subsystems.leds.LEDs
+import frc.robot.subsystems.leds.SHOOT_STATE_COLOR
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.swerve.SwerveDrive
 import org.littletonrobotics.junction.AutoLogOutput
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser
 
 
 /**
@@ -42,7 +41,7 @@ object RobotContainer {
 
     private val testController = CommandXboxController(2)
 
-    private val autoChooser: SendableChooser<Command>
+    private val autoChooser: LoggedDashboardChooser<Command>
     private val shootState: ShootState by lazy { ShootState() }
     private val ampState: AmpState by lazy { AmpState() }
     private val climbState: ClimbState by lazy { ClimbState() }
@@ -58,8 +57,8 @@ object RobotContainer {
 
         swerveDrive.configAutoBuilder()
 
-        autoChooser = AutoBuilder.buildAutoChooser()
-        SmartDashboard.putData("autoChooser", autoChooser)
+        autoChooser = LoggedDashboardChooser("AutoChooser",  AutoBuilder.buildAutoChooser())
+        SmartDashboard.putData("autoChooser", autoChooser.sendableChooser)
     }
 
     private fun configureDefaultCommands() {
@@ -79,24 +78,24 @@ object RobotContainer {
             .whileTrue(Commands.defer({ currentState.execute() }, currentState.execute().requirements))
         driverController().a().onTrue(
             Commands.runOnce({ currentState = shootState })
-                .alongWith(leds.setSolidMode(LEDConstants.SHOOT_STATE_COLOR))
+                .alongWith(leds.setSolidMode(SHOOT_STATE_COLOR))
         )
         driverController().b().onTrue(
             Commands.runOnce({ currentState = ampState })
-                .alongWith(leds.setSolidMode(LEDConstants.AMP_STATE_COLOR))
+                .alongWith(leds.setSolidMode(AMP_STATE_COLOR))
         )
 
-        driverController().x().whileTrue(ShootingCommands.closeShoot())
-            .onFalse(ShootingCommands.finishScore())
-        driverController().povLeft().whileTrue(ShootingCommands.trussSetpoint())
-            .onFalse(ShootingCommands.finishScore())
+        driverController().x().whileTrue(closeShoot())
+            .onFalse(finishScore())
+        driverController().povLeft().whileTrue(trussSetpoint())
+            .onFalse(finishScore())
 
-        driverController().rightBumper().whileTrue(ShootingCommands.shootOverStage())
+        driverController().rightBumper().whileTrue(shootOverStage())
 
-        driverController().leftTrigger().whileTrue(IntakeCommands.intake())
-            .onFalse(IntakeCommands.stopIntake())
-        driverController().leftBumper().whileTrue(IntakeCommands.outtake())
-            .onFalse(IntakeCommands.stopIntake())
+        driverController().leftTrigger().whileTrue(intake())
+            .onFalse(stopIntake())
+        driverController().leftBumper().whileTrue(outtake())
+            .onFalse(stopIntake())
         driverController().back()
             .whileTrue(gripper.setRollerPower(0.4))
             .onFalse(gripper.stop())
@@ -119,20 +118,20 @@ object RobotContainer {
         operatorController().options().whileTrue(intake.reset())
     }
 
-    fun getAutonomousCommand(): Command = autoChooser.selected
+    fun getAutonomousCommand(): Command = autoChooser.get()
 
 
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
-        register("score", shootState.init().until { ShootingCommands.shooterConveyorHoodAtSetpoint() })
+        register("score", shootState.init().until { shooterConveyorHoodAtSetpoint() })
         register("finishScore", shootState.end())
-        register("warmup", WarmupCommands.warmup())
-        register("intake", IntakeCommands.intake())
-        register("outtake", IntakeCommands.outtake())
-        register("stopIntake", IntakeCommands.stopIntake())
+        register("warmup", warmup())
+        register("intake", intake())
+        register("outtake", outtake())
+        register("stopIntake", stopIntake())
         register("rollShooter", Shooter.getInstance().rollNote())
-        register("setpointShoot", ShootingCommands.closeShoot())
-        register("finishSetpointShoot", ShootingCommands.finishScore())
+        register("setpointShoot", closeShoot())
+        register("finishSetpointShoot", finishScore())
     }
 
     @AutoLogOutput

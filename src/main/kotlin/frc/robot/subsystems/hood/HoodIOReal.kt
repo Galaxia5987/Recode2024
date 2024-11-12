@@ -10,13 +10,13 @@ import com.ctre.phoenix6.signals.StaticFeedforwardSignValue
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
-import frc.robot.Ports
+import frc.robot.HoodPorts
 import frc.robot.lib.Utils
 
 class HoodIOReal : HoodIO {
     override val inputs = LoggedHoodInputs()
-    private val motor: TalonFX = TalonFX(Ports.Hood.MOTOR_ID)
-    private val encoder = TalonSRX(Ports.Hood.ENCODER_ID)
+    private val motor: TalonFX = TalonFX(HoodPorts.MOTOR_ID)
+    private val encoder = TalonSRX(HoodPorts.ENCODER_ID)
 
     private val angleControl = PositionTorqueCurrentFOC(0.0)
 
@@ -24,30 +24,30 @@ class HoodIOReal : HoodIO {
         val config = TalonFXConfiguration()
             .apply {
                 Feedback = FeedbackConfigs().apply {
-                    SensorToMechanismRatio = HoodConstants.GEAR_RATIO
+                    SensorToMechanismRatio = GEAR_RATIO
                 }
                 MotionMagic = MotionMagicConfigs().apply {
-                    MotionMagicCruiseVelocity = HoodConstants.MAX_VELOCITY.`in`(Units.RotationsPerSecond)
+                    MotionMagicCruiseVelocity = MAX_VELOCITY.`in`(Units.RotationsPerSecond)
                 }
                 Slot0 = Slot0Configs().apply {
-                    kP = HoodConstants.GAINS.kP
-                    kI = HoodConstants.GAINS.kI
-                    kD = HoodConstants.GAINS.kD
-                    kS = HoodConstants.GAINS.kS
-                    kV = HoodConstants.GAINS.kV
-                    kA = HoodConstants.GAINS.kA
-                    kG = HoodConstants.GAINS.kG
+                    kP = GAINS.kP
+                    kI = GAINS.kI
+                    kD = GAINS.kD
+                    kS = GAINS.kS
+                    kV = GAINS.kV
+                    kA = GAINS.kA
+                    kG = GAINS.kG
                     GravityType = GravityTypeValue.Arm_Cosine
                     StaticFeedforwardSign = StaticFeedforwardSignValue.UseClosedLoopSign
                 }
                 MotorOutput = MotorOutputConfigs().apply {
-                    Inverted = HoodConstants.INVERTED_VALUE
+                    Inverted = INVERTED_VALUE
                 }
                 CurrentLimits = CurrentLimitsConfigs().apply {
                     StatorCurrentLimitEnable = true
                     SupplyCurrentLimitEnable = true
-                    StatorCurrentLimit = 2 * HoodConstants.CURRENT_LIMIT
-                    SupplyCurrentLimit = HoodConstants.CURRENT_LIMIT
+                    StatorCurrentLimit = 2 * CURRENT_LIMIT
+                    SupplyCurrentLimit = CURRENT_LIMIT
                 }
             }
 
@@ -57,10 +57,10 @@ class HoodIOReal : HoodIO {
     }
 
     private fun getEncoderPosition(): Double {
-        val encoderTicksPerRevolution = HoodConstants.ENCODER_TICKS_PER_REVOLUTION
+        val encoderTicksPerRevolution = ENCODER_TICKS_PER_REVOLUTION
         val encoderPosition = encoder.selectedSensorPosition % encoderTicksPerRevolution
         val normalizedPosition =
-            encoderPosition / encoderTicksPerRevolution - HoodConstants.ABSOLUTE_ENCODER_OFFSET.get()
+            encoderPosition / encoderTicksPerRevolution - ABSOLUTE_ENCODER_OFFSET.get()
         return Utils.normalize(Rotation2d.fromRotations(normalizedPosition)).rotations
     }
 

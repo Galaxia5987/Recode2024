@@ -43,6 +43,6 @@ class ClimbState : ScoreState {
             pathFindToChain(),
             climb.setPower { 0.8 }
         ).finallyDo(climb.climb().alongWith(LEDs.getInstance().setRainbow()))
-            .withName("Climb")
+            .withName("ClimbPorts")
     }
 }

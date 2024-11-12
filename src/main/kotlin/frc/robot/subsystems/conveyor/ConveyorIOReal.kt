@@ -7,11 +7,11 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
-import frc.robot.Ports
+import frc.robot.ConveyorPorts
 
 class ConveyorIOReal : ConveyorIO {
     override val inputs = LoggedConveyorInputs()
-    private val roller = TalonFX(Ports.Conveyor.MOTOR_ID)
+    private val roller = TalonFX(ConveyorPorts.MOTOR_ID)
     private val control = VelocityVoltage(0.0).withEnableFOC(true)
 
     init {
@@ -21,12 +21,12 @@ class ConveyorIOReal : ConveyorIO {
                 Inverted = InvertedValue.Clockwise_Positive
             }
             Slot0 = Slot0Configs().apply {
-                kP = ConveyorConstants.GAINS.kP
-                kI = ConveyorConstants.GAINS.kI
-                kD = ConveyorConstants.GAINS.kD
-                kS = ConveyorConstants.GAINS.kS
-                kV = ConveyorConstants.GAINS.kV
-                kA = ConveyorConstants.GAINS.kA
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kD
+                kS = GAINS.kS
+                kV = GAINS.kV
+                kA = GAINS.kA
             }
             CurrentLimits = CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
@@ -34,7 +34,7 @@ class ConveyorIOReal : ConveyorIO {
                 StatorCurrentLimit = 80.0
                 SupplyCurrentLimit = 40.0
             }
-            Feedback = FeedbackConfigs().apply { SensorToMechanismRatio = ConveyorConstants.GEAR_RATIO
+            Feedback = FeedbackConfigs().apply { SensorToMechanismRatio = GEAR_RATIO
             }
         }
 

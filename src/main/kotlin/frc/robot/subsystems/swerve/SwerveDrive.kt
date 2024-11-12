@@ -25,7 +25,6 @@ import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
 import java.util.function.DoubleSupplier
-import java.util.function.Function
 import kotlin.math.abs
 import kotlin.math.hypot
 
@@ -116,7 +115,7 @@ class SwerveDrive private constructor
     /**
      * Updates the offset for the gyro.
      *
-     * @param angle The desired angle. [rad]
+     * @param angle The desired angle.
      */
     fun resetGyro(angle: Rotation2d = Rotation2d()) {
         gyroIO.resetGyro(angle)
@@ -126,7 +125,7 @@ class SwerveDrive private constructor
         /**
          * Gets the raw yaw reading from the gyro.
          *
-         * @return Yaw angle reading from gyro. [rad]
+         * @return Yaw angle reading from gyro.
          */
         get() = inputs.rawYaw
 
@@ -134,7 +133,7 @@ class SwerveDrive private constructor
         /**
          * Gets the yaw reading from the gyro with the calculated offset.
          *
-         * @return Yaw angle with offset. [rad]
+         * @return Yaw angle with offset.
          */
         get() = inputs.yaw
 
@@ -190,7 +189,7 @@ class SwerveDrive private constructor
 
     fun lock() {
         desiredModuleStates =
-            arrayOf<SwerveModuleState?>(
+            arrayOf(
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(315.0)),
@@ -204,27 +203,27 @@ class SwerveDrive private constructor
      * @param chassisSpeeds Desired chassis speeds.
      * @param fieldOriented Should the drive be field oriented.
      */
-    fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
-        var chassisSpeeds = chassisSpeeds
-        desiredSpeeds = chassisSpeeds
+    private fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
+        var speeds = chassisSpeeds
+        desiredSpeeds = speeds
 
         val fieldOrientedChassisSpeeds =
             ChassisSpeeds.fromFieldRelativeSpeeds(
-                chassisSpeeds.vxMetersPerSecond,
-                chassisSpeeds.vyMetersPerSecond,
-                chassisSpeeds.omegaRadiansPerSecond,
+                speeds.vxMetersPerSecond,
+                speeds.vyMetersPerSecond,
+                speeds.omegaRadiansPerSecond,
                 yaw
             )
 
-        if (ChassisSpeeds(0.0, 0.0, 0.0) == chassisSpeeds) {
+        if (ChassisSpeeds(0.0, 0.0, 0.0) == speeds) {
             Arrays.stream(modules).forEach { obj: SwerveModule? -> obj!!.stop() }
             return
         }
 
         if (fieldOriented) {
-            chassisSpeeds = fieldOrientedChassisSpeeds
+            speeds = fieldOrientedChassisSpeeds
         }
-        setModuleStates(kinematics.toSwerveModuleStates(chassisSpeeds))
+        setModuleStates(kinematics.toSwerveModuleStates(speeds))
     }
 
     /**
@@ -322,7 +321,7 @@ class SwerveDrive private constructor
     fun updateSwerveOutputs() {
         currentModuleStates =
             Arrays.stream<SwerveModule?>(modules)
-                .map<SwerveModuleState?>(Function<SwerveModule?, SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState })
+                .map<SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState }
                 .toList()
                 .toTypedArray<SwerveModuleState?>()
         kinematics
@@ -383,9 +382,9 @@ class SwerveDrive private constructor
     private fun setIdleMode(isBrakeMode: Boolean) =
         Commands.runOnce({ modules.forEach { it?.setIdleMode(isBrakeMode) } }).ignoringDisable(true)
 
-    fun setBrakeMode() = setIdleMode(true)
+    fun setBrakeMode(): Command = setIdleMode(true)
 
-    fun setCoastMode() = setIdleMode(false)
+    fun setCoastMode(): Command = setIdleMode(false)
 
     fun characterize(): Command {
         val routine =
@@ -395,7 +394,7 @@ class SwerveDrive private constructor
                     { volts: Voltage ->
                         for (module in modules) {
                             module!!.characterize(
-                                volts.`in`(edu.wpi.first.units.Units.Volts)
+                                volts.`in`(Units.Volts)
                             )
                         }
                     },

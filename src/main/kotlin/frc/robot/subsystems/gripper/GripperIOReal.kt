@@ -9,7 +9,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Timer
-import frc.robot.Ports
+import frc.robot.GripperPorts
 
 class GripperIOReal : GripperIO {
     override val inputs = LoggedGripperInputs()

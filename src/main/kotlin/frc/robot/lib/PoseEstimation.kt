@@ -2,12 +2,10 @@ package frc.robot.lib
 
 import edu.wpi.first.math.VecBuilder
 import edu.wpi.first.math.geometry.Pose3d
-import edu.wpi.first.math.geometry.Translation2d
 import frc.robot.Constants
 import frc.robot.subsystems.swerve.SwerveConstants
 import frc.robot.subsystems.swerve.SwerveDrive
 import frc.robot.subsystems.vision.Vision
-import org.littletonrobotics.junction.AutoLogOutput
 import kotlin.math.sqrt
 
 class PoseEstimation {

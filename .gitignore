@@ -170,3 +170,4 @@ simgui*
 networktables.json
 /.idea
 /ctre_sim/
+/log-downloader/venv/

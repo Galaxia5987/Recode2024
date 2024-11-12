@@ -9,12 +9,12 @@ import java.util.Optional
 class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCam: Transform3d) : VisionIO {
     override val inputs = LoggedVisionInputs()
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
-        VisionConstants.aprilTagFieldLayout,
+        aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
         robotToCam
     )
 
-    override val name = camera.name
+    override val name: String = camera.name
 
     init {
         camera.pipelineIndex = 0

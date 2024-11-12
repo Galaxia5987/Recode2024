@@ -13,15 +13,15 @@ class ShooterIOSim : ShooterIO {
     override val bottomRollerInputs = LoggedRollerInputs()
     private val topMotor = TalonFXSim(
         1,
-        ShooterConstants.GEAR_RATIO_TOP,
-        ShooterConstants.MOMENT_OF_INERTIA_TOP.`in`(Units.KilogramSquareMeters),
+        GEAR_RATIO_TOP,
+        MOMENT_OF_INERTIA_TOP.`in`(Units.KilogramSquareMeters),
         1.0
     )
 
     private val bottomMotor = TalonFXSim(
         1,
-        ShooterConstants.GEAR_RATIO_BOTTOM,
-        ShooterConstants.MOMENT_OF_INERTIA_BOTTOM.`in`(
+        GEAR_RATIO_BOTTOM,
+        MOMENT_OF_INERTIA_BOTTOM.`in`(
             Units.KilogramSquareMeters
         ),
         1.0
@@ -34,16 +34,16 @@ class ShooterIOSim : ShooterIO {
     init {
         topMotor.setController(
             PIDController(
-                ShooterConstants.TOP_GAINS.kP,
-                ShooterConstants.TOP_GAINS.kI,
-                ShooterConstants.TOP_GAINS.kD
+                TOP_GAINS.kP,
+                TOP_GAINS.kI,
+                TOP_GAINS.kD
             )
         )
         bottomMotor.setController(
             PIDController(
-                ShooterConstants.BOTTOM_GAINS.kP,
-                ShooterConstants.BOTTOM_GAINS.kI,
-                ShooterConstants.BOTTOM_GAINS.kD
+                BOTTOM_GAINS.kP,
+                BOTTOM_GAINS.kI,
+                BOTTOM_GAINS.kD
             )
         )
     }
