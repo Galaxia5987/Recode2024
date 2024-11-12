@@ -2,6 +2,7 @@ package frc.robot.commandgroups
 
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
+import frc.robot.lib.extensions.finallyDo
 import frc.robot.subsystems.gripper.Gripper
 import frc.robot.subsystems.intake.Intake
 
@@ -16,5 +17,5 @@ object IntakeCommands {
         )
 
     private fun outtake(): Command = Commands.parallel(gripper.gripperOut(), intake.intakeOut())
-        .finallyDo(Runnable { stop() })
+        .finallyDo(stop())
 }
