@@ -22,6 +22,7 @@ class Ports {
 
     object Gripper {
         const val ROLLER_ID: Int = 7
+        const val SENSOR_ID: Int = 8
     }
 
     object Climb {

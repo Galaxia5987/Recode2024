@@ -11,7 +11,7 @@ class GripperIOReal : GripperIO {
 
     private val spinMotor: CANSparkMax =
         CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
-    private val sensor: DigitalInput = DigitalInput(8)
+    private val sensor: DigitalInput = DigitalInput(Ports.Gripper.SENSOR_ID)
 
     override fun setPower(power: Double) {
         spinMotor.set(power)
