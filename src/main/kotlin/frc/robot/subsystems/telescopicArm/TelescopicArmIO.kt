@@ -8,8 +8,8 @@ import org.team9432.annotation.Logged
 
 interface TelescopicArmIO {           //TL for telescopic
     var inputs: LoggedTLArmInputs
-    fun updateInputs()
-    fun setHeight(distance: Measure<Distance>)
+    fun updateInputs(){}
+    fun setHeight(distance: Measure<Distance>){}
 
     @Logged
     open class TLArmInputs {
