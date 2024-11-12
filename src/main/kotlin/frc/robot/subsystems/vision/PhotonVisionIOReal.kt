@@ -1,10 +1,8 @@
 package frc.robot.subsystems.vision
 
 import edu.wpi.first.math.geometry.Transform3d
-import org.photonvision.EstimatedRobotPose
 import org.photonvision.PhotonCamera
 import org.photonvision.PhotonPoseEstimator
-import java.util.Optional
 
 class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCam: Transform3d) : VisionIO {
     override val inputs = LoggedVisionInputs()
@@ -27,14 +25,12 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
     override fun updateInputs() {
         val unreadResults = camera.allUnreadResults
 
-        lateinit var estimatedPose: Optional<EstimatedRobotPose>
-
         for (result in unreadResults) {
             if (!result.hasTargets()) {
                 return
             }
 
-            estimatedPose = estimator.update(result)
+            val estimatedPose = estimator.update(result)
 
             if (estimatedPose.isEmpty) {
                 continue
