@@ -141,9 +141,9 @@ class ModuleIOSparkMax(
     override fun setIdleMode(isBreakMode: Boolean) {
         val mode = if (isBreakMode) IdleMode.kBrake else IdleMode.kCoast
 
-        driveConfigurator.idleMode(mode)
-        angleConfigurator.idleMode(mode)
-        driveMotor.configure(driveConfigurator, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
-        angleMotor.configure(angleConfigurator, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+        mapOf(driveConfigurator to driveMotor, angleConfigurator to angleMotor).forEach {
+            it.key.idleMode(mode)
+            it.value.configure(it.key, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+        }
     }
 }
