@@ -14,6 +14,11 @@ class LoggedProcessor(private val codeGenerator: CodeGenerator, private val logg
     private fun isFromJava(propertyType: KSTypeReference): Boolean =
         propertyType.resolve().declaration.origin in setOf(Origin.JAVA_LIB, Origin.JAVA)
 
+    private fun getPropertySuperClass(property: KSPropertyDeclaration): KSClassDeclaration? {
+        val propertyType = property.type.resolve()
+        return propertyType.declaration as? KSClassDeclaration
+    }
+
     override fun process(resolver: Resolver): List<KSAnnotated> {
         val annotatedClasses = resolver.getSymbolsWithAnnotation("org.team9432.annotation.Logged").filterIsInstance<KSClassDeclaration>()
         annotatedClasses.forEach { process(it) }
@@ -50,9 +55,8 @@ class LoggedProcessor(private val codeGenerator: CodeGenerator, private val logg
 
             var fromLogCode =
                 """ |$simpleName = table.get("$logName", $simpleName)"""
-
             // If the type comes from java kotlin is not sure whether it's nullable or not
-            if (isFromJava(property.type) && !property.type.toString().contains("Measure")) fromLogCode += "!![0]!!" // Assume the type is not nullable
+            if (isFromJava(property.type) && !getPropertySuperClass(property)?.toClassName().toString().lowercase().contains("measure")) fromLogCode += "!![0]!!" // Assume the type is not nullable
 
             fromLogCode = ("$fromLogCode\n|").trimMargin()
 
