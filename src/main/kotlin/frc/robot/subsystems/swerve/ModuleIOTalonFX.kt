@@ -131,7 +131,7 @@ class ModuleIOTalonFX(
     }
 
     override fun updateOffset(offset: Rotation2d) {
-        angleMotor.setPosition(encoder.absolutePosition.value.minus(WpiUnits.Rotations.of(offset.rotations)))
+        angleMotor.setPosition(encoder.absolutePosition.value - WpiUnits.Rotations.of(offset.rotations))
     }
 
     override fun setVoltage(volts: Double) {
