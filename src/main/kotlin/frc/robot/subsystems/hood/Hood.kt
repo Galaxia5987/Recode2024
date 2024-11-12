@@ -52,6 +52,6 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs("Hood", inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 }

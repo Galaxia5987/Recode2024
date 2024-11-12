@@ -44,6 +44,6 @@ class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInput()
-        Logger.processInputs("Shooter", inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 }

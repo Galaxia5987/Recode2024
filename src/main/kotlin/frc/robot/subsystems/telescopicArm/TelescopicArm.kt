@@ -34,6 +34,6 @@ class TelescopicArm private constructor(private var io: TelescopicArmIO) : Subsy
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs("Telescopic arm", inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 }

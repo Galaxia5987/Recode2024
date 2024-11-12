@@ -45,6 +45,6 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     fun atSetSpeed(): Boolean = inputs.spinMotorVelocity.isNear(setpointSpeed, ConveyorConstants.TOLERANCE)
     override fun periodic() {
         io.updateInput()
-        Logger.processInputs("Conveyor", inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 }

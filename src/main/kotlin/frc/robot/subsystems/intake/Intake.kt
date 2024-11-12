@@ -52,6 +52,6 @@ class Intake private constructor(private val io: IntakeIO):SubsystemBase(){
 
     override fun periodic() {
         io.updateInput()
-        Logger.processInputs("Intake", inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 }

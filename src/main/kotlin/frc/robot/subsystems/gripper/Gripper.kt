@@ -39,7 +39,7 @@ class Gripper private constructor(private val io: GripperIO) : SubsystemBase() {
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs("Gripper", inputs)
+        Logger.processInputs(this::class.simpleName, inputs)
     }
 
 
