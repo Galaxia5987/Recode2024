@@ -28,7 +28,7 @@ class TelescopicArmIOSim : TelescopicArmIO {
 
     override fun updateInputs() {
         motor.update(Timer.getFPGATimestamp())
-        inputs.currentPose = Units.Centimeter.of(motor.position)
+        inputs.currentPose = Units.Meters.of(motor.position)
     }
 
     override fun setHeight(distance: Measure<Distance>) {
