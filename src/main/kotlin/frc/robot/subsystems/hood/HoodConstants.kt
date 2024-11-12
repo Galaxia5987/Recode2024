@@ -43,13 +43,14 @@ object HoodConstants {
                 .withSensorToMechanismRatio(GEAR_RATIO)
         ).withSlot0(
             Slot0Configs()
-                .withKP(IntakeConstants.ANGLE_KP)
-                .withKI(IntakeConstants.ANGLE_KI)
-                .withKD(IntakeConstants.ANGLE_KD)
+                .withKP(ANGLE_KP)
+                .withKI(ANGLE_KI)
+                .withKD(ANGLE_KD)
         ).CurrentLimits
             .withStatorCurrentLimitEnable(true)
             .withSupplyCurrentLimitEnable(true)
             .withStatorCurrentLimit(80.0)
             .withSupplyCurrentLimit(40.0)
     }
+}
 }
