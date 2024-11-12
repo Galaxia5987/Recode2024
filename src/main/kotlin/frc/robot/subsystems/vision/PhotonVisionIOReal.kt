@@ -1,16 +1,16 @@
 package frc.robot.subsystems.vision
 
 import edu.wpi.first.math.geometry.Transform3d
-import edu.wpi.first.units.Units
+import org.photonvision.EstimatedRobotPose
 import org.photonvision.PhotonCamera
 import org.photonvision.PhotonPoseEstimator
+import java.util.Optional
 
 class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCam: Transform3d) : VisionIO {
     override val inputs = LoggedVisionInputs()
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
         VisionConstants.aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-        camera,
         robotToCam
     )
 
@@ -25,28 +25,32 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
     }
 
     override fun updateInputs() {
-        val latestResult = camera.latestResult
+        val unreadResults = camera.allUnreadResults
 
-        if (!latestResult.hasTargets()) {
-            return
+        lateinit var estimatedPose: Optional<EstimatedRobotPose>
+
+        for (result in unreadResults) {
+            if (!result.hasTargets()) {
+                return
+            }
+
+            estimatedPose = estimator.update(result)
+
+            if (estimatedPose.isEmpty) {
+                return
+            }
+
+            val tags = result.targets
+
+            inputs.distanceToTargets.clear()
+            inputs.poseFieldOriented = estimatedPose.get().estimatedPose
+
+            inputs.timestamp = estimatedPose.get().timestampSeconds
+
+            for (tag in tags) {
+                val distanceToTarget = tag.bestCameraToTarget.translation.norm
+                inputs.distanceToTargets.add(distanceToTarget)
+            }
         }
-
-        val estimatedPose = estimator.update(latestResult)
-
-        if (estimatedPose.isEmpty) {
-            return
-        }
-
-        val tags = latestResult.targets
-
-        inputs.distanceToTargets.clear()
-        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
-
-        inputs.timestamp = estimatedPose.get().timestampSeconds
-        for (tag in tags) {
-            val distanceToTarget = tag.bestCameraToTarget.translation.norm
-            inputs.distanceToTargets.add(distanceToTarget)
-        }
-
     }
 }
