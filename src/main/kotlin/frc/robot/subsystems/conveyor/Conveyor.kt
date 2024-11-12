@@ -15,7 +15,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     private var inputs = io.inputs
 
     @AutoLogOutput
-    private var setpointSpeed: Measure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
+    private var setpointSpeed: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
 
     companion object {
         @Volatile
