@@ -1,5 +1,8 @@
 package frc.robot.subsystems.intake
 
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface IntakeIO {
@@ -26,8 +29,8 @@ interface IntakeIO {
     @Logged
     open class IntakeInput {
         var angle: Double = 0.0
-        var angleMotorVoltage: Double = 0.0
-        var spinMotorPower: Double = 0.0
-        var centerMotorPower: Double = 0.0
+        var angleMotorVoltage: Measure<Voltage> = Units.Volt.zero()
+        var spinMotorVoltage: Measure<Voltage> = Units.Volt.zero()
+        var centerMotorVoltage: Measure<Voltage> = Units.Volt.zero()
     }
 }

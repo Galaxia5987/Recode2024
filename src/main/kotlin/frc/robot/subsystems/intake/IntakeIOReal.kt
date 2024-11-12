@@ -1,10 +1,10 @@
 package frc.robot.subsystems.intake
 
-import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.revrobotics.CANSparkLowLevel
 import com.revrobotics.CANSparkMax
+import edu.wpi.first.units.Units
 import frc.robot.Ports
 
 class IntakeIOReal : IntakeIO {
@@ -24,9 +24,9 @@ class IntakeIOReal : IntakeIO {
 
     override fun updateInput() {
         inputs.angle = angleMotor.position.value * 2 * Math.PI
-        inputs.spinMotorPower = spinMotor.get()
-        inputs.angleMotorVoltage = angleMotor.supplyVoltage.value
-        inputs.spinMotorPower = angleMotor.get()
+        inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)
+        inputs.angleMotorVoltage = Units.Volt.of(angleMotor.supplyVoltage.value)
+        inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)
     }
 
     override fun setAngle(angle: Double) {
