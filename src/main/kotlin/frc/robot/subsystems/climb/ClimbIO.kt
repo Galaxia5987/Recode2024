@@ -5,15 +5,15 @@ import org.team9432.annotation.Logged
 interface ClimbIO {
     val inputs: LoggedClimbInputs
 
-    fun updateInput()
+    fun updateInput(){}
 
-    fun setPower(power: Double)
+    fun setPower(power: Double){}
 
-    fun lockClimb()
+    fun lockClimb(){}
 
-    fun unlockClimb()
+    fun unlockClimb(){}
 
-    fun disableLockMotor()
+    fun disableLockMotor(){}
 
     @Logged
     open class ClimbInputs {

@@ -5,9 +5,9 @@ import org.team9432.annotation.Logged
 interface GripperIO {
     val inputs: LoggedGripperInputs
 
-    fun setPower(power: Double)
-    fun stop()
-    fun updateInputs()
+    fun setPower(power: Double){}
+    fun stop(){}
+    fun updateInputs(){}
 
     @Logged
     open class GripperInputs {

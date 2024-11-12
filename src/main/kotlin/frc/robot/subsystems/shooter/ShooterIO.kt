@@ -8,8 +8,8 @@ import org.team9432.annotation.Logged
 interface ShooterIO {
     var inputs: LoggedShooterInputs
 
-    fun setTopVel(vel: Measure<Velocity<Angle>>)
-    fun setBottomVel(vel: Measure<Velocity<Angle>>)
+    fun setTopVel(vel: Measure<Velocity<Angle>>){}
+    fun setBottomVel(vel: Measure<Velocity<Angle>>){}
     fun updateInput()
 
     @Logged

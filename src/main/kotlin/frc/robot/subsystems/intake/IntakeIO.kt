@@ -6,17 +6,17 @@ interface IntakeIO {
 
     val inputs: LoggedIntakeInput
 
-    fun updateInput()
+    fun updateInput(){}
 
-    fun setAngle(angle: Double)
+    fun setAngle(angle: Double){}
 
-    fun resetAngle()
+    fun resetAngle(){}
 
-    fun setAnglePower(power: Double)
+    fun setAnglePower(power: Double){}
 
-    fun setsSpinMotorPower(power: Double)
+    fun setsSpinMotorPower(power: Double){}
 
-    fun setsCenterMotorPower(power: Double)
+    fun setsCenterMotorPower(power: Double){}
 
     @Logged
     open class IntakeInput {

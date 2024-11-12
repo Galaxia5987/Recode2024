@@ -6,9 +6,9 @@ import org.team9432.annotation.Logged
 interface HoodIO {
     var inputs: LoggedInputHood
 
-    fun updateInputs()
+    fun updateInputs(){}
 
-    fun setAngle(angle: Measure<Angle>)
+    fun setAngle(angle: Measure<Angle>){}
 
     @Logged
     open class InputHood {

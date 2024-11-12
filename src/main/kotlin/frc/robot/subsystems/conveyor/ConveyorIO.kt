@@ -6,9 +6,9 @@ import org.team9432.annotation.Logged
 interface ConveyorIO {
     var inputs: LoggedConveyorInputs
 
-    fun updateInput()
+    fun updateInput(){}
 
-    fun setSpinVelocity(vel: Measure<Velocity<Angle>>)
+    fun setSpinVelocity(vel: Measure<Velocity<Angle>>){}
 
     @Logged
     open class ConveyorInputs {
