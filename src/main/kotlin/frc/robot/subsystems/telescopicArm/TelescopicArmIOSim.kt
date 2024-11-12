@@ -10,7 +10,7 @@ import frc.robot.lib.motors.TalonFXSim
 
 class TelescopicArmIOSim : TelescopicArmIO {
     override var inputs: LoggedTLArmInputs = LoggedTLArmInputs()
-    var controlRequest: PositionVoltage = PositionVoltage(0.0)
+    private var controlRequest: PositionVoltage = PositionVoltage(0.0)
 
 
     private var motor = TalonFXSim(
