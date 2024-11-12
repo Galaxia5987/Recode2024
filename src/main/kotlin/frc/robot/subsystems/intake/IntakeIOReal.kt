@@ -14,6 +14,7 @@ import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.units.AngleUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import frc.robot.IntakePorts
 
 class IntakeIOReal : IntakeIO {
@@ -87,7 +88,7 @@ class IntakeIOReal : IntakeIO {
         centerMotor.set(power)
     }
 
-    override fun setAngle(angle: Measure<AngleUnit>) {
+    override fun setAngle(angle: Angle) {
         angleMotor.setControl(positionControl.withPosition(angle.`in`(Units.Rotations)))
     }
 
