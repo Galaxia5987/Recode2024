@@ -8,7 +8,7 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
 
 object VisionConstants {
-    val aprilTagFieldLayout: AprilTagFieldLayout = AprilTagFields.k2024Crescendo.loadAprilTagLayoutField()
+    val aprilTagFieldLayout: AprilTagFieldLayout = AprilTagFieldLayout.loadField(AprilTagFields.k2024Crescendo)
 
     var VISION_MEASUREMENT_MULTIPLIER = 0.5
     val MAXIMUM_DISTANCE_FROM_TAG: Distance = Units.Meters.of(7.0)
