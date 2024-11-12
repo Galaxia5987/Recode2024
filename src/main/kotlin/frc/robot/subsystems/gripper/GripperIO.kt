@@ -1,5 +1,8 @@
 package frc.robot.subsystems.gripper
 
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface GripperIO {
@@ -11,7 +14,7 @@ interface GripperIO {
 
     @Logged
     open class GripperInputs {
-        var spinMotorPower: Double = 0.0
+        var spinMotorVoltage: Measure<Voltage> = Units.Volt.zero()
         var hasNote = false
     }
 }

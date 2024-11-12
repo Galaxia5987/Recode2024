@@ -2,12 +2,8 @@ package frc.robot.subsystems.gripper
 
 import com.revrobotics.CANSparkLowLevel
 import com.revrobotics.CANSparkMax
-import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
-import edu.wpi.first.units.Power
-import edu.wpi.first.units.Voltage
+import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.DigitalInput
-import frc.robot.Constants
 import frc.robot.Ports
 
 class GripperIOReal : GripperIO {
@@ -27,7 +23,7 @@ class GripperIOReal : GripperIO {
 
 
     override fun updateInputs() {
-        inputs.spinMotorPower = spinMotor.get()
+        inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)
         inputs.hasNote = !sensor.get()
     }
 
