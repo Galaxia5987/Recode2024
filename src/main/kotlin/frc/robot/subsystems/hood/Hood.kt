@@ -14,7 +14,7 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
     private val inputs = io.inputs
 
     @AutoLogOutput
-    var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
+    private var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
 
     @AutoLogOutput
     private var atSetpoint = false
