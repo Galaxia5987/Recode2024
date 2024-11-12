@@ -16,9 +16,6 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
     @AutoLogOutput
     private var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
 
-    @AutoLogOutput
-    private var atSetpoint = false
-
     companion object {
         @Volatile
         private var instance: Hood? = null
@@ -45,10 +42,8 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
 
     fun setRestAngle(): Command = Commands.runOnce({ io.setAngle(HoodConstants.restAngle) }).withName("setRestAngle")
 
-    fun atSetPoint(): Boolean {
-        atSetpoint = inputs.angle.isNear(angleSetpoint, HoodConstants.TOLERANCE)
-        return atSetpoint
-    }
+    @AutoLogOutput
+    fun atSetPoint(): Boolean = inputs.angle.isNear(angleSetpoint, HoodConstants.TOLERANCE)
 
     override fun periodic() {
         io.updateInputs()
