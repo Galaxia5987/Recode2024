@@ -19,6 +19,7 @@ class ClimbIOReal : ClimbIO {
 
     override fun updateInput() {
         inputs.climbMotorVoltage = mainClimbMotor.supplyVoltage.value
+        inputs.lockMotorCurrent = lockMotor.supplyCurrent
     }
 
 
