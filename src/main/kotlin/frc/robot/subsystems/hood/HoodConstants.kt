@@ -15,12 +15,12 @@ import frc.robot.subsystems.intake.IntakeConstants
 import frc.robot.subsystems.intake.IntakeConstants.GEAR_RATIO
 
 object HoodConstants {
-    var MOTOR_CONFIGURATION = TalonFXConfiguration()
-    var restAngle: Measure<Angle> = MutableMeasure.ofBaseUnits(100.0, Units.Degree)
+    val MOTOR_CONFIGURATION = TalonFXConfiguration()
+    val restAngle: Measure<Angle> = MutableMeasure.ofBaseUnits(100.0, Units.Degree)
     const val GEAR_RATIO: Double = 3.0 * (36.0 / 18.0) * (158.0 / 18.0)
-    var ANGLE_KP = 0.0
-    var ANGLE_KD = 0.0
-    var ANGLE_KI = 0.0
+    val ANGLE_KP = 0.0
+    val ANGLE_KD = 0.0
+    val ANGLE_KI = 0.0
     const val TOLERANCE: Double = 0.75 / 360
 
     init {
