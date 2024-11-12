@@ -16,7 +16,7 @@ class TelescopicArmIOReal : TelescopicArmIO {
     var controlRequest: PositionTorqueCurrentFOC = PositionTorqueCurrentFOC(0.0)
     override fun updateInputs() {
         inputs.currentPose =
-            Units.Centimeter.of(motor.position.value)
+            Units.Meters.of(motor.position.value)
         inputs.voltage = Units.Volt.of(motor.supplyVoltage.value)
     }
 
