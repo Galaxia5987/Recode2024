@@ -2,6 +2,7 @@ package frc.robot.subsystems.telescopicArm
 
 import edu.wpi.first.units.Distance
 import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -28,6 +29,8 @@ class TelescopicArm private constructor(private var io: TelescopicArmIO) : Subsy
     }
 
     fun setHeight(setPoint: Measure<Distance>): Command = Commands.runOnce({ io.setHeight(setPoint) })
+
+    fun reset():Command = Commands.runOnce({io.setHeight(Units.Meters.zero())})
 
     override fun periodic() {
         io.updateInputs()
