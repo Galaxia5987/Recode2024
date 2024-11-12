@@ -14,7 +14,7 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
     private val inputs = io.inputs
 
     @AutoLogOutput
-    private var angleSetpoint: MutableMeasure<Angle> = MutableMeasure.zero(Units.Rotations)
+    private var angleSetpoint: Measure<Angle> = MutableMeasure.zero(Units.Rotations)
 
     companion object {
         @Volatile
@@ -35,9 +35,9 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
         }
     }
 
-    fun setAngle(angle: Measure<Angle>): Command = Commands.run({
+    fun setAngle(angle: Measure<Angle>): Command = Commands.runOnce({
         io.setAngle(angle)
-        angleSetpoint = angle.mutableCopy()
+        angleSetpoint = angle
     }).withName("set Angle Hood")
 
     fun setRestAngle(): Command = Commands.runOnce({ io.setAngle(HoodConstants.restAngle) }).withName("setRestAngle")
