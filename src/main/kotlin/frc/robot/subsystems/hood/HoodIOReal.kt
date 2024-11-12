@@ -96,8 +96,8 @@ class HoodIOReal : HoodIO {
         inputs.absoluteEncoderAngle = Units.Rotations.of(getEncoderPosition())
         inputs.voltage = motor.motorVoltage.value
         inputs.absoluteEncoderAngleNoOffset = Units.Rotations.of(
-            ((encoder.getSelectedSensorPosition() % HoodConstants.ENCODER_TICKS_PER_REVOLUTION)
-                    / HoodConstants.ENCODER_TICKS_PER_REVOLUTION)
+            ((encoder.getSelectedSensorPosition() % ENCODER_TICKS_PER_REVOLUTION)
+                    / ENCODER_TICKS_PER_REVOLUTION)
         )
     }
 }

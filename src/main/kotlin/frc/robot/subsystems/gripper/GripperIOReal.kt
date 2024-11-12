@@ -14,18 +14,18 @@ import frc.robot.GripperPorts
 class GripperIOReal : GripperIO {
     override val inputs = LoggedGripperInputs()
     private val rollerMotor: SparkMax =
-        SparkMax(Ports.Gripper.ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
+        SparkMax(GripperPorts.ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
     private val timer = Timer()
     private val sensor: DigitalInput = DigitalInput(8)
 
     init {
         val rollerMotorConfigurator = SparkMaxConfig().apply {
-            smartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt())
+            smartCurrentLimit(CURRENT_LIMIT.`in`(Units.Amp).toInt())
             limitSwitch.apply(LimitSwitchConfig().apply {
-                    smartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt()) }
+                    smartCurrentLimit(CURRENT_LIMIT.`in`(Units.Amp).toInt()) }
             )
             idleMode(SparkBaseConfig.IdleMode.kBrake)
-            inverted(GripperConstants.ROLLER_INVERTED_VALUE)
+            inverted(ROLLER_INVERTED_VALUE)
         }
 
         rollerMotor.configure(rollerMotorConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)

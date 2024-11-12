@@ -21,7 +21,7 @@ class IntakeIOReal : IntakeIO {
     
     private val angleMotor = TalonFX(IntakePorts.ANGLE_MOTOR_ID)
     private val spinMotor = TalonFX(IntakePorts.SPIN_MOTOR_ID)
-    private val centerMotor = CANSparkMax(IntakePorts.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val centerMotor = SparkMax(IntakePorts.CENTER_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
     private val centerMotorConfigurator = SparkMaxConfig()
 
     private val positionControl = PositionVoltage(0.0)

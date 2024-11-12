@@ -13,7 +13,6 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
         aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-        simCamera.camera,
         robotToCam
     )
 
