@@ -1,6 +1,6 @@
 package frc.robot.lib.motors;
 
-import com.revrobotics.CANSparkMax;
+import com.revrobotics.spark.SparkBase;
 import edu.wpi.first.math.numbers.N1;
 import edu.wpi.first.math.numbers.N2;
 import edu.wpi.first.math.system.LinearSystem;
@@ -34,7 +34,7 @@ public class SparkMaxSim extends SimMotor {
         voltageRequest = MotorSetpoint.simpleVoltage(voltage);
     }
 
-    public void setReference(double value, CANSparkMax.ControlType ctrl) {
+    public void setReference(double value, SparkBase.ControlType ctrl) {
         setReference(value, ctrl, 0);
     }
 
@@ -42,7 +42,7 @@ public class SparkMaxSim extends SimMotor {
         voltageRequest = voltage;
     }
 
-    public void setReference(double value, CANSparkMax.ControlType ctrl, double arbFeedforward) {
+    public void setReference(double value, SparkBase.ControlType ctrl, double arbFeedforward) {
         switch (ctrl) {
             case kDutyCycle:
                 set(value);
@@ -50,14 +50,14 @@ public class SparkMaxSim extends SimMotor {
             case kPosition:
                 setInputVoltage(() -> controller.calculate(getPosition(), value) + arbFeedforward);
                 break;
-            case kSmartMotion:
+            case kMAXMotionPositionControl:
                 setInputVoltage(
                         () -> profiledController.calculate(getPosition(), value) + arbFeedforward);
                 break;
             case kVelocity:
                 setInputVoltage(() -> controller.calculate(getVelocity(), value) + arbFeedforward);
                 break;
-            case kSmartVelocity:
+            case kMAXMotionVelocityControl:
                 setInputVoltage(
                         () -> profiledController.calculate(getVelocity(), value) + arbFeedforward);
                 break;

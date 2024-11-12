@@ -6,10 +6,12 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import com.revrobotics.CANSparkBase
-import com.revrobotics.CANSparkLowLevel
-import com.revrobotics.CANSparkMax
-import edu.wpi.first.units.Angle
+import com.revrobotics.spark.SparkBase
+import com.revrobotics.spark.SparkLowLevel
+import com.revrobotics.spark.SparkMax
+import com.revrobotics.spark.config.SparkBaseConfig
+import com.revrobotics.spark.config.SparkMaxConfig
+import edu.wpi.first.units.AngleUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import frc.robot.Ports
@@ -18,17 +20,19 @@ class IntakeIOReal : IntakeIO {
     override val inputs = LoggedIntakeInputs()
     private val angleMotor = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
     private val spinMotor = TalonFX(Ports.Intake.SPIN_MOTOR_ID)
-    private val centerMotor = CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val centerMotor = SparkMax(Ports.Intake.CENTER_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
+    private val centerMotorConfigurator = SparkMaxConfig()
     private val positionControl = PositionVoltage(0.0)
     private val dutyCycle = DutyCycleOut(0.0)
 
     init {
-        centerMotor.restoreFactoryDefaults()
-        centerMotor.inverted = true
-        centerMotor.setSmartCurrentLimit(40)
-        centerMotor.idleMode = CANSparkBase.IdleMode.kBrake
-        centerMotor.enableVoltageCompensation(12.0)
-        centerMotor.burnFlash()
+        centerMotorConfigurator.apply {
+            inverted(true)
+            idleMode(SparkBaseConfig.IdleMode.kBrake)
+            smartCurrentLimit(40)
+            voltageCompensation(12.0)
+        }
+        centerMotor.configure(centerMotorConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
         val spinConfig = TalonFXConfiguration().apply {
             MotorOutput = MotorOutputConfigs().apply {

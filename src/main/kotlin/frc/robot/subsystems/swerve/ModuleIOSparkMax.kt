@@ -1,6 +1,13 @@
 package frc.robot.subsystems.swerve
 
 import com.revrobotics.*
+import com.revrobotics.spark.SparkBase
+import com.revrobotics.spark.SparkClosedLoopController
+import com.revrobotics.spark.SparkLowLevel
+import com.revrobotics.spark.SparkMax
+import com.revrobotics.spark.config.SparkBaseConfig
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode
+import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.SwerveModulePosition
@@ -19,12 +26,14 @@ class ModuleIOSparkMax(
     driveInverted: Boolean,
     angleInverted: Boolean
 ) : ModuleIO {
-    private val driveMotor: CANSparkMax
-    private val drivePIDController: SparkPIDController
+    private val driveMotor: SparkMax
+    private val drivePIDController: SparkClosedLoopController
     private val driveEncoder: RelativeEncoder
-    private val angleMotor: CANSparkMax
-    private val anglePIDController: SparkPIDController
+    private var driveConfigurator = SparkMaxConfig()
+    private val angleMotor: SparkMax
+    private val anglePIDController: SparkClosedLoopController
     private val angleEncoder: RelativeEncoder
+    private var angleConfigurator = SparkMaxConfig()
 
     private val encoder: DutyCycleEncoder
 
@@ -32,49 +41,35 @@ class ModuleIOSparkMax(
     override val inputs = LoggedModuleInputs()
 
     init {
-        this.driveMotor = CANSparkMax(driveMotorID, CANSparkLowLevel.MotorType.kBrushless)
-        this.angleMotor = CANSparkMax(angleMotorID, CANSparkLowLevel.MotorType.kBrushless)
+        this.driveMotor = SparkMax(driveMotorID, SparkLowLevel.MotorType.kBrushless)
+        this.angleMotor = SparkMax(angleMotorID, SparkLowLevel.MotorType.kBrushless)
 
         this.encoder = DutyCycleEncoder(encoderID)
 
-        driveMotor.restoreFactoryDefaults()
-        drivePIDController = driveMotor.pidController
+        drivePIDController = driveMotor.closedLoopController
         driveEncoder = driveMotor.encoder
 
-        driveMotor.enableVoltageCompensation(
-            SwerveConstants.VOLT_COMP_SATURATION
-        )
-        driveMotor.setSmartCurrentLimit(
-            SwerveConstants.NEO_CURRENT_LIMIT.toInt()
-        )
-        driveMotor.inverted = driveInverted
-        driveEncoder.setPositionConversionFactor(
-            SwerveConstants.DRIVE_REDUCTION
-        )
-        driveEncoder.setVelocityConversionFactor(
-            SwerveConstants.DRIVE_REDUCTION
-        )
-        driveMotor.burnFlash()
+        driveConfigurator = SparkMaxConfig().apply {
+            voltageCompensation(SwerveConstants.VOLT_COMP_SATURATION)
+            smartCurrentLimit(SwerveConstants.NEO_CURRENT_LIMIT.toInt())
+            inverted(driveInverted)
+                .encoder.positionConversionFactor(SwerveConstants.DRIVE_REDUCTION)
+                .velocityConversionFactor(SwerveConstants.DRIVE_REDUCTION)
+        }
+        driveMotor.configure(driveConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
-        angleMotor.restoreFactoryDefaults()
-        anglePIDController = angleMotor.pidController
+        anglePIDController = angleMotor.closedLoopController
         angleEncoder = angleMotor.encoder
 
-        angleMotor.enableVoltageCompensation(
-            SwerveConstants.VOLT_COMP_SATURATION
-        )
-        angleMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
-        angleMotor.setSmartCurrentLimit(
-            SwerveConstants.NEO_550_CURRENT_LIMIT.toInt()
-        )
-        angleMotor.inverted = angleInverted
-        angleEncoder.setPositionConversionFactor(
-            SwerveConstants.ANGLE_REDUCTION
-        )
-        angleEncoder.setVelocityConversionFactor(
-            SwerveConstants.ANGLE_REDUCTION
-        )
-        angleMotor.burnFlash()
+        angleConfigurator = SparkMaxConfig().apply {
+            voltageCompensation(SwerveConstants.VOLT_COMP_SATURATION)
+            idleMode(SparkBaseConfig.IdleMode.kBrake)
+            smartCurrentLimit(SwerveConstants.NEO_550_CURRENT_LIMIT.toInt())
+            inverted(angleInverted)
+                .encoder.positionConversionFactor(SwerveConstants.ANGLE_REDUCTION)
+                .velocityConversionFactor(SwerveConstants.ANGLE_REDUCTION)
+        }
+        angleMotor.configure(angleConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
     }
 
     override fun updateInputs() {
@@ -100,7 +95,7 @@ class ModuleIOSparkMax(
             val error = angle.minus(inputs.angle)
             anglePIDController.setReference(
                 inputs.angle.getRotations() + error.rotations,
-                CANSparkBase.ControlType.kPosition
+                SparkBase.ControlType.kPosition
             )
         }
 
@@ -113,7 +108,7 @@ class ModuleIOSparkMax(
             velocity *= angleError.cos
             inputs.driveMotorVelocitySetpoint = velocity
             drivePIDController.setReference(
-                feedforward!!.calculate(velocity), CANSparkBase.ControlType.kVoltage
+                feedforward!!.calculate(WpiUnits.MetersPerSecond.of(velocity)).`in`(WpiUnits.Volts), SparkBase.ControlType.kVoltage
             )
         }
 
@@ -141,11 +136,14 @@ class ModuleIOSparkMax(
     }
 
     private val encoderAngle: Double
-        get() = 1.0 - encoder.absolutePosition
+        get() = 1.0 - encoder.get()
 
     override fun setIdleMode(isBreakMode: Boolean) {
-        val mode = if (isBreakMode) CANSparkBase.IdleMode.kBrake else CANSparkBase.IdleMode.kCoast
-        angleMotor.setIdleMode(mode)
-        driveMotor.setIdleMode(mode)
+        val mode = if (isBreakMode) IdleMode.kBrake else IdleMode.kCoast
+
+        driveConfigurator.idleMode(mode)
+        angleConfigurator.idleMode(mode)
+        driveMotor.configure(driveConfigurator, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+        angleMotor.configure(angleConfigurator, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
     }
 }

@@ -1,9 +1,11 @@
 package frc.robot.subsystems.gripper
 
-import com.revrobotics.CANSparkBase
-import com.revrobotics.CANSparkLowLevel
-import com.revrobotics.CANSparkMax
-import com.revrobotics.SparkLimitSwitch
+import com.revrobotics.spark.SparkBase
+import com.revrobotics.spark.SparkLowLevel
+import com.revrobotics.spark.SparkMax
+import com.revrobotics.spark.config.LimitSwitchConfig
+import com.revrobotics.spark.config.SparkBaseConfig
+import com.revrobotics.spark.config.SparkMaxConfig
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.DigitalInput
 import edu.wpi.first.wpilibj.Timer
@@ -11,19 +13,22 @@ import frc.robot.Ports
 
 class GripperIOReal : GripperIO {
     override val inputs = LoggedGripperInputs()
-    private val rollerMotor: CANSparkMax =
-        CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val rollerMotor: SparkMax =
+        SparkMax(Ports.Gripper.ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
     private val timer = Timer()
     private val sensor: DigitalInput = DigitalInput(8)
 
     init {
-        rollerMotor.restoreFactoryDefaults()
-        rollerMotor.setSmartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt())
-        rollerMotor.getForwardLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).enableLimitSwitch(false)
-        rollerMotor.getReverseLimitSwitch(SparkLimitSwitch.Type.kNormallyOpen).enableLimitSwitch(false)
-        rollerMotor.setIdleMode(CANSparkBase.IdleMode.kBrake)
-        rollerMotor.inverted = GripperConstants.ROLLER_INVERTED_VALUE
-        rollerMotor.burnFlash()
+        val rollerMotorConfigurator = SparkMaxConfig().apply {
+            smartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt())
+            limitSwitch.apply(LimitSwitchConfig().apply {
+                    smartCurrentLimit(GripperConstants.currentLimit.`in`(Units.Amp).toInt()) }
+            )
+            idleMode(SparkBaseConfig.IdleMode.kBrake)
+            inverted(GripperConstants.ROLLER_INVERTED_VALUE)
+        }
+
+        rollerMotor.configure(rollerMotorConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
 
         timer.start()
         timer.reset()

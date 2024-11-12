@@ -2,10 +2,8 @@ package frc.robot.commandGroups
 
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
-import edu.wpi.first.wpilibj2.command.ConditionalCommand
 import frc.robot.ControllerInputs
 import frc.robot.Robot
-import frc.robot.RobotContainer
 import frc.robot.subsystems.intake.Intake
 import frc.robot.subsystems.gripper.Gripper
 
