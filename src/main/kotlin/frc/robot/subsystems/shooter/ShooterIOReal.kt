@@ -1,7 +1,5 @@
 package frc.robot.subsystems.shooter
 
-import com.ctre.phoenix6.controls.ControlRequest
-import com.ctre.phoenix6.controls.VelocityTorqueCurrentFOC
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import edu.wpi.first.units.Angle
@@ -22,16 +20,16 @@ class ShooterIOReal : ShooterIO {
         bottomMotor.configurator.apply(ShooterConstants.configBottom)
     }
 
-    override fun setTopVel(vel: Measure<Velocity<Angle>>) {
-        topMotor.setControl(topControlRequest.withVelocity(vel.`in`(Units.RotationsPerSecond)))
+    override fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
+        topMotor.setControl(topControlRequest.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
-    override fun setBottomVel(vel: Measure<Velocity<Angle>>) {
-        bottomMotor.setControl(bottomControlRequest.withVelocity(vel.`in`(Units.RotationsPerSecond)))
+    override fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {
+        bottomMotor.setControl(bottomControlRequest.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
     override fun updateInput() {
-        inputs.topVel = Units.RotationsPerSecond.of(topControlRequest.Velocity)
-        inputs.buttomVel = Units.RotationsPerSecond.of(bottomControlRequest.Velocity)
+        inputs.topVelocity = Units.RotationsPerSecond.of(topControlRequest.Velocity)
+        inputs.buttomVelocity = Units.RotationsPerSecond.of(bottomControlRequest.Velocity)
     }
 }

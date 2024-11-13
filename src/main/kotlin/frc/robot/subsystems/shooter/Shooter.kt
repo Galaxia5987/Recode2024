@@ -28,18 +28,18 @@ class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
         }
     }
 
-    fun setTopVel(vel: Measure<Velocity<Angle>>): Command = Commands.runOnce({ io.setTopVel(vel) })
-    fun setBottomVel(vel: Measure<Velocity<Angle>>): Command = Commands.runOnce({ io.setBottomVel(vel) })
+    fun setTopVelocity(velocity: Measure<Velocity<Angle>>): Command = Commands.runOnce({ io.setTopVelocity(velocity) })
+    fun setBottomVelocity(velocity: Measure<Velocity<Angle>>): Command = Commands.runOnce({ io.setBottomVelocity(velocity) })
 
     fun stop(): Command = Commands.runOnce({
-        io.setBottomVel(MutableMeasure.zero(Units.RotationsPerSecond))
-        io.setTopVel(MutableMeasure.zero(Units.RotationsPerSecond))
+        io.setBottomVelocity(MutableMeasure.zero(Units.RotationsPerSecond))
+        io.setTopVelocity(MutableMeasure.zero(Units.RotationsPerSecond))
     })
 
     fun setShooterVel(vel: Measure<Velocity<Angle>>): Command =
         Commands.runOnce({
-            setTopVel(vel)
-            setBottomVel(vel)
+            setTopVelocity(vel)
+            setBottomVelocity(vel)
         })
 
     override fun periodic() {
