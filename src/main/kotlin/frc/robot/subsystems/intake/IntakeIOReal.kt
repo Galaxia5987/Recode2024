@@ -1,6 +1,10 @@
 package frc.robot.subsystems.intake
 
-import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
@@ -11,15 +15,13 @@ import com.revrobotics.spark.SparkLowLevel
 import com.revrobotics.spark.SparkMax
 import com.revrobotics.spark.config.SparkBaseConfig
 import com.revrobotics.spark.config.SparkMaxConfig
-import edu.wpi.first.units.AngleUnit
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
 import frc.robot.IntakePorts
 
 class IntakeIOReal : IntakeIO {
     override val inputs = LoggedIntakeInputs()
-    
+
     private val angleMotor = TalonFX(IntakePorts.ANGLE_MOTOR_ID)
     private val spinMotor = TalonFX(IntakePorts.SPIN_MOTOR_ID)
     private val centerMotor = SparkMax(IntakePorts.CENTER_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
@@ -65,7 +67,6 @@ class IntakeIOReal : IntakeIO {
                 kP = GAINS.kP
                 kI = GAINS.kI
                 kD = GAINS.kD
-
             }
             CurrentLimits = CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
@@ -103,7 +104,8 @@ class IntakeIOReal : IntakeIO {
     override fun setGains(kP: Double, kI: Double, kD: Double) {
         angleMotor.configurator.apply(
             Slot0Configs()
-                .withKP(kP).withKI(kI).withKD(kD))
+                .withKP(kP).withKI(kI).withKD(kD)
+        )
     }
 
     override fun updateInputs() {

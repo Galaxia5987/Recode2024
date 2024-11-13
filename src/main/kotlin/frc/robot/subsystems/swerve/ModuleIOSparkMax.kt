@@ -1,6 +1,6 @@
 package frc.robot.subsystems.swerve
 
-import com.revrobotics.*
+import com.revrobotics.RelativeEncoder
 import com.revrobotics.spark.SparkBase
 import com.revrobotics.spark.SparkClosedLoopController
 import com.revrobotics.spark.SparkLowLevel
@@ -82,10 +82,11 @@ class ModuleIOSparkMax(
             Rotation2d.fromRadians(Utils.normalize(angleEncoder.position * 2 * Math.PI))
 
         inputs.moduleDistance =
-            (inputs.driveMotorPosition
+            (
+                inputs.driveMotorPosition
                     * SwerveConstants.WHEEL_DIAMETER
-                    * Math.PI)
-
+                    * Math.PI
+                )
     }
 
     override var angle
@@ -100,8 +101,10 @@ class ModuleIOSparkMax(
         }
 
     override var velocity
-        get() = (Units.rpmToRadsPerSec(driveEncoder.velocity)
-                * (SwerveConstants.WHEEL_DIAMETER / 2))
+        get() = (
+            Units.rpmToRadsPerSec(driveEncoder.velocity) *
+                (SwerveConstants.WHEEL_DIAMETER / 2)
+            )
         set(velocity) {
             var velocity = velocity
             val angleError = inputs.angleSetpoint.minus(inputs.angle)

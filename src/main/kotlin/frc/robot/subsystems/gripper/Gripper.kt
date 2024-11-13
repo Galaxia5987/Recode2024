@@ -7,8 +7,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
-
-class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
+class Gripper private constructor(private val io: GripperIO) : SubsystemBase() {
     private val timer = Timer()
     @AutoLogOutput
     private var rollerPowerSetPoint = 0.0
@@ -30,7 +29,7 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
             }
         }
 
-        fun getInstance() : Gripper {
+        fun getInstance(): Gripper {
             return instance ?: throw IllegalArgumentException(
                 "GripperPorts has not been initialized. Call initialize(io: GripperIO) first."
             )
@@ -57,9 +56,9 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
         return setRollerPower(0.0).withTimeout(0.02).withName("stop")
     }
 
-    fun disableSensor(): Command = Commands.runOnce({useSensor=false})
+    fun disableSensor(): Command = Commands.runOnce({ useSensor = false })
 
-    fun enableSensor(): Command = Commands.runOnce({useSensor=true})
+    fun enableSensor(): Command = Commands.runOnce({ useSensor = true })
 
     override fun periodic() {
         io.updateInputs()

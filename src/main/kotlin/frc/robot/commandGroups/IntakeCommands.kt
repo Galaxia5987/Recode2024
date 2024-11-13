@@ -12,7 +12,8 @@ private val gripper = Gripper.getInstance()
 
 fun stopIntake(): Command = Commands.parallel(
     intake.stop(), gripper.stop(),
-    ControllerInputs.stopRumble())
+    ControllerInputs.stopRumble()
+)
 
 fun intake(): Command {
     return Commands.parallel(
@@ -23,8 +24,9 @@ fun intake(): Command {
             Commands.parallel(
                 intake.stop(),
                 gripper.setRollerPower(0.0),
-                ControllerInputs.startRumble().onlyIf{Robot.isTeleop}
-            ))
+                ControllerInputs.startRumble().onlyIf { Robot.isTeleop }
+            )
+        )
         .withName("intake")
 }
 

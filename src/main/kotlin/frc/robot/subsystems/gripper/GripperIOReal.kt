@@ -21,8 +21,10 @@ class GripperIOReal : GripperIO {
     init {
         val rollerMotorConfigurator = SparkMaxConfig().apply {
             smartCurrentLimit(CURRENT_LIMIT.`in`(Units.Amp).toInt())
-            limitSwitch.apply(LimitSwitchConfig().apply {
-                    smartCurrentLimit(CURRENT_LIMIT.`in`(Units.Amp).toInt()) }
+            limitSwitch.apply(
+                LimitSwitchConfig().apply {
+                    smartCurrentLimit(CURRENT_LIMIT.`in`(Units.Amp).toInt())
+                }
             )
             idleMode(SparkBaseConfig.IdleMode.kBrake)
             inverted(ROLLER_INVERTED_VALUE)

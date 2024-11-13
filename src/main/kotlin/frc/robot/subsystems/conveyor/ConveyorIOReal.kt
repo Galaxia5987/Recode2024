@@ -1,6 +1,10 @@
 package frc.robot.subsystems.conveyor
 
-import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
@@ -34,7 +38,8 @@ class ConveyorIOReal : ConveyorIO {
                 StatorCurrentLimit = 80.0
                 SupplyCurrentLimit = 40.0
             }
-            Feedback = FeedbackConfigs().apply { SensorToMechanismRatio = GEAR_RATIO
+            Feedback = FeedbackConfigs().apply {
+                SensorToMechanismRatio = GEAR_RATIO
             }
         }
 

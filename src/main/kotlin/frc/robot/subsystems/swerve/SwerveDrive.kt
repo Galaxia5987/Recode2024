@@ -29,7 +29,7 @@ import kotlin.math.abs
 import kotlin.math.hypot
 
 class SwerveDrive private constructor
-    (private val gyroIO: GyroIO, wheelOffsets: Array<Double>, vararg moduleIOs: ModuleIO) :
+(private val gyroIO: GyroIO, wheelOffsets: Array<Double>, vararg moduleIOs: ModuleIO) :
     SubsystemBase() {
 
     private val inputs = LoggedSwerveDriveInputs()
@@ -173,7 +173,7 @@ class SwerveDrive private constructor
         estimator.resetPosition(pose.rotation, modulePositions, pose)
     }
 
-    private fun isColliding() : Boolean {
+    private fun isColliding(): Boolean {
         return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE.`in`(Units.Gs)
     }
 
@@ -286,7 +286,7 @@ class SwerveDrive private constructor
     }
 
     fun driveAndAdjust(
-        rotation: ()->Angle,
+        rotation: () -> Angle,
         forward: DoubleSupplier,
         strafe: DoubleSupplier,
         turnTolerance: Double,
@@ -328,7 +328,7 @@ class SwerveDrive private constructor
         chassisSpeeds = kinematics.toChassisSpeeds(*currentModuleStates)
         velocity = hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond)
         absolutePositions = Arrays.stream(modules)
-            .mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } //TODO: really not sure about this on
+            .mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } // TODO: really not sure about this on
             .toArray()
     }
 

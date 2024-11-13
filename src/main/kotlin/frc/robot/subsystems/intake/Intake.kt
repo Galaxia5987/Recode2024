@@ -37,7 +37,6 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
         }
     }
 
-
     fun setSpinPower(power: Double): Command {
         return Commands.runOnce({
             io.setSpinPower(power)
@@ -84,21 +83,22 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
     }
 
     fun reset(): Command {
-        return Commands.run({ io.setAnglePower(-0.3) }).finallyDo(Runnable {
-            io.resetEncoder()
-            io.setAnglePower(0.0)
-        })
+        return Commands.run({ io.setAnglePower(-0.3) }).finallyDo(
+            Runnable {
+                io.resetEncoder()
+                io.setAnglePower(0.0)
+            }
+        )
     }
 
     override fun periodic() {
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPID: DoubleArray ->
-                io.setGains(
-                    kPID[0], kPID[1], kPID[2]
-                )
-            }, angleKP, angleKI, angleKD
+            io.setGains(
+                kPID[0], kPID[1], kPID[2]
+            )
+        }, angleKP, angleKI, angleKD
         )
-
 
         io.updateInputs()
         Logger.processInputs(this::class.simpleName, inputs)

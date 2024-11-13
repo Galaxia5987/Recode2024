@@ -1,30 +1,56 @@
 package frc.robot
 
 import edu.wpi.first.math.geometry.Transform3d
+import frc.robot.Constants.Mode
 import frc.robot.lib.PoseEstimation
 import frc.robot.subsystems.climb.Climb
-import frc.robot.subsystems.climb.ClimbIOTalonFX
-import frc.robot.subsystems.conveyor.Conveyor
-import frc.robot.subsystems.conveyor.ConveyorIOReal
-import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.gripper.GripperIOReal
-import frc.robot.subsystems.hood.Hood
-import frc.robot.subsystems.hood.HoodIOReal
-import frc.robot.subsystems.intake.Intake
-import frc.robot.subsystems.intake.IntakeIOReal
-import frc.robot.subsystems.leds.LEDs
-import frc.robot.subsystems.shooter.Shooter
-import frc.robot.subsystems.shooter.ShooterIOReal
-import frc.robot.subsystems.swerve.*
-import frc.robot.Constants.Mode
 import frc.robot.subsystems.climb.ClimbIO
+import frc.robot.subsystems.climb.ClimbIOTalonFX
 import frc.robot.subsystems.climb.LoggedClimbInputs
-import frc.robot.subsystems.conveyor.*
-import frc.robot.subsystems.gripper.*
-import frc.robot.subsystems.hood.*
-import frc.robot.subsystems.intake.*
-import frc.robot.subsystems.shooter.*
-import frc.robot.subsystems.vision.*
+import frc.robot.subsystems.conveyor.Conveyor
+import frc.robot.subsystems.conveyor.ConveyorIO
+import frc.robot.subsystems.conveyor.ConveyorIOReal
+import frc.robot.subsystems.conveyor.ConveyorIOSim
+import frc.robot.subsystems.conveyor.LoggedConveyorInputs
+import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.gripper.GripperIO
+import frc.robot.subsystems.gripper.GripperIOReal
+import frc.robot.subsystems.gripper.GripperIOSim
+import frc.robot.subsystems.gripper.LoggedGripperInputs
+import frc.robot.subsystems.hood.Hood
+import frc.robot.subsystems.hood.HoodIO
+import frc.robot.subsystems.hood.HoodIOReal
+import frc.robot.subsystems.hood.HoodIOSim
+import frc.robot.subsystems.hood.LoggedHoodInputs
+import frc.robot.subsystems.intake.Intake
+import frc.robot.subsystems.intake.IntakeIO
+import frc.robot.subsystems.intake.IntakeIOReal
+import frc.robot.subsystems.intake.IntakeIOSim
+import frc.robot.subsystems.intake.LoggedIntakeInputs
+import frc.robot.subsystems.leds.LEDs
+import frc.robot.subsystems.shooter.LoggedRollerInputs
+import frc.robot.subsystems.shooter.Shooter
+import frc.robot.subsystems.shooter.ShooterIO
+import frc.robot.subsystems.shooter.ShooterIOReal
+import frc.robot.subsystems.shooter.ShooterIOSim
+import frc.robot.subsystems.swerve.GyroIO
+import frc.robot.subsystems.swerve.GyroIOReal
+import frc.robot.subsystems.swerve.GyroIOSim
+import frc.robot.subsystems.swerve.LoggedModuleInputs
+import frc.robot.subsystems.swerve.ModuleIO
+import frc.robot.subsystems.swerve.ModuleIOSim
+import frc.robot.subsystems.swerve.ModuleIOSparkMax
+import frc.robot.subsystems.swerve.ModuleIOTalonFX
+import frc.robot.subsystems.swerve.SwerveConstants
+import frc.robot.subsystems.swerve.SwerveDrive
+import frc.robot.subsystems.vision.INTAKE_APRILTAG_CAMERA_POSE
+import frc.robot.subsystems.vision.LoggedVisionInputs
+import frc.robot.subsystems.vision.PhotonVisionIOReal
+import frc.robot.subsystems.vision.PhotonVisionIOSim
+import frc.robot.subsystems.vision.SPEAKER_LEFT_CAMERA_POSE
+import frc.robot.subsystems.vision.SPEAKER_RIGHT_CAMERA_POSE
+import frc.robot.subsystems.vision.Vision
+import frc.robot.subsystems.vision.VisionIO
 import org.photonvision.PhotonCamera
 import org.photonvision.simulation.PhotonCameraSim
 
@@ -75,37 +101,37 @@ private val MAP = when (Constants.CURRENT_MODE) {
     )
 }
 
-    private fun createModuleIOs(): Array<ModuleIO> {
+private fun createModuleIOs(): Array<ModuleIO> {
     return when (Constants.CURRENT_MODE) {
-            Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
-                Constants.ROBORIO_NEO_SERIAL -> {
-                    Array(4) { i ->
-                        ModuleIOSparkMax(
-                            SwerveDriveNEOPorts.DRIVE_IDS[i],
-                            SwerveDriveNEOPorts.ANGLE_IDS[i],
-                            SwerveDriveNEOPorts.ENCODER_IDS[i],
-                            SwerveDriveNEOPorts.DRIVE_INVERTED[i],
-                            SwerveDriveNEOPorts.ANGLE_INVERTED[i]
-                        )
-                    }
-                }
-                else -> {
-                    Array(4) { i ->
-                        ModuleIOTalonFX(
-                            SwerveDriveWCPPorts.DRIVE_IDS[i],
-                            SwerveDriveWCPPorts.ANGLE_IDS[i],
-                            SwerveDriveWCPPorts.ENCODER_IDS[i],
-                            SwerveConstants.DRIVE_MOTOR_CONFIGS
-                                ?: throw IllegalStateException("drive motor config is null"),
-                            SwerveConstants.ANGLE_MOTOR_CONFIGS
-                                ?: throw IllegalStateException("angle motor config is null"),
-                            SwerveConstants.ENCODER_CONFIGS
-                                ?: throw IllegalStateException("encoder config is null")
-                        )
-                    }
+        Mode.REAL -> when (Constants.ROBORIO_SERIAL_NUMBER) {
+            Constants.ROBORIO_NEO_SERIAL -> {
+                Array(4) { i ->
+                    ModuleIOSparkMax(
+                        SwerveDriveNEOPorts.DRIVE_IDS[i],
+                        SwerveDriveNEOPorts.ANGLE_IDS[i],
+                        SwerveDriveNEOPorts.ENCODER_IDS[i],
+                        SwerveDriveNEOPorts.DRIVE_INVERTED[i],
+                        SwerveDriveNEOPorts.ANGLE_INVERTED[i]
+                    )
                 }
             }
-            Mode.SIM -> {
+            else -> {
+                Array(4) { i ->
+                    ModuleIOTalonFX(
+                        SwerveDriveWCPPorts.DRIVE_IDS[i],
+                        SwerveDriveWCPPorts.ANGLE_IDS[i],
+                        SwerveDriveWCPPorts.ENCODER_IDS[i],
+                        SwerveConstants.DRIVE_MOTOR_CONFIGS
+                            ?: throw IllegalStateException("drive motor config is null"),
+                        SwerveConstants.ANGLE_MOTOR_CONFIGS
+                            ?: throw IllegalStateException("angle motor config is null"),
+                        SwerveConstants.ENCODER_CONFIGS
+                            ?: throw IllegalStateException("encoder config is null")
+                    )
+                }
+            }
+        }
+        Mode.SIM -> {
             Array(4) { ModuleIOSim() }
         }
         Mode.REPLAY -> {
@@ -129,7 +155,7 @@ fun initSwerve() {
             GyroIOSim()
         }
         Mode.REPLAY -> {
-            object: GyroIO {}
+            object : GyroIO {}
         }
     }
 
@@ -147,7 +173,7 @@ fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
             ),
             robotToCam
         )
-        Mode.REPLAY -> object: VisionIO {
+        Mode.REPLAY -> object : VisionIO {
             override val inputs = LoggedVisionInputs()
             override val name = cameraName
         }
@@ -157,7 +183,7 @@ fun initPhotonCamera(cameraName: String, robotToCam: Transform3d): VisionIO {
 fun initVision() {
     val speakerRightCamera = initPhotonCamera("rightOV2311", SPEAKER_RIGHT_CAMERA_POSE)
     val speakerLeftCamera = initPhotonCamera("leftOV2311", SPEAKER_LEFT_CAMERA_POSE)
-    val intakeAprilTagCamera = initPhotonCamera("frontOV2311", INTAKE_APRILTAG_CAMERA_POSE,)
+    val intakeAprilTagCamera = initPhotonCamera("frontOV2311", INTAKE_APRILTAG_CAMERA_POSE)
 
     Vision.initialize(listOf(speakerRightCamera, speakerLeftCamera, intakeAprilTagCamera))
 }
@@ -174,4 +200,3 @@ fun initializeSubsystems() {
     (MAP[Intake] as? IntakeIO)?.let { Intake.initialize(it) }
     (MAP[Gripper] as? GripperIO)?.let { Gripper.initialize(it) }
 }
-

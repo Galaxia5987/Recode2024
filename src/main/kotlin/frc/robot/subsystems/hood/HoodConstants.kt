@@ -4,7 +4,12 @@ import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.math.geometry.Translation2d
 import edu.wpi.first.math.geometry.Translation3d
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.measure.*
+import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.AngularAcceleration
+import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.units.measure.Dimensionless
+import edu.wpi.first.units.measure.Distance
+import edu.wpi.first.units.measure.MomentOfInertia
 import frc.robot.lib.Gains
 import frc.robot.lib.LoggedTunableNumber
 import frc.robot.lib.selectGainsBasedOnMode
@@ -27,14 +32,14 @@ val SIMULATION_OFFSET: Angle = Units.Degrees.of(-54.0)
 const val CURRENT_LIMIT = 40.0
 val INVERTED_VALUE = InvertedValue.CounterClockwise_Positive
 
-
 val ABSOLUTE_ENCODER_OFFSET = LoggedTunableNumber("Hood/EncoderOffset", (5.537 - 33.48) / 360.0)
 
 val GAINS by lazy {
     selectGainsBasedOnMode(
         Gains(
             kP = 1700.0, kD = 335.0, kG = 5.5
-        ), Gains(
+        ),
+        Gains(
             20.0
         )
     )

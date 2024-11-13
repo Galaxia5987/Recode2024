@@ -1,10 +1,14 @@
 package frc.robot.subsystems.shooter
 
-import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import frc.robot.ShooterPorts
 
@@ -109,7 +113,7 @@ class ShooterIOReal : ShooterIO {
 
     override fun updateInputs() {
         topRollerInputs.velocity = topMotor.velocity.value
-        topRollerInputs.voltage =topMotor.motorVoltage.value
+        topRollerInputs.voltage = topMotor.motorVoltage.value
 
         bottomRollerInputs.velocity = bottomMotor.velocity.value
         bottomRollerInputs.voltage = bottomMotor.motorVoltage.value

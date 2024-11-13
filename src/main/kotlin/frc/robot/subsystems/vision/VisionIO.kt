@@ -10,7 +10,6 @@ interface VisionIO {
     val name: String
 
     fun setPipeLine(pipeLineIndex: Int) {
-
     }
 
     fun updateInputs() {}
@@ -20,4 +19,5 @@ interface VisionIO {
         var poseFieldOriented = Pose3d()
         var timestamp: Double = 0.0 // Seconds
         var bestCameraToTargets: MutableList<Transform3d> = ArrayList()
-    }}
+    }
+}

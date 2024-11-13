@@ -1,6 +1,6 @@
 package frc.robot.subsystems.conveyor
 
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
@@ -74,10 +74,10 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         atSetpoint = atSetPoint().also { Logger.recordOutput("Conveyor/atSetpoint", atSetpoint) }
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
-                io.setGains(
-                    kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
-                )
-            }, kP, kI, kD, kS, kV, kA
+            io.setGains(
+                kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
+            )
+        }, kP, kI, kD, kS, kV, kA
         )
 
         io.updateInputs()

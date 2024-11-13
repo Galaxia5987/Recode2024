@@ -1,6 +1,6 @@
 package frc.robot.subsystems.shooter
 
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged

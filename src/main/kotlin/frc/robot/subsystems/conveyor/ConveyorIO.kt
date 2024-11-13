@@ -1,6 +1,6 @@
 package frc.robot.subsystems.conveyor
 
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import org.team9432.annotation.Logged
 

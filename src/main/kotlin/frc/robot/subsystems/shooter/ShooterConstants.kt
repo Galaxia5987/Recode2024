@@ -1,7 +1,7 @@
 package frc.robot.subsystems.shooter
 
 import com.ctre.phoenix6.signals.InvertedValue
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.units.measure.Dimensionless
 import edu.wpi.first.units.measure.MomentOfInertia
@@ -20,7 +20,7 @@ val TOP_GAINS by lazy {
     selectGainsBasedOnMode(
         Gains(
             0.4,
-            kV= 0.1282
+            kV = 0.1282
         ),
         Gains(
             2.0,
@@ -34,7 +34,7 @@ val BOTTOM_GAINS by lazy {
     selectGainsBasedOnMode(
         Gains(
             0.3,
-            kV= 0.1232
+            kV = 0.1232
         ),
         Gains(
             2.0,

@@ -29,7 +29,8 @@ class ClimbState : ScoreState {
                     swerveDrive.turnCommand(
                         Units.Rotations.of(
                             nearestChain().rotation.rotations
-                        ), SwerveConstants.CLIMB_TURN_TOLERANCE
+                        ),
+                        SwerveConstants.CLIMB_TURN_TOLERANCE
                     )
                 )
             },
