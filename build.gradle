@@ -221,6 +221,8 @@ spotless {
         endWithNewline()
     }
     kotlin {
+        targetExclude('build/')
+
         ktlint()
     }
 }
