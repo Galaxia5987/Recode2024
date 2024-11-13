@@ -8,7 +8,7 @@ import edu.wpi.first.units.Voltage
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
-    var inputs: LoggedShooterInputs
+    val inputs: LoggedShooterInputs
 
     fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {}
     fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {}
