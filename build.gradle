@@ -5,6 +5,7 @@ plugins {
     id "java"
     id "org.jetbrains.kotlin.jvm" version "2.0.0"
     id "edu.wpi.first.GradleRIO" version "2025.1.1-beta-1"
+    id "com.diffplug.spotless" version "6.7.2"
     id "com.peterabeles.gversion" version "1.10"
     id 'com.google.devtools.ksp' version '2.0.0-1.0.21'
     id "idea"
@@ -196,5 +197,30 @@ idea {
         downloadSources = true
         // Exclude the .vscode directory from indexing and search
         excludeDirs += file(".vscode")
+    }
+}
+
+spotless {
+    format 'misc', {
+        // define the files to apply `misc` to
+        target '*gradle*', '.gitattributes', '.gitignore'
+
+        // define the steps to apply to those files
+        trimTrailingWhitespace()
+        indentWithSpaces(4)
+        endWithNewline()
+    }
+    java {
+        targetExclude('**/BuildConstants.java')
+
+        // use AOSP style for 4-character wide indents
+        googleJavaFormat().aosp()
+
+        // fix formatting of type annotations
+        trimTrailingWhitespace()
+        endWithNewline()
+    }
+    kotlin {
+        ktlint()
     }
 }
