@@ -38,14 +38,13 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
 
             val tags = result.targets
 
-            inputs.distanceToTargets.clear()
+            inputs.bestCameraToTargets.clear()
             inputs.poseFieldOriented = estimatedPose.get().estimatedPose
 
             inputs.timestamp = estimatedPose.get().timestampSeconds
 
             for (tag in tags) {
-                val distanceToTarget = tag.bestCameraToTarget.translation.norm
-                inputs.distanceToTargets.add(distanceToTarget)
+                inputs.bestCameraToTargets.add(tag.bestCameraToTarget)
             }
         }
     }

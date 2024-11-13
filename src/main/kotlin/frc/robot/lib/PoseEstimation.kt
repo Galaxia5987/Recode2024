@@ -50,7 +50,14 @@ class PoseEstimation {
                 continue
             }
 
-            val distances = result.distanceToTargets
+            val size = result.bestCameraToTargets.size
+            val distances = DoubleArray(size)
+
+            for (i in result.bestCameraToTargets.indices) {
+                val norm = result.bestCameraToTargets[i].translation.norm
+                distances[i] = norm
+            }
+
             val mean = distances.average()
 
             val stddev = if (distances.size == 1) {

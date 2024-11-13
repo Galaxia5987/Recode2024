@@ -55,7 +55,7 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
         val tags = latestResult.targets
 
         for (tag in tags) {
-            inputs.distanceToTargets.add(tag.bestCameraToTarget.translation.norm)
+            inputs.bestCameraToTargets.add(tag.bestCameraToTarget)
         }
     }
 }
