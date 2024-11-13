@@ -4,6 +4,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
@@ -13,7 +14,7 @@ class ConveyorIOSim : ConveyorIO {
     private val conveyor = TalonFXSim(
         1,
         GEAR_RATIO,
-        MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
+        MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
         1.0
     )
 
@@ -26,7 +27,7 @@ class ConveyorIOSim : ConveyorIO {
         conveyor.setController(controller)
     }
 
-    override fun setVelocity(velocity: Measure<Velocity<Angle>>) {
+    override fun setVelocity(velocity: AngularVelocity) {
         conveyor.setControl(control.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
@@ -40,6 +41,6 @@ class ConveyorIOSim : ConveyorIO {
 
     override fun updateInputs() {
         conveyor.update(Timer.getFPGATimestamp())
-        inputs.velocity.mut_replace(conveyor.velocity, Units.RotationsPerSecond)
+        inputs.velocity = Units.RotationsPerSecond.of(conveyor.velocity)
     }
 }

@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.lib.Utils
 import frc.robot.lib.units.Units
+import edu.wpi.first.units.Units as WpiUnits
 
 class ModuleIOTalonFX(
     driveMotorID: Int,
@@ -54,22 +55,18 @@ class ModuleIOTalonFX(
     }
 
     override fun updateInputs() {
-        inputs.driveMotorPosition = driveMotor.position.value
+        inputs.driveMotorPosition = driveMotor.position.value.`in`(WpiUnits.Rotations)
         inputs.driveMotorVelocity =
             Units.rpsToMetersPerSecond(
-                driveMotor.velocity.value, SwerveConstants.WHEEL_DIAMETER / 2
+                driveMotor.velocity.value.`in`(WpiUnits.RotationsPerSecond), SwerveConstants.WHEEL_DIAMETER / 2
             )
-        inputs.driveMotorVoltage = driveMotor.motorVoltage.value
-        inputs.driveMotorAcceleration =
-            Units.rpsToMetersPerSecond(
-                driveMotor.acceleration.value,
-                SwerveConstants.WHEEL_DIAMETER / 2
-            )
+        inputs.driveMotorVoltage = driveMotor.motorVoltage.value.`in`(WpiUnits.Volts)
+        inputs.driveMotorAcceleration = driveMotor.acceleration.value.`in`(WpiUnits.RotationsPerSecond.per(WpiUnits.Second))
 
         inputs.angle =
-            Utils.normalize(Rotation2d.fromRotations(angleMotor.position.value))
-        inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value
-        inputs.angleMotorVelocity = angleMotor.velocity.value
+            Utils.normalize(Rotation2d.fromRotations(angleMotor.position.value.`in`(WpiUnits.Rotations)))
+        inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value.`in`(WpiUnits.Volts)
+        inputs.angleMotorVelocity = angleMotor.velocity.value.`in`(WpiUnits.RotationsPerSecond)
 
         inputs.moduleDistance =
             Units.rpsToMetersPerSecond(
@@ -84,7 +81,7 @@ class ModuleIOTalonFX(
                     !encoder.fault_BootDuringEnable.value ||
                     !encoder.fault_UnlicensedFeatureInUse.value
 
-        inputs.absolutePosition = encoder.absolutePosition.value
+        inputs.absolutePosition = encoder.absolutePosition.value.`in`(WpiUnits.Rotations)
         inputs.moduleState = moduleState
 
     }
@@ -134,7 +131,7 @@ class ModuleIOTalonFX(
     }
 
     override fun updateOffset(offset: Rotation2d) {
-        angleMotor.setPosition(encoder.absolutePosition.value - offset.rotations)
+        angleMotor.setPosition(encoder.absolutePosition.value - WpiUnits.Rotations.of(offset.rotations))
     }
 
     override fun setVoltage(volts: Double) {

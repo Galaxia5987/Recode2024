@@ -3,9 +3,8 @@ package frc.robot.subsystems.intake
 import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.math.controller.PIDController
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import frc.robot.lib.motors.SparkMaxSim
 import frc.robot.lib.motors.TalonFXSim
 import edu.wpi.first.wpilibj.Timer
@@ -33,7 +32,7 @@ class IntakeIOSim : IntakeIO {
         centerMotor.set(power)
     }
 
-    override fun setAngle(angle: Measure<Angle>) {
+    override fun setAngle(angle: Angle) {
         angleMotor.setControl(positionControl.withPosition(angle.`in`(Units.Rotations)))
     }
 

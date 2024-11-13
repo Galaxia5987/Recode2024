@@ -9,7 +9,6 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
         aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-        camera,
         robotToCam
     )
 
@@ -24,28 +23,29 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
     }
 
     override fun updateInputs() {
-        val latestResult = camera.latestResult
+        val unreadResults = camera.allUnreadResults
 
-        if (!latestResult.hasTargets()) {
-            return
+        for (result in unreadResults) {
+            if (!result.hasTargets()) {
+                return
+            }
+
+            val estimatedPose = estimator.update(result)
+
+            if (estimatedPose.isEmpty) {
+                continue
+            }
+
+            val tags = result.targets
+
+            inputs.bestCameraToTargets.clear()
+            inputs.poseFieldOriented = estimatedPose.get().estimatedPose
+
+            inputs.timestamp = estimatedPose.get().timestampSeconds
+
+            for (tag in tags) {
+                inputs.bestCameraToTargets.add(tag.bestCameraToTarget)
+            }
         }
-
-        val estimatedPose = estimator.update(latestResult)
-
-        if (estimatedPose.isEmpty) {
-            return
-        }
-
-        val tags = latestResult.targets
-
-        inputs.distanceToTargets.clear()
-        inputs.poseFieldOriented = estimatedPose.get().estimatedPose
-
-        inputs.timestamp = estimatedPose.get().timestampSeconds
-        for (tag in tags) {
-            val distanceToTarget = tag.bestCameraToTarget.translation.norm
-            inputs.distanceToTargets.add(distanceToTarget)
-        }
-
     }
 }

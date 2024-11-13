@@ -10,10 +10,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics
 import edu.wpi.first.math.kinematics.SwerveModulePosition
 import edu.wpi.first.math.kinematics.SwerveModuleState
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Voltage
+import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.Voltage
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
 import edu.wpi.first.wpilibj2.command.Command
@@ -53,7 +52,7 @@ class SwerveDrive private constructor
     private var desiredSpeeds = ChassisSpeeds()
 
     @AutoLogOutput
-    private var turnAngleSetpoint: Measure<Angle> = Units.Degrees.zero()
+    private var turnAngleSetpoint: Angle = Units.Degrees.zero()
 
     val atTurnSetpoint: Boolean
         get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.MAX_TURN_TOLERANCE)
@@ -262,7 +261,7 @@ class SwerveDrive private constructor
         }
     }
 
-    fun turnCommand(rotation: Measure<Angle>, turnTolerance: Double): Command {
+    fun turnCommand(rotation: Angle, turnTolerance: Double): Command {
         turnAngleSetpoint = rotation
         val turnController =
             DieterController(
@@ -287,7 +286,7 @@ class SwerveDrive private constructor
     }
 
     fun driveAndAdjust(
-        rotation: ()->Measure<Angle>,
+        rotation: ()->Angle,
         forward: DoubleSupplier,
         strafe: DoubleSupplier,
         turnTolerance: Double,
@@ -392,7 +391,7 @@ class SwerveDrive private constructor
             SysIdRoutine(
                 SysIdRoutine.Config(),
                 SysIdRoutine.Mechanism(
-                    { volts: Measure<Voltage?> ->
+                    { volts: Voltage ->
                         for (module in modules) {
                             module!!.characterize(
                                 volts.`in`(Units.Volts)

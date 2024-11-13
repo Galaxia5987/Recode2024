@@ -5,6 +5,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
 import frc.robot.ShooterPorts
 
 class ShooterIOReal : ShooterIO {
@@ -69,11 +70,11 @@ class ShooterIOReal : ShooterIO {
         bottomMotor.configurator.apply(bottomMotorConfig)
     }
 
-    override fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {
+    override fun setTopVelocity(velocity: AngularVelocity) {
         topMotor.setControl(topControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
-    override fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {
+    override fun setBottomVelocity(velocity: AngularVelocity) {
         bottomMotor.setControl(bottomControl.withVelocity(velocity.`in`(Units.RotationsPerSecond)))
     }
 
@@ -107,14 +108,10 @@ class ShooterIOReal : ShooterIO {
     }
 
     override fun updateInputs() {
-        topRollerInputs.velocity.mut_replace(
-            topMotor.velocity.value, Units.RotationsPerSecond
-        )
-        topRollerInputs.voltage.mut_replace(topMotor.motorVoltage.value, Units.Volts)
+        topRollerInputs.velocity = topMotor.velocity.value
+        topRollerInputs.voltage =topMotor.motorVoltage.value
 
-        bottomRollerInputs.velocity.mut_replace(
-            bottomMotor.velocity.value, Units.RotationsPerSecond
-        )
-        bottomRollerInputs.voltage.mut_replace(bottomMotor.velocity.value, Units.Volts)
+        bottomRollerInputs.velocity = bottomMotor.velocity.value
+        bottomRollerInputs.voltage = bottomMotor.motorVoltage.value
     }
 }

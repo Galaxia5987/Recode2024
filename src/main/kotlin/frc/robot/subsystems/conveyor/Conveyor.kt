@@ -1,6 +1,7 @@
 package frc.robot.subsystems.conveyor
 
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -17,7 +18,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     private val kA = LoggedTunableNumber("Conveyor/kA", GAINS.kA)
 
     @AutoLogOutput
-    private var velocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+    private var velocitySetpoint: AngularVelocity = Units.RotationsPerSecond.zero()
     private val inputs = io.inputs
     private val timer = Timer()
     private var atSetpoint = false
@@ -45,13 +46,13 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         timer.reset()
     }
 
-    fun setVelocity(velocitySupplier: () -> Measure<Velocity<Angle>>): Command = run {
+    fun setVelocity(velocitySupplier: () -> AngularVelocity): Command = run {
         val velocity = velocitySupplier.invoke()
         velocitySetpoint = velocity
         io.setVelocity(velocity)
     }
 
-    fun setVelocity(velocity: Measure<Velocity<Angle>>): Command = run {
+    fun setVelocity(velocity: AngularVelocity): Command = run {
         velocitySetpoint = velocity
         io.setVelocity(velocity)
     }

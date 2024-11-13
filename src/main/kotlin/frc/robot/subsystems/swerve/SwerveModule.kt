@@ -31,8 +31,7 @@ class SwerveModule
     var moduleState: SwerveModuleState
         get() = io.moduleState
         set(moduleState) {
-            var moduleState = moduleState
-            moduleState = SwerveModuleState.optimize(moduleState, inputs.angle)
+            moduleState.optimize(inputs.angle)
             setVelocity(moduleState.speedMetersPerSecond)
             io.angle = moduleState.angle
         }

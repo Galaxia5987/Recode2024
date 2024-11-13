@@ -1,6 +1,7 @@
 package frc.robot.subsystems.shooter
 
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -36,10 +37,10 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         LoggedTunableNumber("Shooter/Bottom kA", BOTTOM_GAINS.kA)
 
     @AutoLogOutput
-    private var topVelocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+    private var topVelocitySetpoint: AngularVelocity = Units.RotationsPerSecond.zero()
 
     @AutoLogOutput
-    private var bottomVelocitySetpoint: Measure<Velocity<Angle>> = Units.RotationsPerSecond.zero()
+    private var bottomVelocitySetpoint: AngularVelocity = Units.RotationsPerSecond.zero()
     private val timer = Timer()
     private val subsystemName = this::class.simpleName
 
@@ -67,7 +68,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         timer.reset()
     }
 
-    fun setVelocity(topVelocity: Measure<Velocity<Angle>>, bottomVelocity: Measure<Velocity<Angle>>): Command {
+    fun setVelocity(topVelocity: AngularVelocity, bottomVelocity: AngularVelocity): Command {
         return runOnce {
             topVelocitySetpoint = topVelocity
             bottomVelocitySetpoint = bottomVelocity
@@ -76,7 +77,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         }.withName("Set Top and Bottom Velocity Command")
     }
 
-    fun setVelocity(velocitySupplier: () -> Measure<Velocity<Angle>>): Command {
+    fun setVelocity(velocitySupplier: () -> AngularVelocity): Command {
         return run {
             val velocity = velocitySupplier.invoke()
             topVelocitySetpoint = velocity
@@ -86,7 +87,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         }.withName("Set Top and Bottom Velocity Command")
     }
 
-    fun setVelocity(velocity: Measure<Velocity<Angle>>): Command =
+    fun setVelocity(velocity: AngularVelocity): Command =
         setVelocity(velocity, velocity).withName("Set Velocity Command")
 
     fun stop(): Command {

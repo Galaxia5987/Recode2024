@@ -7,10 +7,8 @@ import com.pathplanner.lib.config.PIDConstants
 import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
-import edu.wpi.first.units.Distance
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.measure.LinearAcceleration
 import frc.robot.Constants
 import frc.robot.lib.LoggedTunableNumber
 import kotlin.math.sqrt
@@ -106,7 +104,7 @@ object SwerveConstants {
     const val SHOOT_TURN_TOLERANCE = 0.06
     const val CLIMB_TURN_TOLERANCE = 0.04
     const val SKID_TOLERANCE = 0.15
-    val COLLISION_TOLERANCE: Measure<Velocity<Velocity<Distance>>> = Units.Gs.of(1.8)
+    val COLLISION_TOLERANCE: LinearAcceleration = Units.Gs.of(1.8)
 
     init {
         if (Constants.CURRENT_MODE == Constants.Mode.REAL) {

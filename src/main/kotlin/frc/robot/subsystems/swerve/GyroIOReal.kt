@@ -1,14 +1,13 @@
 package frc.robot.subsystems.swerve
 
-import com.kauailabs.navx.frc.AHRS
+import com.studica.frc.AHRS
 import edu.wpi.first.math.MathUtil
 import edu.wpi.first.math.geometry.Rotation2d
-import edu.wpi.first.wpilibj.SPI
 import kotlin.math.pow
 import kotlin.math.sqrt
 
 class GyroIOReal : GyroIO {
-    private val gyro = AHRS(SPI.Port.kMXP)
+    private val gyro = AHRS(AHRS.NavXComType.kMXP_SPI)
     private var gyroOffset = Rotation2d()
 
     init {

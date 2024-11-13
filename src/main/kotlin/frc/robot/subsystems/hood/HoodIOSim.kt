@@ -5,9 +5,8 @@ import com.ctre.phoenix6.controls.MotionMagicDutyCycle
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.ProfiledPIDController
 import edu.wpi.first.math.trajectory.TrapezoidProfile
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
@@ -17,7 +16,7 @@ class HoodIOSim : HoodIO {
         TalonFXSim(
             1,
             GEAR_RATIO,
-            MOMENT_OF_INERTIA.`in`(Units.Kilogram.mult(Units.Meters).mult(Units.Meters)),
+            MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
             GEAR_RATIO
         )
 
@@ -37,7 +36,7 @@ class HoodIOSim : HoodIO {
         )
     }
 
-    override fun setAngle(angle: Measure<Angle>) {
+    override fun setAngle(angle: Angle) {
         motor.setControl(control.withPosition(angle.`in`(Units.Rotations)))
     }
 
@@ -48,7 +47,7 @@ class HoodIOSim : HoodIO {
     override fun updateInputs() {
         motor.update(Timer.getFPGATimestamp())
 
-        inputs.internalAngle.mut_replace(motor.position, Units.Rotations)
-        inputs.voltage.mut_replace(motor.appliedVoltage, Units.Volts)
+        inputs.internalAngle = Units.Rotations.of(motor.position)
+        inputs.voltage = Units.Volts.of(motor.appliedVoltage)
     }
 }

@@ -1,8 +1,7 @@
 package frc.robot.subsystems.intake
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -16,7 +15,7 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
     private val angleKD = LoggedTunableNumber("Intake/Angle/kD", GAINS.kD)
 
     @AutoLogOutput
-    private var angleSetpoint: Measure<Angle> = Units.Degree.zero()
+    private var angleSetpoint: Angle = Units.Degree.zero()
     private val inputs = io.inputs
 
     companion object {
@@ -51,7 +50,7 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
         })
     }
 
-    fun setAngle(angle: Measure<Angle>): Command {
+    fun setAngle(angle: Angle): Command {
         return Commands.runOnce({
             angleSetpoint = angle
             io.setAngle(angle)

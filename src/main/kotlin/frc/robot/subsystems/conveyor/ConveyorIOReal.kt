@@ -5,10 +5,8 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.measure.AngularVelocity
 import frc.robot.ConveyorPorts
 
 class ConveyorIOReal : ConveyorIO {
@@ -43,7 +41,7 @@ class ConveyorIOReal : ConveyorIO {
         roller.configurator.apply(config)
     }
 
-    override fun setVelocity(velocity: Measure<Velocity<Angle>>) {
+    override fun setVelocity(velocity: AngularVelocity) {
         if (velocity == Units.RotationsPerSecond.of(0.0)) {
             roller.stopMotor()
         } else {
@@ -68,8 +66,6 @@ class ConveyorIOReal : ConveyorIO {
     }
 
     override fun updateInputs() {
-        inputs.velocity.mut_replace(
-            roller.velocity.value, Units.RotationsPerSecond
-        )
+        inputs.velocity = roller.velocity.value
     }
 }

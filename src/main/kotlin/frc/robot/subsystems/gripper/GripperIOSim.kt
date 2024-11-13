@@ -14,6 +14,6 @@ class GripperIOSim : GripperIO {
 
     override fun updateInputs() {
         rollerMotor.update(Timer.getFPGATimestamp())
-        inputs.rollerMotorVoltage.mut_replace(rollerMotor.busVoltage, Units.Volts)
+        inputs.rollerMotorVoltage = Units.Volts.of(rollerMotor.busVoltage)
     }
 }

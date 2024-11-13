@@ -13,7 +13,6 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
     private val estimator: PhotonPoseEstimator = PhotonPoseEstimator(
         aprilTagFieldLayout,
         PhotonPoseEstimator.PoseStrategy.MULTI_TAG_PNP_ON_COPROCESSOR,
-        simCamera.camera,
         robotToCam
     )
 
@@ -56,7 +55,7 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
         val tags = latestResult.targets
 
         for (tag in tags) {
-            inputs.distanceToTargets.add(tag.bestCameraToTarget.translation.norm)
+            inputs.bestCameraToTargets.add(tag.bestCameraToTarget)
         }
     }
 }
