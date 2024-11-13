@@ -30,6 +30,8 @@ class ShooterIOReal : ShooterIO {
 
     override fun updateInput() {
         inputs.topVelocity = Units.RotationsPerSecond.of(topControlRequest.Velocity)
-        inputs.buttomVelocity = Units.RotationsPerSecond.of(bottomControlRequest.Velocity)
+        inputs.bottomVelocity = Units.RotationsPerSecond.of(bottomControlRequest.Velocity)
+        inputs.topVoltage = Units.Volt.of(topMotor.supplyVoltage.value)
+        inputs.bottomVoltage = Units.Volt.of(bottomMotor.supplyVoltage.value)
     }
 }
