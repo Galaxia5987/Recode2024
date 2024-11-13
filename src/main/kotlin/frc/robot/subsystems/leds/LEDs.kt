@@ -87,20 +87,22 @@ class LEDs private constructor(port: Int, length: Int) : SubsystemBase() {
             val currentMode = mode
             setBlink(Color.kBlack, HAS_NOTE_COLOR, 0.1)
                 .andThen(Commands.waitSeconds(2.0))
-                .andThen(Commands.runOnce(
-                    {
-                        when (currentMode) {
-                            Mode.SOLID -> setSolidMode(currentPrimary)
-                            Mode.BLINK -> setBlink(currentPrimary, currentSecondary, currentBlinkTime)
-                            Mode.RAINBOW -> setRainbow()
+                .andThen(
+                    Commands.runOnce(
+                        {
+                            when (currentMode) {
+                                Mode.SOLID -> setSolidMode(currentPrimary)
+                                Mode.BLINK -> setBlink(currentPrimary, currentSecondary, currentBlinkTime)
+                                Mode.RAINBOW -> setRainbow()
+                            }
                         }
-                    }
-                ))
+                    )
+                )
         })
     }
 
     private fun setSolidColor(color: Color) {
-        val dimmed = Color(color.red*0.2,color.green*0.2,color.blue*0.2)
+        val dimmed = Color(color.red * 0.2, color.green * 0.2, color.blue * 0.2)
         for (i in 0 until ledBuffer.length) {
             ledBuffer.setLED(i, dimmed)
         }

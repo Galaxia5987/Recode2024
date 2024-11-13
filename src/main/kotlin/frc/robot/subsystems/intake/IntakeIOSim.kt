@@ -5,9 +5,9 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.SparkMaxSim
 import frc.robot.lib.motors.TalonFXSim
-import edu.wpi.first.wpilibj.Timer
 
 class IntakeIOSim : IntakeIO {
     override val inputs = LoggedIntakeInputs()

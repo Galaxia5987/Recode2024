@@ -7,14 +7,14 @@
 
 package frc.robot.lib;
 
+import frc.robot.Constants;
+import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Consumer;
 import java.util.function.DoubleSupplier;
-
-import frc.robot.Constants;
-import org.littletonrobotics.junction.networktables.LoggedDashboardNumber;
 
 /**
  * Class for a tunable number. Gets value from dashboard in tuning mode, returns default if not or
@@ -73,7 +73,11 @@ public class LoggedTunableNumber implements DoubleSupplier {
         if (!hasDefault) {
             return 0.0;
         } else {
-            return Constants.IS_TUNING_MODE ? dashboardNumber.get() : defaultValue;
+            if (Constants.IS_TUNING_MODE) {
+                return dashboardNumber.get();
+            } else {
+                return defaultValue;
+            }
         }
     }
 
@@ -81,9 +85,9 @@ public class LoggedTunableNumber implements DoubleSupplier {
      * Checks whether the number has changed since our last check
      *
      * @param id Unique identifier for the caller to avoid conflicts when shared between multiple
-     *           objects. Recommended approach is to pass the result of "hashCode()"
+     *     objects. Recommended approach is to pass the result of "hashCode()"
      * @return True if the number has changed since the last time this method was called, false
-     * otherwise.
+     *     otherwise.
      */
     public boolean hasChanged(int id) {
         double currentValue = get();
@@ -99,21 +103,21 @@ public class LoggedTunableNumber implements DoubleSupplier {
     /**
      * Runs action if any of the tunableNumbers have changed
      *
-     * @param id             Unique identifier for the caller to avoid conflicts when shared between multiple *
-     *                       objects. Recommended approach is to pass the result of "hashCode()"
-     * @param action         Callback to run when any of the tunable numbers have changed. Access tunable
-     *                       numbers in order inputted in method
+     * @param id Unique identifier for the caller to avoid conflicts when shared between multiple *
+     *     objects. Recommended approach is to pass the result of "hashCode()"
+     * @param action Callback to run when any of the tunable numbers have changed. Access tunable
+     *     numbers in order inputted in method
      * @param tunableNumbers All tunable numbers to check
      */
-    public static void ifChanged(int id, Consumer<double[]> action, LoggedTunableNumber... tunableNumbers) {
+    public static void ifChanged(
+            int id, Consumer<double[]> action, LoggedTunableNumber... tunableNumbers) {
         if (Arrays.stream(tunableNumbers).anyMatch(tunableNumber -> tunableNumber.hasChanged(id))) {
-            action.accept(Arrays.stream(tunableNumbers).mapToDouble(LoggedTunableNumber::get).toArray());
+            action.accept(
+                    Arrays.stream(tunableNumbers).mapToDouble(LoggedTunableNumber::get).toArray());
         }
     }
 
-    /**
-     * Runs action if any of the tunableNumbers have changed
-     */
+    /** Runs action if any of the tunableNumbers have changed */
     public static void ifChanged(int id, Runnable action, LoggedTunableNumber... tunableNumbers) {
         ifChanged(id, values -> action.run(), tunableNumbers);
     }

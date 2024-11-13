@@ -18,12 +18,10 @@ class PhotonVisionIOSim(private val simCamera: PhotonCameraSim, private val robo
 
     override val name = simCamera.camera.name
 
-
     init {
         VisionSim.system.addAprilTags(aprilTagFieldLayout)
         VisionSim.system.addCamera(simCamera, robotToCam)
     }
-
 
     override fun updateInputs() {
         val botPose = SwerveDrive.getInstance().estimator.estimatedPosition

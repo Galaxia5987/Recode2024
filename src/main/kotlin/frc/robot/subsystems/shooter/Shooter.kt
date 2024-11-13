@@ -1,6 +1,6 @@
 package frc.robot.subsystems.shooter
 
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
@@ -107,7 +107,8 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
         io.topRollerInputs.velocity.isNear(
             topVelocitySetpoint, TOP_ROLLER_TOLERANCE.`in`(Units.Percent)
         ) && io.bottomRollerInputs.velocity.isNear(
-            bottomVelocitySetpoint, BOTTOM_ROLLER_TOLERANCE.`in`(
+            bottomVelocitySetpoint,
+            BOTTOM_ROLLER_TOLERANCE.`in`(
                 Units.Percent
             )
         )
@@ -115,17 +116,17 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     override fun periodic() {
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
-                io.setTopGains(
-                    kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
-                )
-            }, topKP, topKI, topKD, topKS, topKV, topKA
+            io.setTopGains(
+                kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
+            )
+        }, topKP, topKI, topKD, topKS, topKV, topKA
         )
         LoggedTunableNumber.ifChanged(
             hashCode(), { kPIDSVA: DoubleArray ->
-                io.setBottomGains(
-                    kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
-                )
-            }, bottomKP, bottomKI, bottomKD, bottomKS, bottomKV, bottomKA
+            io.setBottomGains(
+                kPIDSVA[0], kPIDSVA[1], kPIDSVA[2], kPIDSVA[3], kPIDSVA[4], kPIDSVA[5]
+            )
+        }, bottomKP, bottomKI, bottomKD, bottomKS, bottomKV, bottomKA
         )
 
         io.updateInputs()

@@ -43,7 +43,7 @@ object Robot : LoggedRobot() {
         // Report Kotlin language usage
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
-        
+
         initializeSubsystems()
 
         // Initialize logger
@@ -77,7 +77,8 @@ object Robot : LoggedRobot() {
                 val logPath = LogFileUtil.findReplayLog()
                 Logger.setReplaySource(WPILOGReader(logPath))
                 Logger.addDataReceiver(
-                        WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_replay")))
+                    WPILOGWriter(LogFileUtil.addPathSuffix(logPath, "_replay"))
+                )
             }
         }
         Logger.start()
@@ -123,7 +124,6 @@ object Robot : LoggedRobot() {
 
     /** This function is called periodically during autonomous.  */
     override fun autonomousPeriodic() {
-
     }
 
     /** This function is called once when teleop is enabled.  */
@@ -152,7 +152,6 @@ object Robot : LoggedRobot() {
 
     @AutoLogOutput
     fun getDistanceToSpeaker(): Double = (
-            Constants.SPEAKER_POSE - SwerveDrive.getInstance().estimator.estimatedPosition.translation
-            ).norm
-
+        Constants.SPEAKER_POSE - SwerveDrive.getInstance().estimator.estimatedPosition.translation
+        ).norm
 }

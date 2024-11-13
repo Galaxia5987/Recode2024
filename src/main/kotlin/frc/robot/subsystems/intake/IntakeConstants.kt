@@ -11,7 +11,7 @@ const val GEAR_RATIO = 55.56
 
 val GAINS by lazy {
     selectGainsBasedOnMode(
-        Gains (
+        Gains(
             kP = 55.0,
             kI = 3.0,
             kD = 0.1,

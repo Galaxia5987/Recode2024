@@ -1,6 +1,6 @@
 package frc.robot.subsystems.conveyor
 
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.units.measure.Dimensionless
 import edu.wpi.first.units.measure.MomentOfInertia
@@ -18,11 +18,11 @@ val FEED_VELOCITY: AngularVelocity = Units.RotationsPerSecond.of(70.0)
 val GAINS by lazy {
     selectGainsBasedOnMode(
         Gains(
-            kV= 1.87
+            kV = 1.87
         ),
         Gains(
             3.5,
-            kV= 3.8
+            kV = 3.8
         )
     )
 }

@@ -3,7 +3,7 @@ package frc.robot.subsystems.conveyor
 import com.ctre.phoenix6.controls.VelocityVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.controller.SimpleMotorFeedforward
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim

@@ -64,7 +64,6 @@ class ModuleIOSim() : ModuleIO {
                 driveMotor.position, SwerveConstants.WHEEL_DIAMETER / 2
             )
         inputs.moduleState = moduleState
-
     }
 
     override var angle

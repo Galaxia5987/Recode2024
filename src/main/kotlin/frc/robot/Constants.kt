@@ -4,7 +4,7 @@ import com.pathplanner.lib.path.PathConstraints
 import edu.wpi.first.math.geometry.Pose2d
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.geometry.Translation2d
-import edu.wpi.first.units.*
+import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularAcceleration
 import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.units.measure.Distance
@@ -30,8 +30,8 @@ object Constants {
     )
     private val MAX_ANGULAR_ACCELERATION: AngularAcceleration =
         Units.RotationsPerSecond.per(Units.Second).of(
-                MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
-            )
+            MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond) / EFFECTIVE_ROBOT_RADIUS.`in`(Units.Meters)
+        )
     val PATH_CONSTRAINTS: PathConstraints = PathConstraints(
         MAX_VELOCITY.`in`(Units.MetersPerSecond),
         MAX_ACCELERATION.`in`(Units.MetersPerSecondPerSecond),
@@ -58,11 +58,10 @@ object Constants {
 
     val CURRENT_MODE: Mode
         get() =
-            if (LoggedRobot.isReal()){
+            if (LoggedRobot.isReal()) {
                 Mode.REAL
-            }
-            else{
-                if (System.getenv()["isReplay"] =="true") {
+            } else {
+                if (System.getenv()["isReplay"] == "true") {
                     Mode.REPLAY
                 } else Mode.SIM
             }

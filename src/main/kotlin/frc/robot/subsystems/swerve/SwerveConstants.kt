@@ -1,6 +1,16 @@
 package frc.robot.subsystems.swerve
 
-import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.configs.CANcoderConfiguration
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MagnetSensorConfigs
+import com.ctre.phoenix6.configs.MotionMagicConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.VoltageConfigs
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
 import com.pathplanner.lib.config.PIDConstants
@@ -78,7 +88,6 @@ object SwerveConstants {
     val ROTATION_KDIETER =
         LoggedTunableNumber("Swerve Drive/Rotation/rotationKDIETER")
 
-
     const val ODOMETRY_FREQUENCY = 250.0
     var ROBOT_WIDTH = 0.0
     var ROBOT_LENGTH = 0.0
@@ -133,12 +142,15 @@ object SwerveConstants {
                 ANGLE_REDUCTION = (6.0 / 40.0) * (11.0 / 59.0)
 
                 MAX_X_Y_VELOCITY =
-                    ((5676.0
-                            / 60.0) *  // [m/s]
+                    (
+                        (
+                            5676.0 /
+                                60.0
+                            ) * // [m/s]
                             DRIVE_REDUCTION
                             * WHEEL_DIAMETER
-                            * Math.PI)
-
+                            * Math.PI
+                        )
             } else {
                 DRIVE_KP.initDefault(0.3)
                 DRIVE_KI.initDefault(0.0)
@@ -166,11 +178,15 @@ object SwerveConstants {
                 ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
 
                 MAX_X_Y_VELOCITY =
-                    ((6000.0
-                            / 60.0) *  // [m/s]
+                    (
+                        (
+                            6000.0 /
+                                60.0
+                            ) * // [m/s]
                             DRIVE_REDUCTION
                             * WHEEL_DIAMETER
-                            * Math.PI)
+                            * Math.PI
+                        )
             }
         } else {
             DRIVE_KP.initDefault(2.0)
@@ -197,24 +213,29 @@ object SwerveConstants {
             ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
 
             MAX_X_Y_VELOCITY =
-                ((6000.0
-                        / 60.0) *  // [m/s]
+                (
+                    (
+                        6000.0 /
+                            60.0
+                        ) * // [m/s]
                         DRIVE_REDUCTION
                         * WHEEL_DIAMETER
-                        * Math.PI)
+                        * Math.PI
+                    )
         }
 
         MAX_OMEGA_VELOCITY = (
-                MAX_X_Y_VELOCITY
-                        / sqrt(
-                    (ROBOT_LENGTH / 2) * (ROBOT_LENGTH / 2)
-                            + (ROBOT_WIDTH / 2) * (ROBOT_WIDTH / 2)
-                ))
+            MAX_X_Y_VELOCITY /
+                sqrt(
+                    (ROBOT_LENGTH / 2) * (ROBOT_LENGTH / 2) +
+                        (ROBOT_WIDTH / 2) * (ROBOT_WIDTH / 2)
+                )
+            )
         WHEEL_POSITIONS =
             arrayOf(
-                Translation2d(ROBOT_LENGTH / 2, ROBOT_WIDTH / 2),  // FL
-                Translation2d(ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2),  // FR
-                Translation2d(-ROBOT_LENGTH / 2, ROBOT_WIDTH / 2),  // RL
+                Translation2d(ROBOT_LENGTH / 2, ROBOT_WIDTH / 2), // FL
+                Translation2d(ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2), // FR
+                Translation2d(-ROBOT_LENGTH / 2, ROBOT_WIDTH / 2), // RL
                 Translation2d(-ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2) // RR
             )
 
