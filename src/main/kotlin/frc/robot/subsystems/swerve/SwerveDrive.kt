@@ -325,7 +325,7 @@ class SwerveDrive private constructor
                 .toList()
                 .toTypedArray<SwerveModuleState?>()
         kinematics
-        chassisSpeeds = kinematics.toChassisSpeeds(*currentModuleStates)
+        chassisSpeeds = kinematics.toChassisSpeeds(currentModuleStates)
         velocity = hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond)
         absolutePositions = Arrays.stream(modules)
             .mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } // TODO: really not sure about this on
