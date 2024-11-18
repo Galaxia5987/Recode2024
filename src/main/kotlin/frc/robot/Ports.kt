@@ -1,5 +1,10 @@
 package frc.robot
 
+object ElevatorPorts {
+    const val MOTOR_ID = 0
+    const val SENSOR_ID = 0
+}
+
 object ShooterPorts {
     const val TOP_MOTOR_ID: Int = 11
     const val BOTTOM_MOTOR_ID: Int = 10
