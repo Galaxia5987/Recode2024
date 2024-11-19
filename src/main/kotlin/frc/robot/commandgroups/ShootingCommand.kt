@@ -10,8 +10,6 @@ import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterConstants
 
 class ShootingCommand {
-    //    private val swerveDrive = SwerveDrive.getInstance()
-//    private val shooter = Shooter.getInstance()
     private val hood = Hood.getInstance()
     private val conveyor = Conveyor.getInstance()
     private val shooter = Shooter.getInstance()
