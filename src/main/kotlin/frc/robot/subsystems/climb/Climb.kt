@@ -36,7 +36,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun lock(): Command {
-        return Commands.runOnce(io::lockClimb).until(::isStopperStuck).andThen(io::disableLockMotor)
+        return Commands.run(io::lockClimb).until(::isStopperStuck).andThen(io::disableLockMotor)
             .withName("lock")
     }
 
