@@ -8,24 +8,24 @@ import frc.robot.Ports
 class ClimbIOReal : ClimbIO {
     override val inputs = LoggedClimbInputs()
 
-    private val mainClimbMotor: TalonFX = TalonFX(Ports.Climb.MAIN_MOTOR_ID)
-    private val auxClimbMotor: TalonFX = TalonFX(Ports.Climb.AUX_MOTOR_ID)
+    private val mainMotor: TalonFX = TalonFX(Ports.Climb.MAIN_MOTOR_ID)
+    private val auxMotor: TalonFX = TalonFX(Ports.Climb.AUX_MOTOR_ID)
     private val lockMotor: TalonSRX = TalonSRX(Ports.Climb.STOPPER_ID)
 
     init {
-        mainClimbMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
-        auxClimbMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
+        mainMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
+        auxMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
     }
 
     override fun updateInput() {
-        inputs.climbMotorVoltage = mainClimbMotor.supplyVoltage.value
+        inputs.climbMotorVoltage = mainMotor.supplyVoltage.value
         inputs.lockMotorCurrent = lockMotor.supplyCurrent
     }
 
 
     override fun setPower(power: Double) {
-        mainClimbMotor.set(power)
-        auxClimbMotor.set(power)
+        mainMotor.set(power)
+        auxMotor.set(power)
     }
 
     override fun lockClimb() {
