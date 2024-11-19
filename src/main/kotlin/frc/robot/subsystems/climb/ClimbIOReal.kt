@@ -30,11 +30,11 @@ class ClimbIOReal : ClimbIO {
     }
 
     override fun lockClimb() {
-        lockMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)
+        lockMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)  //  +ClimbConstants.STOPPER_MOTOR_POWER !
     }
 
     override fun unlockClimb() {
-        lockMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)
+        lockMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)  //-ClimbConstants.STOPPER_MOTOR_POWER !
     }
 
     override fun disableLockMotor() {
