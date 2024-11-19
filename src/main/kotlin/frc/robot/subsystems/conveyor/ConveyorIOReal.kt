@@ -12,8 +12,8 @@ import frc.robot.Ports
 import org.team9432.annotation.Logged
 
 class ConveyorIOReal : ConveyorIO {
-    override var inputs: LoggedConveyorInputs = LoggedConveyorInputs()
-    private var spinMotor: TalonFX = TalonFX(Ports.Conveyor.MOTOR_ID)
+    override val inputs: LoggedConveyorInputs = LoggedConveyorInputs()
+    private val spinMotor: TalonFX = TalonFX(Ports.Conveyor.MOTOR_ID)
     private val controlRequest = VelocityVoltage(0.0)
 
     init {

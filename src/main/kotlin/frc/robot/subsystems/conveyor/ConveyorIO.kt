@@ -4,7 +4,7 @@ import edu.wpi.first.units.*
 import org.team9432.annotation.Logged
 
 interface ConveyorIO {
-    var inputs: LoggedConveyorInputs
+    val inputs: LoggedConveyorInputs
 
     fun updateInput(){}
 
