@@ -2,6 +2,7 @@ package frc.robot.subsystems.climb
 
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
+import com.ctre.phoenix6.controls.StrictFollower
 import com.ctre.phoenix6.hardware.TalonFX
 import frc.robot.Ports
 
@@ -15,6 +16,7 @@ class ClimbIOReal : ClimbIO {
     init {
         mainMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
         auxMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
+        auxMotor.setControl(StrictFollower(mainMotor.deviceID))
     }
 
     override fun updateInput() {
@@ -25,7 +27,6 @@ class ClimbIOReal : ClimbIO {
 
     override fun setPower(power: Double) {
         mainMotor.set(power)
-        auxMotor.set(power)
     }
 
     override fun lockClimb() {
