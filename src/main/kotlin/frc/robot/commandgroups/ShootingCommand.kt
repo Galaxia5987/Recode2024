@@ -18,7 +18,7 @@ class ShootingCommand {
     fun stopShooter(): Command = Commands.parallel(conveyor.stopConveyor(), shooter.stop())
     fun startShooter(): Command = Commands.parallel(
         conveyor.setPower(Units.RotationsPerSecond.of(ConveyorConstants.RUN_POWER)),
-        shooter.setShooterVel(ShooterConstants.runningVelocity)
+        shooter.setShooterVel(ShooterConstants.shootVelocity)
     )
 
     fun setRestingAngle(): Command = Commands.runOnce({ hood.setRestAngle() })
