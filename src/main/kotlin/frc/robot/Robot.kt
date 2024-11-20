@@ -3,6 +3,7 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot
 
+import com.ctre.phoenix6.SignalLogger
 import edu.wpi.first.hal.FRCNetComm.tInstances
 import edu.wpi.first.hal.FRCNetComm.tResourceType
 import edu.wpi.first.hal.HAL
@@ -68,6 +69,7 @@ object Robot : LoggedRobot() {
                 LoggedPowerDistribution.getInstance(0, PowerDistribution.ModuleType.kCTRE)
                 Logger.addDataReceiver(WPILOGWriter())
                 Logger.addDataReceiver(NT4Publisher())
+                SignalLogger.enableAutoLogging(true)
             }
 
             Constants.Mode.SIM -> Logger.addDataReceiver(NT4Publisher())
