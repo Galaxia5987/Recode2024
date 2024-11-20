@@ -9,15 +9,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController
 import edu.wpi.first.wpilibj2.command.button.RobotModeTriggers
 import frc.robot.ControllerInputs.driverController
 import frc.robot.ControllerInputs.operatorController
-import frc.robot.commandGroups.closeShoot
-import frc.robot.commandGroups.finishScore
-import frc.robot.commandGroups.intake
-import frc.robot.commandGroups.outtake
-import frc.robot.commandGroups.shootOverStage
-import frc.robot.commandGroups.shooterConveyorHoodAtSetpoint
-import frc.robot.commandGroups.stopIntake
-import frc.robot.commandGroups.trussSetpoint
-import frc.robot.commandGroups.warmup
+import frc.robot.commandGroups.*
 import frc.robot.lib.enableAutoLogOutputFor
 import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
