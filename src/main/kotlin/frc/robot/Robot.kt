@@ -69,6 +69,7 @@ object Robot : LoggedRobot() {
                 LoggedPowerDistribution.getInstance(0, PowerDistribution.ModuleType.kCTRE)
                 Logger.addDataReceiver(WPILOGWriter())
                 Logger.addDataReceiver(NT4Publisher())
+                SignalLogger.enableAutoLogging(true)
             }
 
             Constants.Mode.SIM -> Logger.addDataReceiver(NT4Publisher())
@@ -82,7 +83,6 @@ object Robot : LoggedRobot() {
             }
         }
         Logger.start()
-        SignalLogger.enableAutoLogging(true)
 
         RobotContainer // Initialize robot container.
         compressor.enableDigital()
