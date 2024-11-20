@@ -18,6 +18,7 @@ import frc.robot.commandGroups.shooterConveyorHoodAtSetpoint
 import frc.robot.commandGroups.stopIntake
 import frc.robot.commandGroups.trussSetpoint
 import frc.robot.commandGroups.warmup
+import frc.robot.lib.enableAutoLogOutputFor
 import frc.robot.scoreState.AmpState
 import frc.robot.scoreState.ClimbState
 import frc.robot.scoreState.ScoreState
@@ -56,6 +57,7 @@ object RobotContainer {
     private var currentState: ScoreState
 
     init {
+        enableAutoLogOutputFor(this)
         currentState = shootState
 
         registerAutoCommands()

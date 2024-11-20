@@ -4,6 +4,7 @@ import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import frc.robot.lib.enableAutoLogOutputFor
 import frc.robot.lib.finallyDo
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
@@ -33,6 +34,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     init {
+        enableAutoLogOutputFor(this)
         timer.start()
         timer.reset()
     }

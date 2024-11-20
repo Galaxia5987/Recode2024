@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.Robot
 import frc.robot.commandGroups.turnToSpeaker
 import frc.robot.commandGroups.warmup
+import frc.robot.lib.enableAutoLogOutputFor
 import frc.robot.lib.finallyDo
 import frc.robot.lib.math.interpolation.InterpolatingDouble
 import frc.robot.subsystems.conveyor.Conveyor
@@ -24,6 +25,10 @@ class ShootState : ScoreState {
     private val hood = Hood.getInstance()
     private val gripper = Gripper.getInstance()
     private val leds = LEDs.getInstance()
+
+    init {
+        enableAutoLogOutputFor(this)
+    }
 
     private fun warmup(): Command {
         return warmup(
