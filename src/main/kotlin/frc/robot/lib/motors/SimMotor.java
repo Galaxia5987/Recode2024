@@ -8,6 +8,7 @@ import edu.wpi.first.math.system.LinearSystem;
 import edu.wpi.first.math.system.plant.DCMotor;
 import edu.wpi.first.math.system.plant.LinearSystemId;
 import edu.wpi.first.wpilibj.simulation.DCMotorSim;
+
 import java.util.function.DoubleSupplier;
 
 public class SimMotor {
@@ -26,7 +27,7 @@ public class SimMotor {
             DCMotor motor,
             double gearing,
             double conversionFactor) {
-        this.motorSim = new DCMotorSim(model, motor, gearing);
+        this.motorSim = new DCMotorSim(model, motor.withReduction(gearing));
         this.conversionFactor = conversionFactor / gearing;
     }
 
