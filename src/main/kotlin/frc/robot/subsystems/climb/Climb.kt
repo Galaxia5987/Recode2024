@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.Timer
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand
 import frc.robot.lib.finallyDo
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
@@ -44,7 +43,8 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     fun lock(): Command {
-        return Commands.runOnce(io::closeStopper).andThen(Commands.waitUntil { isStopperStuck }).andThen(io::disableStopper)
+        return Commands.runOnce(io::closeStopper).andThen(Commands.waitUntil { isStopperStuck })
+            .andThen(io::disableStopper)
     }
 
     fun setPower(power: DoubleSupplier): Command {
