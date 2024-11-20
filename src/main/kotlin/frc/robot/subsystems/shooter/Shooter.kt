@@ -78,7 +78,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     }
 
     fun setVelocity(velocitySupplier: () -> AngularVelocity): Command {
-        return run {
+        return runOnce {
             val velocity = velocitySupplier.invoke()
             topVelocitySetpoint = velocity
             bottomVelocitySetpoint = velocity

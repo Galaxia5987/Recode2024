@@ -107,7 +107,7 @@ object RobotContainer {
         driverController().back()
             .whileTrue(gripper.setRollerPower(0.4))
             .onFalse(gripper.stop())
-        driverController().start().whileTrue(intake.reset())
+        driverController().start().whileTrue(intake.reset()).onFalse(intake.finishReset())
 
         driverController().povUp().whileTrue(climb.openClimb())
         driverController().povDown().whileTrue(climb.closeClimb())
@@ -123,7 +123,7 @@ object RobotContainer {
         operatorController().cross().onTrue(gripper.enableSensor())
         operatorController().circle().onTrue(gripper.disableSensor())
 
-        operatorController().options().whileTrue(intake.reset())
+        operatorController().options().whileTrue(intake.reset()).onFalse(intake.finishReset())
     }
 
     fun getAutonomousCommand(): Command = autoChooser.get()
