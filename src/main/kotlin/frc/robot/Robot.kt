@@ -3,7 +3,6 @@
 // the WPILib BSD license file in the root directory of this project.
 package frc.robot
 
-import com.ctre.phoenix6.SignalLogger
 import edu.wpi.first.hal.FRCNetComm.tInstances
 import edu.wpi.first.hal.FRCNetComm.tResourceType
 import edu.wpi.first.hal.HAL
@@ -82,7 +81,6 @@ object Robot : LoggedRobot() {
             }
         }
         Logger.start()
-        SignalLogger.enableAutoLogging(true)
 
         RobotContainer // Initialize robot container.
         compressor.enableDigital()
