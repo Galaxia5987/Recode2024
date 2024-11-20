@@ -77,7 +77,7 @@ class Shooter private constructor(private val io: ShooterIO) : SubsystemBase() {
     }
 
     fun setVelocity(velocitySupplier: () -> Measure<Velocity<Angle>>): Command {
-        return run {
+        return runOnce {
             val velocity = velocitySupplier.invoke()
             topVelocitySetpoint = velocity
             bottomVelocitySetpoint = velocity

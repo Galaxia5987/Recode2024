@@ -104,7 +104,7 @@ class ModuleIOSim() : ModuleIO {
     }
 
     override fun checkModule(): Command? {
-        return Commands.run(
+        return Commands.runOnce(
             {
                 driveControlRequest.withVelocity(0.8 * SwerveConstants.MAX_X_Y_VELOCITY)
                 driveMotor.setControl(driveControlRequest)

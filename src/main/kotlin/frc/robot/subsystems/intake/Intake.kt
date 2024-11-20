@@ -85,7 +85,11 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
     }
 
     fun reset(): Command {
-        return Commands.run({ io.setAnglePower(-0.3) }).finallyDo(Runnable {
+        return Commands.runOnce({ io.setAnglePower(-0.3) })
+    }
+
+    fun finishReset(): Command {
+        return Commands.runOnce({
             io.resetEncoder()
             io.setAnglePower(0.0)
         })

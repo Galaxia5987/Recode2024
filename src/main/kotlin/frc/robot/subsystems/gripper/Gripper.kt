@@ -43,7 +43,7 @@ class Gripper private constructor(private val io: GripperIO): SubsystemBase() {
     }
 
     fun setRollerPower(power: Double): Command {
-        return run {
+        return runOnce {
             rollerPowerSetPoint = power
             io.setRollerMotorPower(power)
         }.withName("Set Roller Power")

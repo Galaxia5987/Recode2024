@@ -128,7 +128,7 @@ class ModuleIOSparkMax(
     }
 
     override fun checkModule(): Command? {
-        return Commands.run(
+        return Commands.runOnce(
             {
                 driveMotor.set(0.8)
                 angleMotor.set(0.2)
