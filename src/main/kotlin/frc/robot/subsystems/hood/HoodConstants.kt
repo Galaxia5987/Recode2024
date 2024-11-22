@@ -1,8 +1,5 @@
 package frc.robot.subsystems.hood
 
-import com.ctre.phoenix6.configs.FeedbackConfigs
-import com.ctre.phoenix6.configs.MotorOutputConfigs
-import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
@@ -10,9 +7,6 @@ import edu.wpi.first.units.Angle
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
-import frc.robot.Constants
-import frc.robot.subsystems.intake.IntakeConstants
-import frc.robot.subsystems.intake.IntakeConstants.GEAR_RATIO
 
 object HoodConstants {
     val MOTOR_CONFIGURATION = TalonFXConfiguration()
@@ -24,15 +18,7 @@ object HoodConstants {
     const val TOLERANCE: Double = 0.75 / 360
 
     init {
-        when (Constants.CURRENT_MODE) {
-            Constants.Mode.REAL -> {
 
-            }
-
-            Constants.Mode.SIM, Constants.Mode.REPLAY -> {
-
-            }
-        }
         MOTOR_CONFIGURATION.apply {
             MotorOutput.apply {
                 NeutralMode = NeutralModeValue.Brake
