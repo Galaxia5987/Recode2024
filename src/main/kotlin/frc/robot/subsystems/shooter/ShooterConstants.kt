@@ -6,8 +6,8 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 
 object ShooterConstants {
-    var currentLimit: Double = 40.0
-    var shootVelocity = MutableMeasure.ofBaseUnits(3.0, Units.RotationsPerSecond)
+    var CURRENT_LIMIT: Double = 40.0
+    var SHOOT_VELOCITY = MutableMeasure.ofBaseUnits(3.0, Units.RotationsPerSecond)
     var KP: Double = 0.0
     var KD: Double = 0.0
     var KI: Double = 0.0
@@ -22,9 +22,9 @@ object ShooterConstants {
         }
         CurrentLimits.apply {
             StatorCurrentLimitEnable = true
-            SupplyCurrentLimit = currentLimit
+            SupplyCurrentLimit = CURRENT_LIMIT
             SupplyCurrentLimitEnable = true
-            StatorCurrentLimit = currentLimit * 2
+            StatorCurrentLimit = CURRENT_LIMIT * 2
         }
         MotorOutput.apply {
             Inverted = InvertedValue.Clockwise_Positive
@@ -42,9 +42,9 @@ object ShooterConstants {
         }
         CurrentLimits.apply {
             StatorCurrentLimitEnable = true
-            SupplyCurrentLimit = currentLimit
+            SupplyCurrentLimit = CURRENT_LIMIT
             SupplyCurrentLimitEnable = true
-            StatorCurrentLimit = currentLimit * 2
+            StatorCurrentLimit = CURRENT_LIMIT * 2
         }
         MotorOutput.apply {
             Inverted = InvertedValue.Clockwise_Positive
