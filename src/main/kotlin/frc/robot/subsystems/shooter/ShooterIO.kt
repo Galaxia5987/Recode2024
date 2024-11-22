@@ -1,10 +1,6 @@
 package frc.robot.subsystems.shooter
 
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
-import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
-import edu.wpi.first.units.Voltage
+import edu.wpi.first.units.*
 import org.team9432.annotation.Logged
 
 interface ShooterIO {
@@ -12,7 +8,7 @@ interface ShooterIO {
 
     fun setTopVelocity(velocity: Measure<Velocity<Angle>>) {}
     fun setBottomVelocity(velocity: Measure<Velocity<Angle>>) {}
-    fun updateInput()
+    fun updateInput() {}
 
     @Logged
     open class ShooterInputs {
