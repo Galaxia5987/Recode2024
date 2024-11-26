@@ -1,29 +1,30 @@
 package frc.robot.subsystems.swerve
 
-import com.ctre.phoenix6.configs.*
+import com.ctre.phoenix6.configs.CANcoderConfiguration
+import com.ctre.phoenix6.configs.ClosedLoopRampsConfigs
+import com.ctre.phoenix6.configs.CurrentLimitsConfigs
+import com.ctre.phoenix6.configs.FeedbackConfigs
+import com.ctre.phoenix6.configs.MagnetSensorConfigs
+import com.ctre.phoenix6.configs.MotionMagicConfigs
+import com.ctre.phoenix6.configs.MotorOutputConfigs
+import com.ctre.phoenix6.configs.OpenLoopRampsConfigs
+import com.ctre.phoenix6.configs.Slot0Configs
+import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.VoltageConfigs
 import com.ctre.phoenix6.signals.AbsoluteSensorRangeValue
 import com.ctre.phoenix6.signals.InvertedValue
-import com.ctre.phoenix6.signals.NeutralModeValue
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig
-import com.pathplanner.lib.util.PIDConstants
-import com.pathplanner.lib.util.ReplanningConfig
+import com.pathplanner.lib.config.PIDConstants
+import com.pathplanner.lib.controllers.PPHolonomicDriveController
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.geometry.Translation2d
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.LinearAcceleration
+import frc.robot.Constants
 import frc.robot.lib.webconstants.LoggedTunableNumber
-import kotlin.math.pow
 import kotlin.math.sqrt
 
 object SwerveConstants {
-
-    enum class SwerveType {
-        WCP,
-        NEO,
-        SIM
-    }
-
-    val SWERVE_TYPE = SwerveType.WCP
-
-    val OFFSETS = arrayOf(0.533935546875, 0.762939453125, 0.023681640625, 0.3232421875)
+    val OFFSETS = arrayOf(0.533203125, 0.761962890625, 0.017578125, 0.326416015625)
 
     const val VOLT_COMP_SATURATION = 12.0
     const val NEUTRAL_DEADBAND = 0.0
@@ -31,21 +32,22 @@ object SwerveConstants {
 
     const val NEO_CURRENT_LIMIT = 40.0
     const val NEO_550_CURRENT_LIMIT = 20.0
-    val TALON_FX_CURRENT_LIMIT_CONFIGS = CurrentLimitsConfigs()
-        .withSupplyCurrentLimit(40.0)
-        .withStatorCurrentLimit(80.0)
+    private val TALON_FX_CURRENT_LIMIT_CONFIGS: CurrentLimitsConfigs = CurrentLimitsConfigs()
+        .withSupplyCurrentLimit(30.0)
+        .withStatorCurrentLimit(60.0)
         .withStatorCurrentLimitEnable(true)
         .withSupplyCurrentLimitEnable(true)
-    val VOLTAGE_CONFIGS = VoltageConfigs()
+    private val VOLTAGE_CONFIGS: VoltageConfigs = VoltageConfigs()
         .withPeakForwardVoltage(VOLT_COMP_SATURATION)
         .withPeakReverseVoltage(VOLT_COMP_SATURATION)
-    val MOTOR_OUTPUT_CONFIGS = MotorOutputConfigs()
+    private val MOTOR_OUTPUT_CONFIGS: MotorOutputConfigs = MotorOutputConfigs()
         .withDutyCycleNeutralDeadband(NEUTRAL_DEADBAND)
-        .withNeutralMode(NeutralModeValue.Brake)
         .withInverted(InvertedValue.Clockwise_Positive)
-    val MOTION_MAGIC_CONFIGS = MotionMagicConfigs()
+    private val MOTION_MAGIC_CONFIGS: MotionMagicConfigs = MotionMagicConfigs()
         .withMotionMagicCruiseVelocity(3.0)
         .withMotionMagicAcceleration(12.0)
+    private val DRIVE_SLOT_0_CONFIG: Slot0Configs
+    private val ANGLE_SLOT_0_CONFIG: Slot0Configs
 
     val STEERING_MULTIPLIER =
         LoggedTunableNumber("Steering multiplier", 0.6)
@@ -86,7 +88,6 @@ object SwerveConstants {
     val ROTATION_KDIETER =
         LoggedTunableNumber("Swerve Drive/Rotation/rotationKDIETER")
 
-
     const val ODOMETRY_FREQUENCY = 250.0
     var ROBOT_WIDTH = 0.0
     var ROBOT_LENGTH = 0.0
@@ -99,7 +100,7 @@ object SwerveConstants {
     var FEEDBACK_CONFIGS_ANGLE: FeedbackConfigs? = null
     var ANGLE_MOTOR_CONFIGS: TalonFXConfiguration? = null
     var ENCODER_CONFIGS: CANcoderConfiguration? = null
-    val HOLONOMIC_PATH_FOLLOWER_CONFIG: HolonomicPathFollowerConfig
+    val DRIVE_CONTROLLER: PPHolonomicDriveController
 
     var DRIVE_MOTOR_MOMENT_OF_INERTIA = 0.025
     var ANGLE_MOTOR_MOMENT_OF_INERTIA = 0.004
@@ -107,77 +108,16 @@ object SwerveConstants {
     var MAX_OMEGA_VELOCITY = 0.0
     var VY_NOTE_DETECTION_CONTROLLER = PIDController(5.0, 0.0, 0.3)
 
-    val TURN_MAX_TOLERANCE = 3.0/360.0 //TODO: calibrate
+    const val MAX_TURN_TOLERANCE = 0.06
+    const val AMP_TURN_TOLERANCE = 0.03
+    const val SHOOT_TURN_TOLERANCE = 0.06
+    const val CLIMB_TURN_TOLERANCE = 0.04
+    const val SKID_TOLERANCE = 0.15
+    val COLLISION_TOLERANCE: LinearAcceleration = Units.Gs.of(1.8)
 
     init {
-        when (SWERVE_TYPE) {
-            SwerveType.SIM -> {
-                DRIVE_KP.initDefault(2.0)
-                DRIVE_KI.initDefault(0.0)
-                DRIVE_KD.initDefault(0.0)
-                DRIVE_KV.initDefault(0.0)
-                DRIVE_KS.initDefault(0.0)
-                DRIVE_KA.initDefault(0.0)
-
-                ANGLE_KP.initDefault(12.0)
-                ANGLE_KI.initDefault(0.0)
-                ANGLE_KD.initDefault(0.0)
-                ANGLE_KS.initDefault(0.0)
-
-                ROTATION_KP.initDefault(0.2)
-                ROTATION_KI.initDefault(0.0)
-                ROTATION_KD.initDefault(0.0)
-                ROTATION_KDIETER.initDefault(0.0)
-
-                ROBOT_WIDTH = 0.584
-                ROBOT_LENGTH = 0.584
-                WHEEL_DIAMETER = 0.099
-                DRIVE_REDUCTION = (1 / 2.0) * (24.0 / 22.0) * (15.0 / 45.0)
-                ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
-
-                MAX_X_Y_VELOCITY =
-                    ((6000.0
-                            / 60.0) *  // [m/s]
-                            DRIVE_REDUCTION
-                            * WHEEL_DIAMETER
-                            * Math.PI)
-            }
-
-            SwerveType.WCP -> {
-                DRIVE_KP.initDefault(0.3)
-                DRIVE_KI.initDefault(0.0)
-                DRIVE_KD.initDefault(0.0)
-                DRIVE_KV.initDefault(0.675205)
-                DRIVE_KS.initDefault(0.24833)
-                DRIVE_KA.initDefault(0.05)
-
-                ANGLE_KP.initDefault(100.0)
-                ANGLE_KI.initDefault(0.0)
-                ANGLE_KD.initDefault(0.0)
-                ANGLE_KS.initDefault(0.335905)
-                ANGLE_KV.initDefault(1.32755)
-                ANGLE_KA.initDefault(0.1976375)
-
-                ROTATION_KP.initDefault(2.3)
-                ROTATION_KI.initDefault(0.0)
-                ROTATION_KD.initDefault(0.2)
-                ROTATION_KDIETER.initDefault(0.002)
-
-                ROBOT_WIDTH = 0.585
-                ROBOT_LENGTH = 0.585
-                WHEEL_DIAMETER = 0.09854
-                DRIVE_REDUCTION = (1 / 2.0) * (24.0 / 22.0) * (15.0 / 45.0)
-                ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
-
-                MAX_X_Y_VELOCITY =
-                    ((6000.0
-                            / 60.0) *  // [m/s]
-                            DRIVE_REDUCTION
-                            * WHEEL_DIAMETER
-                            * Math.PI)
-            }
-
-            SwerveType.NEO -> {
+        if (Constants.CURRENT_MODE == Constants.Mode.REAL) {
+            if (Constants.ROBORIO_SERIAL_NUMBER == Constants.ROBORIO_NEO_SERIAL) {
                 DRIVE_KP.initDefault(0.0006)
                 DRIVE_KI.initDefault(0.0)
                 DRIVE_KD.initDefault(0.0)
@@ -202,27 +142,117 @@ object SwerveConstants {
                 ANGLE_REDUCTION = (6.0 / 40.0) * (11.0 / 59.0)
 
                 MAX_X_Y_VELOCITY =
-                    ((5676.0
-                            / 60.0) *  // [m/s]
-                            DRIVE_REDUCTION
-                            * WHEEL_DIAMETER
-                            * Math.PI)
+                    (
+                            (
+                                    5676.0 /
+                                            60.0
+                                    ) * // [m/s]
+                                    DRIVE_REDUCTION
+                                    * WHEEL_DIAMETER
+                                    * Math.PI
+                            )
+            } else {
+                DRIVE_KP.initDefault(0.3)
+                DRIVE_KI.initDefault(0.0)
+                DRIVE_KD.initDefault(0.0)
+                DRIVE_KV.initDefault(0.675205)
+                DRIVE_KS.initDefault(0.24833)
+                DRIVE_KA.initDefault(0.05)
+
+                ANGLE_KP.initDefault(100.0)
+                ANGLE_KI.initDefault(0.0)
+                ANGLE_KD.initDefault(0.0)
+                ANGLE_KS.initDefault(0.335905)
+                ANGLE_KV.initDefault(1.32755)
+                ANGLE_KA.initDefault(0.1976375)
+
+                ROTATION_KP.initDefault(3.5)
+                ROTATION_KI.initDefault(0.0)
+                ROTATION_KD.initDefault(0.1)
+                ROTATION_KDIETER.initDefault(0.0)
+
+                ROBOT_WIDTH = 0.9
+                ROBOT_LENGTH = 0.9
+                WHEEL_DIAMETER = 0.09854
+                DRIVE_REDUCTION = (1 / 2.0) * (24.0 / 22.0) * (15.0 / 45.0)
+                ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
+
+                MAX_X_Y_VELOCITY =
+                    (
+                            (
+                                    6000.0 /
+                                            60.0
+                                    ) * // [m/s]
+                                    DRIVE_REDUCTION
+                                    * WHEEL_DIAMETER
+                                    * Math.PI
+                            )
             }
+        } else {
+            DRIVE_KP.initDefault(2.0)
+            DRIVE_KI.initDefault(0.0)
+            DRIVE_KD.initDefault(0.0)
+            DRIVE_KV.initDefault(0.0)
+            DRIVE_KS.initDefault(0.0)
+            DRIVE_KA.initDefault(0.0)
+
+            ANGLE_KP.initDefault(12.0)
+            ANGLE_KI.initDefault(0.0)
+            ANGLE_KD.initDefault(0.0)
+            ANGLE_KS.initDefault(0.0)
+
+            ROTATION_KP.initDefault(0.2)
+            ROTATION_KI.initDefault(0.0)
+            ROTATION_KD.initDefault(0.0)
+            ROTATION_KDIETER.initDefault(0.0)
+
+            ROBOT_WIDTH = 0.584
+            ROBOT_LENGTH = 0.584
+            WHEEL_DIAMETER = 0.099
+            DRIVE_REDUCTION = (1 / 2.0) * (24.0 / 22.0) * (15.0 / 45.0)
+            ANGLE_REDUCTION = (14.0 / 72.0) * 0.5
+
+            MAX_X_Y_VELOCITY =
+                (
+                        (
+                                6000.0 /
+                                        60.0
+                                ) * // [m/s]
+                                DRIVE_REDUCTION
+                                * WHEEL_DIAMETER
+                                * Math.PI
+                        )
         }
 
         MAX_OMEGA_VELOCITY = (
-                MAX_X_Y_VELOCITY
-                        / sqrt(
-                    (ROBOT_LENGTH / 2) * (ROBOT_LENGTH / 2)
-                            + (ROBOT_WIDTH / 2) * (ROBOT_WIDTH / 2)
-                ))
+                MAX_X_Y_VELOCITY /
+                        sqrt(
+                            (ROBOT_LENGTH / 2) * (ROBOT_LENGTH / 2) +
+                                    (ROBOT_WIDTH / 2) * (ROBOT_WIDTH / 2)
+                        )
+                )
         WHEEL_POSITIONS =
             arrayOf(
-                Translation2d(ROBOT_LENGTH / 2, ROBOT_WIDTH / 2),  // FL
-                Translation2d(ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2),  // FR
-                Translation2d(-ROBOT_LENGTH / 2, ROBOT_WIDTH / 2),  // RL
+                Translation2d(ROBOT_LENGTH / 2, ROBOT_WIDTH / 2), // FL
+                Translation2d(ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2), // FR
+                Translation2d(-ROBOT_LENGTH / 2, ROBOT_WIDTH / 2), // RL
                 Translation2d(-ROBOT_LENGTH / 2, -ROBOT_WIDTH / 2) // RR
             )
+
+        DRIVE_SLOT_0_CONFIG = Slot0Configs()
+            .withKP(DRIVE_KP.get())
+            .withKI(DRIVE_KI.get())
+            .withKD(DRIVE_KD.get())
+            .withKS(DRIVE_KS.get())
+            .withKV(DRIVE_KV.get())
+            .withKA(DRIVE_KA.get())
+        ANGLE_SLOT_0_CONFIG = Slot0Configs()
+            .withKP(ANGLE_KP.get())
+            .withKI(ANGLE_KI.get())
+            .withKD(ANGLE_KD.get())
+            .withKS(ANGLE_KS.get())
+            .withKV(ANGLE_KV.get())
+            .withKA(ANGLE_KA.get())
 
         FEEDBACK_CONFIGS_DRIVE =
             FeedbackConfigs()
@@ -230,9 +260,13 @@ object SwerveConstants {
                 .withSensorToMechanismRatio(1 / DRIVE_REDUCTION)
         DRIVE_MOTOR_CONFIGS =
             TalonFXConfiguration()
+                .withClosedLoopRamps(ClosedLoopRampsConfigs().withVoltageClosedLoopRampPeriod(0.2))
+                .withOpenLoopRamps(OpenLoopRampsConfigs().withVoltageOpenLoopRampPeriod(0.2))
+                .withMotorOutput(MOTOR_OUTPUT_CONFIGS)
                 .withVoltage(VOLTAGE_CONFIGS)
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)
                 .withFeedback(FEEDBACK_CONFIGS_DRIVE)
+                .withSlot0(DRIVE_SLOT_0_CONFIG)
 
         FEEDBACK_CONFIGS_ANGLE =
             FeedbackConfigs()
@@ -244,6 +278,7 @@ object SwerveConstants {
                 .withCurrentLimits(TALON_FX_CURRENT_LIMIT_CONFIGS)
                 .withFeedback(FEEDBACK_CONFIGS_ANGLE)
                 .withMotorOutput(MOTOR_OUTPUT_CONFIGS)
+                .withSlot0(ANGLE_SLOT_0_CONFIG)
                 .withMotionMagic(
                     MotionMagicConfigs()
                         .withMotionMagicCruiseVelocity(30.0)
@@ -254,11 +289,9 @@ object SwerveConstants {
             CANcoderConfiguration()
                 .withMagnetSensor(MagnetSensorConfigs().withAbsoluteSensorRange(AbsoluteSensorRangeValue.Unsigned_0To1))
 
-        HOLONOMIC_PATH_FOLLOWER_CONFIG = HolonomicPathFollowerConfig(
+        DRIVE_CONTROLLER = PPHolonomicDriveController(
             PIDConstants(5.5, 0.0, 0.15),
-            PIDConstants(3.0, 0.0, 0.4),
-            MAX_X_Y_VELOCITY, sqrt((ROBOT_LENGTH / 2.0).pow(2.0) + (ROBOT_WIDTH / 2.0).pow(2.0)),
-            ReplanningConfig()
+            PIDConstants(3.0, 0.0, 0.4)
         )
     }
 }

@@ -2,18 +2,19 @@ package frc.robot.subsystems.intake
 
 import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
-import com.revrobotics.CANSparkLowLevel
-import com.revrobotics.CANSparkMax
+import com.revrobotics.spark.SparkLowLevel
+import com.revrobotics.spark.SparkMax
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import frc.robot.Ports
 
 class IntakeIOReal : IntakeIO {
 
     override val inputs = LoggedIntakeInput()
 
-    private val centerMotor: CANSparkMax =
-        CANSparkMax(Ports.Intake.CENTER_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
-    private val spinMotor: CANSparkMax = CANSparkMax(Ports.Intake.SPIN_MOTOR_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val centerMotor: SparkMax =
+        SparkMax(Ports.Intake.CENTER_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
+    private val spinMotor: SparkMax = SparkMax(Ports.Intake.SPIN_MOTOR_ID, SparkLowLevel.MotorType.kBrushless)
     private var angleMotor: TalonFX = TalonFX(Ports.Intake.ANGLE_MOTOR_ID)
     private val angleControl = PositionVoltage(0.0)
 
@@ -23,13 +24,13 @@ class IntakeIOReal : IntakeIO {
     }
 
     override fun updateInput() {
-        inputs.angle = angleMotor.position.value * 2 * Math.PI
+        inputs.angle = angleMotor.position.value.times(2* Math.PI)
         inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)
-        inputs.angleMotorVoltage = Units.Volt.of(angleMotor.supplyVoltage.value)
+        inputs.angleMotorVoltage = angleMotor.supplyVoltage.value
         inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)
     }
 
-    override fun setAngle(angle: Double) {
+    override fun setAngle(angle: Angle) {
         angleMotor.setControl(
             angleControl
                 .withPosition(inputs.angle)

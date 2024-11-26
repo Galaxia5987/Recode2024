@@ -29,7 +29,7 @@ object RobotContainer {
     private val swerveDrive: SwerveDrive
     private val climb: Climb
     private val shooter: Shooter
-    private val hood:Hood
+    private val hood: Hood
 
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
@@ -38,7 +38,7 @@ object RobotContainer {
     private val autoChooser: SendableChooser<Command>
 
     init {
-        Constants.initSwerve()
+//        Constants.initSwerve()
         Climb.initialize(ClimbIOReal())
         Shooter.initialize(ShooterIOReal())
         Hood.initialize(HoodIOReal())
@@ -58,10 +58,11 @@ object RobotContainer {
     private fun configureDefaultCommands() {
 
         swerveDrive.setDefaultCommand(
-          swerveDrive.driveCommand(
-            { -driverController.leftY },
-            { -driverController.leftX },
-            { 0.6 * -driverController.rightX }))
+            swerveDrive.driveCommand(
+                { -driverController.leftY },
+                { -driverController.leftX },
+                { 0.6 * -driverController.rightX })
+        )
 
         climb.setDefaultCommand(
             climb.setPower {

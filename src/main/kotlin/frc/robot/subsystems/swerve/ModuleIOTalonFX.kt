@@ -8,7 +8,6 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.CANcoder
 import com.ctre.phoenix6.hardware.TalonFX
-import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.math.kinematics.SwerveModulePosition
@@ -17,6 +16,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import frc.robot.lib.Utils
 import frc.robot.lib.units.Units
+import edu.wpi.first.units.Units as WpiUnits
 
 class ModuleIOTalonFX(
     driveMotorID: Int,
@@ -36,8 +36,6 @@ class ModuleIOTalonFX(
     override val inputs = LoggedModuleInputs()
 
     init {
-        updatePID()
-
         driveMotor.configurator.apply(driveConfig)
         driveMotor.setPosition(0.0)
 
@@ -57,22 +55,18 @@ class ModuleIOTalonFX(
     }
 
     override fun updateInputs() {
-        inputs.driveMotorPosition = driveMotor.position.value
+        inputs.driveMotorPosition = driveMotor.position.value.`in`(WpiUnits.Rotations)
         inputs.driveMotorVelocity =
             Units.rpsToMetersPerSecond(
-                driveMotor.velocity.value, SwerveConstants.WHEEL_DIAMETER / 2
+                driveMotor.velocity.value.`in`(WpiUnits.RotationsPerSecond), SwerveConstants.WHEEL_DIAMETER / 2
             )
-        inputs.driveMotorVoltage = driveMotor.motorVoltage.value
-        inputs.driveMotorAcceleration =
-            Units.rpsToMetersPerSecond(
-                driveMotor.acceleration.value,
-                SwerveConstants.WHEEL_DIAMETER / 2
-            )
+        inputs.driveMotorVoltage = driveMotor.motorVoltage.value.`in`(WpiUnits.Volts)
+        inputs.driveMotorAcceleration = driveMotor.acceleration.value.`in`(WpiUnits.RotationsPerSecond.per(WpiUnits.Second))
 
         inputs.angle =
-            Utils.normalize(Rotation2d.fromRotations(angleMotor.position.value))
-        inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value
-        inputs.angleMotorVelocity = angleMotor.velocity.value
+            Utils.normalize(Rotation2d.fromRotations(angleMotor.position.value.`in`(WpiUnits.Rotations)))
+        inputs.angleMotorAppliedVoltage = angleMotor.motorVoltage.value.`in`(WpiUnits.Volts)
+        inputs.angleMotorVelocity = angleMotor.velocity.value.`in`(WpiUnits.RotationsPerSecond)
 
         inputs.moduleDistance =
             Units.rpsToMetersPerSecond(
@@ -80,39 +74,15 @@ class ModuleIOTalonFX(
             )
         inputs.moduleState = moduleState
 
-        inputs.encoderHasFaults =
-            encoder.fault_Hardware.value ||
-                    encoder.fault_Undervoltage.value ||
-                    encoder.fault_BadMagnet.value ||
-                    encoder.fault_BootDuringEnable.value ||
-                    encoder.fault_UnlicensedFeatureInUse.value
+        inputs.noEncoderFaults =
+            !encoder.fault_Hardware.value ||
+            !encoder.fault_Undervoltage.value ||
+            !encoder.fault_BadMagnet.value ||
+            !encoder.fault_BootDuringEnable.value ||
+            !encoder.fault_UnlicensedFeatureInUse.value
 
-        inputs.absolutePosition = encoder.absolutePosition.value
+        inputs.absolutePosition = encoder.absolutePosition.value.`in`(WpiUnits.Rotations)
         inputs.moduleState = moduleState
-
-        if (hasPIDChanged(SwerveConstants.PID_VALUES)) updatePID()
-    }
-
-    override fun updatePID() {
-        driveConfig
-            .Slot0
-            .withKP(SwerveConstants.DRIVE_KP.get())
-            .withKI(SwerveConstants.DRIVE_KI.get())
-            .withKD(SwerveConstants.DRIVE_KD.get())
-            .withKV(SwerveConstants.DRIVE_KV.get())
-            .withKS(SwerveConstants.DRIVE_KS.get())
-            .withKA(SwerveConstants.DRIVE_KA.get())
-        angleConfig
-            .Slot0
-            .withKP(SwerveConstants.ANGLE_KP.get())
-            .withKI(SwerveConstants.ANGLE_KI.get())
-            .withKD(SwerveConstants.ANGLE_KD.get())
-            .withKV(SwerveConstants.ANGLE_KV.get())
-            .withKS(SwerveConstants.ANGLE_KS.get())
-            .withKA(SwerveConstants.ANGLE_KA.get())
-
-        driveMotor.configurator.apply(driveConfig.Slot0)
-        angleMotor.configurator.apply(angleConfig.Slot0)
     }
 
     override var angle
@@ -160,10 +130,16 @@ class ModuleIOTalonFX(
     }
 
     override fun updateOffset(offset: Rotation2d) {
-        angleMotor.setPosition(encoder.absolutePosition.value - offset.rotations)
+        angleMotor.setPosition(encoder.absolutePosition.value - WpiUnits.Rotations.of(offset.rotations))
     }
 
     override fun setVoltage(volts: Double) {
         driveMotor.setControl(VoltageOut(volts))
+    }
+
+    override fun setIdleMode(isBreakMode: Boolean) {
+        val mode = if (isBreakMode) NeutralModeValue.Brake else NeutralModeValue.Coast
+        angleMotor.setNeutralMode(mode)
+        driveMotor.setNeutralMode(mode)
     }
 }

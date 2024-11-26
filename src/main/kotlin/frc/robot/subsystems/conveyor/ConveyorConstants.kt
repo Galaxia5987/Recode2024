@@ -4,13 +4,13 @@ import com.ctre.phoenix6.configs.CurrentLimitsConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
-import edu.wpi.first.units.Current
+import edu.wpi.first.units.CurrentUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 
 object ConveyorConstants {
     const val TOLERANCE = 0.5
-    private val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
+    private val CURRENT_LIMIT: Measure<CurrentUnit> = Units.Amps.of(40.0)
     const val RUN_POWER: Double = 0.7
 
     val CONFIG = TalonFXConfiguration().apply {

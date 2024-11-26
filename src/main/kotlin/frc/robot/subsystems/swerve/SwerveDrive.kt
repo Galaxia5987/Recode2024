@@ -1,6 +1,7 @@
 package frc.robot.subsystems.swerve
 
 import com.pathplanner.lib.auto.AutoBuilder
+import com.pathplanner.lib.config.RobotConfig
 import edu.wpi.first.math.MathUtil
 import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator
 import edu.wpi.first.math.geometry.Pose2d
@@ -9,11 +10,9 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics
 import edu.wpi.first.math.kinematics.SwerveModulePosition
 import edu.wpi.first.math.kinematics.SwerveModuleState
-import edu.wpi.first.units.Angle
-import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Voltage
+import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.Voltage
 import edu.wpi.first.wpilibj.DriverStation
 import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
 import edu.wpi.first.wpilibj2.command.Command
@@ -25,13 +24,12 @@ import frc.robot.lib.controllers.DieterController
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 import java.util.*
-import java.util.concurrent.locks.ReentrantLock
 import java.util.function.DoubleSupplier
-import java.util.function.Function
+import kotlin.math.abs
 import kotlin.math.hypot
 
 class SwerveDrive private constructor
-    (private val gyroIO: GyroIO, wheelOffsets: Array<Double>, vararg moduleIOs: ModuleIO) :
+(private val gyroIO: GyroIO, wheelOffsets: Array<Double>, vararg moduleIOs: ModuleIO) :
     SubsystemBase() {
 
     private val inputs = LoggedSwerveDriveInputs()
@@ -54,11 +52,10 @@ class SwerveDrive private constructor
     private var desiredSpeeds = ChassisSpeeds()
 
     @AutoLogOutput
-    private var turnAngleSetpoint: Measure<Angle> = Units.Degrees.zero()
+    private var turnAngleSetpoint: Angle = Units.Degrees.zero()
 
-    @get:AutoLogOutput
     val atTurnSetpoint: Boolean
-        get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.TURN_MAX_TOLERANCE)
+        get() = Units.Radians.of(yaw.rotations).isNear(turnAngleSetpoint, SwerveConstants.MAX_TURN_TOLERANCE)
 
     @AutoLogOutput
     var velocity = 0.0
@@ -96,7 +93,6 @@ class SwerveDrive private constructor
             SwerveDrivePoseEstimator(
                 kinematics, yaw, modulePositions, botPose
             )
-        configAutoBuilder()
     }
 
     companion object {
@@ -119,7 +115,7 @@ class SwerveDrive private constructor
     /**
      * Updates the offset for the gyro.
      *
-     * @param angle The desired angle. [rad]
+     * @param angle The desired angle.
      */
     fun resetGyro(angle: Rotation2d = Rotation2d()) {
         gyroIO.resetGyro(angle)
@@ -129,7 +125,7 @@ class SwerveDrive private constructor
         /**
          * Gets the raw yaw reading from the gyro.
          *
-         * @return Yaw angle reading from gyro. [rad]
+         * @return Yaw angle reading from gyro.
          */
         get() = inputs.rawYaw
 
@@ -137,12 +133,11 @@ class SwerveDrive private constructor
         /**
          * Gets the yaw reading from the gyro with the calculated offset.
          *
-         * @return Yaw angle with offset. [rad]
+         * @return Yaw angle with offset.
          */
         get() = inputs.yaw
 
-    @get:AutoLogOutput
-    val odometryYaw: Rotation2d
+    val gyroYaw: Rotation2d
         get() {
             val alliance = DriverStation.getAlliance()
             if (alliance.isPresent && alliance.get() == DriverStation.Alliance.Red) {
@@ -173,9 +168,13 @@ class SwerveDrive private constructor
         botPose = pose
         resetGyro(
             pose.rotation
-                .minus(if (Constants.alliance==Constants.Alliance.RED) Rotation2d.fromDegrees(180.0) else Rotation2d())
+                .minus(if (Constants.IS_RED) Rotation2d.fromDegrees(180.0) else Rotation2d())
         )
         estimator.resetPosition(pose.rotation, modulePositions, pose)
+    }
+
+    private fun isColliding(): Boolean {
+        return abs(inputs.acceleration) > SwerveConstants.COLLISION_TOLERANCE.`in`(Units.Gs)
     }
 
     fun checkSwerve() {
@@ -190,7 +189,7 @@ class SwerveDrive private constructor
 
     fun lock() {
         desiredModuleStates =
-            arrayOf<SwerveModuleState?>(
+            arrayOf(
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(45.0)),
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(135.0)),
                 SwerveModuleState(0.0, Rotation2d.fromDegrees(315.0)),
@@ -204,27 +203,27 @@ class SwerveDrive private constructor
      * @param chassisSpeeds Desired chassis speeds.
      * @param fieldOriented Should the drive be field oriented.
      */
-    fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
-        var chassisSpeeds = chassisSpeeds
-        desiredSpeeds = chassisSpeeds
+    private fun drive(chassisSpeeds: ChassisSpeeds, fieldOriented: Boolean) {
+        var speeds = chassisSpeeds
+        desiredSpeeds = speeds
 
         val fieldOrientedChassisSpeeds =
             ChassisSpeeds.fromFieldRelativeSpeeds(
-                chassisSpeeds.vxMetersPerSecond,
-                chassisSpeeds.vyMetersPerSecond,
-                chassisSpeeds.omegaRadiansPerSecond,
+                speeds.vxMetersPerSecond,
+                speeds.vyMetersPerSecond,
+                speeds.omegaRadiansPerSecond,
                 yaw
             )
 
-        if (ChassisSpeeds(0.0, 0.0, 0.0) == chassisSpeeds) {
+        if (ChassisSpeeds(0.0, 0.0, 0.0) == speeds) {
             Arrays.stream(modules).forEach { obj: SwerveModule? -> obj!!.stop() }
             return
         }
 
         if (fieldOriented) {
-            chassisSpeeds = fieldOrientedChassisSpeeds
+            speeds = fieldOrientedChassisSpeeds
         }
-        setModuleStates(kinematics.toSwerveModuleStates(chassisSpeeds))
+        setModuleStates(kinematics.toSwerveModuleStates(speeds))
     }
 
     /**
@@ -262,7 +261,7 @@ class SwerveDrive private constructor
         }
     }
 
-    fun turnCommand(rotation: MutableMeasure<Angle>, turnTolerance: Double): Command {
+    fun turnCommand(rotation: Angle, turnTolerance: Double): Command {
         turnAngleSetpoint = rotation
         val turnController =
             DieterController(
@@ -278,11 +277,8 @@ class SwerveDrive private constructor
                 0.0,
                 0.0,
                 turnController.calculate(
-                    estimator
-                        .estimatedPosition
-                        .rotation
-                        .rotations,
-                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                    gyroYaw.rotations,
+                    rotation.`in`(Units.Rotations)
                 ),
                 false
             )
@@ -290,13 +286,14 @@ class SwerveDrive private constructor
     }
 
     fun driveAndAdjust(
-        rotation: MutableMeasure<Angle>,
-        xJoystick: DoubleSupplier,
-        yJoystick: DoubleSupplier,
+        rotation: () -> Angle,
+        forward: DoubleSupplier,
+        strafe: DoubleSupplier,
+        turnTolerance: Double,
         deadband: Double,
         usePoseEstimation: Boolean
     ): Command {
-        turnAngleSetpoint = rotation
+        turnAngleSetpoint = rotation.invoke()
         val turnController =
             DieterController(
                 SwerveConstants.ROTATION_KP.get(),
@@ -305,16 +302,16 @@ class SwerveDrive private constructor
                 SwerveConstants.ROTATION_KDIETER.get()
             )
         turnController.enableContinuousInput(-0.5, 0.5)
-        turnController.setTolerance(2 / 360.0)
+        turnController.setTolerance(turnTolerance)
         return run {
             drive(
-                MathUtil.applyDeadband(xJoystick.asDouble, deadband),
-                MathUtil.applyDeadband(yJoystick.asDouble, deadband),
+                MathUtil.applyDeadband(forward.asDouble, deadband),
+                MathUtil.applyDeadband(strafe.asDouble, deadband),
                 turnController.calculate(
                     if (usePoseEstimation
                     ) botPose.rotation.rotations
-                    else odometryYaw.rotations,
-                    rotation.`in`(edu.wpi.first.units.Units.Rotations)
+                    else gyroYaw.rotations,
+                    rotation.invoke().`in`(Units.Rotations)
                 ),
                 true
             )
@@ -324,13 +321,14 @@ class SwerveDrive private constructor
     fun updateSwerveOutputs() {
         currentModuleStates =
             Arrays.stream<SwerveModule?>(modules)
-                .map<SwerveModuleState?>(Function<SwerveModule?, SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState })
+                .map<SwerveModuleState?> { obj: SwerveModule? -> obj?.moduleState }
                 .toList()
                 .toTypedArray<SwerveModuleState?>()
+        kinematics
         chassisSpeeds = kinematics.toChassisSpeeds(*currentModuleStates)
         velocity = hypot(chassisSpeeds.vxMetersPerSecond, chassisSpeeds.vyMetersPerSecond)
         absolutePositions = Arrays.stream(modules)
-            .mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } //TODO: really not sure about this on
+            .mapToDouble { obj: SwerveModule? -> obj?.position ?: 0.0 } // TODO: really not sure about this on
             .toArray()
     }
 
@@ -346,7 +344,11 @@ class SwerveDrive private constructor
         Arrays.stream(modules).forEach { obj: SwerveModule? -> obj!!.updateInputs() }
         updateGyroInputs()
         updateModulePositions()
-        estimator.update(odometryYaw, modulePositions)
+
+        if (!isColliding()) {
+            estimator.update(gyroYaw, modulePositions)
+        }
+
         botPose = estimator.estimatedPosition
 
         SwerveDriveKinematics.desaturateWheelSpeeds(
@@ -359,29 +361,40 @@ class SwerveDrive private constructor
         }
 
         Logger.processInputs("SwerveDrive", inputs)
+        Logger.recordOutput("SwerveDrive/atTurnSetpoint", atTurnSetpoint)
+        Logger.recordOutput("SwerveDrive/gyroYaw", gyroYaw)
+        Logger.recordOutput("SwerveDrive/rawYaw", yaw)
     }
 
-    private fun configAutoBuilder() {
-        AutoBuilder.configureHolonomic(
+    fun configAutoBuilder() {
+        AutoBuilder.configure(
             { botPose },
             this::resetPose,
             { chassisSpeeds },
-            { speeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
-            SwerveConstants.HOLONOMIC_PATH_FOLLOWER_CONFIG,
-            {Constants.alliance == Constants.Alliance.RED},
+            { speeds: ChassisSpeeds -> setModuleStates(kinematics.toSwerveModuleStates(speeds)) },
+            SwerveConstants.DRIVE_CONTROLLER,
+            RobotConfig.fromGUISettings(),
+            { Constants.IS_RED },
             this
         )
     }
+
+    private fun setIdleMode(isBrakeMode: Boolean) =
+        Commands.runOnce({ modules.forEach { it?.setIdleMode(isBrakeMode) } }).ignoringDisable(true)
+
+    fun setBrakeMode(): Command = setIdleMode(true)
+
+    fun setCoastMode(): Command = setIdleMode(false)
 
     fun characterize(): Command {
         val routine =
             SysIdRoutine(
                 SysIdRoutine.Config(),
                 SysIdRoutine.Mechanism(
-                    { volts: Measure<Voltage?> ->
+                    { volts: Voltage ->
                         for (module in modules) {
                             module!!.characterize(
-                                volts.`in`(edu.wpi.first.units.Units.Volts)
+                                volts.`in`(Units.Volts)
                             )
                         }
                     },

@@ -1,11 +1,11 @@
 package frc.robot.subsystems.climb
 
+import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
 import java.util.function.DoubleSupplier
-import kotlin.math.absoluteValue
 
 class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     private val inputs = io.inputs
@@ -47,7 +47,7 @@ class Climb private constructor(private val io: ClimbIO) : SubsystemBase() {
     }
 
     override fun periodic() {
-        isStopperStuck = io.inputs.lockMotorCurrent.absoluteValue > ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
+        isStopperStuck = io.inputs.lockMotorCurrent.abs(Units.Amps) > ClimbConstants.STOPPER_MOTOR_CURRENT_THRESHOLD
         io.updateInput()
         Logger.processInputs(this::class.simpleName, inputs)
     }

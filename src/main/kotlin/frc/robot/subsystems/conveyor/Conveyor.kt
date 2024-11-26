@@ -1,10 +1,9 @@
 package frc.robot.subsystems.conveyor
 
-import edu.wpi.first.units.Angle
+import edu.wpi.first.units.AngularVelocityUnit
 import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.measure.AngularVelocity
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -15,7 +14,7 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     private var inputs = io.inputs
 
     @AutoLogOutput
-    private var setpointSpeed: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
+    private var setpointSpeed: Measure<AngularVelocityUnit> = Units.RotationsPerSecond.zero()
 
     companion object {
         @Volatile
@@ -36,11 +35,11 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         }
     }
 
-    fun setPower(vel: Measure<Velocity<Angle>>): Command =
+    fun setPower(vel: AngularVelocity): Command =
         Commands.runOnce({ io.setSpinVelocity(vel) }).withName("setPower")
 
     fun stopConveyor(): Command =
-        Commands.runOnce({ io.setSpinVelocity(MutableMeasure.zero(Units.RotationsPerSecond)) }).withName("stopGripper")
+        Commands.runOnce({ io.setSpinVelocity(Units.RotationsPerSecond.zero()) }).withName("stopGripper")
 
     fun atSetSpeed(): Boolean = inputs.spinMotorVelocity.isNear(setpointSpeed, ConveyorConstants.TOLERANCE)
     override fun periodic() {

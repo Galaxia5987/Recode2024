@@ -1,9 +1,9 @@
 package frc.robot.subsystems.hood
 
-import edu.wpi.first.units.Angle
+import edu.wpi.first.units.AngleUnit
 import edu.wpi.first.units.Measure
-import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
@@ -14,7 +14,7 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
     private val inputs = io.inputs
 
     @AutoLogOutput
-    private var angleSetpoint: Measure<Angle> = MutableMeasure.zero(Units.Rotations)
+    private var angleSetpoint: Measure<AngleUnit> = Units.Rotations.zero()
 
     companion object {
         @Volatile
@@ -35,12 +35,12 @@ class Hood private constructor(private var io: HoodIO) : SubsystemBase() {
         }
     }
 
-    fun setAngle(angle: Measure<Angle>): Command = Commands.runOnce({
+    fun setAngle(angle: Angle): Command = Commands.runOnce({
         io.setAngle(angle)
         angleSetpoint = angle
     }).withName("set Angle Hood")
 
-    fun setRestAngle(): Command = Commands.runOnce({ io.setAngle(HoodConstants.restAngle) }).withName("setRestAngle")
+    fun setRestAngle(): Command = Commands.runOnce({ io.setAngle(HoodConstants.REST_ANGLE) }).withName("setRestAngle")
 
     @AutoLogOutput
     fun atSetPoint(): Boolean = inputs.angle.isNear(angleSetpoint, HoodConstants.TOLERANCE)

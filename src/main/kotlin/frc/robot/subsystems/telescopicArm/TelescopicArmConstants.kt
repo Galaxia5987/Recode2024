@@ -1,9 +1,11 @@
 package frc.robot.subsystems.telescopicArm
 
-import edu.wpi.first.units.Current
-import edu.wpi.first.units.Distance
+import edu.wpi.first.units.CurrentUnit
+import edu.wpi.first.units.DistanceUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Current
+import edu.wpi.first.units.measure.Distance
 
 object TelescopicArmConstants {
     const val KP = 0.0
@@ -13,6 +15,6 @@ object TelescopicArmConstants {
     const val GEAR_RATIO = 3.0
     const val MOMENT_OF_INERTIA = 3.0
     const val CONVERSION_FACTOR = 2 * Math.PI
-    val CURRENT_LIMIT: Measure<Current> = Units.Amps.of(40.0)
-    val DRUM_RADIUS: Measure<Distance> = Units.Centimeter.of(3.0)
+    val CURRENT_LIMIT: Current = Units.Amps.of(40.0)
+    val DRUM_RADIUS: Distance = Units.Centimeter.of(3.0)
 }

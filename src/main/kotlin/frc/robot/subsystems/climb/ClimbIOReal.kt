@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.controls.StrictFollower
 import com.ctre.phoenix6.hardware.TalonFX
 import frc.robot.Ports
+import edu.wpi.first.units.Units
 
 class ClimbIOReal : ClimbIO {
     override val inputs = LoggedClimbInputs()
@@ -21,7 +22,7 @@ class ClimbIOReal : ClimbIO {
 
     override fun updateInput() {
         inputs.climbMotorVoltage = mainMotor.supplyVoltage.value
-        inputs.lockMotorCurrent = lockMotor.supplyCurrent
+        inputs.lockMotorCurrent = Units.Amps.of(lockMotor.supplyCurrent)
     }
 
 
@@ -30,11 +31,17 @@ class ClimbIOReal : ClimbIO {
     }
 
     override fun lockClimb() {
-        lockMotor.set(TalonSRXControlMode.PercentOutput, ClimbConstants.STOPPER_MOTOR_POWER)  //  +ClimbConstants.STOPPER_MOTOR_POWER !
+        lockMotor.set(
+            TalonSRXControlMode.PercentOutput,
+            ClimbConstants.STOPPER_MOTOR_POWER
+        )  //  +ClimbConstants.STOPPER_MOTOR_POWER !
     }
 
     override fun unlockClimb() {
-        lockMotor.set(TalonSRXControlMode.PercentOutput, -ClimbConstants.STOPPER_MOTOR_POWER)  //-ClimbConstants.STOPPER_MOTOR_POWER !
+        lockMotor.set(
+            TalonSRXControlMode.PercentOutput,
+            -ClimbConstants.STOPPER_MOTOR_POWER
+        )  //-ClimbConstants.STOPPER_MOTOR_POWER !
     }
 
     override fun disableLockMotor() {

@@ -1,7 +1,7 @@
 package frc.robot.subsystems.gripper
 
-import com.revrobotics.CANSparkLowLevel
-import com.revrobotics.CANSparkMax
+import com.revrobotics.spark.SparkLowLevel
+import com.revrobotics.spark.SparkMax
 import edu.wpi.first.units.Units
 import edu.wpi.first.wpilibj.DigitalInput
 import frc.robot.Ports
@@ -9,8 +9,8 @@ import frc.robot.Ports
 class GripperIOReal : GripperIO {
     override val inputs: LoggedGripperInputs = LoggedGripperInputs()
 
-    private val spinMotor: CANSparkMax =
-        CANSparkMax(Ports.Gripper.ROLLER_ID, CANSparkLowLevel.MotorType.kBrushless)
+    private val spinMotor: SparkMax =
+        SparkMax(Ports.Gripper.ROLLER_ID, SparkLowLevel.MotorType.kBrushless)
     private val sensor: DigitalInput = DigitalInput(Ports.Gripper.SENSOR_ID)
 
     override fun setPower(power: Double) {

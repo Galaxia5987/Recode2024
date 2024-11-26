@@ -5,9 +5,10 @@ import com.ctre.phoenix6.controls.PositionTorqueCurrentFOC
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.units.Distance
+import edu.wpi.first.units.DistanceUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Distance
 import frc.robot.Ports
 
 class TelescopicArmIOReal : TelescopicArmIO {
@@ -16,8 +17,8 @@ class TelescopicArmIOReal : TelescopicArmIO {
     var controlRequest: PositionTorqueCurrentFOC = PositionTorqueCurrentFOC(0.0)
     override fun updateInputs() {
         inputs.currentPose =
-            Units.Meters.of(motor.position.value)
-        inputs.voltage = Units.Volt.of(motor.supplyVoltage.value)
+            Units.Meters.of(motor.position.valueAsDouble)
+        inputs.voltage = motor.supplyVoltage.value
     }
 
     val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
@@ -48,7 +49,7 @@ class TelescopicArmIOReal : TelescopicArmIO {
         motor.configurator.apply(MOTOR_CONFIGURATION)
     }
 
-    override fun setHeight(distance: Measure<Distance>) {
+    override fun setHeight(distance: Distance) {
         motor.setControl(
             controlRequest.withPosition(
                 distance.`in`(Units.Meters)

@@ -1,17 +1,18 @@
 package frc.robot.subsystems.conveyor
 
 import edu.wpi.first.units.*
+import edu.wpi.first.units.measure.AngularVelocity
 import org.team9432.annotation.Logged
 
 interface ConveyorIO {
     val inputs: LoggedConveyorInputs
 
-    fun updateInput(){}
+    fun updateInput() {}
 
-    fun setSpinVelocity(vel: Measure<Velocity<Angle>>){}
+    fun setSpinVelocity(vel:AngularVelocity) {}
 
     @Logged
     open class ConveyorInputs {
-        val spinMotorVelocity: MutableMeasure<Velocity<Angle>> = MutableMeasure.zero(Units.RotationsPerSecond)
+        var spinMotorVelocity: AngularVelocity = Units.RotationsPerSecond.zero()
     }
 }

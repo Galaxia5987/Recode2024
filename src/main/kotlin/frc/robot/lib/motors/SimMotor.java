@@ -27,7 +27,7 @@ public class SimMotor {
             DCMotor motor,
             double gearing,
             double conversionFactor) {
-        this.motorSim = new DCMotorSim(model, motor, gearing);
+        this.motorSim = new DCMotorSim(model, motor.withReduction(gearing));
         this.conversionFactor = conversionFactor / gearing;
     }
 

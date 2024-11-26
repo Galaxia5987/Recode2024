@@ -6,6 +6,8 @@ import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
+import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Angle
 import frc.robot.Constants
 import frc.robot.lib.webconstants.LoggedTunableNumber
 
@@ -15,7 +17,7 @@ object IntakeConstants {
     var ANGLE_KP = 0.0
     var ANGLE_KD = 0.0
     var ANGLE_KI = 0.0
-    var UP_ANGLE = 127.0
+    var UP_ANGLE:Angle = Units.Rotations.of(127.0)
     var DOWN_ANGLE = 21.0
     var INTAKE_POWER_SPIN = 0.7
     var INTAKE_POWER_CENTER = 0.7

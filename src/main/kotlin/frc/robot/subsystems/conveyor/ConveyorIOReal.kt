@@ -2,11 +2,10 @@ package frc.robot.subsystems.conveyor
 
 import com.ctre.phoenix6.controls.VelocityVoltage
 import com.ctre.phoenix6.hardware.TalonFX
-import com.fasterxml.jackson.annotation.JsonTypeInfo.Id
-import edu.wpi.first.units.Angle
+import edu.wpi.first.units.AngularVelocityUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.Velocity
+import edu.wpi.first.units.measure.AngularVelocity
 import frc.robot.Constants
 import frc.robot.Ports
 import org.team9432.annotation.Logged
@@ -21,10 +20,10 @@ class ConveyorIOReal : ConveyorIO {
     }
 
     override fun updateInput() {
-        inputs.spinMotorVelocity.mut_replace(spinMotor.get(), Units.RotationsPerSecond)
+        inputs.spinMotorVelocity = Units.RotationsPerSecond.of(spinMotor.get())
     }
 
-    override fun setSpinVelocity(vel: Measure<Velocity<Angle>>) {
+    override fun setSpinVelocity(vel: AngularVelocity) {
         spinMotor.setControl(controlRequest.withVelocity(vel.`in`(Units.RotationsPerSecond)))
     }
 }

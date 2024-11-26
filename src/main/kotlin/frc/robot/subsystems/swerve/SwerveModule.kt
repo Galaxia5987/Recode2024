@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
 
 class SwerveModule
-    (private val io: ModuleIO, private val number: Int, private val offset: Double) : SubsystemBase() {
+(private val io: ModuleIO, private val number: Int, private val offset: Double) : SubsystemBase() {
 
     private val timer = Timer()
     private val inputs = io.inputs
@@ -31,8 +31,7 @@ class SwerveModule
     var moduleState: SwerveModuleState
         get() = io.moduleState
         set(moduleState) {
-            var moduleState = moduleState
-            moduleState = SwerveModuleState.optimize(moduleState, inputs.angle)
+            moduleState.optimize(inputs.angle)
             setVelocity(moduleState.speedMetersPerSecond)
             io.angle = moduleState.angle
         }
@@ -42,6 +41,9 @@ class SwerveModule
 
     val position
         get() = inputs.absolutePosition
+
+    val velocity
+        get() = inputs.driveMotorVelocity
 
     fun stop() {
         io.stop()
@@ -67,6 +69,8 @@ class SwerveModule
         }
     }
 
+    fun setIdleMode(isBrakeMode: Boolean) = io.setIdleMode(isBrakeMode)
+
     fun characterize(voltage: Double) {
         io.setVoltage(voltage)
         io.angle = Rotation2d()
@@ -80,8 +84,8 @@ class SwerveModule
             )
             .angularVelocity(
                 edu.wpi.first.units.Units.RotationsPerSecond.of(
-                    inputs.driveMotorVelocity
-                            / (SwerveConstants.WHEEL_DIAMETER * Math.PI)
+                    inputs.driveMotorVelocity /
+                        (SwerveConstants.WHEEL_DIAMETER * Math.PI)
                 )
             )
     }
