@@ -3,7 +3,6 @@ package frc.robot.subsystems.shooter
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.units.Units
-import edu.wpi.first.units.measure.Dimensionless
 import edu.wpi.first.units.measure.MomentOfInertia
 
 object ShooterConstants {
@@ -17,17 +16,22 @@ object ShooterConstants {
     val MOMENT_OF_INERTIA_TOP: MomentOfInertia = Units.KilogramSquareMeters.of(.0008)
     val MOMENT_OF_INERTIA_BOTTOM: MomentOfInertia = Units.KilogramSquareMeters.of(.0008)
 
-    val KP: Double = 0.0
-    val KD: Double = 0.0
-    val KI: Double = 0.0
-    val KV: Double = 0.0
+    val TOP_KP: Double = 0.0
+    val TOP_KD: Double = 0.0
+    val TOP_KI: Double = 0.0
+    val TOP_KV: Double = 0.0
+
+    val BOTTOM_KP: Double = 0.0
+    val BOTTOM_KD: Double = 0.0
+    val BOTTOM_KI: Double = 0.0
+    val BOTTOM_KV: Double = 0.0
 
     val CONNFIG_TOP: TalonFXConfiguration = TalonFXConfiguration().apply {
         Slot0.apply {
-            kP = KP
-            kD = KD
-            kI = KI
-            kV = KV
+            kP = TOP_KP
+            kD = TOP_KD
+            kI = TOP_KI
+            kV = TOP_KV
 
         }
         CurrentLimits.apply {
@@ -44,10 +48,10 @@ object ShooterConstants {
 
     val CONNFIG_BOTTOM: TalonFXConfiguration = TalonFXConfiguration().apply {
         Slot0.apply {
-            kP = KP
-            kD = KD
-            kI = KI
-            kV = KV
+            kP = BOTTOM_KP
+            kD = BOTTOM_KD
+            kI = BOTTOM_KI
+            kV = BOTTOM_KV
 
         }
         CurrentLimits.apply {
