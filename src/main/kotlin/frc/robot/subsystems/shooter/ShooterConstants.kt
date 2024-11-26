@@ -6,14 +6,14 @@ import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.units.Units
 
 object ShooterConstants {
-    var CURRENT_LIMIT: Double = 40.0
-    var SHOOT_VELOCITY = Units.RotationsPerSecond.of(3.0)
-    var KP: Double = 0.0
-    var KD: Double = 0.0
-    var KI: Double = 0.0
-    var KV: Double = 0.0
+    val CURRENT_LIMIT: Double = 40.0
+    val SHOOT_VELOCITY = Units.RotationsPerSecond.of(3.0)
+    val KP: Double = 0.0
+    val KD: Double = 0.0
+    val KI: Double = 0.0
+    val KV: Double = 0.0
 
-    var CONNFIG_TOP: TalonFXConfiguration = TalonFXConfiguration().apply {
+    val CONNFIG_TOP: TalonFXConfiguration = TalonFXConfiguration().apply {
         Slot0.apply {
             kP = KP
             kD = KD
