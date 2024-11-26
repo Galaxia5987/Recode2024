@@ -9,15 +9,13 @@ interface ElevatorIO {
 
     fun setPosition(position: Double) {}
 
-
     fun SetPower(percentOutput: Double) {}
-
 
     fun isAtBottom(): Boolean {
         return false
     }
 
-    fun updateInputs(){}
+    fun updateInputs() {}
 
     @Logged
     open class ElevatorInputs {
@@ -25,5 +23,3 @@ interface ElevatorIO {
         var isAtBottom = false
     }
 }
-
-

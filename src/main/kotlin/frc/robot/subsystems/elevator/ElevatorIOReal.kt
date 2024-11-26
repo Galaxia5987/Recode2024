@@ -13,25 +13,25 @@ import frc.robot.ElevatorPorts
 import frc.robot.subsystems.hood.GAINS
 import frc.robot.subsystems.hood.GEAR_RATIO
 
-class ElevatorIOReal: ElevatorIO {
-    override val inputs = LoggerdElevatorInputs()
+class ElevatorIOReal : ElevatorIO {
+    override val inputs = LoggedElevatorInputs()
     private val motor = TalonFX(ElevatorPorts.MOTOR_ID)
     private val limitSwitch = DigitalInput(ElevatorPorts.SENSOR_ID)
-    init{
-        val motorConfig = TalonFXConfiguration().apply{
-            MotorOutput = MotorOutputConfigs().apply{
-            NeutralMode = NeutralModeValue.Brake
-            Inverted = InvertedValue.Clockwise_Positive
-        }
+    init {
+        val motorConfig = TalonFXConfiguration().apply {
+            MotorOutput = MotorOutputConfigs().apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.Clockwise_Positive
+            }
             Feedback = FeedbackConfigs().apply {
                 RotorToSensorRatio = 1.0
-                SensorToMechanismRatio = GEAR_RATIO*0.5
+                SensorToMechanismRatio = GEAR_RATIO * 0.5
             }
-           Slot0 = Slot0Configs().apply {
-               kP = GAINS.kP
-               kI = GAINS.kI
-               kD = GAINS.kD
-           }
+            Slot0 = Slot0Configs().apply {
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kD
+            }
             CurrentLimits = CurrentLimitsConfigs().apply {
                 StatorCurrentLimitEnable = true
                 SupplyCurrentLimitEnable = true
