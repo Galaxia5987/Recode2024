@@ -8,6 +8,7 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.MomentOfInertia
 import frc.robot.Constants
 import frc.robot.lib.webconstants.LoggedTunableNumber
 
@@ -21,6 +22,7 @@ object IntakeConstants {
     const val DOWN_ANGLE = 21.0
     const val INTAKE_SPIN_POWER = -0.65
     const val INTAKE_CENTER_POWER = -0.4
+    val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(.003)
 
     init {
         when (Constants.CURRENT_MODE) {
