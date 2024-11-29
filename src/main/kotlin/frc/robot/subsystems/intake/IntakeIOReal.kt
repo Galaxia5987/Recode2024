@@ -24,7 +24,7 @@ class IntakeIOReal : IntakeIO {
     }
 
     override fun updateInput() {
-        inputs.angle = angleMotor.position.value.times(2* Math.PI)
+        inputs.angle = angleMotor.position.value.times(2 * Math.PI)
         inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)
         inputs.angleMotorVoltage = angleMotor.supplyVoltage.value
         inputs.spinMotorVoltage = Units.Volt.of(spinMotor.busVoltage)

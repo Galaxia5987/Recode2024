@@ -29,7 +29,7 @@ import kotlin.math.abs
 import kotlin.math.hypot
 
 class SwerveDrive private constructor
-(private val gyroIO: GyroIO, wheelOffsets: Array<Double>, vararg moduleIOs: ModuleIO) :
+    (private val gyroIO: GyroIO, wheelOffsets: Array<Double>, vararg moduleIOs: ModuleIO) :
     SubsystemBase() {
 
     private val inputs = LoggedSwerveDriveInputs()

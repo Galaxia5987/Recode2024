@@ -30,7 +30,8 @@
 > Could be as simple as "Using PathPlanner's built-in chooser" (BTW
 > use [this](https://www.chiefdelphi.com/t/pathplanner-2024-beta/442364/149?u=dan)) or more complex based on the game,
 > like what's been
-> done [here](https://www.chiefdelphi.com/t/frc-6328-mechanical-advantage-2023-build-thread/420691/179#autos-the-questionnaire-2):
+>
+done [here](https://www.chiefdelphi.com/t/frc-6328-mechanical-advantage-2023-build-thread/420691/179#autos-the-questionnaire-2):
 
 ## Side chooser
 

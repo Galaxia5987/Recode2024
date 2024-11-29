@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase
 import org.littletonrobotics.junction.Logger
 
 class SwerveModule
-(private val io: ModuleIO, private val number: Int, private val offset: Double) : SubsystemBase() {
+    (private val io: ModuleIO, private val number: Int, private val offset: Double) : SubsystemBase() {
 
     private val timer = Timer()
     private val inputs = io.inputs
@@ -85,7 +85,7 @@ class SwerveModule
             .angularVelocity(
                 edu.wpi.first.units.Units.RotationsPerSecond.of(
                     inputs.driveMotorVelocity /
-                        (SwerveConstants.WHEEL_DIAMETER * Math.PI)
+                            (SwerveConstants.WHEEL_DIAMETER * Math.PI)
                 )
             )
     }

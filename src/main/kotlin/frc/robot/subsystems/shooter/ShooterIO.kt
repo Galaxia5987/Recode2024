@@ -17,6 +17,6 @@ interface ShooterIO {
         var topVelocity: AngularVelocity = Units.RotationsPerSecond.zero()
         var bottomVelocity: AngularVelocity = Units.RotationsPerSecond.zero()
         var topVoltage: Voltage = Units.Volt.zero()
-        var bottomVoltage:Voltage = Units.Volt.zero()
+        var bottomVoltage: Voltage = Units.Volt.zero()
     }
 }

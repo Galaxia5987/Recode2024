@@ -56,7 +56,11 @@ class ModuleIOSparkMax(
                 .encoder.positionConversionFactor(SwerveConstants.DRIVE_REDUCTION)
                 .velocityConversionFactor(SwerveConstants.DRIVE_REDUCTION)
         }
-        driveMotor.configure(driveConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+        driveMotor.configure(
+            driveConfigurator,
+            SparkBase.ResetMode.kResetSafeParameters,
+            SparkBase.PersistMode.kPersistParameters
+        )
 
         anglePIDController = angleMotor.closedLoopController
         angleEncoder = angleMotor.encoder
@@ -69,7 +73,11 @@ class ModuleIOSparkMax(
                 .encoder.positionConversionFactor(SwerveConstants.ANGLE_REDUCTION)
                 .velocityConversionFactor(SwerveConstants.ANGLE_REDUCTION)
         }
-        angleMotor.configure(angleConfigurator, SparkBase.ResetMode.kResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+        angleMotor.configure(
+            angleConfigurator,
+            SparkBase.ResetMode.kResetSafeParameters,
+            SparkBase.PersistMode.kPersistParameters
+        )
     }
 
     override fun updateInputs() {
@@ -83,10 +91,10 @@ class ModuleIOSparkMax(
 
         inputs.moduleDistance =
             (
-                inputs.driveMotorPosition
-                    * SwerveConstants.WHEEL_DIAMETER
-                    * Math.PI
-                )
+                    inputs.driveMotorPosition
+                            * SwerveConstants.WHEEL_DIAMETER
+                            * Math.PI
+                    )
     }
 
     override var angle
@@ -102,16 +110,17 @@ class ModuleIOSparkMax(
 
     override var velocity
         get() = (
-            Units.rpmToRadsPerSec(driveEncoder.velocity) *
-                (SwerveConstants.WHEEL_DIAMETER / 2)
-            )
+                Units.rpmToRadsPerSec(driveEncoder.velocity) *
+                        (SwerveConstants.WHEEL_DIAMETER / 2)
+                )
         set(velocity) {
             var velocity = velocity
             val angleError = inputs.angleSetpoint.minus(inputs.angle)
             velocity *= angleError.cos
             inputs.driveMotorVelocitySetpoint = velocity
             drivePIDController.setReference(
-                feedforward!!.calculate(WpiUnits.MetersPerSecond.of(velocity)).`in`(WpiUnits.Volts), SparkBase.ControlType.kVoltage
+                feedforward!!.calculate(WpiUnits.MetersPerSecond.of(velocity)).`in`(WpiUnits.Volts),
+                SparkBase.ControlType.kVoltage
             )
         }
 
@@ -146,7 +155,11 @@ class ModuleIOSparkMax(
 
         mapOf(driveConfigurator to driveMotor, angleConfigurator to angleMotor).forEach {
             it.key.idleMode(mode)
-            it.value.configure(it.key, SparkBase.ResetMode.kNoResetSafeParameters, SparkBase.PersistMode.kPersistParameters)
+            it.value.configure(
+                it.key,
+                SparkBase.ResetMode.kNoResetSafeParameters,
+                SparkBase.PersistMode.kPersistParameters
+            )
         }
     }
 }

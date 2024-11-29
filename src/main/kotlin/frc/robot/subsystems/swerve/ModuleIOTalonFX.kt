@@ -61,7 +61,8 @@ class ModuleIOTalonFX(
                 driveMotor.velocity.value.`in`(WpiUnits.RotationsPerSecond), SwerveConstants.WHEEL_DIAMETER / 2
             )
         inputs.driveMotorVoltage = driveMotor.motorVoltage.value.`in`(WpiUnits.Volts)
-        inputs.driveMotorAcceleration = driveMotor.acceleration.value.`in`(WpiUnits.RotationsPerSecond.per(WpiUnits.Second))
+        inputs.driveMotorAcceleration =
+            driveMotor.acceleration.value.`in`(WpiUnits.RotationsPerSecond.per(WpiUnits.Second))
 
         inputs.angle =
             Utils.normalize(Rotation2d.fromRotations(angleMotor.position.value.`in`(WpiUnits.Rotations)))
@@ -76,10 +77,10 @@ class ModuleIOTalonFX(
 
         inputs.noEncoderFaults =
             !encoder.fault_Hardware.value ||
-            !encoder.fault_Undervoltage.value ||
-            !encoder.fault_BadMagnet.value ||
-            !encoder.fault_BootDuringEnable.value ||
-            !encoder.fault_UnlicensedFeatureInUse.value
+                    !encoder.fault_Undervoltage.value ||
+                    !encoder.fault_BadMagnet.value ||
+                    !encoder.fault_BootDuringEnable.value ||
+                    !encoder.fault_UnlicensedFeatureInUse.value
 
         inputs.absolutePosition = encoder.absolutePosition.value.`in`(WpiUnits.Rotations)
         inputs.moduleState = moduleState
