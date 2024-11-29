@@ -112,7 +112,7 @@ dependencies {
     simulationRelease wpi.sim.enableRelease()
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-
+    implementation("org.javassist:javassist:3.29.0-GA")
     implementation 'com.opencsv:opencsv:5.8'
 
     implementation project(':annotation')
