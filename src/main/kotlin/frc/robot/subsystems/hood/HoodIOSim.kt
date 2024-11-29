@@ -8,20 +8,16 @@ import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
 import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
-import frc.robot.subsystems.hood.HoodConstants.ANGLE_KD
-import frc.robot.subsystems.hood.HoodConstants.ANGLE_KI
-import frc.robot.subsystems.hood.HoodConstants.ANGLE_KP
-import frc.robot.subsystems.hood.HoodConstants.GEAR_RATIO
-import frc.robot.subsystems.hood.HoodConstants.MOMENT_OF_INERTIA
+
 
 class HoodIOSim : HoodIO {
     override var inputs: LoggedInputHood = LoggedInputHood()
     private val motor = TalonFXSim(
-        1, GEAR_RATIO, MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
-        GEAR_RATIO
+        1, HoodConstants.GEAR_RATIO, HoodConstants.MOMENT_OF_INERTIA.`in`(Units.KilogramSquareMeters),
+        HoodConstants.GEAR_RATIO
     )
     private val angleControl = PositionVoltage(0.0)
-    private val pidController = PIDController(ANGLE_KP, ANGLE_KI, ANGLE_KD)
+    private val pidController = PIDController(HoodConstants.ANGLE_KP, HoodConstants.ANGLE_KI, HoodConstants.ANGLE_KD)
 
     init {
         motor.setController(pidController)
