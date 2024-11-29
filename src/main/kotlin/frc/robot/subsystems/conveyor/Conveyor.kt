@@ -41,7 +41,8 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
     fun stopConveyor(): Command =
         Commands.runOnce({ io.setSpinVelocity(Units.RotationsPerSecond.zero()) }).withName("stopGripper")
 
-    fun atSetSpeed(): Boolean = inputs.spinMotorVelocity.isNear(setpointSpeed, ConveyorConstants.TOLERANCE)
+    fun atSetSpeed(): Boolean =
+        inputs.spinMotorVelocity.isNear(setpointSpeed, ConveyorConstants.TOLERANCE.`in`(Units.Percent))
     override fun periodic() {
         io.updateInput()
         Logger.processInputs(this::class.simpleName, inputs)

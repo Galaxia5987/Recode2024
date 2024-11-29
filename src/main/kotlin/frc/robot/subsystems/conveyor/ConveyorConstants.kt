@@ -7,9 +7,10 @@ import com.ctre.phoenix6.signals.InvertedValue
 import edu.wpi.first.units.CurrentUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Dimensionless
 
 object ConveyorConstants {
-    const val TOLERANCE = 0.5
+    val TOLERANCE: Dimensionless = Units.Percent.of(0.1)
     private val CURRENT_LIMIT: Measure<CurrentUnit> = Units.Amps.of(40.0)
     const val RUN_POWER: Double = 0.7
 
