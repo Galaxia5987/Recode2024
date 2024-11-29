@@ -4,6 +4,8 @@ import edu.wpi.first.units.Measure
 import edu.wpi.first.units.MutableMeasure
 import edu.wpi.first.util.struct.Struct
 import edu.wpi.first.util.struct.StructSerializable
+import javassist.ClassPool
+import javassist.CtMethod
 import org.littletonrobotics.junction.AutoLogOutputManager
 import org.littletonrobotics.junction.LogTable
 import org.littletonrobotics.junction.inputs.LoggableInputs
@@ -64,6 +66,28 @@ abstract class AutoLogInputs : LoggableInputs {
 
     override fun toLog(table: LogTable) {
         toLogRunners.forEach { it(table) }
+    }
+}
+
+// TODO: This should be considered a war crime
+// Measure.class.isAssignableFrom(type)
+fun modifyRegisterFields() {
+    try {
+        val pool = ClassPool.getDefault()
+        val ctClass = pool.get("org.littletonrobotics.junction.AutoLogOutputManager")
+        val ctMethod: CtMethod = ctClass.getDeclaredMethod("registerField")
+
+        ctMethod.instrument(object : javassist.expr.ExprEditor() {
+            override fun edit(expr: javassist.expr.MethodCall) {
+                if (expr.lineNumber == 433) {
+                    expr.replace("$1.equals(Measure.class) || Measure.class.isAssignableFrom(\$1);")
+                }
+            }
+        })
+
+        ctClass.toClass()
+    } catch (e: Exception) {
+        e.printStackTrace()
     }
 }
 
