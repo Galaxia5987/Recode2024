@@ -9,7 +9,7 @@ interface ConveyorIO {
 
     fun updateInput() {}
 
-    fun setSpinVelocity(vel: AngularVelocity) {}
+    fun setSpinVelocity(velocity: AngularVelocity) {}
 
     @Logged
     open class ConveyorInputs {
