@@ -38,6 +38,18 @@ class ElevatorIOReal : ElevatorIO {
                 StatorCurrentLimit = 80.0
                 SupplyCurrentLimit = 40.0
             }
-    }}
-
+        }
+    }
+    override fun setPosition(position: Double) {
+        super.setPosition(position)
+    }
+    override fun SetPower(percentOutput: Double) {
+        super.SetPower(percentOutput)
+    }
+    override fun isAtBottom(): Boolean {
+        return super.isAtBottom()
+    }
+    override fun updateInputs() {
+        super.updateInputs()
+    }
 }
