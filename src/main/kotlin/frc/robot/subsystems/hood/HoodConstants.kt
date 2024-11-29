@@ -7,6 +7,7 @@ import edu.wpi.first.units.AngleUnit
 import edu.wpi.first.units.Measure
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.units.measure.MomentOfInertia
 
 object HoodConstants {
 
@@ -16,6 +17,7 @@ object HoodConstants {
     val ANGLE_KD = 0.0
     val ANGLE_KI = 0.0
     const val TOLERANCE: Double = 0.75 / 360
+    val MOMENT_OF_INERTIA: MomentOfInertia = Units.KilogramSquareMeters.of(0.0003)
 
     val MOTOR_CONFIGURATION = TalonFXConfiguration().apply {
         MotorOutput.apply {
