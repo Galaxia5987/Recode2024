@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import frc.robot.lib.LoggedTunableNumber
+import frc.robot.lib.enableAutoLogOutputFor
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
@@ -17,6 +18,10 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
     @AutoLogOutput
     private var angleSetpoint: Angle = Units.Degree.zero()
     private val inputs = io.inputs
+
+    init {
+        enableAutoLogOutputFor(this)
+    }
 
     companion object {
         @Volatile

@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.SubsystemBase
 import frc.robot.lib.LoggedTunableNumber
+import frc.robot.lib.enableAutoLogOutputFor
 import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.Logger
 
@@ -37,6 +38,10 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
             "Hood", HOOD_LENGTH.`in`(Units.Meters), 45.0
         )
     )
+
+    init {
+        enableAutoLogOutputFor(this)
+    }
 
     companion object { // Custom Singleton Implementation
         @Volatile
