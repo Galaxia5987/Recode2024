@@ -5,7 +5,7 @@ import edu.wpi.first.units.measure.Distance
 import org.team9432.annotation.Logged
 
 interface ElevatorIO {
-    val inputs: LoggerdElevatorInputs
+    val inputs: LoggedElevatorInputs
 
     fun setPosition(position: Double) {}
 
