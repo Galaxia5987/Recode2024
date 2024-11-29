@@ -4,6 +4,7 @@ import com.ctre.phoenix6.controls.VelocityVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 
 class ShooterIOSim : ShooterIO {
@@ -50,6 +51,8 @@ class ShooterIOSim : ShooterIO {
     }
 
     override fun updateInput() {
+        topMotor.update(Timer.getFPGATimestamp())
+        bottomMotor.update(Timer.getFPGATimestamp())
         inputs.topVelocity = Units.RotationsPerSecond.of(topMotor.velocity)
         inputs.topVoltage = Units.Volt.of(bottomMotor.appliedVoltage)
         inputs.bottomVelocity = Units.RotationsPerSecond.of(bottomMotor.velocity)

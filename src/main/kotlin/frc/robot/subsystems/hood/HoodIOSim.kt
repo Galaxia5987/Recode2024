@@ -6,6 +6,7 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.wpilibj.Timer
 import frc.robot.lib.motors.TalonFXSim
 import frc.robot.subsystems.hood.HoodConstants.ANGLE_KD
 import frc.robot.subsystems.hood.HoodConstants.ANGLE_KI
@@ -27,6 +28,7 @@ class HoodIOSim : HoodIO {
     }
 
     override fun updateInputs() {
+        motor.update(Timer.getFPGATimestamp())
         inputs.angle = Units.Rotations.of(motor.position)
         inputs.angleMotorVoltage = Units.Volt.of(motor.appliedVoltage)
     }

@@ -11,6 +11,7 @@ import edu.wpi.first.math.controller.PIDController
 import edu.wpi.first.math.system.plant.DCMotor
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Angle
+import edu.wpi.first.wpilibj.Timer
 import frc.robot.Ports
 import frc.robot.lib.motors.SparkMaxSim
 import frc.robot.lib.motors.TalonFXSim
@@ -31,6 +32,9 @@ class IntakeIOSim : IntakeIO {
     }
 
     override fun updateInput() {
+        angleMotor.update(Timer.getFPGATimestamp())
+        centerMotor.update(Timer.getFPGATimestamp())
+        spinMotor.update(Timer.getFPGATimestamp())
         inputs.angle = Units.Rotations.of(angleMotor.position * 2 * Math.PI)
         inputs.angleMotorVoltage = Units.Volt.of(angleMotor.appliedVoltage)
         inputs.spinMotorVoltage = Units.Volt.of(spinMotor.appliedVoltage)
