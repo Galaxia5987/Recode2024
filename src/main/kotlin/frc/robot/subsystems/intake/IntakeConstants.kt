@@ -13,14 +13,14 @@ import frc.robot.lib.webconstants.LoggedTunableNumber
 
 object IntakeConstants {
     val MOTOR_CONFIGURATION = TalonFXConfiguration()
-    val GEAR_RATIO = 55.56
+    const val GEAR_RATIO = 55.56
     var ANGLE_KP = 0.0
     var ANGLE_KD = 0.0
     var ANGLE_KI = 0.0
-    var UP_ANGLE:Angle = Units.Rotations.of(127.0)
-    var DOWN_ANGLE = 21.0
-    var INTAKE_POWER_SPIN = 0.7
-    var INTAKE_POWER_CENTER = 0.7
+    val UP_ANGLE: Angle = Units.Rotations.of(127.0)
+    const val DOWN_ANGLE = 21.0
+    const val INTAKE_SPIN_POWER = -0.65
+    const val INTAKE_CENTER_POWER = -0.4
 
     init {
         when (Constants.CURRENT_MODE) {
