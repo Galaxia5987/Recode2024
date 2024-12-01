@@ -25,26 +25,28 @@ class PhotonVisionIOReal(private val camera: PhotonCamera, private val robotToCa
     override fun updateInputs() {
         val unreadResults = camera.allUnreadResults
 
-        for (result in unreadResults) {
-            if (!result.hasTargets()) {
-                return
-            }
+        if (unreadResults.isNotEmpty()) {
+            for (result in unreadResults) {
+                if (!result.hasTargets()) {
+                    return
+                }
 
-            val estimatedPose = estimator.update(result)
+                val estimatedPose = estimator.update(result)
 
-            if (estimatedPose.isEmpty) {
-                continue
-            }
+                if (estimatedPose.isEmpty) {
+                    continue
+                }
 
-            val tags = result.targets
+                val tags = result.targets
 
-            inputs.bestCameraToTargets.clear()
-            inputs.poseFieldOriented = estimatedPose.get().estimatedPose
+                inputs.bestCameraToTargets.clear()
+                inputs.poseFieldOriented = estimatedPose.get().estimatedPose
 
-            inputs.timestamp = estimatedPose.get().timestampSeconds
+                inputs.timestamp = estimatedPose.get().timestampSeconds
 
-            for (tag in tags) {
-                inputs.bestCameraToTargets.add(tag.bestCameraToTarget)
+                for (tag in tags) {
+                    inputs.bestCameraToTargets.add(tag.bestCameraToTarget)
+                }
             }
         }
     }
