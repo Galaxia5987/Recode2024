@@ -51,7 +51,6 @@ object RobotContainer {
         RobotModeTriggers.disabled().debounce(7.0).onTrue(swerveDrive.setCoastMode())
 
         driverController().y().onTrue(Commands.runOnce(swerveDrive::resetGyro))
-
     }
 
     fun getAutonomousCommand(): Command = autoChooser.get()
@@ -59,5 +58,4 @@ object RobotContainer {
     private fun registerAutoCommands() {
         fun register(name: String, command: Command) = NamedCommands.registerCommand(name, command)
     }
-
 }
