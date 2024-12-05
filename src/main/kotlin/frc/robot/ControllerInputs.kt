@@ -22,13 +22,15 @@ object ControllerInputs {
         return Commands.runOnce(
             {
                 driverController.hid.setRumble(GenericHID.RumbleType.kBothRumble, 1.0)
-            })
+            }
+        )
     }
 
     fun stopRumble(): Command {
         return Commands.runOnce(
             {
                 driverController.hid.setRumble(GenericHID.RumbleType.kBothRumble, 0.0)
-            })
+            }
+        )
     }
 }

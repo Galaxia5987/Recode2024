@@ -14,8 +14,6 @@ import edu.wpi.first.wpilibj.PowerDistribution
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
 import frc.robot.lib.enableAutoLogOutputFor
-import frc.robot.subsystems.swerve.SwerveDrive
-import org.littletonrobotics.junction.AutoLogOutput
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
 import org.littletonrobotics.junction.Logger
@@ -43,7 +41,6 @@ object Robot : LoggedRobot() {
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
 
-        initializeSubsystems()
         enableAutoLogOutputFor(this)
 
         // Initialize logger
@@ -61,7 +58,7 @@ object Robot : LoggedRobot() {
                 0 -> "All changes committed"
                 1 -> "Uncommitted changes"
                 else -> "Unknown"
-            },
+            }
         )
 
         when (Constants.CURRENT_MODE) {
@@ -149,9 +146,4 @@ object Robot : LoggedRobot() {
 
     /** This function is called periodically during test mode.  */
     override fun testPeriodic() {}
-
-    @AutoLogOutput
-    fun getDistanceToSpeaker(): Double = (
-        Constants.SPEAKER_POSE - SwerveDrive.getInstance().estimator.estimatedPosition.translation
-        ).norm
 }

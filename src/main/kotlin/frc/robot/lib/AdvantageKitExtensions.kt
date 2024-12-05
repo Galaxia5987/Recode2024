@@ -43,7 +43,7 @@ abstract class AutoLogInputs : LoggableInputs {
         private var value: T,
         private val name: String? = null,
         private val toLog: LogTable.(String, T) -> Unit,
-        private val fromLog: LogTable.(String, T) -> T,
+        private val fromLog: LogTable.(String, T) -> T
     ) {
         operator fun getValue(thisRef: Any, property: KProperty<*>) = value
         operator fun setValue(thisRef: Any, property: KProperty<*>, value: T) {
@@ -77,31 +77,31 @@ fun enableAutoLogOutputFor(vararg roots: Any) {
     }
 }
 
-//```
-//This provides a replacement for the @AutoLog annotation as well as the ability to manually register @AutoLogOutput roots.
-//Here is an example of using auto-logged inputs in kotlin:
-//```
-//class ArmInputs: AutoLogInputs() {
+// ```
+// This provides a replacement for the @AutoLog annotation as well as the ability to manually register @AutoLogOutput roots.
+// Here is an example of using auto-logged inputs in kotlin:
+// ```
+// class ArmInputs: AutoLogInputs() {
 //    var angle by log(Rotation2d())
 //    var voltage by log(Volts.mutable(0.0), "ArmVoltage")
 //    var statorCurrent by log(Amps.mutable(2.0))
-//}
-//interface ArmIO {
+// }
+// interface ArmIO {
 //    fun updateInputs(inputs: ArmInputs) {}
 //    fun setVoltage(volts: Voltage) {}
-//}
-//class Arm: SubsystemBase() {
+// }
+// class Arm: SubsystemBase() {
 //    private val inputs = ArmInputs()
 //    private val io: ArmIO = ArmIOImpl()
 //    override fun periodic() {
 //        io.updateInputs(inputs)
 //        Logger.processInputs("Arm", inputs)
 //    }
-//}
-//```
-//And here is an example of registering a singleton for the @AutoLogOutput annotation:
-//```
-//object LoggedSingleton {
+// }
+// ```
+// And here is an example of registering a singleton for the @AutoLogOutput annotation:
+// ```
+// object LoggedSingleton {
 //    init {
 //        enableAutoLogOutputFor(this)
 //    }
@@ -109,4 +109,4 @@ fun enableAutoLogOutputFor(vararg roots: Any) {
 //    fun getValue() {
 //        return 2.0
 //    }
-//}
+// }

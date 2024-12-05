@@ -59,5 +59,8 @@ fun Command.finallyDo(command: Command): WrapperCommand = finallyDo(
 )
 
 fun Pose2d.toPose3d(): Pose3d = Pose3d(
-    x, y, 0.0, Rotation3d(0.0, 0.0, rotation.radians)
+    x,
+    y,
+    0.0,
+    Rotation3d(0.0, 0.0, rotation.radians)
 )
