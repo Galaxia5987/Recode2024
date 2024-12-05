@@ -13,7 +13,6 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType
 import edu.wpi.first.wpilibj.PowerDistribution
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.CommandScheduler
-import frc.robot.lib.enableAutoLogOutputFor
 import org.littletonrobotics.junction.LogFileUtil
 import org.littletonrobotics.junction.LoggedRobot
 import org.littletonrobotics.junction.Logger
@@ -40,8 +39,6 @@ object Robot : LoggedRobot() {
         // Report Kotlin language usage
         // https://www.chiefdelphi.com/t/do-you-use-kotlin-make-sure-first-knows/447155?u=dan
         HAL.report(tResourceType.kResourceType_Language, tInstances.kLanguage_Kotlin)
-
-        enableAutoLogOutputFor(this)
 
         // Initialize logger
         listOf(
