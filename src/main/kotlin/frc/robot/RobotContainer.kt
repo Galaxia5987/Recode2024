@@ -13,11 +13,26 @@ import frc.robot.subsystems.climb.Climb
 import frc.robot.subsystems.climb.ClimbIOReal
 import java.util.function.DoubleSupplier
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser
+import frc.robot.subsystems.conveyor.Conveyor
+import frc.robot.subsystems.conveyor.ConveyorIO
+import frc.robot.subsystems.conveyor.ConveyorIOReal
+import frc.robot.subsystems.conveyor.ConveyorIOSim
+import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.gripper.GripperIOReal
+import frc.robot.subsystems.gripper.GripperIOSIm
 import frc.robot.subsystems.hood.Hood
 import frc.robot.subsystems.hood.HoodIOReal
+import frc.robot.subsystems.hood.HoodIOSim
+import frc.robot.subsystems.intake.Intake
+import frc.robot.subsystems.intake.IntakeIOReal
+import frc.robot.subsystems.intake.IntakeIOSim
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
+import frc.robot.subsystems.shooter.ShooterIOSim
 import frc.robot.subsystems.swerve.SwerveDrive
+import frc.robot.subsystems.telescopicArm.TelescopicArm
+import frc.robot.subsystems.telescopicArm.TelescopicArmIOReal
+import frc.robot.subsystems.telescopicArm.TelescopicArmIOSim
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -38,10 +53,30 @@ object RobotContainer {
     private val autoChooser: SendableChooser<Command>
 
     init {
-//        Constants.initSwerve()
-        Climb.initialize(ClimbIOReal())
-        Shooter.initialize(ShooterIOReal())
-        Hood.initialize(HoodIOReal())
+        when (Constants.CURRENT_MODE) {
+            Constants.Mode.REAL -> {
+                Climb.initialize(ClimbIOReal())
+                Conveyor.initialize(ConveyorIOReal())
+                Gripper.initialize(GripperIOReal())
+                Hood.initialize(HoodIOReal())
+                Intake.initialize(IntakeIOReal())
+                Shooter.initialize(ShooterIOReal())
+                TelescopicArm.initialize(TelescopicArmIOReal())
+            }
+
+            Constants.Mode.SIM -> {
+                Conveyor.initialize(ConveyorIOSim())
+                Gripper.initialize(GripperIOSIm())
+                Hood.initialize(HoodIOSim())
+                Intake.initialize(IntakeIOSim())
+                Shooter.initialize(ShooterIOSim())
+                TelescopicArm.initialize(TelescopicArmIOSim())
+
+            }
+
+            else -> {}
+        }
+
 
         swerveDrive = SwerveDrive.getInstance()
         climb = Climb.getInstance()
