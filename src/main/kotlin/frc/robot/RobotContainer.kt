@@ -4,6 +4,7 @@ import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
+import frc.robot.ControllerInputs.driverController
 import frc.robot.generated.TunerConstants
 import frc.robot.subsystems.drive.Drive
 import frc.robot.subsystems.drive.DriveCommands
@@ -59,6 +60,12 @@ object RobotContainer {
     }
 
     private fun configureDefaultCommands() {
+        swerveDrive.defaultCommand = DriveCommands.joystickDrive(
+            swerveDrive,
+            { -driverController().leftX },
+            { -driverController().leftY },
+            { 0.5 * -driverController().rightX }
+        )
     }
 
     private fun configureButtonBindings() {
