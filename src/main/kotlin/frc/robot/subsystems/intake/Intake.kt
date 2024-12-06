@@ -56,13 +56,13 @@ class Intake private constructor(private val io: IntakeIO) : SubsystemBase() {
 
     fun stop(): Command = Commands.parallel(stopSpinMotor(), stopCenterMotor(), setAngle(IntakeConstants.UP_ANGLE))
     fun intakeIn(): Command = Commands.parallel(
-        setSpinMotorPower(IntakeConstants.INTAKE_POWER_SPIN),
-        setCenterMotorPower(IntakeConstants.INTAKE_POWER_CENTER)
+        setSpinMotorPower(IntakeConstants.INTAKE_SPIN_POWER),
+        setCenterMotorPower(IntakeConstants.INTAKE_CENTER_POWER)
     )
 
     fun intakeOut(): Command = Commands.parallel(
-        setSpinMotorPower(-IntakeConstants.INTAKE_POWER_SPIN),
-        setCenterMotorPower(-IntakeConstants.INTAKE_POWER_CENTER)
+        setSpinMotorPower(-IntakeConstants.INTAKE_SPIN_POWER),
+        setCenterMotorPower(-IntakeConstants.INTAKE_CENTER_POWER)
     )
 
     override fun periodic() {
