@@ -25,7 +25,7 @@ object RobotContainer {
     private val testController = CommandXboxController(2)
 
     init {
-        swerveDrive = when(Constants.CURRENT_MODE){
+        swerveDrive = when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
                 Drive(
                     GyroIONavX(),
@@ -37,7 +37,7 @@ object RobotContainer {
             }
             Constants.Mode.SIM -> {
                 Drive(
-                    object: GyroIO {},
+                    object : GyroIO {},
                     ModuleIOSim(TunerConstants.FrontLeft),
                     ModuleIOSim(TunerConstants.FrontRight),
                     ModuleIOSim(TunerConstants.BackLeft),
@@ -46,11 +46,11 @@ object RobotContainer {
             }
             else -> {
                 Drive(
-                    object: GyroIO {},
-                    object: ModuleIO {},
-                    object: ModuleIO {},
-                    object: ModuleIO {},
-                    object: ModuleIO {}
+                    object : GyroIO {},
+                    object : ModuleIO {},
+                    object : ModuleIO {},
+                    object : ModuleIO {},
+                    object : ModuleIO {}
                 )
             }
         }
