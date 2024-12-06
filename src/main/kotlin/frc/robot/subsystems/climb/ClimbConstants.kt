@@ -4,6 +4,9 @@ import com.ctre.phoenix6.configs.MotorOutputConfigs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
+import edu.wpi.first.units.CurrentUnit
+import edu.wpi.first.units.Measure
+import edu.wpi.first.units.Units
 
 object ClimbConstants {
     const val GEAR_RATIO = 12.0
@@ -14,12 +17,15 @@ object ClimbConstants {
     val MOTOR_CONFIG = TalonFXConfiguration()
 
     init {
-        MOTOR_CONFIG.withMotorOutput(
-            MotorOutputConfigs()
-                .withNeutralMode(NeutralModeValue.Brake)
-                .withInverted(InvertedValue.Clockwise_Positive)
-        ).CurrentLimits
-            .withStatorCurrentLimitEnable(false)
-            .withSupplyCurrentLimitEnable(false)
+        MOTOR_CONFIG.apply {
+            MotorOutput.apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            CurrentLimits.apply {
+                StatorCurrentLimitEnable = false
+                SupplyCurrentLimitEnable = false
+            }
+        }
     }
 }
