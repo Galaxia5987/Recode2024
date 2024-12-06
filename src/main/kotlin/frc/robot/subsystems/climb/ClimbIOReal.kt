@@ -18,6 +18,14 @@ class ClimbIOReal : ClimbIO {
         mainMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
         auxMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
         auxMotor.setControl(StrictFollower(mainMotor.deviceID))
+
+        lockMotor.configFactoryDefault()
+        lockMotor.enableCurrentLimit(true)
+        lockMotor.enableVoltageCompensation(true)
+        lockMotor.configVoltageCompSaturation(ClimbConstants.STOPPER_MOTOR_VOLTAGE_COMPENSATION_SATURATION)
+        lockMotor.configPeakCurrentLimit(ClimbConstants.STOPPER_MOTOR_CURRENT_LIMIT)
+        lockMotor.setNeutralMode(NeutralMode.Brake)
+        lockMotor.inverted = true
     }
 
     override fun updateInput() {
