@@ -1,5 +1,6 @@
 package frc.robot.subsystems.climb
 
+import com.ctre.phoenix.motorcontrol.NeutralMode
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode
 import com.ctre.phoenix.motorcontrol.can.TalonSRX
 import com.ctre.phoenix6.controls.StrictFollower
@@ -15,8 +16,7 @@ class ClimbIOReal : ClimbIO {
     private val lockMotor: TalonSRX = TalonSRX(Ports.Climb.STOPPER_ID)
 
     init {
-        mainMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
-        auxMotor.configurator.apply(ClimbConstants.MOTOR_CONFIG)
+        listOf(auxMotor, mainMotor).forEach { it.apply { ClimbConstants.MOTOR_CONFIG } }
         auxMotor.setControl(StrictFollower(mainMotor.deviceID))
 
         lockMotor.configFactoryDefault()
@@ -55,5 +55,4 @@ class ClimbIOReal : ClimbIO {
     override fun disableLockMotor() {
         lockMotor.neutralOutput()
     }
-
 }
