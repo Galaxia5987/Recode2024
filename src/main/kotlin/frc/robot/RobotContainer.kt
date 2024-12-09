@@ -2,6 +2,8 @@ package frc.robot
 
 import com.pathplanner.lib.auto.NamedCommands
 import edu.wpi.first.math.MathUtil
+import edu.wpi.first.math.geometry.Pose2d
+import edu.wpi.first.math.geometry.Rotation2d
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController
@@ -70,6 +72,11 @@ object RobotContainer {
     }
 
     private fun configureButtonBindings() {
+        driverController().y().onTrue(
+            Commands.runOnce({
+                swerveDrive.pose = Pose2d(swerveDrive.pose.translation, Rotation2d())
+            },swerveDrive)
+        .ignoringDisable(true));
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
