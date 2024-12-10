@@ -17,7 +17,7 @@ import static edu.wpi.first.units.Units.*;
 public class TunerConstants {
     // Both sets of gains need to be tuned to your individual robot.
 
-    private static final double[] offsets = new double[] {-8.49518560331068, -19.730060893785115, -16.177361389041973, -13.692312512667232};
+    private static final double[] offsets = new double[] {5.393476450205914, 5.3627968344482015, -3.5619033894704586, -1.1965050145508};
     // The steer motor uses any SwerveModule.SteerRequestType control request with the
     // output type specified by SwerveModuleConstants.SteerMotorClosedLoopOutput
     private static final Slot0Configs steerGains =
