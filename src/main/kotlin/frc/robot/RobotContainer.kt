@@ -65,8 +65,8 @@ object RobotContainer {
     private fun configureDefaultCommands() {
         swerveDrive.defaultCommand = DriveCommands.joystickDrive(
             swerveDrive,
-            { MathUtil.applyDeadband(-driverController().leftX, 0.15) },
-            { MathUtil.applyDeadband(-driverController().leftY, 0.15) },
+            { MathUtil.applyDeadband(driverController().leftY, 0.15) },
+            { MathUtil.applyDeadband(driverController().leftX, 0.15) },
             { 0.5 * MathUtil.applyDeadband(-driverController().rightX, 0.15) }
         )
     }
@@ -76,7 +76,8 @@ object RobotContainer {
             Commands.runOnce({
                 swerveDrive.pose = Pose2d(swerveDrive.pose.translation, Rotation2d())
             },swerveDrive)
-        .ignoringDisable(true));
+        .ignoringDisable(true))
+
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
