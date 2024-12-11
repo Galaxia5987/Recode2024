@@ -2,12 +2,13 @@ package frc.robot.subsystems.elevator
 
 import edu.wpi.first.units.Units
 import edu.wpi.first.units.measure.Distance
+import edu.wpi.first.units.measure.Voltage
 import org.team9432.annotation.Logged
 
 interface ElevatorIO {
     val inputs: LoggedElevatorInputs
 
-    fun setPosition(position: Double) {}
+    fun setHeight(position: Double) {}
 
     fun setPower(percentOutput: Double) {}
 
