@@ -14,10 +14,10 @@ class ElevatorIOSim : ElevatorIO {
     }
     override fun SetPower(percentOutput: Double) {
         super.SetPower(percentOutput)
+    override fun setPower(percentOutput: Double) {
+        super.setPower(percentOutput)
     }
-    override fun isAtBottom(): Boolean {
-        return super.isAtBottom()
-    }
+    override fun resat() {}
     override fun updateInputs() {
         super.updateInputs()
     }
