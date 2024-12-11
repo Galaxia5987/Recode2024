@@ -45,7 +45,7 @@ class ElevatorIOReal : ElevatorIO {
             }
         }
 
-    override fun setPosition(position: Double) {
+    override fun setHeight(position: Double) {
         motor.setControl(motorPosititonRequest.withPosition(position))
     }
 
