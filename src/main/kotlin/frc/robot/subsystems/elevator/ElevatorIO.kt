@@ -11,8 +11,7 @@ interface ElevatorIO {
 
     fun setPower(percentOutput: Double) {}
 
-    fun resat() {
-    }
+    fun reset() {}
 
     fun updateInputs() {}
 
