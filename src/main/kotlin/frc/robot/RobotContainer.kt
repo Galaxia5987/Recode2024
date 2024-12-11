@@ -67,7 +67,7 @@ object RobotContainer {
             swerveDrive,
             { MathUtil.applyDeadband(driverController().leftY, 0.15) },
             { MathUtil.applyDeadband(driverController().leftX, 0.15) },
-            { 0.5 * MathUtil.applyDeadband(-driverController().rightX, 0.15) }
+            { 0.7 * MathUtil.applyDeadband(-driverController().rightX, 0.15) }
         )
     }
 
