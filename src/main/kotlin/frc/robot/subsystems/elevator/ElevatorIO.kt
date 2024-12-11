@@ -9,10 +9,9 @@ interface ElevatorIO {
 
     fun setPosition(position: Double) {}
 
-    fun SetPower(percentOutput: Double) {}
+    fun setPower(percentOutput: Double) {}
 
-    fun isAtBottom(): Boolean {
-        return false
+    fun resat() {
     }
 
     fun updateInputs() {}
