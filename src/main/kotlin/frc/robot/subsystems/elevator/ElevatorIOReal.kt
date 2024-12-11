@@ -43,11 +43,13 @@ class ElevatorIOReal : ElevatorIO {
     override fun setPosition(position: Double) {
         super.setPosition(position)
     }
-    override fun SetPower(percentOutput: Double) {
-        super.SetPower(percentOutput)
+
+    override fun setPower(percentOutput: Double) {
+        motor.setControl(motorPowerRequest.withOutput(percentOutput))
     }
-    override fun isAtBottom(): Boolean {
-        return super.isAtBottom()
+
+    override fun resat() {
+
     }
     override fun updateInputs() {
         super.updateInputs()
