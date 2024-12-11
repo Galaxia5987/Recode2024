@@ -57,6 +57,7 @@ class ElevatorIOReal : ElevatorIO {
 
     }
     override fun updateInputs() {
-        super.updateInputs()
+       inputs.appliedVoltege= motor.motorVoltage.value
+       inputs.carriageHeight=Units.Meters.of(motor.position.value.magnitude()*(12.13*2*PI))
     }
 }
