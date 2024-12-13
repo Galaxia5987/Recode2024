@@ -29,10 +29,11 @@ import frc.robot.subsystems.intake.IntakeIOSim
 import frc.robot.subsystems.shooter.Shooter
 import frc.robot.subsystems.shooter.ShooterIOReal
 import frc.robot.subsystems.shooter.ShooterIOSim
-import frc.robot.subsystems.swerve.SwerveDrive
+import frc.robot.subsystems.swerve.*
 import frc.robot.subsystems.telescopicArm.TelescopicArm
 import frc.robot.subsystems.telescopicArm.TelescopicArmIOReal
 import frc.robot.subsystems.telescopicArm.TelescopicArmIOSim
+import org.littletonrobotics.junction.networktables.LoggedDashboardChooser
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -41,21 +42,22 @@ import frc.robot.subsystems.telescopicArm.TelescopicArmIOSim
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 object RobotContainer {
-    private val swerveDrive: SwerveDrive
-    private val climb: Climb
+    //    private val swerveDrive: SwerveDrive
+//    private val climb: Climb
     private val shooter: Shooter
     private val hood: Hood
-
     private val driverController = CommandXboxController(0)
     private val operatorController = CommandXboxController(1)
     private val testController = CommandXboxController(2)
 
-    private val autoChooser: SendableChooser<Command>
+//    private val autoChooser: SendableChooser<Command>
 
     init {
         when (Constants.CURRENT_MODE) {
             Constants.Mode.REAL -> {
-                Climb.initialize(ClimbIOReal())
+//                SwerveDrive.initialize(GyroIOReal(), SwerveConstants.OFFSETS)
+//                Climb.initialize(ClimbIOReal())
+//                climb = Climb.getInstance()
                 Conveyor.initialize(ConveyorIOReal())
                 Gripper.initialize(GripperIOReal())
                 Hood.initialize(HoodIOReal())
@@ -65,6 +67,7 @@ object RobotContainer {
             }
 
             Constants.Mode.SIM -> {
+//              SwerveDrive.initialize(GyroIOSim(), SwerveConstants.OFFSETS, * moduleIOs )
                 Conveyor.initialize(ConveyorIOSim())
                 Gripper.initialize(GripperIOSIm())
                 Hood.initialize(HoodIOSim())
@@ -78,41 +81,41 @@ object RobotContainer {
         }
 
 
-        swerveDrive = SwerveDrive.getInstance()
-        climb = Climb.getInstance()
+//        swerveDrive = SwerveDrive.getInstance()
+
         shooter = Shooter.getInstance()
         hood = Hood.getInstance();
 
-        autoChooser = AutoBuilder.buildAutoChooser()
+//        autoChooser = AutoBuilder.buildAutoChooser()
 
         registerAutoCommands()
-        configureButtonBindings()
+//        configureButtonBindings()
         configureDefaultCommands()
     }
 
+//    private fun configureButtonBindings() {
+//        driverController.y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
+//
+//    }
+
     private fun configureDefaultCommands() {
 
-        swerveDrive.setDefaultCommand(
-            swerveDrive.driveCommand(
-                { -driverController.leftY },
-                { -driverController.leftX },
-                { 0.6 * -driverController.rightX })
-        )
+//        swerveDrive.setDefaultCommand(
+//            swerveDrive.driveCommand(
+//                { -driverController.leftY },
+//                { -driverController.leftX },
+//                { 0.6 * -driverController.rightX })
+//        )
 
-        climb.setDefaultCommand(
-            climb.setPower {
-                MathUtil.applyDeadband(
-                    -(driverController.leftTriggerAxis + 1) / 2
-                            + (driverController.rightTriggerAxis + 1) / 2,
-                    0.15
-                )
-            }
-        )
-    }
-
-    private fun configureButtonBindings() {
-        driverController.y().onTrue(Commands.runOnce({ swerveDrive.resetGyro() }))
-
+//        climb.setDefaultCommand(
+//            climb.setPower {
+//                MathUtil.applyDeadband(
+//                    -(driverController.leftTriggerAxis + 1) / 2
+//                            + (driverController.rightTriggerAxis + 1) / 2,
+//                    0.15
+//                )
+//            }
+//        )
     }
 
     fun getAutonomousCommand(): Command = Commands.none()
