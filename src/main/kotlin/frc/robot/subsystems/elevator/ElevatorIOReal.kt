@@ -12,8 +12,7 @@ import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.wpilibj.DigitalInput
 import frc.robot.ElevatorPorts
-import frc.robot.subsystems.hood.GAINS
-import frc.robot.subsystems.hood.GEAR_RATIO
+import kotlin.math.PI
 
 class ElevatorIOReal : ElevatorIO {
     override val inputs = LoggedElevatorInputs()
@@ -53,7 +52,8 @@ class ElevatorIOReal : ElevatorIO {
         motor.setControl(motorPowerRequest.withOutput(percentOutput))
     }
 
-    override fun resat() {
+    override fun reset() {
+      motor.setPosition(0.0)
 
     }
     override fun updateInputs() {
