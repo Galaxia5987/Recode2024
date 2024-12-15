@@ -1,7 +1,10 @@
 package frc.robot.subsystems.elevator
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import org.littletonrobotics.junction.AutoLogOutput
+import frc.robot.subsystems.gripper.Gripper
+import frc.robot.subsystems.gripper.Gripper.Companion
+import frc.robot.subsystems.hood.Hood
+import org.littletonrobotics.junction.Logger
 
 class Elevator private constructor(private val io: ElevatorIO) : SubsystemBase() {
 
@@ -24,7 +27,7 @@ class Elevator private constructor(private val io: ElevatorIO) : SubsystemBase()
     }
 
     fun setPosition(position: Double) {
-        io.setPosition(position)
+        io.setHeight(position)
     }
 
     fun setPower(percentOutput: Double) {
