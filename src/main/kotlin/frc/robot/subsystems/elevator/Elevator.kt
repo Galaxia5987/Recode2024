@@ -31,7 +31,12 @@ class Elevator private constructor(private val io: ElevatorIO) : SubsystemBase()
         io.setPower(percentOutput)
     }
 
-    fun resat() {
-        io.setPosition()=0.0
+    fun reset() {
+        io.reset()
+    }
+
+    override fun periodic() {
+        io.updateInputs()
+        Logger.processInputs("elevator",io.inputs)
     }
 }
