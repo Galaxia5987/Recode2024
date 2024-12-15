@@ -12,12 +12,10 @@ class ElevatorIOSim : ElevatorIO {
     override fun setHeight(position: Double) {
         super.setHeight(position)
     }
-    override fun SetPower(percentOutput: Double) {
-        super.SetPower(percentOutput)
     override fun setPower(percentOutput: Double) {
         super.setPower(percentOutput)
     }
-    override fun resat() {}
+    override fun reset() {}
     override fun updateInputs() {
         super.updateInputs()
     }
