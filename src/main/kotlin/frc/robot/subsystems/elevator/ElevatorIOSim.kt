@@ -9,8 +9,8 @@ class ElevatorIOSim : ElevatorIO {
     private val limitSwitch = DigitalInput(ElevatorPorts.SENSOR_ID)
     private val motor = TalonFX(ElevatorPorts.MOTOR_ID)
 
-    override fun setPosition(position: Double) {
-        super.setPosition(position)
+    override fun setHeight(position: Double) {
+        super.setHeight(position)
     }
     override fun SetPower(percentOutput: Double) {
         super.SetPower(percentOutput)
