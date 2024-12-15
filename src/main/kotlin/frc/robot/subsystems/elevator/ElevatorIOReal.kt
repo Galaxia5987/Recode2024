@@ -10,7 +10,7 @@ import com.ctre.phoenix6.controls.PositionVoltage
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
-import edu.wpi.first.wpilibj.DigitalInput
+import edu.wpi.first.units.Units
 import frc.robot.ElevatorPorts
 import kotlin.math.PI
 
@@ -28,7 +28,7 @@ class ElevatorIOReal : ElevatorIO {
                 }
                 Feedback = FeedbackConfigs().apply {
                     RotorToSensorRatio = 1.0
-                    SensorToMechanismRatio = GEAR_RATIO * 0.5
+                    SensorToMechanismRatio = GEAR_RATIO * FIRST_STAGE_RATIO
                 }
                 Slot0 = Slot0Configs().apply {
                     kP = GAINS.kP
