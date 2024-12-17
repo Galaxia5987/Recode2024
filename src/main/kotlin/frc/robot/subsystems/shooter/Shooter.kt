@@ -2,10 +2,14 @@ package frc.robot.subsystems.shooter
 
 import edu.wpi.first.units.*
 import edu.wpi.first.units.measure.AngularVelocity
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
 import edu.wpi.first.wpilibj2.command.Command
 import edu.wpi.first.wpilibj2.command.Commands
 import edu.wpi.first.wpilibj2.command.SubsystemBase
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Mechanism
 import org.littletonrobotics.junction.Logger
+
 
 class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
     private val inputs = io.inputs
@@ -43,6 +47,24 @@ class Shooter private constructor(private var io: ShooterIO) : SubsystemBase() {
             setTopVelocity(vel)
             setBottomVelocity(vel)
         })
+
+    val routine = SysIdRoutine(
+        SysIdRoutine.Config(),
+        Mechanism(
+            { inputs.topVoltage },
+            { SysIdRoutineLog(":)") },
+            this
+        )
+    )
+
+    fun sysIdQuasistatic(direction: SysIdRoutine.Direction): Command {
+        return routine.quasistatic(direction)
+    }
+
+    fun sysIdDynamic(direction: SysIdRoutine.Direction): Command {
+        return routine.dynamic(direction)
+    }
+
 
     override fun periodic() {
         io.updateInput()
