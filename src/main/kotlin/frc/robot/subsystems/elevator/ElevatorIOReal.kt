@@ -5,58 +5,78 @@ import com.ctre.phoenix6.configs.FeedbackConfigs
 import com.ctre.phoenix6.configs.MotorOutputConfigs
 import com.ctre.phoenix6.configs.Slot0Configs
 import com.ctre.phoenix6.configs.TalonFXConfiguration
+import com.ctre.phoenix6.configs.VoltageConfigs
 import com.ctre.phoenix6.controls.DutyCycleOut
 import com.ctre.phoenix6.controls.PositionVoltage
+import com.ctre.phoenix6.controls.VoltageOut
 import com.ctre.phoenix6.hardware.TalonFX
 import com.ctre.phoenix6.signals.InvertedValue
 import com.ctre.phoenix6.signals.NeutralModeValue
 import edu.wpi.first.units.Units
+import edu.wpi.first.units.measure.Voltage
+import edu.wpi.first.wpilibj.sysid.SysIdRoutineLog
 import frc.robot.ElevatorPorts
+import java.util.function.Consumer
 import kotlin.math.PI
 
 class ElevatorIOReal : ElevatorIO {
     override val inputs = LoggedElevatorInputs()
     private val motor = TalonFX(ElevatorPorts.MOTOR_ID)
-    private val motorPosititonRequest = PositionVoltage(0.0)
+    private val motorPositionRequest = PositionVoltage(0.0)
+    private val motorVoltageRequest = VoltageOut(0.0)
     private val motorPowerRequest = DutyCycleOut(0.0)
 
-    init {
-        val motorConfig = TalonFXConfiguration().apply {
-            MotorOutput = MotorOutputConfigs().apply {
-                NeutralMode = NeutralModeValue.Brake
-                Inverted = InvertedValue.Clockwise_Positive
-            }
-            Feedback = FeedbackConfigs().apply {
-                RotorToSensorRatio = 1.0
-                SensorToMechanismRatio = GEAR_RATIO * FIRST_STAGE_RATIO
-            }
-            Slot0 = Slot0Configs().apply {
-                kP = GAINS.kP
-                kI = GAINS.kI
-                kD = GAINS.kD
-            }
-            CurrentLimits = CurrentLimitsConfigs().apply {
-                StatorCurrentLimitEnable = true
-                SupplyCurrentLimitEnable = true
-                StatorCurrentLimit = 80.0
-                SupplyCurrentLimit = 40.0
+        init {
+            val motorConfig = TalonFXConfiguration().apply {
+                MotorOutput = MotorOutputConfigs().apply {
+                    NeutralMode = NeutralModeValue.Brake
+                    Inverted = InvertedValue.Clockwise_Positive
+                }
+                Feedback = FeedbackConfigs().apply {
+                    RotorToSensorRatio = 1.0
+                    SensorToMechanismRatio = GEAR_RATIO * FIRST_STAGE_RATIO
+                }
+                Slot0 = Slot0Configs().apply {
+                    kP = GAINS.kP
+                    kI = GAINS.kI
+                    kD = GAINS.kD
+                }
+                CurrentLimits = CurrentLimitsConfigs().apply {
+                    StatorCurrentLimitEnable = true
+                    SupplyCurrentLimitEnable = true
+                    StatorCurrentLimit = 80.0
+                    SupplyCurrentLimit = 40.0
+                }
             }
         }
-    }
 
     override fun setHeight(position: Double) {
-        motor.setControl(motorPosititonRequest.withPosition(position))
+        motor.setControl(motorPositionRequest.withPosition(position))
     }
+
+
+    override fun setVoltage(voltage: Voltage) {
+        motor.setControl(motorVoltageRequest.withOutput(voltage))
+    }
+
 
     override fun setPower(percentOutput: Double) {
         motor.setControl(motorPowerRequest.withOutput(percentOutput))
     }
 
     override fun reset() {
-        motor.setPosition(0.0)
+      motor.setPosition(0.0)
+
     }
+
+    override fun updateRoutineLog(log: SysIdRoutineLog) {
+        log.motor("1")
+            .voltage(inputs.appliedVoltege)
+            .linearPosition(inputs.carriageHeight)
+    }
+
     override fun updateInputs() {
-        inputs.appliedVoltege = motor.motorVoltage.value
-        inputs.carriageHeight = Units.Meters.of(motor.position.value.magnitude() * (12.13 * 2 * PI))
+       inputs.appliedVoltege= motor.motorVoltage.value
+       inputs.carriageHeight=Units.Meters.of(motor.position.value.magnitude()*(12.13*2*PI))
     }
 }
