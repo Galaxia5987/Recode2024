@@ -1,9 +1,6 @@
 package frc.robot.subsystems.elevator
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase
-import frc.robot.subsystems.gripper.Gripper
-import frc.robot.subsystems.gripper.Gripper.Companion
-import frc.robot.subsystems.hood.Hood
 import org.littletonrobotics.junction.Logger
 
 class Elevator private constructor(private val io: ElevatorIO) : SubsystemBase() {
@@ -12,11 +9,11 @@ class Elevator private constructor(private val io: ElevatorIO) : SubsystemBase()
         @Volatile
         private var instance: Elevator? = null
 
-        fun initialize(io:ElevatorIO){
+        fun initialize(io: ElevatorIO) {
             synchronized(this) {
-            if (Elevator.instance == null) {
-                instance = Elevator(io)
-            }
+                if (Elevator.instance == null) {
+                    instance = Elevator(io)
+                }
             }
         }
         fun getInstance(): Elevator {
@@ -40,6 +37,6 @@ class Elevator private constructor(private val io: ElevatorIO) : SubsystemBase()
 
     override fun periodic() {
         io.updateInputs()
-        Logger.processInputs("elevator",io.inputs)
+        Logger.processInputs("elevator", io.inputs)
     }
 }

@@ -20,29 +20,29 @@ class ElevatorIOReal : ElevatorIO {
     private val motorPosititonRequest = PositionVoltage(0.0)
     private val motorPowerRequest = DutyCycleOut(0.0)
 
-        init {
-            val motorConfig = TalonFXConfiguration().apply {
-                MotorOutput = MotorOutputConfigs().apply {
-                    NeutralMode = NeutralModeValue.Brake
-                    Inverted = InvertedValue.Clockwise_Positive
-                }
-                Feedback = FeedbackConfigs().apply {
-                    RotorToSensorRatio = 1.0
-                    SensorToMechanismRatio = GEAR_RATIO * FIRST_STAGE_RATIO
-                }
-                Slot0 = Slot0Configs().apply {
-                    kP = GAINS.kP
-                    kI = GAINS.kI
-                    kD = GAINS.kD
-                }
-                CurrentLimits = CurrentLimitsConfigs().apply {
-                    StatorCurrentLimitEnable = true
-                    SupplyCurrentLimitEnable = true
-                    StatorCurrentLimit = 80.0
-                    SupplyCurrentLimit = 40.0
-                }
+    init {
+        val motorConfig = TalonFXConfiguration().apply {
+            MotorOutput = MotorOutputConfigs().apply {
+                NeutralMode = NeutralModeValue.Brake
+                Inverted = InvertedValue.Clockwise_Positive
+            }
+            Feedback = FeedbackConfigs().apply {
+                RotorToSensorRatio = 1.0
+                SensorToMechanismRatio = GEAR_RATIO * FIRST_STAGE_RATIO
+            }
+            Slot0 = Slot0Configs().apply {
+                kP = GAINS.kP
+                kI = GAINS.kI
+                kD = GAINS.kD
+            }
+            CurrentLimits = CurrentLimitsConfigs().apply {
+                StatorCurrentLimitEnable = true
+                SupplyCurrentLimitEnable = true
+                StatorCurrentLimit = 80.0
+                SupplyCurrentLimit = 40.0
             }
         }
+    }
 
     override fun setHeight(position: Double) {
         motor.setControl(motorPosititonRequest.withPosition(position))
@@ -53,11 +53,10 @@ class ElevatorIOReal : ElevatorIO {
     }
 
     override fun reset() {
-      motor.setPosition(0.0)
-
+        motor.setPosition(0.0)
     }
     override fun updateInputs() {
-       inputs.appliedVoltege= motor.motorVoltage.value
-       inputs.carriageHeight=Units.Meters.of(motor.position.value.magnitude()*(12.13*2*PI))
+        inputs.appliedVoltege = motor.motorVoltage.value
+        inputs.carriageHeight = Units.Meters.of(motor.position.value.magnitude() * (12.13 * 2 * PI))
     }
 }
