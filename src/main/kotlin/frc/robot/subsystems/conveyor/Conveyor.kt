@@ -48,13 +48,13 @@ class Conveyor private constructor(private val io: ConveyorIO) : SubsystemBase()
         timer.reset()
     }
 
-    fun setVelocity(velocitySupplier: () -> AngularVelocity): Command = run {
+    fun setVelocity(velocitySupplier: () -> AngularVelocity): Command = runOnce {
         val velocity = velocitySupplier.invoke()
         velocitySetpoint = velocity
         io.setVelocity(velocity)
     }
 
-    fun setVelocity(velocity: AngularVelocity): Command = run {
+    fun setVelocity(velocity: AngularVelocity): Command = runOnce {
         velocitySetpoint = velocity
         io.setVelocity(velocity)
     }

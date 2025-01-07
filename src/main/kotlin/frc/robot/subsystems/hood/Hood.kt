@@ -84,7 +84,7 @@ class Hood private constructor(private val io: HoodIO) : SubsystemBase() {
     }
 
     fun setAngle(angleSupplier: () -> Angle): Command {
-        return run {
+        return runOnce {
             val angle = angleSupplier.invoke()
             angleSetpoint = angle
             io.setAngle(angle)
